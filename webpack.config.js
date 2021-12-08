@@ -2,7 +2,7 @@ const path = require('path');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const ModuleFederationPlugin = require('webpack/lib/container/ModuleFederationPlugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const deps = require("./package.json").dependencies;
+const { dependencies } = require("./package.json");
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
@@ -65,11 +65,11 @@ module.exports = {
       shared: {
         react: {
           singleton: true,
-          requiredVersion: deps.react,
+          requiredVersion: dependencies.react,
         },
         "react-dom": {
           singleton: true,
-          requiredVersion: deps["react-dom"],
+          requiredVersion: dependencies["react-dom"],
         }
       },
     }),

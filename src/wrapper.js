@@ -23,8 +23,6 @@ class Wrapper extends PureComponent {
         };
     }
 
-    currentUrl = window.location.pathname.split('/')[1];
-
     errorTranslations = {
         ru: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
         en: 'The service is not available in this location. Please choose another location.'
@@ -145,10 +143,6 @@ class Wrapper extends PureComponent {
     };
 
     changeUserInfo = (name, value) => {
-        console.log('name')
-        console.log(name)
-        console.log(value)
-        console.log('name')
         const { account, location, role, userInfo } = this.state;
         const { changeUser } = this.props;
         this.setState({ [name]: value });
@@ -176,6 +170,7 @@ class Wrapper extends PureComponent {
             logout,
             changeLang,
             children,
+            changeApp
         } = this.props;
 
         const roles = availableAccounts ? availableAccounts[account].roles.map(role => ({
@@ -266,9 +261,13 @@ class Wrapper extends PureComponent {
                 </div>
             </header>
             <div>
-                { routes && isServiceAvailableInCurrantLocation && <RenderSidebar routes={routes} visible={visible} /> }
+                { routes && isServiceAvailableInCurrantLocation && <RenderSidebar name={name}
+                                                                        routes={routes}
+                                                                        visible={visible}
+                                                                        changeApp={(newLocation) => changeApp(newLocation)}
+                                                                    /> }
                 { isServiceAvailableInCurrantLocation ? (
-                <div className='main-content' style={{ paddingLeft: visible ? '320px' : '40px' }}>
+                <div className='main-content' style={{ paddingLeft: visible ? '290px' : '40px' }}>
                     {children}
                 </div>) : <h2 className='unavailable'>{this.errorTranslations[locale]}</h2> } 
             </div>
