@@ -4,8 +4,8 @@
   "description": "A New React App Without CRA",
   "main": "index.js",
   "scripts": {
-    "start": "webpack serve",
-    "build": "webpack build"
+    "start": "set NODE_ENV=development&&webpack serve --hot",
+    "build": "set NODE_ENV=production&&webpack"
   },
   "devDependencies": {
     "@babel/core": "^7.15.8",
@@ -14,7 +14,7 @@
     "@babel/preset-react": "^7.14.5",
     "babel-loader": "^8.2.3",
     "css-loader": "^6.4.0",
-    "file-loader": "^6.2.0",
+    "html-loader": "^3.0.1",
     "html-webpack-plugin": "^5.4.0",
     "sass": "^1.44.0",
     "sass-loader": "^12.2.0",

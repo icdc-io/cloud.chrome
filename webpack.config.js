@@ -6,11 +6,35 @@ const { dependencies } = require("./package.json");
 const TerserPlugin = require('terser-webpack-plugin');
 const CssMinimizerPlugin = require("css-minimizer-webpack-plugin");
 
+let mode = 'development';
+
+if (process.env.NODE_ENV === 'production') {
+  mode = 'production'
+}
+
 module.exports = {
-  mode: 'development',
+  mode,
   entry: './src/index',
+  // output: {
+  //   filename: '[name].[contenthash].js',
+  //   assetModuleFilename: 'assets/[hash][ext][query]',
+  //   publicPath: "http://localhost:8081",
+  //   clean: true
+  // },
   module: {
     rules: [
+      {
+        test: /\.html$/i,
+        loader: 'html-loader'
+      },
+      {
+        test: /\.(sa|sc|c)ss$/,
+        use: [
+          (mode === 'development' ? 'style-loader' : MiniCssExtractPlugin.loader),
+          'css-loader',
+          'sass-loader',
+        ],
+      },
       {
         test: /\.m?js$/,
         exclude:
@@ -30,26 +54,12 @@ module.exports = {
         },
       },
       {
-        test: /\.(scss|css)$/,
-        use: [
-            {
-                loader: MiniCssExtractPlugin.loader,
-                options: {
-                },
-            },
-            'css-loader',
-            'sass-loader',
-        ],
+        test: /\.(png|svg|jp(e)g|gif)$/,
+        type: 'asset/resource',
       },
       {
-        test: /\.(woff(2)?|ttf|jpg|png|eot|gif|svg)(\?v=\d+\.\d+\.\d+)?$/,
-        use: [{
-          loader: 'file-loader',
-          options: {
-              name: '[name].[ext]',
-              outputPath: 'fonts/'
-          }
-        }]
+        test: /\.(woff(2)?|ttf|eot|otf)$/,
+        type: 'asset/resource',
       },
     ],
   },
@@ -70,6 +80,10 @@ module.exports = {
         "react-dom": {
           singleton: true,
           requiredVersion: dependencies["react-dom"],
+        },
+        "semantic-ui-react": {
+          singleton: true,
+          requiredVersion: dependencies["semantic-ui-react"],
         }
       },
     }),
@@ -81,9 +95,9 @@ module.exports = {
   devServer: {
     port: 8081,
     historyApiFallback: true,
-    static: {
-      directory: path.join(__dirname, "dist"),
-    }
+    // static: {
+    //   directory: path.join(__dirname, "dist"),
+    // }
   },
   optimization: {
     minimizer: [

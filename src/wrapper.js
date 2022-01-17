@@ -1,5 +1,5 @@
 import React, { PureComponent } from 'react';
-import { Dropdown, Loader, Segment, Icon } from 'semantic-ui-react';
+import { Dropdown, Loader, Segment, Icon, Popup } from 'semantic-ui-react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RenderSidebar from './RenderSidebar';
 import ICDCLogo from './logo.svg';
@@ -12,14 +12,18 @@ import auth from './auth';
 class Wrapper extends PureComponent {
     constructor() {
         super();
+        const userInfo = JSON.parse(localStorage.getItem('user'));
         this.state = {
-            account: '',
+            account: userInfo?.account,
             location: '',
             role: '',
             availableAccounts: null,
             visible: true,
             accountsDropdown: [],
-            userInfo: null
+            userInfo: null,
+            accountsClass: false,
+            rolesClass: false,
+            langsClass: false
         };
     }
 
@@ -37,10 +41,16 @@ class Wrapper extends PureComponent {
         value: 'en'
     }];
 
-    DropdownIcon = (value) => (
+    DropdownIcon = (value, isPopup) => (
         <div style={{ display: 'inline-block', float: 'right' }}>
-            <Icon style={{ float: 'right', margin: 0, marginRight: '-8px' }} name="angle right"/>
             <span style={{ marginRight: '4px', color: 'gray' }}>{value.toUpperCase()}</span>
+            { isPopup ? (
+                <Popup
+                    content='Hello'
+                    position='bottom left'
+                    trigger={<Icon name='attention' className='location-popup' />}
+                />
+            ) : <Icon style={{ float: 'right', margin: 0, marginRight: '-8px' }} name="angle right"/> }
         </div>
     );
 
@@ -67,6 +77,12 @@ class Wrapper extends PureComponent {
                     let newAccounts = {};
                     let accountsArray = [];
                     const userInfo = libjwt.jwt.getUserInfo();
+                    console.log('eeeeeeeeeeeee')
+                    console.log('response')
+                    console.log(data)
+                    console.log('userInfo')
+                    console.log(userInfo)
+                    console.log('eeeeeeeeeeeee')
                     const { accounts } = userInfo.external;
                     this.setState({ userInfo });
                     for (let obj in accounts) {
@@ -113,6 +129,12 @@ class Wrapper extends PureComponent {
                             });
                         };
                     }
+                    console.log('rrrrrrrrrrrrr')
+                    console.log('accountsArray')
+                    console.log(accountsArray)
+                    console.log('newAccounts')
+                    console.log(newAccounts)
+                    console.log('rrrrrrrrrrrrrr')
                     changeAccounts(newAccounts);
                     this.setState({
                         accountsDropdown: accountsArray,
@@ -152,6 +174,8 @@ class Wrapper extends PureComponent {
         }))
     };
 
+    setActiveClass = (name, value) => this.setState({ [name]: value });
+
     render() {
         const {
             availableAccounts,
@@ -161,6 +185,9 @@ class Wrapper extends PureComponent {
             location,
             userInfo,
             visible,
+            accountsClass,
+            rolesClass,
+            langsClass
         } = this.state;
         const {
             name,
@@ -197,7 +224,7 @@ class Wrapper extends PureComponent {
                 <div className='info-section'>
                     <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
                         <Dropdown.Menu>
-                            <Dropdown.Item >
+                            <Dropdown.Item>
                                 <a href={`https://help.icdc.io/devops/${locale}/Welcome.html`} target='_blank' style={{ color: 'black' }}>
                                     Help & Asistance
                                 </a>
@@ -205,17 +232,6 @@ class Wrapper extends PureComponent {
                             <Dropdown.Item>Support</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
-
-                    { id !== 'devops' && <label>
-                        Role:
-                        <Dropdown
-                            fluid
-                            selection
-                            value={role}
-                            onChange={(_e, data) => this.changeUserInfo('role', data.value)}
-                            options={roles}
-                        />
-                    </label>}
 
                     <label>
                         Location:
@@ -232,13 +248,19 @@ class Wrapper extends PureComponent {
                         className='user-dropdown'
                     >
                         <Dropdown.Menu className='first-level'>
-                            <Dropdown.Header>Username: <br />{userInfo.email}</Dropdown.Header>
+                            <Dropdown.Header>{userInfo.email}</Dropdown.Header>
+                            <Dropdown.Divider />
                             <Dropdown text='Accounts'
                                 pointing='right'
-                                className='link item accounts'
-                                icon={this.DropdownIcon(account)}
+                                // simple
+                                className={(accountsClass ? 'active visible ' : '') + 'link item accounts'}
+                                icon={this.DropdownIcon(account, true)}
+                                // onMouseEnter={() => this.setActiveClass('accountsClass', true)}
+                                // onMouseLeave={() => this.setActiveClass('accountsClass', false)}
+                                // onChange={() => this.setActiveClass('accountsClass', false)}
+                                closeOnChange
                             >
-                                <Dropdown.Menu className='second-level'>
+                                <Dropdown.Menu className={(accountsClass ? 'visible ' : '') + 'second-level'}>
                                     { accountsDropdown.map(account => (
                                         <Dropdown.Item key={account.key} onClick={() => this.setState({ account: account.value })}>
                                             {account.text}
@@ -246,31 +268,61 @@ class Wrapper extends PureComponent {
                                     ))}
                                 </Dropdown.Menu>
                             </Dropdown>
-                            <Dropdown text='Language' pointing='right' className='link item'
-                            icon={this.DropdownIcon(locale)} 
+                            { id !== 'devops' && <Dropdown text='Role'
+                                pointing='right'
+                                className={(rolesClass ? 'active visible ' : '') +  'link item'}
+                                icon={this.DropdownIcon(role)}
+                                onMouseEnter={() => this.setActiveClass('rolesClass', true)}
+                                onMouseLeave={() => this.setActiveClass('rolesClass', false)}
+                                onChange={() => this.setActiveClass('rolesClass', false)}
+                                closeOnChange
                             >
-                                <Dropdown.Menu className='second-level' >
-                                {this.langs.map(lang => (
-                                    <Dropdown.Item key={lang.value} onClick={(_e, data) => changeLang(lang.value)}>{lang.text}</Dropdown.Item>))}
+                                <Dropdown.Menu className={(rolesClass ? 'visible ' : '') + 'second-level'}>
+                                    {roles.map(role => (
+                                        <Dropdown.Item key={role.value}
+                                            onClick={() => this.changeUserInfo('role', role.value)}>
+                                                {role.text}
+                                        </Dropdown.Item>
+                                    ))}
+                                </Dropdown.Menu>
+                            </Dropdown> }
+                            <Dropdown.Divider />
+                            <Dropdown text='Language'
+                                pointing='right'
+                                className={(langsClass ? 'active visible ' : '') +  'link item'}
+                                icon={this.DropdownIcon(locale)}
+                                onMouseEnter={() => this.setActiveClass('langsClass', true)}
+                                onMouseLeave={() => this.setActiveClass('langsClass', false)}
+                                onChange={() => this.setActiveClass('langsClass', false)}
+                                closeOnChange
+                            >
+                                <Dropdown.Menu className={(langsClass ? 'visible ' : '') + 'second-level'}>
+                                    {this.langs.map(lang => (
+                                        <Dropdown.Item key={lang.value}
+                                            onClick={() => changeLang(lang.value)}>
+                                                {lang.text}
+                                        </Dropdown.Item>
+                                    ))}
                                 </Dropdown.Menu>
                             </Dropdown>
-                            <Dropdown.Divider />
                             <Dropdown.Item onClick={() => logout(true)}>Logout</Dropdown.Item>
                         </Dropdown.Menu>
                     </Dropdown>
                 </div>
             </header>
-            <div>
-                { routes && isServiceAvailableInCurrantLocation && <RenderSidebar name={name}
-                                                                        routes={routes}
-                                                                        visible={visible}
-                                                                        changeApp={(newLocation) => changeApp(newLocation)}
-                                                                    /> }
+                { routes && isServiceAvailableInCurrantLocation && (
+                    <RenderSidebar name={name}
+                        routes={routes}
+                        visible={visible}
+                        changeApp={(newLocation) => changeApp(newLocation)}
+                    />
+                )}
                 { isServiceAvailableInCurrantLocation ? (
-                <div className='main-content' style={{ paddingLeft: visible ? '290px' : '40px' }}>
-                    {children}
-                </div>) : <h2 className='unavailable'>{this.errorTranslations[locale]}</h2> } 
-            </div>
+                    <div className='main-content' style={{ paddingLeft: visible ? '290px' : '40px' }}>
+                        {children}
+                    </div>
+                ) : <h2 className='unavailable'>{this.errorTranslations[locale]}</h2>
+                } 
         </> : <Segment className='start-loader'>
         <Loader active inline='centered' />
     </Segment>;

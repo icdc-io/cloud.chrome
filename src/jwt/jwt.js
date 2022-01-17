@@ -183,22 +183,29 @@ function isExistingValid(token) {
 // keycloak init successful
 function initSuccess() {
   log('JWT Initialized');
+  console.log('initSuccess')
   setCookie(priv.getToken());
   setRefresh(priv.getRefershToken());
-  const newTokens = {};
-  const userInfo = priv.getTokenParsed();
-  const { accounts } = userInfo.external;
-  for (let obj in accounts) {
-      if (accounts[obj].locations.length && accounts[obj].roles.length) {
-          newTokens[obj]= accounts[obj];
-      }
-  };
-  !localStorage.getItem('user') && localStorage.setItem('user', Object.keys(newTokens).length ? JSON.stringify({
-      account: Object.keys(newTokens)[0],
-      location: newTokens[Object.keys(newTokens)[0]].locations[0],
-      role: newTokens[Object.keys(newTokens)[0]].roles[0],
-      email: userInfo.email
-  }) : null);
+
+  if (!localStorage.getItem('user')) {
+    console.log('eeeeeeeeeeeeeeeee')
+    console.log(localStorage.getItem('user'))
+    console.log('eeeeeeeeeeeeeeeee')
+    const newTokens = {};
+    const userInfo = priv.getTokenParsed();
+    const { accounts } = userInfo.external;
+    for (let obj in accounts) {
+        if (accounts[obj].locations.length && accounts[obj].roles.length) {
+            newTokens[obj]= accounts[obj];
+        }
+    };
+    localStorage.setItem('user', Object.keys(newTokens).length ? JSON.stringify({
+        account: Object.keys(newTokens)[0],
+        location: newTokens[Object.keys(newTokens)[0]].locations[0],
+        role: newTokens[Object.keys(newTokens)[0]].roles[0],
+        email: userInfo.email
+    }) : null);
+  }
 }
 
 // keycloak init failed
@@ -292,6 +299,7 @@ export const expiredToken = () => {
 // Broadcast message to refresh tokens across tabs
 function refreshTokens() {
   setCookie(priv.getToken());
+  console.log('refreshTokens')
   authChannel.postMessage({ type: 'refresh' });
 }
 
@@ -300,6 +308,9 @@ function updateToken() {
   return priv
     .updateToken()
     .then((refreshed) => {
+      console.log('updateToken')
+      console.log(refreshed)
+      console.log('updateToken')
       // Important! after we update the token
       // we have to again populate the Cookie!
       // Otherwise we just update and dont send
@@ -340,6 +351,7 @@ function setCookie(token) {
 
 function setRefresh(refreshToken) {
   log('Setting the refresh token');
+  console.log('setRefresh')
   cookie.set('cs_jwt_refresh', refreshToken, { secure: true });
 }
 
