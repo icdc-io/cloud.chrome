@@ -2,7 +2,7 @@ import { wipePostbackParamsThatAreNotForUs, getOfflineToken } from './jwt/insigh
 import * as jwt from './jwt/jwt';
 import cookie from 'js-cookie';
 import { options as defaultOptions } from './jwt/constants';
-import { ACCOUNT_REQUEST_TIMEOUT, ACTIVE_REMOTE_REQUEST, CROSS_ACCESS_ACCOUNT_NUMBER } from './consts';
+import { ACCOUNT_REQUEST_TIMEOUT, ACTIVE_REMOTE_REQUEST, CROSS_ACCESS_ACCOUNT_NUMBER } from './constants/consts';
 const TIMER_STR = '[JWT][jwt.js] Auth time';
 
 function bouncer() {

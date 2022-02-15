@@ -1,4 +1,4 @@
-import consts from '../../consts';
+import consts from '../../constants/consts';
 import { DEFAULT_ROUTES } from '../constants';
 import insightsUrl from './url';
 import axios from 'axios';

@@ -2,12 +2,13 @@ import React, { PureComponent } from 'react';
 import { Dropdown, Loader, Segment, Icon, Popup } from 'semantic-ui-react';
 import { BrowserRouter as Router } from 'react-router-dom';
 import RenderSidebar from './RenderSidebar';
-import ICDCLogo from './logo.svg';
-import QuestionLogo from './question.svg';
-import Burger from './burger.svg';
+import ICDCLogo from './images/logo.svg';
+import QuestionLogo from './images/question.svg';
+import Burger from './images/burger.svg';
 import './wrapper.scss';
 import PropTypes from 'prop-types';
 import auth from './auth';
+import { errorTranslations, langs, servicesImages } from './constants/viewConstants';
 
 class Wrapper extends PureComponent {
     constructor(props) {
@@ -20,27 +21,18 @@ class Wrapper extends PureComponent {
             availableAccounts: {},
             isSideBarVisible: true,
             accountsDropdown: [],
+            username: '',
             email: '',
             isUserDropdownOpen: false,
             accountFullName: '',
-            serviceAvailability: {}
+            serviceAvailability: {},
+            groups: [],
+            servicesInLocations: {},
+            isError: false,
+            currentService: {}
         };
         this.ref = React.createRef();
     }
-
-    errorTranslations = {
-        ru: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
-        en: 'The service is not available in this location. Please choose another location.'
-    };
-
-    langs = [{
-        text: 'Русский',
-        value: 'ru'
-     },
-     {
-        text: 'English',
-        value: 'en'
-    }];
 
     handleClickOutside = (event) => {
         if (this.ref.current && !this.ref.current.contains(event.target)) {
@@ -65,41 +57,51 @@ class Wrapper extends PureComponent {
         document.addEventListener('click', this.handleClickOutside, true);
 
         const { email } = this.state;
-        const { id, changeAccounts, changeUser } = this.props;
+        const { id, changeAccounts, changeUser, getAppInfo } = this.props;
+        getAppInfo({
+            amazon: true,
+            iscsi: true
+        });
         const libjwt = auth();
         libjwt.initPromise.then(() => {
             const { account, location, role } = JSON.parse(localStorage.getItem('user'));
             changeUser({ account, location, role });
             window.insights = {
                 getToken: () => libjwt.jwt.getEncodedToken(),
-                getUserInfo: () => libjwt.jwt.getUserInfo()
+                getUserInfo: () => libjwt.jwt.getUserInfo(),
+                getLocation: () => this.state.location,
+                getAccount: () => this.state.account,
+                getRole: () => this.state.role
             }
             if (!email) {
                 const h = new Headers();
                 h.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
                 fetch('https://api.zby.icdc.io/api/accounts/v1/accounts', {
-                  method: 'GET',
-                  headers: h
-                }).
-                then(response => response.json()
+                    method: 'GET',
+                    headers: h
+                })
+                .then(response => response.json()
                 .then(data => {
                     const fullAccountsInfo = {};
                     const accountsArray = [];
                     const serviceAvailability = {};
+                    const servicesInLocations = {};
+                    let currentService;
                     const locationsNumber = Object.keys(serviceAvailability).length;
                     const userInfo = libjwt.jwt.getUserInfo();
                     const { accounts, locations } = userInfo.external;
-                    this.setState({ email: userInfo.email, locations });
-                    for (let obj of data) {
+                    this.setState({ username: userInfo.name, email: userInfo.email, locations, groups: userInfo.groups });
+                    for (const obj of data) {
                         if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
                             fullAccountsInfo[obj.name] = {
                                 ...accounts[obj.name],
                                 display_name: obj.display_name
                             };
-                            for (let currentLocation of obj.locations) {
+                            for (const currentLocation of obj.locations) {
                                 if (locationsNumber === locations.length) break;
                                 if (!serviceAvailability[currentLocation.name]) {
                                     serviceAvailability[currentLocation.name] = currentLocation.services.some(service => service.name === id);
+                                    servicesInLocations[currentLocation.name] = currentLocation.services;
                                 }
                             }
                             accountsArray.push({
@@ -109,7 +111,14 @@ class Wrapper extends PureComponent {
                             });
                         }
                     }
-                    changeAccounts(fullAccountsInfo);
+                    changeAccounts && changeAccounts(fullAccountsInfo);
+                    for (let location in serviceAvailability) {
+                        if (serviceAvailability[location]) {
+                            currentService = servicesInLocations[location].find(service => service.name === id);
+                            break;
+                        }
+                    }
+
                     this.setState({
                         accountsDropdown: accountsArray,
                         availableAccounts: fullAccountsInfo,
@@ -117,8 +126,14 @@ class Wrapper extends PureComponent {
                         location,
                         role,
                         accountFullName: fullAccountsInfo[account].display_name,
-                        serviceAvailability
+                        serviceAvailability,
+                        servicesInLocations,
+                        currentService
                     });
+                })
+                .catch((_e) => {
+                    console.log(_e)
+                    this.setState({ isError: true })
                 }));
             }
         });
@@ -129,7 +144,7 @@ class Wrapper extends PureComponent {
     };
 
     getFirstAvailableLocation = (locations, serviceAvailability) => {
-        for (let loc of locations) {
+        for (const loc of locations) {
             if (serviceAvailability[loc]) {
                 return loc;
             }
@@ -153,19 +168,21 @@ class Wrapper extends PureComponent {
     };
 
     changeUserInfo = (name, value) => {
-        const { account, location, role, email } = this.state;
-        const { changeUser } = this.props;
-        this.setState({ [name]: value, isUserDropdownOpen: false });
-        changeUser({ account, location, role, [name]: value });
-        localStorage.setItem('user', JSON.stringify({
-            account, location, role, [name]: value, email
-        }))
+        if (this.state[name] !== value) {
+            const { account, location, role, email } = this.state;
+            const { changeUser } = this.props;
+            this.setState({ [name]: value, isUserDropdownOpen: false });
+            changeUser({ account, location, role, [name]: value });
+            localStorage.setItem('user', JSON.stringify({
+                account, location, role, [name]: value, email
+            }))
+        }
     };
 
     getLocationsAvailability = (locations, serviceAvailability) => {
         const availableLocations = [], notAvailableLocations = [];
 
-        for (let loc of locations) {
+        for (const loc of locations) {
             if (serviceAvailability[loc]) {
                 availableLocations.push({
                     key: loc,
@@ -185,6 +202,36 @@ class Wrapper extends PureComponent {
         return { availableLocations, notAvailableLocations };
     };
 
+    mapServicesInLocation = (servicesInfo) => {
+        const {
+            location,
+            serviceAvailability,
+            currentService
+        } = this.state;
+
+        if (!serviceAvailability[location]) {
+            servicesInfo.unshift(currentService);
+        }
+
+        return servicesInfo.map((location, key) => {
+            const shortNameArray = location.displayName.split('IBACloud ');
+            const isExternal = location.url.startsWith('http');
+            const isCurrentService = this.props.id === location.name;
+            const url = isCurrentService ? '' : isExternal ? location.url : 'https://cloud.icdc.io' + location.path;
+
+            return {
+                key,
+                text: location.displayName.startsWith('IBACloud') ? shortNameArray[1] : shortNameArray[0],
+                value: location.name,
+                className: isExternal ? 'external' : isCurrentService ? 'current' : '',
+                image: {
+                    src: servicesImages[location.name]
+                },
+                url
+            };
+        });
+    };
+
     render() {
         const {
             availableAccounts,
@@ -192,13 +239,17 @@ class Wrapper extends PureComponent {
             accountsDropdown,
             role,
             location,
+            username,
             email,
             isSideBarVisible,
             isUserDropdownOpen,
-            serviceAvailability
+            serviceAvailability,
+            groups,
+            servicesInLocations,
+            isError,
+            currentService
         } = this.state;
         const {
-            name,
             routes,
             locale,
             id,
@@ -208,6 +259,15 @@ class Wrapper extends PureComponent {
             changeApp
         } = this.props;
 
+        if (isError) {
+            return (
+                <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+                    {errorTranslations[locale]}
+                </h2>
+            );
+        }
+
+        const availability = (id === 'admin' && groups.includes('cloud-admin')) || serviceAvailability[location];
         const currentAccountInfo = availableAccounts[account];
 
         if (!currentAccountInfo) {
@@ -224,16 +284,11 @@ class Wrapper extends PureComponent {
             value: `${role}`
         }));
 
-        // const locations = currentAccountInfo.locations.map(location => ({
-        //     key: location,
-        //     text: location,
-        //     value: location
-        // }));
-
         const { availableLocations, notAvailableLocations } = this.getLocationsAvailability(currentAccountInfo.locations, serviceAvailability);
 
         const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
         const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
+        const contentPadding = isSideBarVisible ? 'calc(260px + 2%)' : '2%';
 
         if (isUserDropdownOpen) {
             userDropdownClasses.push('visible');
@@ -261,46 +316,37 @@ class Wrapper extends PureComponent {
 
                     <label>
                         Location:
-                        {/* <Dropdown
-                            fluid
-                            selection
-                            value={location}
-                            onChange={(_e, data) => this.changeUserInfo('location', data.value)}
-                            options={[...availableLocations, ...notAvailableLocations]}
-                            className='locations'
-                        >
-                        </Dropdown> */}
                         <Dropdown fluid
                             selection
                             value={location}
                             options={[...availableLocations, ...notAvailableLocations]}
                             scrolling={false}
-                            className='locations'>
-                        <Dropdown.Menu>
-                                { availableLocations.map(currentLocation => (
-                                <Dropdown.Item key={currentLocation.key}
-                                    className={currentLocation.value === location ? 'current' : ''}
-                                    onClick={() => this.changeUserInfo('location', currentLocation.value)}
-                                    active={currentLocation.value === location}
-                                    selected={currentLocation.value === location}
-                                >
-                                    {currentLocation.text}
-                                </Dropdown.Item>
-                                ))}
-                                                            <Dropdown.Divider />
-                            <Dropdown.Header>Not available</Dropdown.Header>
-                                { notAvailableLocations.map(currentLocation => (
-                                <Dropdown.Item key={currentLocation.key}
-                                    active={currentLocation.value === location}
-                                    selected={currentLocation.value === location}
-                                    disabled
-                                >
-                                    {currentLocation.text}
-                                </Dropdown.Item>
-                                ))}
-                        </Dropdown.Menu>
+                            className='locations'
+                        >
+                            <Dropdown.Menu>
+                                    { availableLocations.map(currentLocation => (
+                                    <Dropdown.Item key={currentLocation.key}
+                                        className={(currentLocation.value === location ? 'current' : '') + ' available'}
+                                        onClick={() => this.changeUserInfo('location', currentLocation.value)}
+                                        active={currentLocation.value === location}
+                                        selected={currentLocation.value === location}
+                                    >
+                                        {currentLocation.text}
+                                    </Dropdown.Item>
+                                    ))}
+                                    <Dropdown.Divider />
+                                    { notAvailableLocations.map(currentLocation => (
+                                    <Dropdown.Item key={currentLocation.key}
+                                        onClick={() => this.changeUserInfo('location', currentLocation.value)}
+                                        active={currentLocation.value === location}
+                                        selected={currentLocation.value === location}
+                                    >
+                                        {currentLocation.text}
+                                    </Dropdown.Item>
+                                    ))}
+                            </Dropdown.Menu>
                         </Dropdown>
-                                        </label>
+                    </label>
                     <div ref={this.ref}
                         onClick={() => this.setState((prevState) => ({ isUserDropdownOpen: !prevState.isUserDropdownOpen }))}
                         role="listbox"
@@ -313,7 +359,7 @@ class Wrapper extends PureComponent {
                             role="alert"
                             className="divider text"
                         >
-                            Dzmitry Valashchuk
+                            {username}
                         </div>
                         <i aria-hidden="true" className="dropdown icon"></i>
                         <div className={firstLevelMenuClasses.join(' ')}>
@@ -367,7 +413,7 @@ class Wrapper extends PureComponent {
                                 closeOnChange
                             >
                                 <Dropdown.Menu className='second-level'>
-                                    {this.langs.map(lang => (
+                                    {langs.map(lang => (
                                         <Dropdown.Item key={lang.value}
                                             className={lang.value === locale ? 'current' : ''}
                                             onClick={() => { changeLang(lang.value); this.setState({ isUserDropdownOpen: false }) }}>
@@ -381,18 +427,23 @@ class Wrapper extends PureComponent {
                     </div>
                 </div>
             </header>
-                { routes && serviceAvailability[location] && (
-                    <RenderSidebar name={name}
-                        routes={routes}
-                        visible={isSideBarVisible}
-                        changeApp={(newLocation) => changeApp(newLocation)}
-                    />
-                )}
-                { serviceAvailability[location] ? (
-                    <div className='main-content' style={{ paddingLeft: isSideBarVisible ? 'calc(260px + 2%)' : '2%' }}>
+                <RenderSidebar name={id}
+                    routes={routes}
+                    visible={isSideBarVisible}
+                    changeApp={(newLocation) => changeApp(newLocation)}
+                    isAvailable={routes && availability}
+                    servicesInLocations={this.mapServicesInLocation(servicesInLocations[location])}
+                    currentService={currentService}
+                />
+                { availability ? (
+                    <div className='main-content' style={{ paddingLeft: contentPadding }}>
                         {children}
                     </div>
-                ) : <h2 className='unavailable'>{this.errorTranslations[locale]}</h2>
+                ) : (
+                    <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+                        {errorTranslations[locale]}
+                    </h2>
+                    )
                 } 
         </>;
 

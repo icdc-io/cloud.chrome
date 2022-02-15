@@ -2,14 +2,11 @@
 import Keycloak from '@redhat-cloud-services/keycloak-js';
 import { BroadcastChannel } from 'broadcast-channel';
 import cookie from 'js-cookie';
-import { pageRequiresAuthentication } from '../utils';
 import * as Sentry from '@sentry/browser';
-import { deleteLocalStorageItems } from '../utils';
 import logger from './logger';
 
 // Insights Specific
 import insightsUrl from './insights/url';
-// import insightsUser from './insights/user';
 import urijs from 'urijs';
 import { DEFAULT_ROUTES, options as defaultOptions } from './constants';
 import Priv from './Priv';
@@ -100,7 +97,7 @@ export const init = (options) => {
   options.onLoad = 'check-sso';
   options.checkLoginIframe = false;
 
-  const isBeta = window.location.pathname.split('/')[1] === 'beta' ? '/beta' : '';
+  // const isBeta = window.location.pathname.split('/')[1] === 'beta' ? '/beta' : '';
 
   // options.silentCheckSsoRedirectUri = `https://${window.location.host}${isBeta}/apps/chrome/silent-check-sso.html`;
 
@@ -230,16 +227,7 @@ function logout(bounce) {
   cookie.remove(priv.getCookie().cookieName);
   cookie.remove('cs_demo');
 
-  const isBeta = window.location.pathname.split('/')[1] === 'beta' ? '/beta' : '';
-  const keys = Object.keys(localStorage).filter(
-    (key) =>
-      key.endsWith('/api/entitlements/v1/services') ||
-      key.endsWith('/chrome') ||
-      key.endsWith('/chrome-store') ||
-      key.startsWith('kc-callback') ||
-      key.startsWith(GLOBAL_FILTER_KEY)
-  );
-  deleteLocalStorageItems(keys);
+  localStorage.removeItem('user')
   // Redirect to logout
   if (bounce) {
     let eightSeconds = new Date(new Date().getTime() + 8 * 1000);
@@ -247,7 +235,7 @@ function logout(bounce) {
       expires: eightSeconds,
     });
     priv.logout({
-      redirectUri: `https://${window.location.host}${isBeta}`,
+      redirectUri: `https://${window.location.host}`,
     });
   }
 }
@@ -276,10 +264,8 @@ export const getUserInfo = () => {
       log('Successfully updated token');
     })
     .catch(() => {
-      if (pageRequiresAuthentication()) {
         log('Trying to log in user to refresh token');
         return login();
-      }
     });
 };
 
