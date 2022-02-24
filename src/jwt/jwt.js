@@ -185,9 +185,6 @@ function initSuccess() {
   setRefresh(priv.getRefershToken());
 
   if (!localStorage.getItem('user')) {
-    console.log('eeeeeeeeeeeeeeeee')
-    console.log(localStorage.getItem('user'))
-    console.log('eeeeeeeeeeeeeeeee')
     const newTokens = {};
     const userInfo = priv.getTokenParsed();
     const { accounts } = userInfo.external;
@@ -202,6 +199,7 @@ function initSuccess() {
         role: newTokens[Object.keys(newTokens)[0]].roles[0],
         email: userInfo.email
     }) : null);
+    localStorage.setItem('icdc-lang', 'en');
   }
 }
 

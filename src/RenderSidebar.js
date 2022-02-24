@@ -41,6 +41,10 @@ class RenderSidebar extends React.Component {
     render() {
         const { name, routes, visible, isAvailable, servicesInLocations } = this.props;
 
+        console.log('routes')
+        console.log(routes)
+        console.log('routes')
+
         const homepage = {
             text: 'Home',
             value: 'home',

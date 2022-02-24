@@ -60,7 +60,8 @@ class Wrapper extends PureComponent {
         const { id, changeAccounts, changeUser, getAppInfo } = this.props;
         getAppInfo({
             amazon: true,
-            iscsi: true
+            iscsi: true,
+            projects: true
         });
         const libjwt = auth();
         libjwt.initPromise.then(() => {
@@ -149,15 +150,19 @@ class Wrapper extends PureComponent {
                 return loc;
             }
         }
+        return locations[0];
     };
 
     componentDidUpdate(_prevProps, prevState) {
         const { account, availableAccounts, email, serviceAvailability } = this.state;
+        const { changeUser } = this.props;
         if (account && availableAccounts && prevState.account !== account) {
+            const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability);
             this.setState({
-                location: this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability),
+                location: newLocation,
                 role: availableAccounts[account].roles[0]
             });
+            changeUser({ account, location: newLocation, role: availableAccounts[account].roles[0] });
             localStorage.setItem('user', JSON.stringify({
                 account,
                 location: availableAccounts[account].locations[0],
@@ -267,7 +272,7 @@ class Wrapper extends PureComponent {
             );
         }
 
-        const availability = (id === 'admin' && groups.includes('cloud-admin')) || serviceAvailability[location];
+        const availability = (id === 'admin' ? groups.includes('cloud-admin') : true) && (id === 'devops' ? /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/true : true) && serviceAvailability[location];
         const currentAccountInfo = availableAccounts[account];
 
         if (!currentAccountInfo) {
