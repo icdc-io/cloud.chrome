@@ -14,6 +14,7 @@ class Wrapper extends PureComponent {
     constructor(props) {
         super(props);
         const userInfo = JSON.parse(localStorage.getItem('user'));
+
         this.state = {
             account: userInfo?.account,
             location: '',
@@ -28,8 +29,9 @@ class Wrapper extends PureComponent {
             serviceAvailability: {},
             groups: [],
             servicesInLocations: {},
-            isError: false,
-            currentService: {}
+            isError: '',
+            currentService: {},
+            locale: this.props.language
         };
         this.ref = React.createRef();
     }
@@ -61,7 +63,12 @@ class Wrapper extends PureComponent {
         getAppInfo({
             amazon: true,
             iscsi: true,
-            projects: true
+            projects: true,
+            balancer: true,
+            vpc: true,
+            firewall: true,
+            dns: true,
+            vpn: true
         });
         const libjwt = auth();
         libjwt.initPromise.then(() => {
@@ -134,7 +141,7 @@ class Wrapper extends PureComponent {
                 })
                 .catch((_e) => {
                     console.log(_e)
-                    this.setState({ isError: true })
+                    this.setState({ isError: 'wrong' })
                 }));
             }
         });
@@ -237,6 +244,12 @@ class Wrapper extends PureComponent {
         });
     };
 
+    setLang = (newLang) => {
+        this.props.changeLang(newLang);
+        this.setState({ isUserDropdownOpen: false, locale: newLang });
+        localStorage.setItem('icdc-lang', newLang);
+    };
+
     render() {
         const {
             availableAccounts,
@@ -252,14 +265,13 @@ class Wrapper extends PureComponent {
             groups,
             servicesInLocations,
             isError,
-            currentService
+            currentService,
+            locale
         } = this.state;
         const {
             routes,
-            locale,
             id,
             logout,
-            changeLang,
             children,
             changeApp
         } = this.props;
@@ -267,7 +279,7 @@ class Wrapper extends PureComponent {
         if (isError) {
             return (
                 <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
-                    {errorTranslations[locale]}
+                    {errorTranslations[isError][locale]}
                 </h2>
             );
         }
@@ -421,7 +433,7 @@ class Wrapper extends PureComponent {
                                     {langs.map(lang => (
                                         <Dropdown.Item key={lang.value}
                                             className={lang.value === locale ? 'current' : ''}
-                                            onClick={() => { changeLang(lang.value); this.setState({ isUserDropdownOpen: false }) }}>
+                                            onClick={() => lang.value !== locale && this.setLang(lang.value)}>
                                                 {lang.text}
                                         </Dropdown.Item>
                                     ))}

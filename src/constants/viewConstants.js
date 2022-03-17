@@ -14,8 +14,14 @@ import question from '../images/question.svg';
 import storage from '../images/storage.svg';
 
 export const errorTranslations = {
-  ru: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
-  en: 'The service is not available in this location. Please choose another location.'
+  notAvailable: {
+    ru: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
+    en: 'The service is not available in this location. Please choose another location.'
+  },
+  wrong: {
+    ru: 'Что-то пошло не так. Пожалуйста, попробуте позже.',
+    en: 'Something went wrong. Please try again later.'
+  }
 };
 
 export const langs = [{
