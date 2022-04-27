@@ -14,13 +14,15 @@ import question from '../images/question.svg';
 import storage from '../images/storage.svg';
 
 export const errorTranslations = {
-  notAvailable: {
-    ru: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
-    en: 'The service is not available in this location. Please choose another location.'
+  ru: {
+    notAvailable: 'Сервис недоступен в этой локации. Пожалуйста, выберите другую.',
+    wrong: 'Что-то пошло не так. Пожалуйста, попробуте позже.',
+    noAccess: 'Недостаточно прав.'
   },
-  wrong: {
-    ru: 'Что-то пошло не так. Пожалуйста, попробуте позже.',
-    en: 'Something went wrong. Please try again later.'
+  en: {
+    notAvailable: 'The service is not available in this location. Please choose another location.',
+    wrong: 'Something went wrong. Please try again later.',
+    noAccess: 'You don\'t have enough rights.'
   }
 };
 

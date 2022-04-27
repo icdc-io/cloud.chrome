@@ -27,14 +27,19 @@ class Wrapper extends PureComponent {
             isUserDropdownOpen: false,
             accountFullName: '',
             serviceAvailability: {},
-            groups: [],
             servicesInLocations: {},
             isError: '',
             currentService: {},
             locale: this.props.language
         };
         this.ref = React.createRef();
-    }
+    };
+    noAccessError = '';
+
+    isNoAccess = {
+        admin: (groups) => !groups.includes('cloud-admin'),
+        devops: (groups) => /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/false
+    };
 
     handleClickOutside = (event) => {
         if (this.ref.current && !this.ref.current.contains(event.target)) {
@@ -68,11 +73,23 @@ class Wrapper extends PureComponent {
             vpc: true,
             firewall: true,
             dns: true,
-            vpn: true
+            vpn: true,
+            quotas: true,
+            info: true,
+            users: true,
+            reports: true,
+            billing: true,
+            general: true,
+            accounts: true,
+            clusters: true,
+            quotas: true,
+            payment: true,
+            invoices: true,
+            delivery: true
         });
         const libjwt = auth();
         libjwt.initPromise.then(() => {
-            const { account, location, role } = JSON.parse(localStorage.getItem('user'));
+            const { account = '', location = '', role = '' } = JSON.parse(localStorage.getItem('user'));
             changeUser({ account, location, role });
             window.insights = {
                 getToken: () => libjwt.jwt.getEncodedToken(),
@@ -81,6 +98,7 @@ class Wrapper extends PureComponent {
                 getAccount: () => this.state.account,
                 getRole: () => this.state.role
             }
+            console.log(email)
             if (!email) {
                 const h = new Headers();
                 h.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
@@ -98,7 +116,6 @@ class Wrapper extends PureComponent {
                     const locationsNumber = Object.keys(serviceAvailability).length;
                     const userInfo = libjwt.jwt.getUserInfo();
                     const { accounts, locations } = userInfo.external;
-                    this.setState({ username: userInfo.name, email: userInfo.email, locations, groups: userInfo.groups });
                     for (const obj of data) {
                         if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
                             fullAccountsInfo[obj.name] = {
@@ -125,9 +142,15 @@ class Wrapper extends PureComponent {
                             currentService = servicesInLocations[location].find(service => service.name === id);
                             break;
                         }
-                    }
+                    };
+
+                    this.noAccessError = this.isNoAccess[id] && this.isNoAccess[id](userInfo.groups) ? 'noAccess' : '';
 
                     this.setState({
+                        username: userInfo.name,
+                        email: userInfo.email,
+                        locations,
+                        isError: !serviceAvailability[location] ? 'notAvailable' : '',
                         accountsDropdown: accountsArray,
                         availableAccounts: fullAccountsInfo,
                         account,
@@ -140,7 +163,6 @@ class Wrapper extends PureComponent {
                     });
                 })
                 .catch((_e) => {
-                    console.log(_e)
                     this.setState({ isError: 'wrong' })
                 }));
             }
@@ -167,7 +189,8 @@ class Wrapper extends PureComponent {
             const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability);
             this.setState({
                 location: newLocation,
-                role: availableAccounts[account].roles[0]
+                role: availableAccounts[account].roles[0],
+                isError: serviceAvailability[newLocation] ? this.noAccessError : 'notAvailable'
             });
             changeUser({ account, location: newLocation, role: availableAccounts[account].roles[0] });
             localStorage.setItem('user', JSON.stringify({
@@ -181,9 +204,13 @@ class Wrapper extends PureComponent {
 
     changeUserInfo = (name, value) => {
         if (this.state[name] !== value) {
-            const { account, location, role, email } = this.state;
+            const { account, location, role, email, serviceAvailability } = this.state;
             const { changeUser } = this.props;
-            this.setState({ [name]: value, isUserDropdownOpen: false });
+            this.setState({
+                [name]: value,
+                isUserDropdownOpen: false,
+                isError: name === 'location' && serviceAvailability[value] ? this.noAccessError : 'notAvailable'
+            });
             changeUser({ account, location, role, [name]: value });
             localStorage.setItem('user', JSON.stringify({
                 account, location, role, [name]: value, email
@@ -221,11 +248,13 @@ class Wrapper extends PureComponent {
             currentService
         } = this.state;
 
+        const servicesInfoSet = new Set(servicesInfo);
+
         if (!serviceAvailability[location]) {
-            servicesInfo.unshift(currentService);
+            servicesInfoSet.add(currentService);
         }
 
-        return servicesInfo.map((location, key) => {
+        return [...servicesInfoSet].map((location, key) => {
             const shortNameArray = location.displayName.split('IBACloud ');
             const isExternal = location.url.startsWith('http');
             const isCurrentService = this.props.id === location.name;
@@ -262,7 +291,6 @@ class Wrapper extends PureComponent {
             isSideBarVisible,
             isUserDropdownOpen,
             serviceAvailability,
-            groups,
             servicesInLocations,
             isError,
             currentService,
@@ -276,16 +304,15 @@ class Wrapper extends PureComponent {
             changeApp
         } = this.props;
 
-        if (isError) {
+        const currentAccountInfo = availableAccounts[account];
+
+        if (isError === 'wrong') {
             return (
                 <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
-                    {errorTranslations[isError][locale]}
+                    {errorTranslations[locale][isError]}
                 </h2>
             );
         }
-
-        const availability = (id === 'admin' ? groups.includes('cloud-admin') : true) && (id === 'devops' ? /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/true : true) && serviceAvailability[location];
-        const currentAccountInfo = availableAccounts[account];
 
         if (!currentAccountInfo) {
             return (
@@ -312,159 +339,162 @@ class Wrapper extends PureComponent {
             firstLevelMenuClasses.push('visible');
         }
 
-        const content = <>
-            <header>
-                { routes && <img src={Burger}
-                                style={{ color: 'white', cursor: 'pointer' }}
-                                onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
-                                alt='Burger menu' /> }
-                <img src={ ICDCLogo } alt="ICDCLogo"/>
-                <div className='info-section'>
-                    <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
-                        <Dropdown.Menu>
-                            <Dropdown.Item>
-                                <a href={`https://help.icdc.io/devops/${locale}/Welcome.html`} target='_blank' style={{ color: 'black' }}>
-                                    Help & Asistance
-                                </a>
-                            </Dropdown.Item>
-                            <Dropdown.Item>Support</Dropdown.Item>
-                        </Dropdown.Menu>
-                    </Dropdown>
-
-                    <label>
-                        Location:
-                        <Dropdown fluid
-                            selection
-                            value={location}
-                            options={[...availableLocations, ...notAvailableLocations]}
-                            scrolling={false}
-                            className='locations'
-                        >
+        const content = (
+            <>
+                <header>
+                    { routes && <img src={Burger}
+                                    style={{ color: 'white', cursor: 'pointer' }}
+                                    onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
+                                    alt='Burger menu' /> }
+                    <img src={ ICDCLogo } alt="ICDCLogo"/>
+                    <div className='info-section'>
+                        <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
                             <Dropdown.Menu>
-                                    { availableLocations.map(currentLocation => (
-                                    <Dropdown.Item key={currentLocation.key}
-                                        className={(currentLocation.value === location ? 'current' : '') + ' available'}
-                                        onClick={() => this.changeUserInfo('location', currentLocation.value)}
-                                        active={currentLocation.value === location}
-                                        selected={currentLocation.value === location}
-                                    >
-                                        {currentLocation.text}
-                                    </Dropdown.Item>
-                                    ))}
-                                    <Dropdown.Divider />
-                                    { notAvailableLocations.map(currentLocation => (
-                                    <Dropdown.Item key={currentLocation.key}
-                                        onClick={() => this.changeUserInfo('location', currentLocation.value)}
-                                        active={currentLocation.value === location}
-                                        selected={currentLocation.value === location}
-                                    >
-                                        {currentLocation.text}
-                                    </Dropdown.Item>
-                                    ))}
+                                <Dropdown.Item>
+                                    <a href={`https://help.icdc.io/devops/${locale}/Welcome.html`} target='_blank' style={{ color: 'black' }}>
+                                        Help & Asistance
+                                    </a>
+                                </Dropdown.Item>
+                                <Dropdown.Item>Support</Dropdown.Item>
                             </Dropdown.Menu>
                         </Dropdown>
-                    </label>
-                    <div ref={this.ref}
-                        onClick={() => this.setState((prevState) => ({ isUserDropdownOpen: !prevState.isUserDropdownOpen }))}
-                        role="listbox"
-                        aria-expanded={isUserDropdownOpen}
-                        className={userDropdownClasses.join(' ')}
-                        tabIndex="0"
-                    >
-                        <div aria-atomic="true"
-                            aria-live="polite"
-                            role="alert"
-                            className="divider text"
-                        >
-                            {username}
-                        </div>
-                        <i aria-hidden="true" className="dropdown icon"></i>
-                        <div className={firstLevelMenuClasses.join(' ')}>
-                            <Dropdown.Header>{email}</Dropdown.Header>
-                            <Dropdown.Divider />
-                            <Dropdown text='Accounts'
-                                pointing='right'
-                                simple
-                                className='link item accounts'
-                                icon={this.DropdownIcon(account, true)}
-                                closeOnChange
+
+                        <label>
+                            Location:
+                            <Dropdown fluid
+                                selection
+                                value={location}
+                                options={[...availableLocations, ...notAvailableLocations]}
+                                scrolling={false}
+                                className='locations'
                             >
-                                <Dropdown.Menu className='second-level'>
-                                    { accountsDropdown.map(currentAccount => (
-                                        <Dropdown.Item key={currentAccount.key}
-                                            className={currentAccount.value === account ? 'current' : ''}
-                                            onClick={() => this.setState({
-                                                account: currentAccount.value,
-                                                accountFullName: currentAccount.text,
-                                                isUserDropdownOpen: false
-                                            })}
+                                <Dropdown.Menu>
+                                        { availableLocations.map(currentLocation => (
+                                        <Dropdown.Item key={currentLocation.key}
+                                            className={(currentLocation.value === location ? 'current' : '') + ' available'}
+                                            onClick={() => this.changeUserInfo('location', currentLocation.value)}
+                                            active={currentLocation.value === location}
+                                            selected={currentLocation.value === location}
                                         >
-                                            {currentAccount.text}
+                                            {currentLocation.text}
                                         </Dropdown.Item>
-                                    ))}
+                                        ))}
+                                        <Dropdown.Divider />
+                                        { notAvailableLocations.map(currentLocation => (
+                                        <Dropdown.Item key={currentLocation.key}
+                                            onClick={() => this.changeUserInfo('location', currentLocation.value)}
+                                            active={currentLocation.value === location}
+                                            selected={currentLocation.value === location}
+                                        >
+                                            {currentLocation.text}
+                                        </Dropdown.Item>
+                                        ))}
                                 </Dropdown.Menu>
                             </Dropdown>
-                            { id !== 'devops' && <Dropdown text='Role'
-                                pointing='right'
-                                simple
-                                className='link item role'
-                                icon={this.DropdownIcon(role)}
-                                closeOnChange
+                        </label>
+                        <div ref={this.ref}
+                            onClick={() => this.setState((prevState) => ({ isUserDropdownOpen: !prevState.isUserDropdownOpen }))}
+                            role="listbox"
+                            aria-expanded={isUserDropdownOpen}
+                            className={userDropdownClasses.join(' ')}
+                            tabIndex="0"
+                        >
+                            <div aria-atomic="true"
+                                aria-live="polite"
+                                role="alert"
+                                className="divider text"
                             >
-                                <Dropdown.Menu className='second-level'>
-                                    {roles.map(currentRole => (
-                                        <Dropdown.Item key={currentRole.value}
-                                            className={currentRole.value === role ? 'current' : ''}
-                                            onClick={() => this.changeUserInfo('role', currentRole.value)}>
-                                                {currentRole.text}
-                                        </Dropdown.Item>
-                                    ))}
-                                </Dropdown.Menu>
-                            </Dropdown> }
-                            <Dropdown.Divider />
-                            <Dropdown text='Language'
-                                pointing='right'
-                                simple
-                                className='link item lang'
-                                icon={this.DropdownIcon(locale)}
-                                closeOnChange
-                            >
-                                <Dropdown.Menu className='second-level'>
-                                    {langs.map(lang => (
-                                        <Dropdown.Item key={lang.value}
-                                            className={lang.value === locale ? 'current' : ''}
-                                            onClick={() => lang.value !== locale && this.setLang(lang.value)}>
-                                                {lang.text}
-                                        </Dropdown.Item>
-                                    ))}
-                                </Dropdown.Menu>
-                            </Dropdown>
-                            <Dropdown.Item onClick={() => logout(true)}>Logout</Dropdown.Item>
+                                {username}
+                            </div>
+                            <i aria-hidden="true" className="dropdown icon"></i>
+                            <div className={firstLevelMenuClasses.join(' ')}>
+                                <Dropdown.Header>{email}</Dropdown.Header>
+                                <Dropdown.Divider />
+                                <Dropdown text='Accounts'
+                                    pointing='right'
+                                    simple
+                                    className='link item accounts'
+                                    icon={this.DropdownIcon(account, true)}
+                                    closeOnChange
+                                >
+                                    <Dropdown.Menu className='second-level'>
+                                        { accountsDropdown.map(currentAccount => (
+                                            <Dropdown.Item key={currentAccount.key}
+                                                className={currentAccount.value === account ? 'current' : ''}
+                                                onClick={() => this.setState({
+                                                    account: currentAccount.value,
+                                                    accountFullName: currentAccount.text,
+                                                    isUserDropdownOpen: false
+                                                })}
+                                            >
+                                                {currentAccount.text}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                { id !== 'devops' && <Dropdown text='Role'
+                                    pointing='right'
+                                    simple
+                                    className='link item role'
+                                    icon={this.DropdownIcon(role)}
+                                    closeOnChange
+                                >
+                                    <Dropdown.Menu className='second-level'>
+                                        {roles.map(currentRole => (
+                                            <Dropdown.Item key={currentRole.value}
+                                                className={currentRole.value === role ? 'current' : ''}
+                                                onClick={() => this.changeUserInfo('role', currentRole.value)}>
+                                                    {currentRole.text}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown> }
+                                <Dropdown.Divider />
+                                <Dropdown text='Language'
+                                    pointing='right'
+                                    simple
+                                    className='link item lang'
+                                    icon={this.DropdownIcon(locale)}
+                                    closeOnChange
+                                >
+                                    <Dropdown.Menu className='second-level'>
+                                        {langs.map(lang => (
+                                            <Dropdown.Item key={lang.value}
+                                                className={lang.value === locale ? 'current' : ''}
+                                                onClick={() => lang.value !== locale && this.setLang(lang.value)}>
+                                                    {lang.text}
+                                            </Dropdown.Item>
+                                        ))}
+                                    </Dropdown.Menu>
+                                </Dropdown>
+                                <Dropdown.Item onClick={() => logout(true)}>Logout</Dropdown.Item>
+                            </div>
                         </div>
                     </div>
-                </div>
-            </header>
+                </header>
                 <RenderSidebar name={id}
                     routes={routes}
                     visible={isSideBarVisible}
                     changeApp={(newLocation) => changeApp(newLocation)}
-                    isAvailable={routes && availability}
+                    isAvailable={routes && !isError}
                     servicesInLocations={this.mapServicesInLocation(servicesInLocations[location])}
                     currentService={currentService}
                 />
-                { availability ? (
+                { isError ? (
+                    <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+                        {errorTranslations[locale][isError]}
+                    </h2>
+
+                ) : (
                     <div className='main-content' style={{ paddingLeft: contentPadding }}>
                         {children}
                     </div>
-                ) : (
-                    <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
-                        {errorTranslations[locale]}
-                    </h2>
                     )
-                } 
-        </>;
+                }
+            </>
+        );
 
-    return <Router>{content}</Router>;
+        return <Router>{content}</Router>;
     }
 };
 

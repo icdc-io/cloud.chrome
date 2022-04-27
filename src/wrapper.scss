@@ -147,6 +147,8 @@ aside {
 .main-content {
   padding: 106px 2% 2%;
   transition: all .5s ease-out;
+  display: flex;
+  flex-direction: column;
 }
 
 .ui.inverted.menu .active.item {
