@@ -107,14 +107,17 @@ class Wrapper extends PureComponent {
                     headers: h
                 })
                 .then(response => response.json()
-                .then(data => {
+                .then(async data => {
                     const fullAccountsInfo = {};
                     const accountsArray = [];
                     const serviceAvailability = {};
                     const servicesInLocations = {};
                     let currentService;
                     const locationsNumber = Object.keys(serviceAvailability).length;
-                    const userInfo = libjwt.jwt.getUserInfo();
+                    const userInfo = await libjwt.jwt.getUserInfo();
+                    console.log('userInfo')
+                    console.log(userInfo)
+                    console.log('userInfo')
                     const { accounts, locations } = userInfo.external;
                     for (const obj of data) {
                         if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
@@ -163,6 +166,9 @@ class Wrapper extends PureComponent {
                     });
                 })
                 .catch((_e) => {
+                    console.log('_e')
+                    console.log(_e)
+                    console.log('_e')
                     this.setState({ isError: 'wrong' })
                 }));
             }
@@ -209,7 +215,7 @@ class Wrapper extends PureComponent {
             this.setState({
                 [name]: value,
                 isUserDropdownOpen: false,
-                isError: name === 'location' && serviceAvailability[value] ? this.noAccessError : 'notAvailable'
+                isError: serviceAvailability[value] ? this.noAccessError : 'notAvailable'
             });
             changeUser({ account, location, role, [name]: value });
             localStorage.setItem('user', JSON.stringify({

@@ -258,8 +258,8 @@ export const getUserInfo = () => {
 
   return updateToken()
     .then(() => {
-      priv.getTokenParsed();
       log('Successfully updated token');
+      return priv.getTokenParsed();
     })
     .catch(() => {
         log('Trying to log in user to refresh token');
