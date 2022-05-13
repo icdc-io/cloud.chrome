@@ -215,7 +215,7 @@ class Wrapper extends PureComponent {
             this.setState({
                 [name]: value,
                 isUserDropdownOpen: false,
-                isError: serviceAvailability[value] ? this.noAccessError : 'notAvailable'
+                isError: name !== 'location' || serviceAvailability[value] ? this.noAccessError : 'notAvailable'
             });
             changeUser({ account, location, role, [name]: value });
             localStorage.setItem('user', JSON.stringify({
