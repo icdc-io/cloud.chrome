@@ -64,7 +64,7 @@ class Wrapper extends PureComponent {
         document.addEventListener('click', this.handleClickOutside, true);
 
         const { email } = this.state;
-        const { id, changeAccounts, changeUser, getAppInfo } = this.props;
+        const { id, changeAccounts, changeUser, getAppInfo, setBaseUrls = null  } = this.props;
         getAppInfo({
             amazon: true,
             iscsi: true,
@@ -119,6 +119,7 @@ class Wrapper extends PureComponent {
                     console.log(userInfo)
                     console.log('userInfo')
                     const { accounts, locations } = userInfo.external;
+                    setBaseUrls && setBaseUrls(locations);
                     for (const obj of data) {
                         if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
                             fullAccountsInfo[obj.name] = {
