@@ -64,7 +64,7 @@ class Wrapper extends PureComponent {
         document.addEventListener('click', this.handleClickOutside, true);
 
         const { email } = this.state;
-        const { id, changeAccounts, changeUser, getAppInfo, setBaseUrls = null  } = this.props;
+        const { id, changeAccounts, changeUser, getAppInfo, getAvailableLocations, setBaseUrls = null  } = this.props;
         getAppInfo({
             amazon: true,
             iscsi: true,
@@ -141,6 +141,15 @@ class Wrapper extends PureComponent {
                         }
                     }
                     changeAccounts && changeAccounts(fullAccountsInfo);
+
+                    const availableServices = [];
+                    for (let location in serviceAvailability) {
+                        if (serviceAvailability[location]) {
+                            availableServices.push(location);
+                        }
+                    };
+                    getAvailableLocations(availableServices);
+                    
                     for (let location in serviceAvailability) {
                         if (serviceAvailability[location]) {
                             currentService = servicesInLocations[location].find(service => service.name === id);
