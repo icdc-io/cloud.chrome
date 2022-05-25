@@ -150,7 +150,7 @@ class Wrapper extends PureComponent {
                             availableServices.push(location);
                         }
                     };
-                    getAvailableLocations(availableServices);
+                    getAvailableLocations && getAvailableLocations(availableServices);
                     
                     for (let location in serviceAvailability) {
                         if (serviceAvailability[location]) {
