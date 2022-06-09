@@ -65,7 +65,7 @@ class Wrapper extends PureComponent {
         document.addEventListener('click', this.handleClickOutside, true);
 
         const { email } = this.state;
-        const { id, changeAccounts, changeUser, getAppInfo = null, setBaseUrls = null, getServicesInfo = null, isHelpDeskAvailable = false } = this.props;
+        const { id, changeAccounts, changeUser, getAppInfo = null, setBaseUrls = null, getServicesInfo = null } = this.props;
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
@@ -115,10 +115,6 @@ class Wrapper extends PureComponent {
                     let currentService;
                     const locationsNumber = Object.keys(serviceAvailability).length;
                     const userInfo = await this.libjwt.jwt.getUserInfo();
-                    console.log('userInfo')
-                    console.log(userInfo)
-                    console.log(locationsNumber)
-                    console.log('userInfo')
                     const { accounts, locations } = userInfo.external;
                     setBaseUrls && setBaseUrls(locations);
                     for (const obj of data) {
@@ -142,7 +138,6 @@ class Wrapper extends PureComponent {
                         }
                     }
                     changeAccounts && changeAccounts(fullAccountsInfo);
-                    console.log(serviceAvailability)
                     for (let location in serviceAvailability) {
                         if (serviceAvailability[location]) {
                             currentService = servicesInLocations[location].find(service => service.name === id);
@@ -151,10 +146,6 @@ class Wrapper extends PureComponent {
                     };
 
                     this.noAccessError = this.isNoAccess[id] && this.isNoAccess[id](userInfo.groups) ? 'noAccess' : '';
-
-                    console.log('servicesInLocations')
-                    console.log(servicesInLocations)
-                    console.log('servicesInLocations')
 
                     getServicesInfo && getServicesInfo(servicesInLocations);
 
@@ -184,10 +175,10 @@ class Wrapper extends PureComponent {
         });
     };
 
-    initHelpDesk = () => {
-        localStorage.setItem('support-token', this.libjwt.jwt.getEncodedToken());
-        window.icdcHelpdeskWidget.reloadIframe();
-    }
+    // initHelpDesk = () => {
+    //     localStorage.setItem('support-token', this.libjwt.jwt.getEncodedToken());
+    //     window.icdcHelpdeskWidget.reloadIframe();
+    // }
 
     componentWillUnmount() {
         document.removeEventListener('click', this.handleClickOutside, true);
@@ -321,7 +312,7 @@ class Wrapper extends PureComponent {
             id,
             children,
             changeApp = () => {},
-            isHelpDeskAvailable = false
+            openHelpdesk = false
         } = this.props;
 
         const currentAccountInfo = availableAccounts[account];
@@ -352,7 +343,8 @@ class Wrapper extends PureComponent {
 
         const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
         const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
-        const contentPadding = isSideBarVisible && id !== 'home' ? 'calc(260px + 2%)' : '2%';
+        const isSidebarOpen = isSideBarVisible && id !== 'home';
+        const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
         if (isUserDropdownOpen) {
             userDropdownClasses.push('visible');
@@ -361,7 +353,7 @@ class Wrapper extends PureComponent {
 
         const content = (
             <>
-                <header>
+                <header className='chrome-header'>
                     { routes && id !== 'home' && <img src={Burger}
                                     style={{ color: 'white', cursor: 'pointer' }}
                                     onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
@@ -375,7 +367,7 @@ class Wrapper extends PureComponent {
                                         Help & Asistance
                                     </a>
                                 </Dropdown.Item>
-                                { isHelpDeskAvailable && <Dropdown.Item onClick={this.initHelpDesk}>Support</Dropdown.Item> }
+                                { openHelpdesk && <Dropdown.Item onClick={() => openHelpdesk()}>Support</Dropdown.Item> }
                             </Dropdown.Menu>
                         </Dropdown>
 
@@ -501,12 +493,12 @@ class Wrapper extends PureComponent {
                     currentService={currentService}
                 /> }
                 { isError ? (
-                    <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+                    <h2 className={(isSidebarOpen ? 'sidebar-open' : 'sidebar-close') + ' unavailable'} style={{ paddingLeft: contentPadding }}>
                         {errorTranslations[locale][isError]}
                     </h2>
 
                 ) : (
-                    <div className='main-content' style={{ paddingLeft: contentPadding }}>
+                    <div className={(isSidebarOpen ? 'sidebar-open' : 'sidebar-close') + ' main-content'} style={{ paddingLeft: contentPadding }}>
                         {children}
                     </div>
                     )
