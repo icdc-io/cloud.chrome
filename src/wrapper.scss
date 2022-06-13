@@ -12,11 +12,15 @@ body {
   align-items: center;
 }
 
+.ui.centered.inline.loader.active, .ui.centered.inline.loader.visible {
+  z-index: 1;
+}
+
 .wrapper {
   display: flex;
 }
 
-header {
+.chrome-header {
   height: 76px;
   background-color: #151515;
   position: fixed;

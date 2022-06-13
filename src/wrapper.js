@@ -65,7 +65,7 @@ class Wrapper extends PureComponent {
         document.addEventListener('click', this.handleClickOutside, true);
 
         const { email } = this.state;
-        const { id, changeAccounts, changeUser, getAppInfo = null, setBaseUrls = null, getServicesInfo = null, isHelpDeskAvailable = false } = this.props;
+        const { id, changeAccounts, changeUser, getAppInfo = null, setBaseUrls = null, getServicesInfo = null } = this.props;
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
@@ -89,8 +89,12 @@ class Wrapper extends PureComponent {
             delivery: true
         });
         this.libjwt.initPromise.then(() => {
-            const { account = '', location = '', role = '' } = JSON.parse(localStorage.getItem('user'));
-            changeUser({ account, location, role });
+            const user = JSON.parse(localStorage.getItem('user')) || {
+                location: '',
+                account: '',
+                role: ''
+            };
+            changeUser(user);
             window.insights = {
                 getToken: () => this.libjwt.jwt.getEncodedToken(),
                 getUserInfo: () => this.libjwt.jwt.getUserInfo(),
@@ -102,7 +106,10 @@ class Wrapper extends PureComponent {
             if (!email) {
                 const h = new Headers();
                 h.append('Authorization', `Bearer ${this.libjwt.jwt.getEncodedToken()}`);
-                fetch('https://api.zby.icdc.io/api/accounts/v1/accounts', {
+                console.log('new chrome')
+                console.log(process.env.API_GATEWAY)
+                console.log('new chrome')
+                fetch('https://api.icdc.d3.zby.icdc.io/api/accounts/v1/accounts', {
                     method: 'GET',
                     headers: h
                 })
@@ -115,10 +122,6 @@ class Wrapper extends PureComponent {
                     let currentService;
                     const locationsNumber = Object.keys(serviceAvailability).length;
                     const userInfo = await this.libjwt.jwt.getUserInfo();
-                    console.log('userInfo')
-                    console.log(userInfo)
-                    console.log(locationsNumber)
-                    console.log('userInfo')
                     const { accounts, locations } = userInfo.external;
                     setBaseUrls && setBaseUrls(locations);
                     for (const obj of data) {
@@ -142,8 +145,6 @@ class Wrapper extends PureComponent {
                         }
                     }
                     changeAccounts && changeAccounts(fullAccountsInfo);
-                    console.log(serviceAvailability)
-                    
                     for (let location in serviceAvailability) {
                         if (serviceAvailability[location]) {
                             currentService = servicesInLocations[location].find(service => service.name === id);
@@ -153,23 +154,19 @@ class Wrapper extends PureComponent {
 
                     this.noAccessError = this.isNoAccess[id] && this.isNoAccess[id](userInfo.groups) ? 'noAccess' : '';
 
-                    console.log('servicesInLocations')
-                    console.log(servicesInLocations)
-                    console.log('servicesInLocations')
-
                     getServicesInfo && getServicesInfo(servicesInLocations);
 
                     this.setState({
                         username: userInfo.name,
                         email: userInfo.email,
                         locations,
-                        isError: !serviceAvailability[location] && id !== 'home' ? 'notAvailable' : '',
+                        isError: !serviceAvailability[user.location] && id !== 'home' ? 'notAvailable' : '',
                         accountsDropdown: accountsArray,
                         availableAccounts: fullAccountsInfo,
-                        account,
-                        location,
-                        role,
-                        accountFullName: fullAccountsInfo[account].display_name,
+                        account: user.account,
+                        location: user.location,
+                        role: user.role,
+                        accountFullName: fullAccountsInfo[user.account].display_name,
                         serviceAvailability,
                         servicesInLocations,
                         currentService
@@ -185,16 +182,19 @@ class Wrapper extends PureComponent {
         });
     };
 
-    initHelpDesk = () => {
-        localStorage.setItem('support-token', this.libjwt.jwt.getEncodedToken());
-        window.icdcHelpdeskWidget.reloadIframe();
-    }
+    // initHelpDesk = () => {
+    //     localStorage.setItem('support-token', this.libjwt.jwt.getEncodedToken());
+    //     window.icdcHelpdeskWidget.reloadIframe();
+    // }
 
     componentWillUnmount() {
         document.removeEventListener('click', this.handleClickOutside, true);
     };
 
-    getFirstAvailableLocation = (locations, serviceAvailability) => {
+    getFirstAvailableLocation = (locations, serviceAvailability, currentLocation) => {
+        if (locations.includes(currentLocation)) {
+            return currentLocation;
+        }
         for (const loc of locations) {
             if (serviceAvailability[loc]) {
                 return loc;
@@ -204,10 +204,10 @@ class Wrapper extends PureComponent {
     };
 
     componentDidUpdate(_prevProps, prevState) {
-        const { account, availableAccounts, email, serviceAvailability } = this.state;
+        const { account, availableAccounts, email, serviceAvailability, location } = this.state;
         const { changeUser, id } = this.props;
         if (account && availableAccounts && prevState.account !== account) {
-            const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability);
+            const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability, location);
             this.setState({
                 location: newLocation,
                 role: availableAccounts[account].roles[0],
@@ -322,7 +322,7 @@ class Wrapper extends PureComponent {
             id,
             children,
             changeApp = () => {},
-            isHelpDeskAvailable = false
+            openHelpdesk = false
         } = this.props;
 
         const currentAccountInfo = availableAccounts[account];
@@ -353,7 +353,8 @@ class Wrapper extends PureComponent {
 
         const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
         const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
-        const contentPadding = isSideBarVisible && id !== 'home' ? 'calc(260px + 2%)' : '2%';
+        const isSidebarOpen = isSideBarVisible && id !== 'home';
+        const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
         if (isUserDropdownOpen) {
             userDropdownClasses.push('visible');
@@ -362,7 +363,7 @@ class Wrapper extends PureComponent {
 
         const content = (
             <>
-                <header>
+                <header className='chrome-header'>
                     { routes && id !== 'home' && <img src={Burger}
                                     style={{ color: 'white', cursor: 'pointer' }}
                                     onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
@@ -376,7 +377,7 @@ class Wrapper extends PureComponent {
                                         Help & Asistance
                                     </a>
                                 </Dropdown.Item>
-                                { isHelpDeskAvailable && <Dropdown.Item onClick={this.initHelpDesk}>Support</Dropdown.Item> }
+                                { openHelpdesk && <Dropdown.Item onClick={() => openHelpdesk()}>Support</Dropdown.Item> }
                             </Dropdown.Menu>
                         </Dropdown>
 
@@ -502,12 +503,12 @@ class Wrapper extends PureComponent {
                     currentService={currentService}
                 /> }
                 { isError ? (
-                    <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+                    <h2 className={(isSidebarOpen ? 'sidebar-open' : 'sidebar-close') + ' unavailable'} style={{ paddingLeft: contentPadding }}>
                         {errorTranslations[locale][isError]}
                     </h2>
 
                 ) : (
-                    <div className='main-content' style={{ paddingLeft: contentPadding }}>
+                    <div className={(isSidebarOpen ? 'sidebar-open' : 'sidebar-close') + ' main-content'} style={{ paddingLeft: contentPadding }}>
                         {children}
                     </div>
                     )
