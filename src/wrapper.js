@@ -89,8 +89,12 @@ class Wrapper extends PureComponent {
             delivery: true
         });
         this.libjwt.initPromise.then(() => {
-            const { account = '', location = '', role = '' } = JSON.parse(localStorage.getItem('user'));
-            changeUser({ account, location, role });
+            const user = JSON.parse(localStorage.getItem('user')) || {
+                location: '',
+                account: '',
+                role: ''
+            };
+            changeUser(user);
             window.insights = {
                 getToken: () => this.libjwt.jwt.getEncodedToken(),
                 getUserInfo: () => this.libjwt.jwt.getUserInfo(),
@@ -102,7 +106,10 @@ class Wrapper extends PureComponent {
             if (!email) {
                 const h = new Headers();
                 h.append('Authorization', `Bearer ${this.libjwt.jwt.getEncodedToken()}`);
-                fetch('https://api.zby.icdc.io/api/accounts/v1/accounts', {
+                console.log('new chrome')
+                console.log(process.env.API_GATEWAY)
+                console.log('new chrome')
+                fetch('https://api.icdc.d3.zby.icdc.io/api/accounts/v1/accounts', {
                     method: 'GET',
                     headers: h
                 })
@@ -153,13 +160,13 @@ class Wrapper extends PureComponent {
                         username: userInfo.name,
                         email: userInfo.email,
                         locations,
-                        isError: !serviceAvailability[location] && id !== 'home' ? 'notAvailable' : '',
+                        isError: !serviceAvailability[user.location] && id !== 'home' ? 'notAvailable' : '',
                         accountsDropdown: accountsArray,
                         availableAccounts: fullAccountsInfo,
-                        account,
-                        location,
-                        role,
-                        accountFullName: fullAccountsInfo[account].display_name,
+                        account: user.account,
+                        location: user.location,
+                        role: user.role,
+                        accountFullName: fullAccountsInfo[user.account].display_name,
                         serviceAvailability,
                         servicesInLocations,
                         currentService
@@ -184,7 +191,10 @@ class Wrapper extends PureComponent {
         document.removeEventListener('click', this.handleClickOutside, true);
     };
 
-    getFirstAvailableLocation = (locations, serviceAvailability) => {
+    getFirstAvailableLocation = (locations, serviceAvailability, currentLocation) => {
+        if (locations.includes(currentLocation)) {
+            return currentLocation;
+        }
         for (const loc of locations) {
             if (serviceAvailability[loc]) {
                 return loc;
@@ -194,10 +204,10 @@ class Wrapper extends PureComponent {
     };
 
     componentDidUpdate(_prevProps, prevState) {
-        const { account, availableAccounts, email, serviceAvailability } = this.state;
+        const { account, availableAccounts, email, serviceAvailability, location } = this.state;
         const { changeUser, id } = this.props;
         if (account && availableAccounts && prevState.account !== account) {
-            const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability);
+            const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability, location);
             this.setState({
                 location: newLocation,
                 role: availableAccounts[account].roles[0],
