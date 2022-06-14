@@ -108,6 +108,8 @@ class Wrapper extends PureComponent {
                 h.append('Authorization', `Bearer ${this.libjwt.jwt.getEncodedToken()}`);
                 console.log('new chrome')
                 console.log(process.env.API_GATEWAY)
+                console.log(process)
+                console.log(process.env)
                 console.log('new chrome')
                 fetch('https://api.icdc.d3.zby.icdc.io/api/accounts/v1/accounts', {
                     method: 'GET',
