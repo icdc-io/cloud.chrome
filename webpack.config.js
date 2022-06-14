@@ -127,11 +127,6 @@ module.exports = () => {
   console.log(process.env)
   console.log('process.env')
 
-  const envKeys = Object.keys(process.env).reduce((prev, next) => {
-    prev[`process.env.${next}`] = JSON.stringify(process.env[next]);
-    return prev;
-  }, {});
-
   return {
     mode,
     bail: isEnvProduction,
@@ -413,7 +408,7 @@ module.exports = () => {
       // It is absolutely essential that NODE_ENV is set to production
       // during a production build.
       // Otherwise React will be compiled in the very slow development mode.
-      new webpack.DefinePlugin(envKeys),
+      new webpack.DefinePlugin(env.stringified),
       // Experimental hot reloading for React .
       // https://github.com/facebook/react/tree/main/packages/react-refresh
       isEnvDevelopment &&
