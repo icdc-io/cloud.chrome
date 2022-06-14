@@ -111,7 +111,7 @@ class Wrapper extends PureComponent {
                 console.log(process)
                 console.log(process.env)
                 console.log('new chrome')
-                fetch('https://api.zby.icdc.io/api/accounts/v1/accounts', {
+                fetch('https://api.icdc.d3.zby.icdc.io/api/accounts/v1/accounts', {
                     method: 'GET',
                     headers: h
                 })
