@@ -123,6 +123,10 @@ module.exports = () => {
     return loaders;
   };
 
+  console.log('process.env')
+  console.log(process.env)
+  console.log('process.env')
+
   const envKeys = Object.keys(process.env).reduce((prev, next) => {
     prev[`process.env.${next}`] = JSON.stringify(process.env[next]);
     return prev;
