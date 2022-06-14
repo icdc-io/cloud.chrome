@@ -106,7 +106,8 @@ class Wrapper extends PureComponent {
             if (!email) {
                 const h = new Headers();
                 h.append('Authorization', `Bearer ${this.libjwt.jwt.getEncodedToken()}`);
-                fetch('https://api.icdc.d3.zby.icdc.io/api/accounts/v1/accounts', {
+                const apiUrl = process.env.API_GATEWAY || 'https://api.icdc.d3.zby.icdc.io/api';
+                fetch(apiUrl + '/accounts/v1/accounts', {
                     method: 'GET',
                     headers: h
                 })

@@ -180,7 +180,6 @@ function isExistingValid(token) {
 // keycloak init successful
 function initSuccess() {
   log('JWT Initialized');
-  console.log('initSuccess')
   setCookie(priv.getToken());
   setRefresh(priv.getRefershToken());
 
@@ -283,7 +282,6 @@ export const expiredToken = () => {
 // Broadcast message to refresh tokens across tabs
 function refreshTokens() {
   setCookie(priv.getToken());
-  console.log('refreshTokens')
   authChannel.postMessage({ type: 'refresh' });
 }
 
@@ -292,9 +290,6 @@ function updateToken() {
   return priv
     .updateToken()
     .then((refreshed) => {
-      console.log('updateToken')
-      console.log(refreshed)
-      console.log('updateToken')
       // Important! after we update the token
       // we have to again populate the Cookie!
       // Otherwise we just update and dont send
@@ -335,7 +330,6 @@ function setCookie(token) {
 
 function setRefresh(refreshToken) {
   log('Setting the refresh token');
-  console.log('setRefresh')
   cookie.set('cs_jwt_refresh', refreshToken, { secure: true });
 }
 
