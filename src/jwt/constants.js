@@ -38,10 +38,16 @@ export const DEFAULT_ROUTES = {
   },
 };
 
+const KEYCLOAK_CLIENTID = 'insights';
+
+const KEYCLOAK_REALM = 'master';
+
+const DEFAULT_COOKIE_NAME = 'cs_jwt';
+
 export const options = {
-  realm: 'master',
-  clientId: 'insights',
-  cookieName: 'cs_jwt'
+  realm: process.env.KEYCLOAK_REALM || KEYCLOAK_REALM,
+  clientId: process.env.KEYCLOAK_CLIENTID || KEYCLOAK_CLIENTID,
+  cookieName: process.env.DEFAULT_COOKIE_NAME || DEFAULT_COOKIE_NAME
 };
 
 export const noAuthParam = 'noauth';
