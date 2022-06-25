@@ -1,6 +1,8 @@
 import logger from '../logger';
 const log = logger('insights/url.js');
 
+const KEYCLOAK_URL = 'https://login.icdc.io/auth';
+
 // Parse through keycloak options routes
 export default (env) => {
   if (window.SSO_URL) {
@@ -17,6 +19,6 @@ export default (env) => {
   } else {
     log('SSO url: not found, defaulting to qa');
     log('Current env: not found, defaultint to qa');
-    return 'https://login.icdc.io/auth';
+    return process.env.KEYCLOAK_URL || KEYCLOAK_URL;
   }
 };
