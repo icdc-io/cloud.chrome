@@ -89,8 +89,9 @@ export const init = (options) => {
   priv.setCookie({ cookieName });
   //constructor for new Keycloak Object?
   options.url = insightsUrl(options.routes ? options.routes : DEFAULT_ROUTES);
-  options.clientId = 'insights';
-  options.realm = 'master';
+  // Take from constants.js:
+  //options.clientId = 'insights';
+  //options.realm = 'master';
 
   //options for keycloak.init method
   options.promiseType = 'native';
