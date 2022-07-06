@@ -35,10 +35,9 @@ class Wrapper extends PureComponent {
         this.ref = React.createRef();
         this.libjwt = auth();
     };
-    noAccessError = '';
 
     isNoAccess = {
-        admin: (groups) => !groups.includes('cloud-admin'),
+        admin: (groups) => !groups.some(group => /.admin$/.test(group)),
         devops: (groups) => /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/false
     };
 
@@ -150,15 +149,13 @@ class Wrapper extends PureComponent {
                         }
                     };
 
-                    this.noAccessError = this.isNoAccess[id] && this.isNoAccess[id](userInfo.groups) ? 'noAccess' : '';
-
                     getServicesInfo && getServicesInfo(servicesInLocations);
 
                     this.setState({
                         username: userInfo.name,
                         email: userInfo.email,
                         locations,
-                        isError: !serviceAvailability[user.location] && id !== 'home' ? 'notAvailable' : '',
+                        isError: this.isNoAccess[id] && this.isNoAccess[id](userInfo.groups) ? 'noAccess' : !serviceAvailability[user.location] && id !== 'home' ? 'notAvailable' : '',
                         accountsDropdown: accountsArray,
                         availableAccounts: fullAccountsInfo,
                         account: user.account,
@@ -202,14 +199,15 @@ class Wrapper extends PureComponent {
     };
 
     componentDidUpdate(_prevProps, prevState) {
-        const { account, availableAccounts, email, serviceAvailability, location } = this.state;
+        const { account, availableAccounts, email, serviceAvailability, location, isError } = this.state;
         const { changeUser, id } = this.props;
-        if (account && availableAccounts && prevState.account !== account) {
+
+        if (isError != 'noAccess' && account && availableAccounts && prevState.account !== account) {
             const newLocation = this.getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability, location);
             this.setState({
                 location: newLocation,
                 role: availableAccounts[account].roles[0],
-                isError: !serviceAvailability[newLocation] && id !== 'home' ? 'notAvailable' : this.noAccessError
+                isError: !serviceAvailability[newLocation] && id !== 'home' ? 'notAvailable' : ''
             });
             changeUser({ account, location: newLocation, role: availableAccounts[account].roles[0] });
             localStorage.setItem('user', JSON.stringify({
@@ -222,13 +220,13 @@ class Wrapper extends PureComponent {
     };
 
     changeUserInfo = (name, value) => {
-        if (this.state[name] !== value) {
+        if (this.state.isError != 'noAccess' && this.state[name] !== value) {
             const { account, location, role, email, serviceAvailability } = this.state;
             const { changeUser, id } = this.props;
             this.setState({
                 [name]: value,
                 isUserDropdownOpen: false,
-                isError: name !== 'location' || serviceAvailability[value] || id === 'home' ? this.noAccessError : 'notAvailable'
+                isError: name !== 'location' || serviceAvailability[value] || id === 'home' ? '' : 'notAvailable'
             });
             changeUser({ account, location, role, [name]: value });
             localStorage.setItem('user', JSON.stringify({
@@ -296,6 +294,16 @@ class Wrapper extends PureComponent {
         this.props.changeLang(newLang);
         this.setState({ isUserDropdownOpen: false, locale: newLang });
         localStorage.setItem('icdc-lang', newLang);
+    };
+
+    changeAccount = (currentAccount) => {
+        if (this.state.isError != 'noAccess') {
+            this.setState({
+                account: currentAccount.value,
+                accountFullName: currentAccount.text,
+                isUserDropdownOpen: false
+            });
+        }
     };
 
     render() {
@@ -441,11 +449,7 @@ class Wrapper extends PureComponent {
                                         { accountsDropdown.map(currentAccount => (
                                             <Dropdown.Item key={currentAccount.key}
                                                 className={currentAccount.value === account ? 'current' : ''}
-                                                onClick={() => this.setState({
-                                                    account: currentAccount.value,
-                                                    accountFullName: currentAccount.text,
-                                                    isUserDropdownOpen: false
-                                                })}
+                                                onClick={() => this.changeAccount(currentAccount)}
                                             >
                                                 {currentAccount.text}
                                             </Dropdown.Item>
