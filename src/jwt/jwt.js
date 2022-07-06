@@ -184,6 +184,11 @@ function initSuccess() {
   setCookie(priv.getToken());
   setRefresh(priv.getRefershToken());
 
+  window.insights = {
+    getToken: () => priv.getToken(),
+    getUserInfo: () => priv.getTokenParsed()
+  };
+
   if (!localStorage.getItem('user')) {
     const newTokens = {};
     const userInfo = priv.getTokenParsed();

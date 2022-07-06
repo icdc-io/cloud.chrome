@@ -95,10 +95,10 @@ const Wrapper = ({
 
                     const userParsed = JSON.parse(localStorage.getItem('user')) || initialUser;
 
+                    setBaseUrls && setBaseUrls(locations);
                     changeUser(userParsed);
                     setUser(userParsed);
 
-                    setBaseUrls && setBaseUrls(locations);
                     for (const obj of data) {
                         if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
                             fullAccountsInfo[obj.name] = {
@@ -148,19 +148,6 @@ const Wrapper = ({
         });
     }, []);
 
-    useEffect(() => {
-        if (user.location && !window.insights) {
-            changeUser(user);
-            window.insights = {
-                getToken: () => libjwt.jwt.getEncodedToken(),
-                getUserInfo: () => libjwt.jwt.getUserInfo(),
-                getLocation: () => user.location,
-                getAccount: () => user.account,
-                getRole: () => user.role
-            };
-        }
-    }, [user]);
-
     const getFirstAvailableLocation = (locations, serviceAvailability, currentLocation) => {
         if (locations.includes(currentLocation)) {
             return currentLocation;
@@ -192,11 +179,6 @@ const Wrapper = ({
     }, [user.account]);
 
     const changeUserInfo = (name, value) => {
-        console.log('changeUserInfo')
-        console.log(name)
-        console.log(value)
-        console.log(user)
-        console.log('changeUserInfo')
         if (name === 'location') setIsError(checkError(value));
 
         setUser(prevState => ({ ...prevState, [name]: value }));

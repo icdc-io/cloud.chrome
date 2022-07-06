@@ -48,9 +48,6 @@ const Wrapper = ({
     }, []);
 
     const changeUserInfo = (name, value) => {
-        console.log(name)
-        console.log(value)
-        console.log(user)
         if (user[name] !== value) {
             changeUser(name, value);
             setIsUserDropdownOpen(false);
