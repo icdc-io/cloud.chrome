@@ -1,7 +1,7 @@
 import logger from '../logger';
 const log = logger('insights/url.js');
 
-const KEYCLOAK_URL = 'https://login.icdc.io/auth';
+const KEYCLOAK_URL = 'https://login.scdc.io/auth';
 
 // Parse through keycloak options routes
 export default (env) => {
