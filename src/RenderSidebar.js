@@ -69,7 +69,7 @@ class RenderSidebar extends React.Component {
                                         <Dropdown.Item {...service} />
                                     </a>)}
                                 <Dropdown.Divider />
-                                <a href='https://cloud.icdc.io/home'>
+                                <a href={window.location.origin + '/home'}>
                                     <Dropdown.Item {...homepage} />
                                 </a>
                             </Dropdown.Menu>

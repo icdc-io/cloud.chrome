@@ -275,7 +275,7 @@ class Wrapper extends PureComponent {
             const shortNameArray = location.displayName.split('IBACloud ');
             const isExternal = location.url.startsWith('http');
             const isCurrentService = this.props.id === location.name;
-            const url = isCurrentService ? '' : isExternal ? location.url : 'https://cloud.icdc.io' + location.path;
+            const url = isCurrentService ? '' : isExternal ? location.url : window.location.origin + location.path;
 
             return {
                 key,
@@ -374,7 +374,9 @@ class Wrapper extends PureComponent {
                                     style={{ color: 'white', cursor: 'pointer' }}
                                     onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
                                     alt='Burger menu' /> }
-                    <img src={ ICDCLogo } alt="ICDCLogo"/>
+                    <a href={window.location.origin + '/home'} target='_self'>
+                        <img src={ ICDCLogo } alt="ICDCLogo"/>
+                    </a>
                     <div className='info-section'>
                         <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
                             <Dropdown.Menu>
