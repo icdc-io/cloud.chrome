@@ -374,7 +374,7 @@ class Wrapper extends PureComponent {
                                     style={{ color: 'white', cursor: 'pointer' }}
                                     onClick={ () => this.setState(prevState => ({ isSideBarVisible: !prevState.isSideBarVisible }))}
                                     alt='Burger menu' /> }
-                    <a href={window.location.origin + '/home'} target='_self'>
+                    <a href={window.location.origin} target='_self'>
                         <img src={ ICDCLogo } alt="ICDCLogo"/>
                     </a>
                     <div className='info-section'>
