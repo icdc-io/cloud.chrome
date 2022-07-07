@@ -69,7 +69,7 @@ class RenderSidebar extends React.Component {
                                         <Dropdown.Item {...service} />
                                     </a>)}
                                 <Dropdown.Divider />
-                                <a href={window.location.origin + '/home'}>
+                                <a href={window.location.origin}>
                                     <Dropdown.Item {...homepage} />
                                 </a>
                             </Dropdown.Menu>
