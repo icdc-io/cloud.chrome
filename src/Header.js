@@ -72,14 +72,16 @@ const Wrapper = ({
         firstLevelMenuClasses.push('visible');
     }
 
+    const dynamicfilename = 'logo';
+
     return (
       <header className='chrome-header'>
         { isBurgerMenyVisible && <img src={Burger}
                         style={{ color: 'white', cursor: 'pointer' }}
                         onClick={() => changeSidebarVisability()}
                         alt='Burger menu' /> }
-        <a href={`${window.location.origin}/home`}>
-            <img src={ ICDCLogo } alt="ICDCLogo"/>
+        <a href={`${window.location.origin}/home`} className='header-logo'>
+            <img src={ require(`./images/${dynamicfilename}.svg`) } alt="ICDCLogo"/>
         </a>
         <div className='info-section'>
             <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>

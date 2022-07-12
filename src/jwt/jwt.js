@@ -189,22 +189,39 @@ function initSuccess() {
     getUserInfo: () => priv.getTokenParsed()
   };
 
-  if (!localStorage.getItem('user')) {
-    const newTokens = {};
-    const userInfo = priv.getTokenParsed();
-    const { accounts } = userInfo.external;
-    for (let obj in accounts) {
-        if (accounts[obj].locations.length && accounts[obj].roles.length) {
-            newTokens[obj]= accounts[obj];
+  const user = JSON.parse(localStorage.getItem('user'));
+  const userInfo = priv.getTokenParsed();
+  const { accounts } = userInfo.external;
+  const availableLangs = ['en', 'ru'];
+
+  let accountInfo;
+
+  if (!user ||
+      !accounts[user.account] ||
+      !accounts[user.account].locations.includes(user.location) ||
+      !accounts[user.account].roles.includes(user.role)) {
+
+    for (let account in accounts) {
+      if (accounts[account].locations.length && accounts[account].roles.length) {
+        accountInfo = {
+          name: account,
+          location: accounts[account].locations[0],
+          role: accounts[account].roles[0]
         }
-    };
-    localStorage.setItem('user', Object.keys(newTokens).length ? JSON.stringify({
-        account: Object.keys(newTokens)[0],
-        location: newTokens[Object.keys(newTokens)[0]].locations[0],
-        role: newTokens[Object.keys(newTokens)[0]].roles[0],
-        email: userInfo.email
-    }) : null);
-    localStorage.setItem('icdc-lang', 'en');
+        break;
+      }
+    }
+
+    if (accountInfo) {
+      localStorage.setItem('user', JSON.stringify({
+          account: accountInfo.name,
+          location: accountInfo.location,
+          role: accountInfo.role,
+          email: userInfo.email
+      }));
+    }
+
+    if (!availableLangs.includes(localStorage.getItem('icdc-lang'))) localStorage.setItem('icdc-lang', 'en');
   }
 }
 

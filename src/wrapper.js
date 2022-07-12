@@ -7,8 +7,15 @@ import PropTypes from 'prop-types';
 import auth from './auth';
 import { errorTranslations, langs, servicesImages } from './constants/viewConstants';
 import Skeleton from './Skeleton';
+// import Keycloak from 'keycloak-js';
 
-let libjwt = auth();
+const libjwt = auth();
+
+// const initOptions = {
+//     url: 'https://login.scdc.io/auth',
+//     realm: 'master',
+//     clientId: 'insights'
+// };
 
 const Wrapper = ({
   id,
@@ -50,7 +57,7 @@ const Wrapper = ({
         devops: (groups) => /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/false
     };
 
-    useEffect(() => {
+    useEffect(async() => {
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
@@ -73,79 +80,77 @@ const Wrapper = ({
             invoices: true,
             delivery: true
         });
-        libjwt.initPromise.then(() => {
-            if (!email) {
-                const h = new Headers();
-                h.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
+        // let keycloak = new Keycloak(initOptions);
+        // keycloak.init({ onLoad: 'check-sso' }).then(auth => console.log(auth)).catch(e => console.log(e))
+        try {
+            const isAuthSuccess = await libjwt.initPromise;
+            console.log('ddd')
+            console.log(isAuthSuccess)
+            console.log('ddd')
+            if (!email && isAuthSuccess) {
+                const headers = new Headers();
+                headers.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
                 const apiUrl = process.env.API_GATEWAY ? `${process.env.API_GATEWAY}/api` : 'https://api.icdc.d3.zby.icdc.io/api';
-                fetch(apiUrl + '/accounts/v1/accounts', {
-                    method: 'GET',
-                    headers: h
-                })
-                .then(response => response.json()
-                .then(async data => {
-                    const fullAccountsInfo = {};
-                    const accountsArray = [];
-                    const serviceAvailabilityInfo = {};
-                    const servicesInLocationsInfo = {};
-                    let currentServiceInfo;
-                    const locationsNumber = Object.keys(serviceAvailabilityInfo).length;
-                    const userInfo = await libjwt.jwt.getUserInfo();
-                    const { accounts, locations } = userInfo.external;
+                const response = await fetch(apiUrl + '/accounts/v1/accounts', { method: 'GET', headers });
+                const data = await response.json();
+                const fullAccountsInfo = {};
+                const accountsArray = [];
+                const serviceAvailabilityInfo = {};
+                const servicesInLocationsInfo = {};
+                let currentServiceInfo;
+                const locationsNumber = Object.keys(serviceAvailabilityInfo).length;
+                const userInfo = await libjwt.jwt.getUserInfo();
+                const { accounts, locations } = userInfo.external;
 
-                    const userParsed = JSON.parse(localStorage.getItem('user')) || initialUser;
+                const userParsed = JSON.parse(localStorage.getItem('user')) || initialUser;
 
-                    setBaseUrls && setBaseUrls(locations);
-                    changeUser(userParsed);
-                    setUser(userParsed);
+                setBaseUrls && setBaseUrls(locations);
+                changeUser(userParsed);
+                setUser(userParsed);
 
-                    for (const obj of data) {
-                        if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
-                            fullAccountsInfo[obj.name] = {
-                                ...accounts[obj.name],
-                                display_name: obj.display_name
-                            };
-                            for (const currentLocation of obj.locations) {
-                                if (locationsNumber === locations.length) break;
-                                if (!serviceAvailabilityInfo[currentLocation.name]) {
-                                    serviceAvailabilityInfo[currentLocation.name] = currentLocation.services.some(service => service.name === id);
-                                    servicesInLocationsInfo[currentLocation.name] = currentLocation.services;
-                                }
+                for (const obj of data) {
+                    if (accounts[obj.name] && accounts[obj.name].roles.length && accounts[obj.name].locations.length) {
+                        fullAccountsInfo[obj.name] = {
+                            ...accounts[obj.name],
+                            display_name: obj.display_name
+                        };
+                        for (const currentLocation of obj.locations) {
+                            if (locationsNumber === locations.length) break;
+                            if (!serviceAvailabilityInfo[currentLocation.name]) {
+                                serviceAvailabilityInfo[currentLocation.name] = currentLocation.services.some(service => service.name === id);
+                                servicesInLocationsInfo[currentLocation.name] = currentLocation.services;
                             }
-                            accountsArray.push({
-                                key: obj.name,
-                                text: obj.display_name,
-                                value: obj.name
-                            });
                         }
+                        accountsArray.push({
+                            key: obj.name,
+                            text: obj.display_name,
+                            value: obj.name
+                        });
                     }
-                    changeAccounts && changeAccounts(fullAccountsInfo);
-                    for (let location in serviceAvailabilityInfo) {
-                        if (serviceAvailabilityInfo[location]) {
-                            currentServiceInfo = servicesInLocationsInfo[location].find(service => service.name === id);
-                            break;
-                        }
-                    };
+                }
+                changeAccounts && changeAccounts(fullAccountsInfo);
+                for (let location in serviceAvailabilityInfo) {
+                    if (serviceAvailabilityInfo[location]) {
+                        currentServiceInfo = servicesInLocationsInfo[location].find(service => service.name === id);
+                        break;
+                    }
+                };
 
-                    getServicesInfo && getServicesInfo(servicesInLocationsInfo);
+                getServicesInfo && getServicesInfo(servicesInLocationsInfo);
 
-                    setUsername(userInfo.name);
-                    setEmail(userInfo.email);
-                    setAccountsDropdown(accountsArray);
-                    setAvailableAccounts(fullAccountsInfo);
-                    setNoAccessError(isNoAccess[id] && isNoAccess[id](userInfo.groups) ? 'noAccess' : '');
-                    setServiceAvailability(serviceAvailabilityInfo);
-                    setServicesInLocations(servicesInLocationsInfo);
-                    setCurrentService(currentServiceInfo);
-                })
-                .catch((_e) => {
-                    console.log('_e')
-                    console.log(_e)
-                    console.log('_e')
-                    setIsError('wrong');
-                }));
+                setUsername(userInfo.name);
+                setEmail(userInfo.email);
+                setAccountsDropdown(accountsArray);
+                setAvailableAccounts(fullAccountsInfo);
+                setNoAccessError(isNoAccess[id] && isNoAccess[id](userInfo.groups) ? 'noAccess' : '');
+                setServiceAvailability(serviceAvailabilityInfo);
+                setServicesInLocations(servicesInLocationsInfo);
+                setCurrentService(currentServiceInfo);
             }
-        });
+        } catch(_e) {
+            console.log(_e)
+            libjwt.jwt.getEncodedToken() && setIsError('wrong');
+        }
     }, []);
 
     const getFirstAvailableLocation = (locations, serviceAvailability, currentLocation) => {
