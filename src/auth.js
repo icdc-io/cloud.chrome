@@ -11,7 +11,8 @@ function bouncer() {
     jwt.login();
   }
 
-  console.timeEnd(TIMER_STR); // eslint-disable-line no-console
+  console.timeEnd(TIMER_STR);
+  return true;
 }
 
 export function crossAccountBouncer() {
