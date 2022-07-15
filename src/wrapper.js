@@ -84,9 +84,6 @@ const Wrapper = ({
         // keycloak.init({ onLoad: 'check-sso' }).then(auth => console.log(auth)).catch(e => console.log(e))
         try {
             const isAuthSuccess = await libjwt.initPromise;
-            console.log('ddd')
-            console.log(isAuthSuccess)
-            console.log('ddd')
             if (!email && isAuthSuccess) {
                 const headers = new Headers();
                 headers.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
@@ -205,23 +202,25 @@ const Wrapper = ({
             servicesInfoSet.add(currentService);
         }
 
-        return [...servicesInfoSet].map((location, key) => {
-            const shortNameArray = location.displayName.split('IBACloud ');
-            const isExternal = location.url.startsWith('http');
-            const isCurrentService = id === location.name;
-            const url = isCurrentService ? '' : isExternal ? location.url : window.location.origin + location.path;
+        return [...servicesInfoSet]
+            .filter(location => location.displayName && location.name)
+            .map((location, key) => {
+                const shortNameArray = location.displayName.split('IBACloud ');
+                const isExternal = location.url.startsWith('http');
+                const isCurrentService = id === location.name;
+                const url = isCurrentService ? '' : isExternal ? location.url : window.location.origin + location.path;
 
-            return {
-                key,
-                text: location.displayName.startsWith('IBACloud') ? shortNameArray[1] : shortNameArray[0],
-                value: location.name,
-                className: isExternal ? 'external' : isCurrentService ? 'current' : '',
-                image: {
-                    src: servicesImages[location.name]
-                },
-                url
-            };
-        });
+                return {
+                    key,
+                    text: location.displayName.startsWith('IBACloud') ? shortNameArray[1] : shortNameArray[0],
+                    value: location.name,
+                    className: isExternal ? 'external' : isCurrentService ? 'current' : '',
+                    image: {
+                        src: servicesImages[location.name]
+                    },
+                    url
+                };
+            });
     };
 
 

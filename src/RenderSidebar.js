@@ -37,7 +37,7 @@ const RenderSidebar = ({
         className={ (activeItem === splitAndGet(route.to) ? 'active ' : '') + 'item'}
         style={{ fontSize: '15px', cursor: 'pointer', width: '100%' }}>
         {route.title}
-    </div> : <Skeleton className='aside-skeleton' width='200px' />;
+    </div> : <Skeleton key={key} className='aside-skeleton' width='200px' />;
 
     const homepage = {
         text: 'Home',
