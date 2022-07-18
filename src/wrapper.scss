@@ -120,6 +120,7 @@ body {
   .ui.dropdown.user-dropdown {
     color: white;
     font-size: 16px;
+    min-width: 160px;
 
     .menu.transition.visible.first-level {
       left: -16px;
