@@ -80,7 +80,7 @@ const Wrapper = ({
                         style={{ color: 'white', cursor: 'pointer' }}
                         onClick={() => changeSidebarVisability()}
                         alt='Burger menu' /> }
-        <a href={`${window.location.origin}/home`} className='header-logo'>
+        <a href={`${window.location.origin}/`} className='header-logo'>
             <img src={ require(`./images/${dynamicfilename}.svg`) } alt="ICDCLogo"/>
         </a>
         <div className='info-section'>

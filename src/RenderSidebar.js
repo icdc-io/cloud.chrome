@@ -67,7 +67,7 @@ const RenderSidebar = ({
                                     <Dropdown.Item {...service} />
                                 </a>)}
                             <Dropdown.Divider />
-                            <a href='https://cloud.icdc.io/home'>
+                            <a href={`${window.location.origin}/`}>
                                 <Dropdown.Item {...homepage} />
                             </a>
                         </Dropdown.Menu>
