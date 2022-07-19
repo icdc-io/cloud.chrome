@@ -72,7 +72,7 @@ const Wrapper = ({
         firstLevelMenuClasses.push('visible');
     }
 
-    const dynamicfilename = 'logo';
+    const dynamicfilename = process.env.CP_VENDOR || 'logo';
 
     return (
       <header className='chrome-header'>

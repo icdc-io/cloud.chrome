@@ -50,12 +50,13 @@ const Wrapper = ({
 
     const [currentService, setCurrentService] = useState({});
     const [locale, setLocale] = useState(language);
-    const [noAccessError, setNoAccessError] = useState('');
 
     const isNoAccess = {
-        admin: (groups) => !groups.includes('cloud-admin'),
+        admin: (groups) => !groups.some(group => /.cloud$/.test(group)),
         devops: (groups) => /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/false
     };
+
+    const checkError = (available) => available || id === 'home' ? '' : 'notAvailable';
 
     useEffect(async() => {
         getAppInfo && getAppInfo({
@@ -139,7 +140,7 @@ const Wrapper = ({
                 setEmail(userInfo.email);
                 setAccountsDropdown(accountsArray);
                 setAvailableAccounts(fullAccountsInfo);
-                setNoAccessError(isNoAccess[id] && isNoAccess[id](userInfo.groups) ? 'noAccess' : '');
+                setIsError(isNoAccess[id] && isNoAccess[id](userInfo.groups) ? 'noAccess' : checkError(serviceAvailabilityInfo[userParsed.location]));
                 setServiceAvailability(serviceAvailabilityInfo);
                 setServicesInLocations(servicesInLocationsInfo);
                 setCurrentService(currentServiceInfo);
@@ -162,8 +163,6 @@ const Wrapper = ({
         return locations[0];
     };
 
-    const checkError = (location) => serviceAvailability[location] || id === 'home' ? noAccessError : 'notAvailable';
-
     useEffect(() => {
       const { account, location } = user;
 
@@ -172,7 +171,7 @@ const Wrapper = ({
         const newRole = availableAccounts[account].roles[0];
 
         setUser(prevState => ({ ...prevState, location: newLocation, role: newRole }));
-        setIsError(checkError(newLocation));
+        isError != 'noAccess' && setIsError(checkError(serviceAvailability[newLocation]));
 
         changeUser({ account, location: newLocation, role: newRole });
 
@@ -181,7 +180,7 @@ const Wrapper = ({
     }, [user.account]);
 
     const changeUserInfo = (name, value) => {
-        if (name === 'location') setIsError(checkError(value));
+        if (name === 'location' && isError != 'noAccess') setIsError(checkError(serviceAvailability[value]));
 
         setUser(prevState => ({ ...prevState, [name]: value }));
 
