@@ -241,6 +241,12 @@ export function login() {
 
 export function logout(bounce) {
   log('Logging out');
+  console.log(process.env.LOGOUT_URL);
+  console.log(process.env.API_GATEWAY);
+  console.log(process.env.KEYCLOAK_REALM);
+  console.log(process.env.KEYCLOAK_CLIENTID);
+  console.log(process.env.DEFAULT_COOKIE_NAME);
+  console.log(process.env.KEYCLOAK_URL)
 
   // Clear cookies and tokens
   priv.clearToken();
