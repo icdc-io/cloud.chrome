@@ -1,6 +1,5 @@
 import React, { useEffect, useRef, useState } from 'react';
 import { Dropdown, Icon } from 'semantic-ui-react';
-import ICDCLogo from './images/logo.svg';
 import QuestionLogo from './images/question.svg';
 import Burger from './images/burger.svg';
 import './wrapper.scss';
