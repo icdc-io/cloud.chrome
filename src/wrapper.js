@@ -23,7 +23,7 @@ const Wrapper = ({
   changeUser,
   getAppInfo = null,
   setBaseUrls = null,
-  getServicesInfo = null,
+  getServicesInfo,
   language,
   routes = [],
   children,

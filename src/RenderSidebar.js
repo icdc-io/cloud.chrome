@@ -4,6 +4,7 @@ import { Sidebar, Menu, Dropdown } from 'semantic-ui-react';
 import Home from './images/home.svg';
 import Homepage from './images/homepage.svg';
 import Skeleton from './Skeleton';
+import External from './images/external.svg';
 
 const RenderSidebar = ({
     routes,
@@ -31,13 +32,25 @@ const RenderSidebar = ({
         }
     }, []);
 
-    const renderSidebarItem = (route, key) => servicesInLocations ? <div
-        key={key}
-        onClick={() => changeItem(route.to)}
-        className={ (activeItem === splitAndGet(route.to) ? 'active ' : '') + 'item'}
-        style={{ fontSize: '15px', cursor: 'pointer', width: '100%' }}>
-        {route.title}
-    </div> : <Skeleton key={key} className='aside-skeleton' width='200px' />;
+    const renderSidebarItem = (route, key) => {
+        if (!servicesInLocations) return <Skeleton key={key} className='aside-skeleton' width='200px' />;
+
+        const isExternalLink = route.to.startsWith('http');
+
+        if (isExternalLink) {
+            return <a key={key} href={route.to} target='_blank' className='item'>
+                <span>{route.title}</span>
+                <img src={External} alt="External link" />
+            </a>
+        }
+
+        return <div
+            key={key}
+            onClick={() => changeItem(route.to)}
+            className={ (activeItem === splitAndGet(route.to) ? 'active ' : '') + 'item'}>
+                { route.title }
+        </div>
+    };
 
     const homepage = {
         text: 'Home',
