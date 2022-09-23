@@ -29,13 +29,15 @@ const Wrapper = ({
   children,
   changeApp = () => {},
   openHelpdesk = false,
-  changeLang
+  changeLang,
+  getPublicLocationData
 }) => {
     const initialUser = {
         location: '',
         account: '',
         role: ''
     };
+    const apiUrl = process.env.API_GATEWAY ? `${process.env.API_GATEWAY}/api` : 'https://api.icdc.d3.zby.icdc.io/api';
 
     const [user, setUser] = useState(initialUser);
     const [availableAccounts, setAvailableAccounts] = useState({});
@@ -50,6 +52,7 @@ const Wrapper = ({
 
     const [currentService, setCurrentService] = useState({});
     const [locale, setLocale] = useState(language);
+    const [locationPublicData, setLocationPublicData] = useState({});
 
     const isNoAccess = {
         admin: (groups) => !groups.some(group => /.cloud$/.test(group)),
@@ -88,7 +91,6 @@ const Wrapper = ({
             if (!email && isAuthSuccess) {
                 const headers = new Headers();
                 headers.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
-                const apiUrl = process.env.API_GATEWAY ? `${process.env.API_GATEWAY}/api` : 'https://api.icdc.d3.zby.icdc.io/api';
                 const response = await fetch(apiUrl + '/accounts/v1/accounts', { method: 'GET', headers });
                 const data = await response.json();
                 const fullAccountsInfo = {};
@@ -150,6 +152,20 @@ const Wrapper = ({
             libjwt.jwt.getEncodedToken() && setIsError('wrong');
         }
     }, []);
+
+    useEffect(() => {
+        if (user.location) {
+            const headers = new Headers();
+            headers.append('Authorization', `Bearer ${libjwt.jwt.getEncodedToken()}`);
+            fetch(`${apiUrl}/accounts/v1/locations/${user.location}`, { method: 'GET', headers })
+                .then(response => response.json())
+                .then(locationData => {
+                    setLocationPublicData(locationData);
+                    getPublicLocationData && getPublicLocationData(locationData)
+                })
+                .catch(e => console.log(e))
+        }
+    }, [user.location]);
 
     const getFirstAvailableLocation = (locations, serviceAvailability, currentLocation) => {
         if (locations.includes(currentLocation)) {
@@ -249,7 +265,7 @@ const Wrapper = ({
             email={email}
             serviceAvailability={serviceAvailability}
             changeSidebarVisability={() => setIsSideBarVisible(prevState => !prevState)}
-            logout={() => libjwt.jwt.logout(true)}
+            logout={() => libjwt.jwt.logout(true, locationPublicData.back_to_url)}
         />
         { id !== 'home' && (
             <Sidebar

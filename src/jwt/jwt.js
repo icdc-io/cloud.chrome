@@ -239,7 +239,7 @@ export function login() {
   return priv.login({ redirectUri: location.href });
 }
 
-export function logout(bounce) {
+export function logout(bounce, redirectUrl) {
   log('Logging out');
 
   // Clear cookies and tokens
@@ -255,7 +255,7 @@ export function logout(bounce) {
       expires: eightSeconds,
     });
     priv.logout({
-      redirectUri: process.env.LOGOUT_URL || `https://ibacloud.by`,
+      redirectUri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
     });
   }
 }
