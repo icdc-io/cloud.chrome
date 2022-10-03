@@ -10,7 +10,7 @@ export default (env) => {
     return window.SSO_URL;
   }
 
-  const ssoEnv = Object.entries(env).find(([, { url }]) => url.includes(location.hostname));
+  const ssoEnv = Object.entries(env).find(([, { url }]) => url.includes(window.location.hostname));
 
   if (ssoEnv) {
     log(`SSO Url: ${ssoEnv?.[1].sso}`);

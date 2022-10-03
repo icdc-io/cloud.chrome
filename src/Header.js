@@ -43,7 +43,7 @@ const Wrapper = ({
     useEffect(() => {
         document.addEventListener('click', handleClickOutside, true);
   
-        () => document.removeEventListener('click', handleClickOutside, true);
+        return () => document.removeEventListener('click', handleClickOutside, true);
     }, []);
 
     const changeUserInfo = (name, value) => {
