@@ -565,10 +565,6 @@ module.exports = function (webpackEnv) {
             singleton: true,
             requiredVersion: dependencies["react-dom"],
           },
-          "react-router-dom": {
-            singleton: true,
-            requiredVersion: dependencies["react-router-dom"],
-          },
           "semantic-ui-react": {
             singleton: true,
             requiredVersion: dependencies["semantic-ui-react"],
