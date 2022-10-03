@@ -1,5 +1,5 @@
 import Keycloak from '@redhat-cloud-services/keycloak-js';
-
+/* eslint-disable no-unused-expressions */
 class Priv {
   constructor() {
     this._cookie;

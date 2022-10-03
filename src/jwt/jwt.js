@@ -236,7 +236,7 @@ export function login() {
   log('Logging in');
   // Redirect to login
   cookie.set('cs_loggedOut', 'false');
-  return priv.login({ redirectUri: location.href });
+  return priv.login({ redirectUri: window.location.href });
 }
 
 export function logout(bounce, redirectUrl) {
