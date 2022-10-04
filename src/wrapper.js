@@ -251,7 +251,7 @@ const Wrapper = ({
     const isSidebarOpen = isSideBarVisible && id !== 'home';
     const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
-    return <Router>
+    return <Router basename={process.env.NODE_ENV === 'production' ? `/${id}` : ''}>
         <Header 
             id={id}
             isBurgerMenyVisible={routes && id !== 'home'}

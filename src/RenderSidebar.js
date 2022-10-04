@@ -17,6 +17,8 @@ const RenderSidebar = ({
 }) => {
     const splitAndGet = (string) => string.split('/')[1];
 
+    console.log(history)
+
     const [activeItem, setActiveItem] = useState(splitAndGet(history.location.pathname));
 
     const changeItem = (route) => {
