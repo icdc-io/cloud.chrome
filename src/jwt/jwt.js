@@ -98,7 +98,9 @@ export const init = (options) => {
   options.onLoad = 'check-sso';
   options.checkLoginIframe = false;
 
-  options.silentCheckSsoRedirectUri = `https://${window.location.host}/cloud/silent-check-sso.html`;
+  if (process.env.NODE_ENV === 'production') {
+    options.silentCheckSsoRedirectUri = `https://${window.location.host}/cloud/silent-check-sso.html`;
+  }
 
   if (window.localStorage && window.localStorage.getItem('chrome:jwt:shortSession') === 'true') {
     options.realm = 'short-session';
