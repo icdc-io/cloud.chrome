@@ -8,9 +8,6 @@ process.env.NODE_ENV = 'development';
 // ignoring them. In the future, promise rejections that are not handled will
 // terminate the Node.js process with a non-zero exit code.
 process.on('unhandledRejection', err => {
-  console.log('err')
-  console.log(err)
-  console.log('err')
   throw err;
 });
 

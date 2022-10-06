@@ -10,10 +10,6 @@ export default (env) => {
     return window.SSO_URL;
   }
 
-  console.log('process.env.KEYCLOAK_URL')
-  console.log(process.env.KEYCLOAK_URL)
-  console.log('process.env.KEYCLOAK_URL')
-
   const ssoEnv = Object.entries(env).find(([, { url }]) => url.includes(window.location.hostname));
 
   if (ssoEnv) {
