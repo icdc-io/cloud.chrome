@@ -72,6 +72,8 @@ const Wrapper = ({
     }
 
     const dynamicfilename = process.env.CP_VENDOR || 'logo';
+    const helpBaseUrl = `https://help.${process.env.CP_VENDOR || 'icdc'}.io`;
+    const helpPath = id === 'home' ? '' : `/${id}/${locale}/Welcome.html`
 
     return (
       <header className='chrome-header'>
@@ -86,7 +88,7 @@ const Wrapper = ({
             <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
                 <Dropdown.Menu>
                     <Dropdown.Item>
-                        <a href={`https://help.icdc.io/${id}/${locale}/Welcome.html`} target='_blank' style={{ color: 'black' }}>
+                        <a href={helpBaseUrl + helpPath} target='_blank' style={{ color: 'black' }}>
                             Help & Asistance
                         </a>
                     </Dropdown.Item>
