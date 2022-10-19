@@ -238,7 +238,8 @@ const Wrapper = ({
             });
     };
 
-
+    const isSidebarOpen = isSideBarVisible && id !== 'home';
+    const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
     if (isError === 'wrong') {
         return (
@@ -247,9 +248,6 @@ const Wrapper = ({
             </h2>
         );
     }
-
-    const isSidebarOpen = isSideBarVisible && id !== 'home';
-    const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
     return <Router basename={process.env.NODE_ENV === 'production' ? `/${id}` : ''}>
         <Header 
