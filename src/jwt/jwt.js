@@ -255,7 +255,8 @@ export function logout(bounce, redirectUrl) {
       expires: eightSeconds,
     });
     priv.logout({
-      redirectUri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
+      post_logout_redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
+      id_token_hint: priv._keycloak.idToken
     });
   }
 }
