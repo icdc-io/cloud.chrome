@@ -267,7 +267,6 @@ export function logout(bounce, redirectUrl) {
       expires: eightSeconds,
     });
     const logoutParams = {
-      redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
       post_logout_redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
       id_token_hint: priv._tokenId
     };
