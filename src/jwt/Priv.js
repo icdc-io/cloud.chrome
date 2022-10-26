@@ -4,6 +4,7 @@ class Priv {
   constructor() {
     this._cookie;
     this._keycloak;
+    this._tokenId;
   }
 
   setCookie(cookie) {
@@ -20,6 +21,10 @@ class Priv {
 
   initializeKeycloak(options) {
     this._keycloak.init(options);
+  }
+
+  setTokenId(tokenId) {
+    this._tokenId = tokenId;
   }
 
   setToken(token) {

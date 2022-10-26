@@ -269,11 +269,12 @@ export function logout(bounce, redirectUrl) {
     const logoutParams = {
       redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
       post_logout_redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
-      id_token_hint: priv._keycloak.idToken
+      id_token_hint: priv._tokenId
     };
     console.log('logoutParams')
     console.log(logoutParams)
-    console.log(priv._keycloak)
+    console.log(priv)
+    console.log(priv._tokenId)
     console.log('logoutParams')
     priv.logout(logoutParams);
   }
@@ -289,6 +290,7 @@ function loginAllTabs(data) {
   console.log(data)
   console.log(priv)
   console.log('loginAllTabs')
+  priv.setTokenId(priv._keycloak.idToken);
 
   authChannel.postMessage({ type: 'login' });
 }
