@@ -37,6 +37,7 @@ export function wipePostbackParamsThatAreNotForUs() {
 }
 
 export function getOfflineToken(realm, clientId) {
+  console.log('getOfflineToken')
   const postbackUrl = getPostbackUrl();
 
   if (priv.response) {

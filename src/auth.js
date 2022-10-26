@@ -6,7 +6,9 @@ import { ACCOUNT_REQUEST_TIMEOUT, ACTIVE_REMOTE_REQUEST, CROSS_ACCESS_ACCOUNT_NU
 const TIMER_STR = '[JWT][jwt.js] Auth time';
 
 function bouncer() {
+  console.log('bouncer')
   if (!jwt.isAuthenticated()) {
+    console.log('auth')
     cookie.remove(defaultOptions.cookieName);
     jwt.login();
   }

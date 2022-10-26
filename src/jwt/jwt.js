@@ -61,6 +61,7 @@ export function decodeToken(str) {
 }
 
 export const doOffline = (key, val) => {
+  console.log('doOffline')
   const url = urijs(window.location.href);
   url.removeSearch(key);
   url.addSearch(key, val);
@@ -74,6 +75,7 @@ export const doOffline = (key, val) => {
 
   const kc = Keycloak(options);
   kc.init(options).then(() => {
+    console.log('kc.init')
     kc.login({
       scope: 'offline_access',
     });
@@ -83,6 +85,7 @@ export const doOffline = (key, val) => {
 /*** Initialization ***/
 export const init = (options) => {
   log('Initializing');
+  console.log('init')
 
   const cookieName = options.cookieName ? options.cookieName : DEFAULT_COOKIE_NAME;
 
@@ -107,10 +110,15 @@ export const init = (options) => {
   }
 
   //priv.keycloak = Keycloak(options);
+  console.log('setKeycloak')
+  console.log(options)
+  console.log('setKeycloak')
   priv.setKeycloak(options, updateToken, loginAllTabs, refreshTokens);
 
   if (options.token) {
     if (isExistingValid(options.token)) {
+      console.log('isExistingValid')
+
       // we still need to init async
       // so that the renewal times and such fire
       priv.initializeKeycloak(options);
@@ -121,6 +129,9 @@ export const init = (options) => {
         // to check if things are good get faked out
         // TODO reafctor the direct access to priv.keycloak
         // away from the users
+        console.log('options')
+        console.log(options)
+        console.log('options')
         priv.setToken(options.token);
         resolve();
       });
@@ -234,6 +245,7 @@ function initError() {
 /*** Login/Logout ***/
 export function login() {
   log('Logging in');
+  console.log('login')
   // Redirect to login
   cookie.set('cs_loggedOut', 'false');
   return priv.login({ redirectUri: window.location.href });
@@ -272,7 +284,12 @@ export const logoutAllTabs = (bounce) => {
   logout(bounce);
 };
 
-function loginAllTabs() {
+function loginAllTabs(data) {
+  console.log('loginAllTabs')
+  console.log(data)
+  console.log(priv)
+  console.log('loginAllTabs')
+
   authChannel.postMessage({ type: 'login' });
 }
 
@@ -284,6 +301,7 @@ export const getUserInfo = () => {
   if (jwtCookie && isExistingValid(jwtCookie) && isExistingValid(priv.getToken())) {
     return priv.getTokenParsed();
   }
+  console.log('getUserInfo')
 
   return updateToken()
     .then(() => {
@@ -317,6 +335,7 @@ function refreshTokens() {
 
 // Actually update the token
 function updateToken() {
+  console.log('updateToken')
   return priv
     .updateToken()
     .then((refreshed) => {
