@@ -12,7 +12,6 @@ class Priv {
   }
 
   setKeycloak(options, onTokenExpired, onAuthSuccess, onAuthRefreshSuccess) {
-    console.log('setKeycloakdd')
     this._keycloak = Keycloak(options);
     this._keycloak.onTokenExpired = onTokenExpired;
     this._keycloak.onAuthSuccess = onAuthSuccess;
@@ -28,7 +27,6 @@ class Priv {
   }
 
   setToken(token) {
-    console.log('setToken')
     this._keycloak.authenticated = true;
     this._keycloak.token = token;
   }
