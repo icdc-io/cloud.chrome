@@ -71,7 +71,7 @@ const Wrapper = ({
         firstLevelMenuClasses.push('visible');
     }
 
-    const dynamicfilename = process.env.CP_VENDOR || 'logo';
+    const dynamicfilename = process.env.CP_VENDOR || 'icdc';
     const helpBaseUrl = `https://help.${process.env.CP_VENDOR || 'icdc'}.io`;
     const helpPath = id === 'home' ? '' : `/${id}/${locale}/Welcome.html`
 
