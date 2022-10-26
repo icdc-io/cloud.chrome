@@ -254,10 +254,14 @@ export function logout(bounce, redirectUrl) {
     cookie.set('cs_loggedOut', 'true', {
       expires: eightSeconds,
     });
-    priv.logout({
+    const logoutParams = {
       post_logout_redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
       id_token_hint: priv._keycloak.idToken
-    });
+    };
+    console.log('logoutParams')
+    console.log(logoutParams)
+    console.log('logoutParams')
+    priv.logout(logoutParams);
   }
 }
 

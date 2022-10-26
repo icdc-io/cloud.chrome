@@ -53,6 +53,8 @@ export function getOfflineToken(realm, clientId) {
   const tokenURL = `${insightsUrl(DEFAULT_ROUTES)}/realms/${realm}/protocol/openid-connect/token`;
   const params = parseHashString(postbackUrl);
 
+  console.log('getOfflineToken')
+
   return axios({
     method: 'post',
     url: tokenURL,
