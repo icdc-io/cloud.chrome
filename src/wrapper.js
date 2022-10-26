@@ -32,6 +32,7 @@ const Wrapper = ({
   changeLang,
   getPublicLocationData
 }) => {
+    console.log('logout new version');
     const initialUser = {
         location: '',
         account: '',
