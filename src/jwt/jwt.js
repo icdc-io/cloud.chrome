@@ -266,16 +266,13 @@ export function logout(bounce, redirectUrl) {
     cookie.set('cs_loggedOut', 'true', {
       expires: eightSeconds,
     });
+    const finalRedirectUrl = redirectUrl ? redirectUrl.startsWith('http') ? redirectUrl : `https://${redirectUrl}` : process.env.LOGOUT_URL || `https://ibacloud.by`;
     const logoutParams = {
-      post_logout_redirect_uri: redirectUrl || process.env.LOGOUT_URL || `https://ibacloud.by`,
+      post_logout_redirect_uri: finalRedirectUrl,
       id_token_hint: priv._tokenId
     };
-    console.log('logoutParams')
-    console.log(logoutParams)
-    console.log(priv)
-    console.log(priv._tokenId)
-    console.log('logoutParams')
-    priv.logout(logoutParams);
+    const query = new URLSearchParams(logoutParams).toString();
+    window.location.replace(`${insightsUrl(DEFAULT_ROUTES)}/realms/${defaultOptions.realm}/protocol/openid-connect/logout?${query}`);
   }
 }
 
