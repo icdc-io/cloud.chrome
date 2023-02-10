@@ -239,11 +239,11 @@ const Wrapper = ({
     };
 
     const isSidebarOpen = isSideBarVisible && id !== 'home';
-    const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
+    const contentPadding = isSidebarOpen ? '260px' : '0';
 
     if (isError === 'wrong') {
         return (
-            <h2 className='unavailable' style={{ paddingLeft: contentPadding }}>
+            <h2 className='unavailable'>
                 {errorTranslations[locale][isError]}
             </h2>
         );
