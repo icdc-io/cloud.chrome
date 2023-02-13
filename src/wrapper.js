@@ -63,7 +63,7 @@ const Wrapper = ({
     const checkError = (available) => available || id === 'home' ? '' : 'notAvailable';
 
     useEffect(async() => {
-        getCpVendor && getCpVendor(process.env.CP_VENDOR || 'scdc');
+        getCpVendor && getCpVendor(process.env.CP_VENDOR || 'icdc');
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
