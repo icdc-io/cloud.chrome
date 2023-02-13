@@ -6,7 +6,7 @@ import './wrapper.scss';
 import PropTypes from 'prop-types';
 import auth from './auth';
 import { errorTranslations, langs, servicesImages } from './constants/viewConstants';
-import Skeleton from './Skeleton';
+// import Skeleton from './Skeleton';
 // import Keycloak from 'keycloak-js';
 
 const libjwt = auth();
@@ -30,7 +30,8 @@ const Wrapper = ({
   changeApp = () => {},
   openHelpdesk = false,
   changeLang,
-  getPublicLocationData
+  getPublicLocationData,
+  getCpVendor
 }) => {
     const initialUser = {
         location: '',
@@ -62,6 +63,7 @@ const Wrapper = ({
     const checkError = (available) => available || id === 'home' ? '' : 'notAvailable';
 
     useEffect(async() => {
+        getCpVendor && getCpVendor(process.env.CP_VENDOR || 'scdc');
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
@@ -239,7 +241,7 @@ const Wrapper = ({
     };
 
     const isSidebarOpen = isSideBarVisible && id !== 'home';
-    const contentPadding = isSidebarOpen ? '260px' : '0';
+    const contentPadding = isSidebarOpen ? 'calc(260px + 2%)' : '2%';
 
     if (isError === 'wrong') {
         return (
