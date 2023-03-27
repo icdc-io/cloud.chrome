@@ -38,7 +38,7 @@ const Wrapper = ({
         account: '',
         role: ''
     };
-    const apiUrl = process.env.API_GATEWAY ? `${process.env.API_GATEWAY}/api` : 'https://api.icdc.d3.zby.icdc.io/api';
+    const apiUrl = process.env.API_GATEWAY ? `${process.env.API_GATEWAY}/api` : 'https://api-gw.icdc.d3.zby.icdc.io/api';
 
     const [user, setUser] = useState(initialUser);
     const [availableAccounts, setAvailableAccounts] = useState({});
