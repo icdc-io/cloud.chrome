@@ -220,7 +220,7 @@ const Wrapper = ({
         }
 
         return [...servicesInfoSet]
-            .filter(location => location.displayName && location.name)
+            .filter(location => location?.displayName && location?.name)
             .map((location, key) => {
                 const shortNameArray = location.displayName.split('IBACloud ');
                 const isExternal = location.url.startsWith('http');
