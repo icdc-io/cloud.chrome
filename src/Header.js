@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { langs } from './constants/viewConstants';
 import Skeleton from './Skeleton';
 import LocationsDropdown from './LocationsDropdown';
+import { CP_VENDOR } from './constants/consts';
 
 const Wrapper = ({
   id,
@@ -71,8 +72,7 @@ const Wrapper = ({
         firstLevelMenuClasses.push('visible');
     }
 
-    const dynamicfilename = process.env.CP_VENDOR || 'icdc';
-    const helpBaseUrl = `https://help.${process.env.CP_VENDOR || 'icdc'}.io`;
+    const helpBaseUrl = `https://help.${CP_VENDOR}.io`;
     const helpPath = id === 'home' ? '' : `/${id}/${locale}/Welcome.html`
 
     return (
@@ -82,7 +82,7 @@ const Wrapper = ({
                         onClick={() => changeSidebarVisability()}
                         alt='Burger menu' /> }
         <a href={`${window.location.origin}/`} className='header-logo'>
-            <img src={ require(`./images/${dynamicfilename}.svg`) } alt="ICDCLogo"/>
+            <img src={ require(`./images/${CP_VENDOR}.svg`) } alt="ICDCLogo"/>
         </a>
         <div className='info-section'>
             <Dropdown className='question-dropdown' icon={<img src={QuestionLogo} />}>
