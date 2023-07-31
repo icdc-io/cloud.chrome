@@ -6,6 +6,7 @@ import './wrapper.scss';
 import PropTypes from 'prop-types';
 import auth from './auth';
 import { errorTranslations, langs, servicesImages } from './constants/viewConstants';
+import { CP_VENDOR } from './constants/consts';
 // import Skeleton from './Skeleton';
 // import Keycloak from 'keycloak-js';
 
@@ -63,7 +64,7 @@ const Wrapper = ({
     const checkError = (available) => available || id === 'home' ? '' : 'notAvailable';
 
     useEffect(async() => {
-        getCpVendor && getCpVendor(process.env.CP_VENDOR || 'icdc');
+        getCpVendor && getCpVendor(CP_VENDOR);
         getAppInfo && getAppInfo({
             amazon: true,
             iscsi: true,
