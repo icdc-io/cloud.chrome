@@ -56,7 +56,6 @@ const Wrapper = ({
     const { account, role, location } = user;
 
     const currentAccountInfo = availableAccounts[account];
-    console.log('currentAccountInfo',currentAccountInfo)
 
     const roles = currentAccountInfo?.roles.map(role => {
         let order = null;
@@ -80,8 +79,6 @@ const Wrapper = ({
     })
     .filter(x => x.sortOrder !== null)
     .sort((a, b) => a.sortOrder - b.sortOrder);
-
-    console.log(roles)
 
     const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
     const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
