@@ -56,12 +56,32 @@ const Wrapper = ({
     const { account, role, location } = user;
 
     const currentAccountInfo = availableAccounts[account];
+    console.log('currentAccountInfo',currentAccountInfo)
 
-    const roles = currentAccountInfo?.roles.map(role => ({
-        key: role,
-        text: `${role}`,
-        value: `${role}`
-    }));
+    const roles = currentAccountInfo?.roles.map(role => {
+        let order = null;
+        switch (role.toLowerCase()) {
+            case 'admin':
+                order = 0; break;
+            case 'billing':
+                order = 1; break;
+            case 'member':
+                order = 2; break;
+            default:
+                order = null; break;
+        }
+
+        return {
+            key: role,
+            text: `${role}`,
+            value: `${role}`,
+            sortOrder: order,
+        }
+    })
+    .filter(x => x.sortOrder !== null)
+    .sort((a, b) => a.sortOrder - b.sortOrder);
+
+    console.log(roles)
 
     const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
     const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
@@ -148,13 +168,15 @@ const Wrapper = ({
                                 closeOnChange
                             >
                                 <Dropdown.Menu className='second-level'>
-                                    {(roles || []).map(currentRole => (
+                                    {
+                                    (roles || []).map(currentRole => (
                                         <Dropdown.Item key={currentRole.value}
                                             className={currentRole.value === role ? 'current' : ''}
                                             onClick={() => changeUserInfo('role', currentRole.value)}>
                                                 {currentRole.text}
                                         </Dropdown.Item>
-                                    ))}
+                                    ))
+                                    }
                                 </Dropdown.Menu>
                             </Dropdown> }
                             <Dropdown.Divider />
