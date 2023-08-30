@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import { langs } from './constants/viewConstants';
 import Skeleton from './Skeleton';
 import LocationsDropdown from './LocationsDropdown';
+import _ from "lodash";
 
 const Wrapper = ({
   id,
@@ -24,6 +25,7 @@ const Wrapper = ({
   logout
 }) => {
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
+    const [roleChangeApplied, setRoleChangeApplied] =  useState(false);
 
     const ref = useRef();
 
@@ -57,14 +59,16 @@ const Wrapper = ({
 
     const currentAccountInfo = availableAccounts[account];
 
+    const availableRoles = ['admin', 'billing', 'member'];
+
     const roles = currentAccountInfo?.roles.map(role => {
         let order = null;
         switch (role.toLowerCase()) {
-            case 'admin':
+            case availableRoles[0]:
                 order = 0; break;
-            case 'billing':
+            case availableRoles[1]:
                 order = 1; break;
-            case 'member':
+            case availableRoles[2]:
                 order = 2; break;
             default:
                 order = null; break;
@@ -79,6 +83,12 @@ const Wrapper = ({
     })
     .filter(x => x.sortOrder !== null)
     .sort((a, b) => a.sortOrder - b.sortOrder);
+    
+    if(!roleChangeApplied && role && !availableRoles.includes(role?.toLowerCase()) && roles?.length)
+    {
+        changeUserInfo('role', roles[0].value);
+        setRoleChangeApplied(true);
+    }
 
     const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
     const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
