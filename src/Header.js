@@ -88,7 +88,7 @@ const Wrapper = ({
         if (role && !availableRoles.includes(role?.toLowerCase()) && roles?.length) {
             changeUserInfo('role', roles[0].value);
         }
-    }, [role, roles]);
+    }, [role, roles, account, location]);
 
     const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
     const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
