@@ -26,7 +26,6 @@ const Wrapper = ({
   logout
 }) => {
     const [isUserDropdownOpen, setIsUserDropdownOpen] = useState(false);
-    const [roleChangeApplied, setRoleChangeApplied] =  useState(false);
 
     const ref = useRef();
 
@@ -84,12 +83,12 @@ const Wrapper = ({
     })
     .filter(x => x.sortOrder !== null)
     .sort((a, b) => a.sortOrder - b.sortOrder);
-    
-    if(!roleChangeApplied && role && !availableRoles.includes(role?.toLowerCase()) && roles?.length)
-    {
-        changeUserInfo('role', roles[0].value);
-        setRoleChangeApplied(true);
-    }
+
+    useEffect(() => {
+        if (role && !availableRoles.includes(role?.toLowerCase()) && roles?.length) {
+            changeUserInfo('role', roles[0].value);
+        }
+    }, [role, roles]);
 
     const userDropdownClasses = ['ui', 'active', 'dropdown', 'user-dropdown'];
     const firstLevelMenuClasses = ['menu', 'transition', 'first-level'];
