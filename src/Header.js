@@ -162,7 +162,7 @@ const Wrapper = ({
                                             onClick={() => changeUserInfo('account', currentAccount.value)}
                                         >
                                             {currentAccount.text}
-                                            <span style={{ color: 'gray' }}>({currentAccount.value?.toUpperCase()})</span>
+                                            <span style={{ color: 'gray' }}> ({currentAccount.value?.toUpperCase()})</span>
                                         </Dropdown.Item>
                                     ))}
                                 </Dropdown.Menu>
