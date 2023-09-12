@@ -9,6 +9,7 @@ import Skeleton from './Skeleton';
 import LocationsDropdown from './LocationsDropdown';
 import _ from "lodash";
 import { CP_VENDOR } from './constants/consts';
+import {filterAndSort, getAvailableRoles} from './utils/roleUtils';
 
 const Wrapper = ({
   id,
@@ -59,33 +60,17 @@ const Wrapper = ({
 
     const currentAccountInfo = availableAccounts[account];
 
-    const availableRoles = ['admin', 'billing', 'member'];
 
-    const roles = currentAccountInfo?.roles.map(role => {
-        let order = null;
-        switch (role.toLowerCase()) {
-            case availableRoles[0]:
-                order = 0; break;
-            case availableRoles[1]:
-                order = 1; break;
-            case availableRoles[2]:
-                order = 2; break;
-            default:
-                order = null; break;
-        }
-
-        return {
-            key: role,
-            text: `${role}`,
-            value: `${role}`,
-            sortOrder: order,
-        }
-    })
-    .filter(x => x.sortOrder !== null)
-    .sort((a, b) => a.sortOrder - b.sortOrder);
+ 
+    const roles = filterAndSort(currentAccountInfo?.roles)
+        .map(role=>({
+        key: role,
+        text: `${role}`,
+        value: `${role}`,
+    }));
 
     useEffect(() => {
-        if (role && !availableRoles.includes(role?.toLowerCase()) && roles?.length) {
+        if (role && !getAvailableRoles().includes(role?.toLowerCase()) && roles?.length) {
             changeUserInfo('role', roles[0].value);
         }
     }, [role, roles, account, location]);
