@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import auth from './auth';
 import { errorTranslations, langs, servicesImages } from './constants/viewConstants';
 import { CP_VENDOR } from './constants/consts';
+import {filterAndSort} from './utils/roleUtils';
 // import Skeleton from './Skeleton';
 // import Keycloak from 'keycloak-js';
 
@@ -187,7 +188,7 @@ const Wrapper = ({
 
       if (availableAccounts[account]) {
         const newLocation = getFirstAvailableLocation(availableAccounts[account].locations, serviceAvailability, location);
-        const newRole = availableAccounts[account].roles[0];
+        const newRole = filterAndSort(availableAccounts[account].roles)[0];
 
         setUser(prevState => ({ ...prevState, location: newLocation, role: newRole }));
         isError != 'noAccess' && setIsError(checkError(serviceAvailability[newLocation]));
