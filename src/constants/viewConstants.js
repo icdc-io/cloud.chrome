@@ -14,6 +14,10 @@ import question from '../images/question.svg';
 import storage from '../images/storage.svg';
 import support from '../images/support.svg';
 import billing from '../images/billing.svg';
+import database from '../images/database.svg';
+import openshiftCloud from '../images/openshiftCloud.svg';
+import openshiftDedicated from '../images/openshiftDedicated.svg';
+import openshiftService from '../images/openshiftService.svg';
 
 export const errorTranslations = {
   ru: {
@@ -53,5 +57,9 @@ export const servicesImages = {
   question,
   storage,
   support,
-  billing
+  billing,
+  database,
+  "openshift-cloud": openshiftCloud,
+  "openshift-dedicated": openshiftDedicated,
+  "openshift-service": openshiftService
 }
