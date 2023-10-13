@@ -59,6 +59,7 @@ const Wrapper = ({
 
     const isNoAccess = {
         admin: (groups) => !groups.some(group => /.cloud$/.test(group)),
+        billing: (groups) => !groups.some(group => /.cloud$/.test(group)),
         devops: (groups) => /*['member'].some(role => tokenData.external.accounts[user.account].roles.indexOf(role) !== -1)*/false
     };
 
