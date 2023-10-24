@@ -84,7 +84,7 @@ const Wrapper = ({
     }
 
     const helpBaseUrl = `https://help.${CP_VENDOR}.io`;
-    const helpPath = id === 'home' ? '' : `/${id === "openshift-cloud" ? "openshift" : id}/${locale}/Welcome.html`
+    const helpPath = id === 'home' ? '' : `/${id === "outrun-cloud" ? "outrun" : id}/${locale}/Welcome.html`
 
     return (
       <header className='chrome-header'>

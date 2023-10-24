@@ -15,9 +15,9 @@ import storage from '../images/storage.svg';
 import support from '../images/support.svg';
 import billing from '../images/billing.svg';
 import database from '../images/database.svg';
-import openshiftCloud from '../images/openshiftCloud.svg';
-import openshiftDedicated from '../images/openshiftDedicated.svg';
-import openshiftService from '../images/openshiftService.svg';
+import outrunCloud from '../images/outrunCloud.svg';
+import outrunDedicated from '../images/outrunDedicated.svg';
+import outrunService from '../images/outrunService.svg';
 
 export const errorTranslations = {
   ru: {
@@ -59,7 +59,7 @@ export const servicesImages = {
   support,
   billing,
   database,
-  "openshift-cloud": openshiftCloud,
-  "openshift-dedicated": openshiftDedicated,
-  "openshift-service": openshiftService
+  "outrun-cloud": outrunCloud,
+  "outrun-dedicated": outrunDedicated,
+  "outrun-service": outrunService
 }
