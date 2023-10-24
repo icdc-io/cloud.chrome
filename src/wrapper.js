@@ -222,8 +222,11 @@ const Wrapper = ({
             servicesInfoSet.add(currentService);
         }
 
+        const numberOrLast = (position) => typeof position === 'number' ? position : 999;
+
         return [...servicesInfoSet]
             .filter(location => location?.displayName && location?.name)
+            .sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
             .map((location, key) => {
                 const shortNameArray = location.displayName.split('IBACloud ');
                 const isExternal = location.url.startsWith('http');
