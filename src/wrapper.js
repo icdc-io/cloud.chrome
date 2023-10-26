@@ -221,12 +221,24 @@ const Wrapper = ({
         if (!serviceAvailability[user.location]) {
             servicesInfoSet.add(currentService);
         }
+        const adminServicesOnly = ['admin', 'billing'];
+        const servicesRoles = {
+            openshift: [ 'member' ],
+            devops: [ 'member' ],
+            projects: [ 'admin', 'billing', 'manager' ]
+        };
+
+        const token = window.insights.getUserInfo();
+
+        const isVisible = (service) => adminServicesOnly.includes(service) ? token.groups.some(group => /.cloud$/.test(group)) : servicesRoles[service] ?
+        servicesRoles[service].some(role => token.external.accounts[user.account].roles.indexOf(role) !== -1) : true;
 
         const numberOrLast = (position) => typeof position === 'number' ? position : 999;
 
         return [...servicesInfoSet]
             .filter(location => location?.displayName && location?.name)
             .sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
+            .filter(location => isVisible(location.name))
             .map((location, key) => {
                 const shortNameArray = location.displayName.split('IBACloud ');
                 const isExternal = location.url.startsWith('http');
