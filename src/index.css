@@ -1,0 +1,84 @@
+@import "./reset.css";
+@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
+
+:root {
+  --primary-black: rgba(0, 0, 0, 0.87);
+  --black: #000;
+  --dark-grey: #4c4f56;
+  --white: #fff;
+  --border-color: #d4d4d5;
+  --grey: #777;
+  --label-color: #004f8a;
+  --label-bg: #d8eeff;
+  --tabs-border: #e2e2e8;
+  --primary-blue: #2185d0;
+  --input-border: #d1d1d1;
+  --placeholder: #909090;
+  --separator: #dedede;
+  --shadow: rgba(0, 0, 0, 0.2);
+  --shadow-light: rgba(0, 0, 0, 0.1);
+  --radio-border: #848ea5;
+  --button-white: #fefefe;
+  --dark-white: #e1e1e1;
+  --hor-separator: #dfe3e5;
+  --dark-text: #393946;
+  --grey-text: #4d5258;
+  --light-text: #666;
+  --header-height: 76px;
+}
+
+body {
+  position: relative;
+  background-color: #ebebeb;
+  position: relative;
+  font-family: Lato, sans-serif;
+}
+
+button {
+  all: unset;
+  cursor: pointer;
+}
+
+button:focus-visible {
+  outline: 1px solid #2185d0;
+}
+
+#root {
+  font-family: Lato, sans-serif;
+  position: relative;
+  min-height: 100vh;
+  display: grid;
+}
+
+.ui.active.centered.loader {
+  margin: auto;
+}
+
+.submit-banner {
+  position: fixed;
+  bottom: 0;
+  width: 100%;
+  left: 0;
+  padding: 33px 50px 33px 67px;
+  background-color: var(--white);
+  border-radius: 4px;
+  border: 1px solid var(--border-color);
+  transition: all 0.5s ease-out;
+  display: flex;
+  justify-content: space-between;
+  z-index: 9998;
+  gap: 32px;
+  flex-wrap: wrap;
+}
+
+.sidebar-open .submit-banner {
+  padding-left: 327px;
+}
+
+.sidebar-close .submit-banner {
+  padding-left: 67px;
+}
+
+.below-header {
+  padding-top: var(--header-height);
+}

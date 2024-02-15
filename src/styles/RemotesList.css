@@ -1,0 +1,6 @@
+.skeleton-side_wrapper {
+  padding: 12px 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}

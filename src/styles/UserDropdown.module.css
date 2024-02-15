@@ -1,0 +1,84 @@
+.ui.dropdown.user-dropdown {
+  color: white;
+  font-size: 16px;
+  min-width: 160px;
+}
+
+.user-dropdown .menu.transition.visible.first-level {
+  left: -16px;
+  top: 36px;
+}
+
+.user-dropdown .item.current {
+  background: #ebebeb;
+}
+
+.user-dropdown .link.item {
+  &.accounts {
+    z-index: 3;
+  }
+
+  &.role {
+    z-index: 2;
+  }
+
+  &.lang {
+    z-index: 1;
+  }
+}
+
+.user-dropdown .menu.transition.second-level {
+  top: 0px !important;
+}
+
+.user-dropdown .header {
+  text-transform: none;
+  font-weight: normal;
+}
+
+.user-select__trigger {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.user-select {
+  font-size: 14px;
+  background-color: white;
+  color: rgba(0, 0, 0, 0.85);
+  border: 1px solid rgba(34, 36, 38, 0.15);
+  border-radius: 0.28571429rem;
+  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+}
+
+.select-item {
+  padding: 0.78571429rem 1.14285714rem;
+  line-height: 1;
+  display: flex;
+  justify-content: space-between;
+
+   /* &:focus, &:focus-within {
+     outline: none;
+   }
+
+   &:hover {
+     background: rgba(0,0,0,.05);
+     color: rgba(0,0,0,.95);
+     outline: none;
+   }
+   &[data-highlighted] {
+     background: rgba(0,0,0,.05);
+   }
+   &[data-state="checked"] {
+     color: #4183c4;
+     background: rgba(0,0,0,.03);
+  } */
+}
+
+.select-item.label {
+  font-size: 12.7px;
+}
+
+.select-item.label:hover {
+  background: inherit;
+}

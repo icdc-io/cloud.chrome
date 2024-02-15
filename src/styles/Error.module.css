@@ -1,0 +1,59 @@
+.noAccess {
+  font-family: "Inter";
+  color: #000;
+  font-size: 18px;
+  font-weight: 400;
+  line-height: normal;
+  background-color: #fff;
+  background-image: url("../images/403.svg");
+  background-repeat: no-repeat;
+  background-position: 90% bottom;
+  height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.noAccess-wrapper {
+  width: 100%;
+  max-width: 970px;
+  margin: 0 auto;
+  padding: 0 15px;
+}
+
+h2 {
+  font-size: 46px;
+  line-height: normal;
+  margin-bottom: 28px;
+}
+
+div {
+  margin-bottom: 26px;
+  width: 100%;
+}
+
+p {
+  max-width: 60%;
+}
+
+b {
+  display: block;
+  margin-bottom: 7px;
+}
+
+@media (max-width: 767px) {
+  .noAccess {
+    background-position: 50% center;
+    background-image: url("../images/403_mob.svg");
+    background-size: 750px;
+  }
+
+  .noAccess-wrapper {
+    height: auto;
+    padding: 0 5%;
+  }
+
+  h2 {
+    font-size: 32px;
+  }
+}

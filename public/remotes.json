@@ -1,0 +1,78 @@
+{
+  "icz": {
+    "account": {},
+    "admin": {},
+    "networking": {},
+    "storage": {},
+    "billing": {}
+  },
+  "sbg": {},
+  "dby": {},
+  "cby": {},
+  "zby": {},
+  "ycz": {},
+  "pkz": {},
+  "dcz": {
+    "account": [
+      {
+        "route": "billing",
+        "name": "Billing",
+        "url": "http://localhost:8084"
+      },
+      {
+        "route": "info",
+        "name": "Info",
+        "url": "http://localhost:8082"
+      },
+      {
+        "route": "users",
+        "name": "Users",
+        "url": "http://localhost:8083"
+      },
+      {
+        "route": "reports",
+        "name": "Reports",
+        "url": "http://localhost:8085"
+      }
+    ],
+    "networking": [
+      {
+        "route": "dns",
+        "name": "DNS",
+        "url": "http://localhost:8087"
+      },
+      {
+        "route": "vpc",
+        "name": "VPC",
+        "url": "http://localhost:8087"
+      },
+      {
+        "route": "firewall",
+        "name": "Firewall",
+        "url": "http://localhost:8082"
+      },
+      {
+        "route": "portforward",
+        "name": "Port Forward",
+        "url": "http://localhost:8083"
+      },
+      {
+        "route": "load_balancer",
+        "name": "Load Balancer",
+        "url": "http://localhost:8085"
+      }
+    ],
+    "storage2": [
+      {
+        "route": "amazon",
+        "name": "S3 Object Storage",
+        "url": "http://localhost:8001"
+      },
+      {
+        "route": "iscsi",
+        "name": "iSCSI Block Storage",
+        "url": "http://localhost:8002"
+      }
+    ]
+  }
+}
