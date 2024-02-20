@@ -2,6 +2,7 @@ import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import QuestionLogo from "../images/question.svg";
 import { useSelector } from "react-redux";
+import styles from "../styles/HelpDropdown.module.css";
 
 const HelpDropdown = () => {
   const helpBaseUrl = `https://help.${
@@ -20,13 +21,19 @@ const HelpDropdown = () => {
   return (
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
-        <button className="help-button" aria-label="Help options">
+        <button className={styles["help-button"]} aria-label="Help options">
           <img src={QuestionLogo} />
         </button>
       </DropdownMenu.Trigger>
       <DropdownMenu.Portal>
-        <DropdownMenu.Content className="help__content" sideOffset={5}>
-          <DropdownMenu.Item className="help-item" onSelect={goToHelp}>
+        <DropdownMenu.Content
+          className={styles["help__content"]}
+          sideOffset={5}
+        >
+          <DropdownMenu.Item
+            className={styles["help-item"]}
+            onSelect={goToHelp}
+          >
             Help & Asistance
           </DropdownMenu.Item>
         </DropdownMenu.Content>

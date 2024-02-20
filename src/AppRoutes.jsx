@@ -32,7 +32,9 @@ const AppRoutes = () => {
 
   const uniqueInternalServicesList = Object.entries(
     uniqueInternalServices,
-  ).filter((serviceInfo) => remotes[user.location][serviceInfo[0].substring(1)]);
+  ).filter(
+    (serviceInfo) => remotes[user.location][serviceInfo[0].substring(1)],
+  );
 
   const routes = () => {
     return uniqueInternalServicesList
@@ -44,7 +46,7 @@ const AppRoutes = () => {
           ],
         ),
       }))
-      .map((serviceInfo) => (
+      .map((serviceInfo) =>
         serviceInfo.isAvailableInLocation ? (
           <Route
             key={serviceInfo.name}
@@ -83,11 +85,9 @@ const AppRoutes = () => {
             path={serviceInfo.name}
             element={<h1>Not available in this location</h1>}
           />
-        )
-    ));
+        ),
+      );
   };
-
-  console.log(routes())
 
   return (
     <Layout>

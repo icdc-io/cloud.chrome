@@ -47,7 +47,8 @@ const parseAccountsData = async (accountsDataPromise) => {
   const currentAccountInfo = accounts[user.account];
 
   user.location =
-    isUserInfoInvalid || !currentAccountInfo.locations.includes(userInfo.location)
+    isUserInfoInvalid ||
+    !currentAccountInfo.locations.includes(userInfo.location)
       ? currentAccountInfo.locations[0]
       : userInfo.location; //check if location from localStorage is valid, otherwise set first available location
   user.role =

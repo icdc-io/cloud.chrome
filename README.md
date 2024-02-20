@@ -1,6 +1,6 @@
-# catalog
+# Chrome host app
 
-Compute > Catalog : react micro frontend
+Entrypoint into cloud, host app
 
 npm i
 

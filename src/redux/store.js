@@ -1,9 +1,9 @@
 import promiseMiddleware from "redux-promise-middleware";
 import { compose, createStore, applyMiddleware, combineReducers } from "redux";
-import thunk from "redux-thunk";
+import { thunk } from "redux-thunk";
 import { logger } from "redux-logger";
 import Immutable from "seamless-immutable";
-import { reducer as reduxFormReducer } from "redux-form";
+// import { reducer as reduxFormReducer } from "redux-form";
 import {
   CHANGE_BURGER_VISIBILITY,
   CHANGE_CURRENT_SERVICE,
@@ -28,7 +28,7 @@ const initialState = Immutable({
   remotes: {},
   remotesFetchStatus: PENDING,
   fullAccountsInfo: null,
-  baseUrls: null,
+  baseUrls: {},
   uniqueInternalServices: {},
   accountsDataFetchStatus: PENDING,
   username: "",
@@ -104,7 +104,7 @@ const staticReducers = {
 function createReducer(asyncReducers) {
   return combineReducers({
     ...staticReducers,
-    form: reduxFormReducer,
+    // form: reduxFormReducer,
     ...asyncReducers,
   });
 }

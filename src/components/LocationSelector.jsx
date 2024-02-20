@@ -3,9 +3,12 @@ import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserInfo } from "../redux/actions";
+import styles from "../styles/LocationSelector.module.css";
+import { useTranslation } from "react-i18next";
 
 const LocationSelector = () => {
   const dispatch = useDispatch();
+  const { t } = useTranslation();
   const { account, location } = useSelector((state) => state.host.user);
   const baseUrls = useSelector((state) => state.host.baseUrls);
   const currentServiceName = useSelector((state) => state.host.currentService);
@@ -52,14 +55,17 @@ const LocationSelector = () => {
   };
 
   return (
-    <label className="location-label">
-      Location:
+    <label className={styles["location-label"]}>
+      {t("location")}:
       <Select.Root
         value={location}
         onValueChange={changeLocation}
-        className="location-selector"
+        className={styles["location-selector"]}
       >
-        <Select.Trigger className="select-trigger" aria-label="Location">
+        <Select.Trigger
+          className={styles["select-trigger"]}
+          aria-label="Location"
+        >
           <Select.Value placeholder={location} />
           <Select.Icon>
             <ChevronDownIcon />
@@ -70,13 +76,13 @@ const LocationSelector = () => {
           <Select.Content
             side="top"
             position="popper"
-            className="locations-options"
+            className={styles["locations-options"]}
           >
             <Select.Viewport>
               <Select.Group>
                 {availableLocations.map((currentLocation) => (
                   <Select.Item
-                    className={"select-item "}
+                    className={styles["select-item"]}
                     value={currentLocation.value}
                     key={currentLocation.value}
                   >
@@ -84,11 +90,11 @@ const LocationSelector = () => {
                   </Select.Item>
                 ))}
               </Select.Group>
-              <Select.Separator className="SelectSeparator" />
+              <Select.Separator className={styles["SelectSeparator"]} />
               <Select.Group>
                 {notAvailableLocations.map((currentLocation) => (
                   <Select.Item
-                    className={"select-item "}
+                    className={styles["select-item"]}
                     value={currentLocation.value}
                     key={currentLocation.value}
                   >

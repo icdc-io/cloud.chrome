@@ -17,7 +17,7 @@ export const kc = (function (options) {
   }
 
   function updateTokenb() {
-    kc.token = '1';
+    kc.token = "1";
   }
 
   function logout() {
@@ -125,7 +125,7 @@ export const kc = (function (options) {
     getUserInfo,
     login,
     logout,
-    updateTokenb
+    updateTokenb,
   };
 })(keycloakOptions);
 

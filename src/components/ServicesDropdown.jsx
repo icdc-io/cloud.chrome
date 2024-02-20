@@ -7,6 +7,7 @@ import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { isServiceAvailable } from "../utils/availability";
 import { servicesImages } from "../constants/viewConstants";
+import styles from "../styles/ServicesDropdown.module.css";
 
 const ServicesDropdown = () => {
   const currentServiceName = useSelector((state) => state.host.currentService);
@@ -78,7 +79,7 @@ const ServicesDropdown = () => {
   return handledServices.length ? (
     <Select.Root value={currentServiceName} onValueChange={onServiceChange}>
       <Select.Trigger
-        className="select-trigger"
+        className={styles["select-trigger"]}
         aria-label={`Current service - ${currentServiceName}`}
       >
         <Select.Value placeholder={currentServiceName} />
@@ -88,7 +89,7 @@ const ServicesDropdown = () => {
       </Select.Trigger>
       <Select.Portal>
         <Select.Content
-          className="services-select-content"
+          className={styles["services-select-content"]}
           side="top"
           position="popper"
         >
@@ -97,7 +98,7 @@ const ServicesDropdown = () => {
               {handledServices.map((service) => (
                 <Select.Item
                   key={service.key}
-                  className={"select-item " + service.className}
+                  className={`${styles["select-item"]} ${styles[service.className]}`}
                   value={service.value}
                 >
                   <img src={service.image.src || ""} />
@@ -105,9 +106,9 @@ const ServicesDropdown = () => {
                 </Select.Item>
               ))}
             </Select.Group>
-            <Select.Separator className="separator" />
+            <Select.Separator className={styles["separator"]} />
             <Select.Group>
-              <Select.Item className={"select-item "}>
+              <Select.Item className={styles["select-item"]}>
                 <img src={homepage.image.src} />
                 <Select.ItemText>{homepage.text}</Select.ItemText>
               </Select.Item>
@@ -117,7 +118,7 @@ const ServicesDropdown = () => {
       </Select.Portal>
     </Select.Root>
   ) : (
-    <Skeleton className="services-skeleton" width="160px" />
+    <Skeleton className={styles["services-skeleton"]} width="160px" />
   );
 };
 

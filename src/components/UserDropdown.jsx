@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import { kc } from "../keycloak";
 import { langs } from "../i18n";
 import { changeLang, changeUserInfo } from "../redux/actions";
-import useUserStore from "../currentInfoStore";
 import { filterAndSort } from "../utils/roleUtils";
 import styles from "../styles/UserDropdown.module.css";
 
@@ -16,9 +15,6 @@ const UserDropdown = () => {
   const { account, role, location } = useSelector((state) => state.host.user);
   const locale = useSelector((state) => state.host.lang);
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
-  const changeUserCurrentInfo = useUserStore(
-    (state) => state.changeUserCurrentInfo,
-  );
 
   const logout = () => {
     kc.logout();
@@ -63,7 +59,6 @@ const UserDropdown = () => {
     }
     dispatch(changeUserInfo(newUserInfo));
     localStorage.setItem("user", JSON.stringify(newUserInfo));
-    changeUserCurrentInfo(newUserInfo);
   };
 
   return (
@@ -72,7 +67,6 @@ const UserDropdown = () => {
         <button
           className={styles["user-select__trigger"]}
           aria-label="User options"
-          style={{ color: "white" }}
         >
           {username}
           <ChevronDownIcon color="white" />
@@ -81,9 +75,12 @@ const UserDropdown = () => {
 
       <DropdownMenu.Portal>
         <DropdownMenu.Content className={styles["user-select"]} sideOffset={5}>
-          <DropdownMenu.Label className={`${styles["select-item"]} ${styles["label"]}`}>
+          <DropdownMenu.Label
+            className={`${styles["select-item"]} ${styles["label"]}`}
+          >
             {email}
           </DropdownMenu.Label>
+          <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
               Accounts
@@ -116,7 +113,7 @@ const UserDropdown = () => {
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
               Role
-              <div className="RightSlot">
+              <div className={styles["RightSlot"]}>
                 <span className={styles["selected-value"]}>{role}</span>
                 <ChevronRightIcon />
               </div>

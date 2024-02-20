@@ -7,6 +7,7 @@ import { FULFILLED, PENDING, REJECTED } from "../redux/constants.js";
 import { Loader } from "semantic-ui-react";
 import { isServiceAvailable } from "../utils/availability";
 import Error from "./Error";
+import styles from "../styles/Layout.module.css";
 
 const Layout = ({ children }) => {
   const isSideBarVisible = useSelector((state) => state.host.isSideBarVisible);
@@ -49,12 +50,10 @@ const Layout = ({ children }) => {
     <>
       <Header status={finalFetchStatus} />
       <div
-        className={
-          (isSideBarVisible ? "" : "without-sidebar ") + "below-header"
-        }
+        className={`${styles[isSideBarVisible ? "" : "without-sidebar"]}  ${styles["below-header"]}`}
       >
         <Sidebar status={finalFetchStatus} />
-        <div className="main-content">{mainContent}</div>
+        <div className={styles["main-content"]}>{mainContent}</div>
       </div>
     </>
   );

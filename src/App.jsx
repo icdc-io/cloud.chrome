@@ -1,5 +1,5 @@
 import React, { useCallback, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import AppRoutes from "./AppRoutes";
 import { kc, initOptions } from "./keycloak";
 import {
@@ -7,13 +7,16 @@ import {
   fetchRemotes,
   fetchServiceVersion,
 } from "./redux/actions";
-import "./wrapper.scss";
 import { initGeneralUtils } from "./general/api";
 // import { loadComponent } from "./utils";
 // import { generalModules } from "./constants/generalModules";
 
+const keycloakRequest = kc.init(initOptions);
+
 const App = () => {
   const dispatch = useDispatch();
+  const user = useSelector((state) => state.host.user);
+  const baseUrls = useSelector((state) => state.host.baseUrls);
 
   // const loadGeneralModules = (modulesNamesList) => {
   //   modulesNamesList.forEach((moduleName) =>
@@ -28,7 +31,6 @@ const App = () => {
 
   const initSuccess = useCallback(
     (authSuccess) => {
-      console.log(authSuccess)
       if (!authSuccess) {
         kc.login();
       } else {
@@ -48,8 +50,21 @@ const App = () => {
   };
 
   useEffect(() => {
-    kc.init(initOptions).then(initSuccess, initFailed);
+    keycloakRequest.then(initSuccess, initFailed);
   }, [initSuccess]);
+
+  useEffect(() => {
+    const messageListener = (e) => {
+      e.detail.getUserInfo({
+        token: kc.getToken(),
+        user: user,
+        baseUrl: baseUrls[user.location],
+      });
+    };
+    window.addEventListener("requestInfo", messageListener);
+
+    return () => window.removeEventListener("requestInfo", messageListener);
+  }, [user]);
 
   return <AppRoutes />;
 };

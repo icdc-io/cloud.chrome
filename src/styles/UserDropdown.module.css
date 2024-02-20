@@ -40,6 +40,8 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  font-size: 16px;
+  color: white;
 }
 
 .user-select {
@@ -56,8 +58,9 @@
   line-height: 1;
   display: flex;
   justify-content: space-between;
+  cursor: pointer;
 
-   /* &:focus, &:focus-within {
+  /* &:focus, &:focus-within {
      outline: none;
    }
 
@@ -81,4 +84,32 @@
 
 .select-item.label:hover {
   background: inherit;
+}
+
+.select-item[data-state="checked"] {
+  color: #4183c4;
+  background: rgba(0, 0, 0, 0.03);
+  cursor: default;
+}
+
+.select-item[data-highlighted] {
+  background: rgba(0, 0, 0, 0.05);
+  outline: none;
+}
+
+.RightSlot {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.DropdownMenuSeparator {
+  border-top: 1px solid rgba(34, 36, 38, 0.1);
+  height: 0;
+  margin: 0.5em 0;
+}
+
+.selected-value {
+  text-transform: uppercase;
+  color: gray;
 }

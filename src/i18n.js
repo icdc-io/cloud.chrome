@@ -21,6 +21,7 @@ const resources = {
       thank: "Thank you for your understanding.",
       supportBtn: "Support",
       exitBtn: "Log out",
+      location: "Location",
     },
   },
   ru: {
@@ -42,6 +43,7 @@ const resources = {
       thank: "Благодарим за понимание.",
       supportBtn: "Поддержка",
       exitBtn: "Выйти",
+      location: "Локация",
     },
   },
 };

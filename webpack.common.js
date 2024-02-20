@@ -70,12 +70,27 @@ module.exports = {
         },
         // "react-redux": {
         //   singleton: true,
+        //   strictVersion: true,
+        //   requiredVersion: dependencies["react-redux"],
+        //   eager: true,
         // },
         // "react-router-dom": {
         //   singleton: true,
+        //   strictVersion: true,
+        //   requiredVersion: dependencies["react-router-dom"],
+        //   eager: true,
         // },
-        // "seamless-immutable": {
+        // "react-i18next": {
         //   singleton: true,
+        //   strictVersion: true,
+        //   requiredVersion: dependencies["react-i18next"],
+        //   eager: true,
+        // },
+        // "semantic-ui-react": {
+        //   singleton: true,
+        //   strictVersion: true,
+        //   requiredVersion: dependencies["semantic-ui-react"],
+        //   eager: true,
         // },
       },
     }),
