@@ -3,20 +3,23 @@ import Homepage from "../images/homepage.svg";
 import Skeleton from "./Skeleton";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { isServiceAvailable } from "../utils/availability";
 import { servicesImages } from "../constants/viewConstants";
 import styles from "../styles/ServicesDropdown.module.css";
+import { changeCurrentService } from "../redux/actions";
 
 const ServicesDropdown = () => {
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+
   const currentServiceName = useSelector((state) => state.host.currentService);
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
   const user = useSelector((state) => state.host.user);
   const servicesInCurrentLocation = Object.values(
     fullAccountsInfo[user.account].servicesInLocations[user.location],
   );
-  const navigate = useNavigate();
 
   const homepage = {
     text: "Home",
@@ -69,10 +72,12 @@ const ServicesDropdown = () => {
     );
     if (!highlightedService) {
       navigate("/");
+      dispatch(changeCurrentService(serviceName));
     } else if (highlightedService.isExternal) {
       window.open(highlightedService.url, "_blank");
     } else {
       navigate(highlightedService.url);
+      dispatch(changeCurrentService(highlightedService.value));
     }
   };
 

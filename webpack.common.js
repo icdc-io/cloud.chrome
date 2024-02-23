@@ -62,12 +62,6 @@ module.exports = {
           requiredVersion: dependencies.react,
           eager: true,
         },
-        "react-dom": {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: dependencies["react-dom"],
-          eager: true,
-        },
         // "react-redux": {
         //   singleton: true,
         //   strictVersion: true,
@@ -80,18 +74,24 @@ module.exports = {
         //   requiredVersion: dependencies["react-router-dom"],
         //   eager: true,
         // },
-        // "react-i18next": {
+        "react-i18next": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: dependencies["react-i18next"],
+          eager: true,
+        },
+        // "seamless-immutable": {
         //   singleton: true,
         //   strictVersion: true,
-        //   requiredVersion: dependencies["react-i18next"],
+        //   requiredVersion: dependencies["seamless-immutable"],
         //   eager: true,
         // },
-        // "semantic-ui-react": {
-        //   singleton: true,
-        //   strictVersion: true,
-        //   requiredVersion: dependencies["semantic-ui-react"],
-        //   eager: true,
-        // },
+        "semantic-ui-react": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: dependencies["semantic-ui-react"],
+          eager: true,
+        },
       },
     }),
   ],

@@ -37,7 +37,7 @@ const initialState = Immutable({
   isBurgerVisible: true,
   serviceVersion: "",
   serviceVersionFetchStatus: PENDING,
-  currentService: "",
+  currentService: window.location.pathname.split("/")[1],
 });
 
 const hostReducer = (state = initialState, action) => {

@@ -3,11 +3,13 @@ import { useDispatch, useSelector } from "react-redux";
 import AppRoutes from "./AppRoutes";
 import { kc, initOptions } from "./keycloak";
 import {
+  // changeCurrentService,
   fetchAccountsData,
   fetchRemotes,
   fetchServiceVersion,
+  // fetchAllData,
 } from "./redux/actions";
-import { initGeneralUtils } from "./general/api";
+// import { initGeneralUtils } from "./general/api";
 // import { loadComponent } from "./utils";
 // import { generalModules } from "./constants/generalModules";
 
@@ -34,10 +36,12 @@ const App = () => {
       if (!authSuccess) {
         kc.login();
       } else {
+        // dispatch(changeCurrentService(window.location.pathname.split("/")[1]));
         dispatch(fetchAccountsData());
         dispatch(fetchServiceVersion());
         dispatch(fetchRemotes());
-        initGeneralUtils();
+        // dispatch(fetchAllData());
+        // initGeneralUtils();
         // loadGeneralModules(generalModules);
       }
     },

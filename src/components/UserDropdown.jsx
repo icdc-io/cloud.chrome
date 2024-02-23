@@ -7,9 +7,11 @@ import { langs } from "../i18n";
 import { changeLang, changeUserInfo } from "../redux/actions";
 import { filterAndSort } from "../utils/roleUtils";
 import styles from "../styles/UserDropdown.module.css";
+import { useTranslation } from "react-i18next";
 
 const UserDropdown = () => {
   const dispatch = useDispatch();
+  const { t, i18n } = useTranslation();
   const username = useSelector((state) => state.host.username);
   const email = useSelector((state) => state.host.email);
   const { account, role, location } = useSelector((state) => state.host.user);
@@ -32,6 +34,7 @@ const UserDropdown = () => {
 
   const changeLocale = (newLang) => {
     dispatch(changeLang(newLang));
+    i18n.changeLanguage(newLang);
     localStorage.setItem("icdc-lang", newLang);
   };
 
@@ -43,7 +46,6 @@ const UserDropdown = () => {
         location,
         role: value,
       };
-      kc.updateTokenb();
     } else {
       const newAccountInfo = fullAccountsInfo[value];
 
@@ -83,7 +85,7 @@ const UserDropdown = () => {
           <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
-              Accounts
+              {t("accounts")}
               <div className={styles["RightSlot"]}>
                 <span className={styles["selected-value"]}>{account}</span>
                 <ChevronRightIcon />
@@ -112,7 +114,7 @@ const UserDropdown = () => {
           </DropdownMenu.Sub>
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
-              Role
+              {t("role")}
               <div className={styles["RightSlot"]}>
                 <span className={styles["selected-value"]}>{role}</span>
                 <ChevronRightIcon />
@@ -142,7 +144,7 @@ const UserDropdown = () => {
           <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
-              Language
+              {t("language")}
               <div className={styles["RightSlot"]}>
                 <span className={styles["selected-value"]}>{locale}</span>
                 <ChevronRightIcon />
@@ -169,7 +171,7 @@ const UserDropdown = () => {
           </DropdownMenu.Sub>
 
           <DropdownMenu.Item className={styles["select-item"]} onClick={logout}>
-            Logout
+            {t("logout")}
           </DropdownMenu.Item>
           <DropdownMenu.Arrow className={styles["DropdownMenuArrow"]} />
         </DropdownMenu.Content>

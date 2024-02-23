@@ -5,7 +5,7 @@ import Layout from "./components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeBurgerVisibility,
-  changeCurrentService,
+  // changeCurrentService,
   changeSidebarVisibility,
 } from "./redux/actions";
 import { Loader } from "semantic-ui-react";
@@ -15,7 +15,7 @@ const AppRoutes = () => {
   const dispatch = useDispatch();
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
   const remotes = useSelector((state) => state.host.remotes);
-  const currentService = useSelector((state) => state.host.currentService);
+  // const currentService = useSelector((state) => state.host.currentService);
   const uniqueInternalServices = useSelector(
     (state) => state.host.uniqueInternalServices,
   );
@@ -24,8 +24,8 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const newService = location.pathname.split("/")[1];
-    if (newService !== currentService)
-      dispatch(changeCurrentService(newService));
+    // if (newService !== currentService)
+    //   dispatch(changeCurrentService(newService));
     dispatch(changeSidebarVisibility(Boolean(newService)));
     dispatch(changeBurgerVisibility(Boolean(newService)));
   }, [location.pathname]);

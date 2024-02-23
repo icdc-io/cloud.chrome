@@ -16,10 +16,6 @@ export const kc = (function (options) {
     return kc.init(options);
   }
 
-  function updateTokenb() {
-    kc.token = "1";
-  }
-
   function logout() {
     return kc.logout({
       redirectUri: process.env.REACT_APP_LOGOUT_URL,
@@ -32,34 +28,31 @@ export const kc = (function (options) {
     });
   }
 
-  function updateToken() {
-    return kc
-      .updateToken()
-      .then(() => {
-        // Important! after we update the token
-        // we have to again populate the Cookie!
-        // Otherwise we just update and dont send
-        // the updated token down stream... and things 401
-        // if (refreshed) {
-        //   log('Token was successfully refreshed');
-        // } else {
-        //   log('Token is still valid, not updating');
-        // }
-      })
-      .catch(() => {
-        // log(err);
-        // // Sentry.captureException(err);
-        // log('Token updated failed, trying to reauth');
-        login();
-      });
-  }
+  // function updateToken() {
+  //   return kc
+  //     .updateToken()
+  //     .then(() => {
+  //       // Important! after we update the token
+  //       // we have to again populate the Cookie!
+  //       // Otherwise we just update and dont send
+  //       // the updated token down stream... and things 401
+  //       // if (refreshed) {
+  //       //   log('Token was successfully refreshed');
+  //       // } else {
+  //       //   log('Token is still valid, not updating');
+  //       // }
+  //     })
+  //     .catch(() => {
+  //       // log(err);
+  //       // // Sentry.captureException(err);
+  //       // log('Token updated failed, trying to reauth');
+  //       login();
+  //     });
+  // }
 
   function isTokenValid() {
     console.log("Checking validity of existing JWT");
     try {
-      // console.log(kc.isTokenExpired())
-      // console.log(kc.token)
-      // console.log(kc.tokenParsed.exp)
       if (kc.isTokenExpired() || !kc.tokenParsed || !kc.tokenParsed.exp) {
         return false;
       }
@@ -99,33 +92,25 @@ export const kc = (function (options) {
       return kc.token;
     }
 
-    // kc.logout();
+    logout();
     return "";
   }
 
   function getUserInfo() {
-    console.log(kc.isTokenExpired);
-    console.log(updateToken());
-    console.log(isTokenValid());
     if (isTokenValid()) {
       return kc.tokenParsed;
     }
 
-    // return logout();
-  }
-
-  function returnKc() {
-    return kc;
+    logout();
+    return "";
   }
 
   return {
     init,
-    returnKc,
     getToken,
     getUserInfo,
     login,
     logout,
-    updateTokenb,
   };
 })(keycloakOptions);
 

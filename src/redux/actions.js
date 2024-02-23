@@ -123,7 +123,6 @@ export const fetchAccountsData = () => ({
       `${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
       {},
       {},
-      true,
     ),
   ),
 });

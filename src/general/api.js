@@ -24,75 +24,78 @@ const API = {
   },
 };
 
-const processRequestInfo = (url, initialHeaders) => {
+export const getInfoForRequest = () => {
   return new Promise((resolve, reject) => {
     try {
-      let getUserInfo = ({ token, user, baseUrl }) => {
-        resolve({
-          url: url.startsWith("http") ? url : baseUrl + url,
-          headers: {
-            ...initialHeaders,
-            Authorization: `Bearer ${token}`,
-            "x-icdc-account": user?.account || "",
-            "x-icdc-role": user?.role || "",
-            "x-icdc-location": user?.location || "",
-          },
-        });
-      };
-
       window.dispatchEvent(
         new CustomEvent("requestInfo", {
           detail: {
-            getUserInfo,
+            getUserInfo: ({ token, user, baseUrl }) => resolve({ token, user, baseUrl }),
           },
         }),
       );
-      getUserInfo = null;
     } catch (e) {
-      reject(e.message);
+      reject({
+        token: "",
+        user: {},
+        baseUrl: "",
+      });
     }
   });
 };
 
-export const fetchData = async (url, headers = {}, options = {}) => {
-  const aa = await processRequestInfo(url, headers);
-  console.log(aa);
-  const response = await API.get(aa.url, aa.headers, options);
+const getFullUrl = (initialUrl, baseUrl) => initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
+
+const getHeaders = (token, user, initialHeaders) => ({
+  ...initialHeaders,
+  Authorization: `Bearer ${token}`,
+  "x-auth-group": `${user.account}.${user.role}`,
+  "x-icdc-account": user.account,
+  "x-icdc-role": user.role,
+  "x-icdc-location": user.location,
+});
+
+export const fetchData = async (
+  initialUrl,
+  initialHeaders = {},
+  options = {},
+) => {
+  const { token, user, baseUrl } = await getInfoForRequest();
+  const url = getFullUrl(initialUrl, baseUrl);
+  const headers = getHeaders(token, user, initialHeaders);
+  const response = await API.get(url, headers, options);
   return response.data;
 };
 
-export const updateData = async (url, data, headers = {}) => {
-  const request = await processRequestInfo(url, headers);
-  const response = await API.put(request.url, data, request.headers);
+export const updateData = async (initialUrl, data, initialHeaders = {}) => {
+  const { token, user, baseUrl } = await getInfoForRequest();
+  const url = getFullUrl(initialUrl, baseUrl);
+  const headers = getHeaders(token, user, initialHeaders);
+  const response = await API.put(url, data, headers);
   return response.data;
 };
 
-export const createData = async (url, data, headers = {}) => {
-  const request = await processRequestInfo(url, headers);
-  const response = await API.post(request.url, request.headers, data);
+export const createData = async (initialUrl, data, initialHeaders = {}) => {
+  const { token, user, baseUrl } = await getInfoForRequest();
+  const url = getFullUrl(initialUrl, baseUrl);
+  const headers = getHeaders(token, user, initialHeaders);
+  const response = await API.post(url, headers, data);
   return response.data;
 };
 
-export const deleteData = async (url, params, headers = {}) => {
-  const request = await processRequestInfo(url, headers);
-  const response = await API.delete(request.url, request.headers, params);
+export const deleteData = async (initialUrl, params, initialHeaders = {}) => {
+  const { token, user, baseUrl } = await getInfoForRequest();
+  const url = getFullUrl(initialUrl, baseUrl);
+  const headers = getHeaders(token, user, initialHeaders);
+  const response = await API.delete(url, headers, params);
   return response.data;
 };
 
 export const exportData = async (initialUrl, initialHeaders = {}, params) => {
-  const { url, headers } = await processRequestInfo(initialUrl, initialHeaders);
+  const { token, user } = await getInfoForRequest();
+  const headers = getHeaders(token, user, initialHeaders);
   const fullUrl = params
-    ? url + "?" + new URLSearchParams(params).toString()
-    : url;
+    ? initialUrl + "?" + new URLSearchParams(params).toString()
+    : initialUrl;
   return fetch(fullUrl, { headers });
-};
-
-export const initGeneralUtils = () => {
-  window.chrome = {
-    fetchData,
-    updateData,
-    createData,
-    deleteData,
-    exportData,
-  };
 };
