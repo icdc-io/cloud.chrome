@@ -60,7 +60,7 @@ const AppRoutes = () => {
                   path={remoteServiceInfo.route}
                   element={
                     <RemoteComponent
-                      fallback="Loading Checkout..."
+                      fallback={<Loader active inline="centered" />}
                       remoteUrl={remoteServiceInfo.url}
                       remote={remoteServiceInfo.route}
                       store={store}

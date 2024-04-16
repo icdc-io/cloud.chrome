@@ -30,7 +30,8 @@ export const getInfoForRequest = () => {
       window.dispatchEvent(
         new CustomEvent("requestInfo", {
           detail: {
-            getUserInfo: ({ token, user, baseUrl }) => resolve({ token, user, baseUrl }),
+            getUserInfo: ({ token, user, baseUrl }) =>
+              resolve({ token, user, baseUrl }),
           },
         }),
       );
@@ -44,7 +45,8 @@ export const getInfoForRequest = () => {
   });
 };
 
-const getFullUrl = (initialUrl, baseUrl) => initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
+const getFullUrl = (initialUrl, baseUrl) =>
+  initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
 
 const getHeaders = (token, user, initialHeaders) => ({
   ...initialHeaders,
@@ -61,7 +63,10 @@ export const fetchData = async (
   options = {},
 ) => {
   const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(initialUrl, baseUrl);
+  const url = getFullUrl(
+    initialUrl.replace("{account}", user.account),
+    baseUrl,
+  );
   const headers = getHeaders(token, user, initialHeaders);
   const response = await API.get(url, headers, options);
   return response.data;
@@ -69,7 +74,10 @@ export const fetchData = async (
 
 export const updateData = async (initialUrl, data, initialHeaders = {}) => {
   const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(initialUrl, baseUrl);
+  const url = getFullUrl(
+    initialUrl.replace("{account}", user.account),
+    baseUrl,
+  );
   const headers = getHeaders(token, user, initialHeaders);
   const response = await API.put(url, data, headers);
   return response.data;
@@ -77,7 +85,10 @@ export const updateData = async (initialUrl, data, initialHeaders = {}) => {
 
 export const createData = async (initialUrl, data, initialHeaders = {}) => {
   const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(initialUrl, baseUrl);
+  const url = getFullUrl(
+    initialUrl.replace("{account}", user.account),
+    baseUrl,
+  );
   const headers = getHeaders(token, user, initialHeaders);
   const response = await API.post(url, headers, data);
   return response.data;
@@ -85,7 +96,10 @@ export const createData = async (initialUrl, data, initialHeaders = {}) => {
 
 export const deleteData = async (initialUrl, params, initialHeaders = {}) => {
   const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(initialUrl, baseUrl);
+  const url = getFullUrl(
+    initialUrl.replace("{account}", user.account),
+    baseUrl,
+  );
   const headers = getHeaders(token, user, initialHeaders);
   const response = await API.delete(url, headers, params);
   return response.data;
@@ -99,3 +113,8 @@ export const exportData = async (initialUrl, initialHeaders = {}, params) => {
     : initialUrl;
   return fetch(fullUrl, { headers });
 };
+// {
+//   "route": "instances",
+//   "name": "Instances",
+//   "url": "http://localhost:8004"
+// },

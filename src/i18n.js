@@ -22,6 +22,10 @@ const resources = {
       supportBtn: "Support",
       exitBtn: "Log out",
       location: "Location",
+      role: "Role",
+      accounts: "Accounts",
+      language: "Language",
+      logout: "Logout",
     },
   },
   ru: {
@@ -44,6 +48,10 @@ const resources = {
       supportBtn: "Поддержка",
       exitBtn: "Выйти",
       location: "Локация",
+      role: "Роль",
+      accounts: "Аккаунты",
+      language: "Язык",
+      logout: "Выход",
     },
   },
 };
