@@ -34,6 +34,21 @@ body {
   font-family: Lato, sans-serif;
 }
 
+input,
+textarea {
+  border: 1px solid #d1d1d1;
+}
+
+input:focus,
+textarea:focus {
+  outline: 1px solid #2185d0;
+}
+
+input::placeholder,
+textarea::placeholder {
+  color: #909090;
+}
+
 button {
   all: unset;
   cursor: pointer;
@@ -72,6 +87,10 @@ button:focus-visible {
   flex-wrap: wrap;
 }
 
+.flex {
+  display: flex;
+}
+
 .sidebar-open .submit-banner {
   padding-left: 327px;
 }
@@ -101,4 +120,50 @@ button:focus-visible {
 
 [data-radix-popper-content-wrapper] {
   z-index: 9 !important;
+}
+
+.custom-loader {
+  z-index: 1;
+  position: relative;
+  display: block;
+  margin: auto;
+  padding: 24px;
+}
+
+.custom-loader::after {
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 50%;
+  -webkit-animation: loader 0.6s linear;
+  animation: loader 0.6s linear;
+  -webkit-animation-iteration-count: infinite;
+  animation-iteration-count: infinite;
+  border-radius: 500rem;
+  border-color: #767676 transparent transparent;
+  border-style: solid;
+  border-width: 0.2em;
+  box-shadow: 0 0 0 1px transparent;
+}
+
+.custom-loader::before {
+  height: 32px;
+  width: 32px;
+  position: absolute;
+  content: "";
+  top: 0;
+  left: 50%;
+  border-radius: 500rem;
+  border: 0.2em solid rgba(0, 0, 0, 0.1);
+}
+
+@keyframes loader {
+  from {
+    transform: rotate(0);
+  }
+  to {
+    transform: rotate(360deg);
+  }
 }

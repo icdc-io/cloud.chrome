@@ -3,7 +3,7 @@ import { compose, createStore, applyMiddleware, combineReducers } from "redux";
 import { thunk } from "redux-thunk";
 import { logger } from "redux-logger";
 import Immutable from "seamless-immutable";
-// import { reducer as reduxFormReducer } from "redux-form";
+
 import {
   CHANGE_BURGER_VISIBILITY,
   CHANGE_CURRENT_SERVICE,

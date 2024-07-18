@@ -1,7 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
 
-const resources = {
+export const resources = {
   en: {
     translation: {
       lang: "English",
@@ -56,7 +56,7 @@ const resources = {
   },
 };
 
-const locales = Object.keys(resources);
+export const locales = Object.keys(resources);
 
 export const langs = locales.map((locale) => ({
   text: resources[locale].translation.lang,

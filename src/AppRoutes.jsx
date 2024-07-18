@@ -1,5 +1,5 @@
 import React, { useEffect } from "react";
-import { Navigate, Outlet, Route, Routes, useLocation } from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import RemoteComponent from "./components/RemoteComponent";
 import Layout from "./components/Layout";
 import { useDispatch, useSelector } from "react-redux";
@@ -10,6 +10,7 @@ import {
 } from "./redux/actions";
 import { Loader } from "semantic-ui-react";
 import { store } from "./redux/store";
+import AvailableRoute from "./components/AvailableRoute";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
@@ -51,13 +52,13 @@ const AppRoutes = () => {
           <Route
             key={serviceInfo.name}
             path={`${serviceInfo.name}/*`}
-            element={<Outlet />}
+            Component={AvailableRoute}
           >
             {remotes[user.location][serviceInfo.name].map(
               (remoteServiceInfo) => (
                 <Route
                   key={remoteServiceInfo.name}
-                  path={remoteServiceInfo.route}
+                  path={`${remoteServiceInfo.route}/*`}
                   element={
                     <RemoteComponent
                       fallback={<Loader active inline="centered" />}

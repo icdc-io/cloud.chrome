@@ -7,6 +7,11 @@ const API = {
       params,
     });
   },
+  patch(url, data = {}, headers = {}) {
+    return axios.patch(url, data, {
+      headers,
+    });
+  },
   put(url, data = {}, headers = {}) {
     return axios.put(url, data, {
       headers,
@@ -80,6 +85,17 @@ export const updateData = async (initialUrl, data, initialHeaders = {}) => {
   );
   const headers = getHeaders(token, user, initialHeaders);
   const response = await API.put(url, data, headers);
+  return response.data;
+};
+
+export const patchData = async (initialUrl, data, initialHeaders = {}) => {
+  const { token, user, baseUrl } = await getInfoForRequest();
+  const url = getFullUrl(
+    initialUrl.replace("{account}", user.account),
+    baseUrl,
+  );
+  const headers = getHeaders(token, user, initialHeaders);
+  const response = await API.patch(url, data, headers);
   return response.data;
 };
 

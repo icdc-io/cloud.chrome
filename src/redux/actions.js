@@ -152,3 +152,8 @@ export const changeUserInfo = (newInfo) => ({
   type: CHANGE_USER_INFO,
   payload: newInfo,
 });
+export const fetchRemotesApps = () => {
+  return fetchData(
+    "https://api.dcz.lab.icdc.io/api/delivery/v1/service/networking/version",
+  );
+};

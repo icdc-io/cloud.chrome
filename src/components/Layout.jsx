@@ -23,6 +23,12 @@ const Layout = ({ children }) => {
     (state) => state.host.serviceVersionFetchStatus,
   );
 
+  console.log(isSideBarVisible);
+  console.log(currentService);
+  console.log(user);
+  console.log(accountsDataFetchStatus);
+  console.log(isServiceAvailable(currentService, user.account));
+
   const fetchStatuses = [
     accountsDataFetchStatus,
     remotesFetchStatus,

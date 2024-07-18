@@ -6,6 +6,7 @@ import {
   // changeCurrentService,
   fetchAccountsData,
   fetchRemotes,
+  fetchRemotesApps,
   fetchServiceVersion,
   // fetchAllData,
 } from "./redux/actions";
@@ -36,6 +37,7 @@ const App = () => {
       if (!authSuccess) {
         kc.login();
       } else {
+        fetchRemotesApps().then((data) => console.log(data));
         // dispatch(changeCurrentService(window.location.pathname.split("/")[1]));
         dispatch(fetchAccountsData());
         dispatch(fetchServiceVersion());
