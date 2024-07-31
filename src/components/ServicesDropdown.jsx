@@ -3,16 +3,16 @@ import Homepage from "../images/homepage.svg";
 import Skeleton from "./Skeleton";
 import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
-import { useDispatch, useSelector } from "react-redux";
+import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
 import { isServiceAvailable } from "../utils/availability";
 import { servicesImages } from "../constants/viewConstants";
 import styles from "../styles/ServicesDropdown.module.css";
-import { changeCurrentService } from "../redux/actions";
+import { kc } from "../keycloak";
+import { HOME } from "../constants/servicesNames";
 
 const ServicesDropdown = () => {
   const navigate = useNavigate();
-  const dispatch = useDispatch();
 
   const currentServiceName = useSelector((state) => state.host.currentService);
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
@@ -23,7 +23,7 @@ const ServicesDropdown = () => {
 
   const homepage = {
     text: "Home",
-    value: "home",
+    value: HOME,
     image: {
       src: Homepage,
     },
@@ -38,7 +38,9 @@ const ServicesDropdown = () => {
     return [...servicesInfoSet]
       .filter((location) => location && location.displayName && location.name)
       .sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
-      .filter((service) => isServiceAvailable(service.name, user.account))
+      .filter((service) =>
+        isServiceAvailable(service.name, user.account, kc.getUserInfo()),
+      )
       .map((service, key) => {
         const shortNameArray = service.displayName.split("IBACloud ");
         const isExternal = service.url.startsWith("http");
@@ -72,12 +74,10 @@ const ServicesDropdown = () => {
     );
     if (!highlightedService) {
       navigate("/");
-      dispatch(changeCurrentService(serviceName));
     } else if (highlightedService.isExternal) {
       window.open(highlightedService.url, "_blank");
     } else {
       navigate(highlightedService.url);
-      dispatch(changeCurrentService(highlightedService.value));
     }
   };
 

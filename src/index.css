@@ -167,3 +167,114 @@ button:focus-visible {
     transform: rotate(360deg);
   }
 }
+
+/* general networking styles to rewrite in future */
+.name-with-image-wrapper {
+  display: flex;
+  min-width: 6rem;
+  align-items: center;
+}
+
+.name-with-image-wrapper img {
+  padding-right: 0.5rem;
+  height: 45px;
+}
+
+.api-dialog-snippet-wrapper {
+  border: solid 1px #c8cfee;
+  border-radius: 4px;
+  margin-top: 10px;
+  background: #f5f7ff;
+}
+
+.api-dialog-snippet-wrapper .code-snippet-wrapper .language-bash {
+  word-break: break-all !important;
+}
+
+.api-dialog-snippet-wrapper .header-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-bottom: 1px solid #c8cfee;
+  padding: 7px;
+}
+
+.api-dialog-snippet-wrapper .header-container button {
+  background: none;
+  border: none;
+}
+
+.table-container {
+  /* overflow-x: auto; */
+  width: 100%;
+}
+
+.reset-button {
+  border: none;
+  background-color: transparent;
+}
+
+.ui.grid > .row.network-delete {
+  border-top: 3px solid #d3d3d3;
+  margin: 0 1rem;
+  padding: 2rem 1.5rem;
+}
+
+.network-delete {
+  display: flex;
+  flex-direction: row;
+  width: 100%;
+  margin-right: 20px;
+  align-items: center;
+  margin-bottom: 20px;
+  justify-content: space-between;
+  border-top: 1px solid #d3d3d3;
+  padding-top: 15px;
+}
+
+.network-delete_desc {
+  max-width: 700px;
+}
+
+.content-page__header {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;
+}
+
+.content-page__header h4.ui.header {
+  margin: 0 1rem 1rem 0;
+}
+
+.content-page__header div.right {
+  margin: 1rem 0;
+  flex-wrap: wrap;
+  display: flex;
+  flex-direction: row;
+}
+
+.content-page__header div.right .ui.button {
+  margin-bottom: 1rem;
+}
+
+.ui.form .disabled.field {
+  opacity: 1;
+}
+
+.ui.table.item-list {
+  border: none;
+  margin-top: 0;
+  padding-bottom: 30px;
+}
+
+.ui.table.item-list thead th {
+  background: #fff;
+  border-left: none;
+}
+
+.color--grey {
+  color: #969696;
+}
+
+/* general networking styles to rewrite in future end*/

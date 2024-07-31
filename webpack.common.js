@@ -50,7 +50,11 @@ module.exports = {
     new ModuleFederationPlugin({
       name: "host",
       filename: "general.js",
-      remotes: {},
+      remotes: {
+        home: isEnvProduction
+          ? "home@http://localhost:8080/remoteEntry.js"
+          : "home@http://localhost:8080/remoteEntry.js",
+      },
       exposes: {
         "./Api": "./src/general/api.js",
         "./Store": "./src/redux/store.js",
@@ -70,13 +74,15 @@ module.exports = {
         "./networking/CodeSnippet":
           "./src/general/networking/ApiDialog/CodeSnippet.js",
         "./composeValidators": "./src/general/utils/composeValidators.js",
+        "./isServiceAvailable": "./src/utils/availability.js",
+        "./Error": "./src/general/components/ErrorScreen.jsx",
       },
       shared: {
         react: {
-          singleton: true,
-          strictVersion: true,
-          requiredVersion: dependencies.react,
-          eager: true,
+          singleton: true, // true - load this module once
+          strictVersion: true, // only necessary version
+          requiredVersion: dependencies.react, // define required module version
+          eager: true, // true - load module immediately, not on demand
         },
         // "react-redux": {
         //   singleton: true,
@@ -84,12 +90,12 @@ module.exports = {
         //   requiredVersion: dependencies["react-redux"],
         //   eager: true,
         // },
-        // "react-router-dom": {
-        //   singleton: true,
-        //   strictVersion: true,
-        //   requiredVersion: dependencies["react-router-dom"],
-        //   eager: true,
-        // },
+        "react-router-dom": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: dependencies["react-router-dom"],
+          eager: true,
+        },
         "react-i18next": {
           singleton: true,
           strictVersion: true,

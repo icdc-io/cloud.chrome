@@ -5,14 +5,19 @@ import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
 import { FULFILLED, PENDING, REJECTED } from "../redux/constants.js";
 import { Loader } from "semantic-ui-react";
-import { isServiceAvailable } from "../utils/availability";
 import Error from "./Error";
 import styles from "../styles/Layout.module.css";
+import AppRoutes from "../AppRoutes";
+import {
+  CRITICAL_DATA_FETCH_ERROR,
+  NO_ACCESS_ERROR,
+} from "../constants/errors";
 
-const Layout = ({ children }) => {
+const Layout = () => {
   const isSideBarVisible = useSelector((state) => state.host.isSideBarVisible);
-  const currentService = useSelector((state) => state.host.currentService);
-  const user = useSelector((state) => state.host.user);
+  const accountsDataFetchErrorStatus = useSelector(
+    (state) => state.host.accountsDataFetchErrorStatus,
+  );
   const accountsDataFetchStatus = useSelector(
     (state) => state.host.accountsDataFetchStatus,
   );
@@ -22,12 +27,6 @@ const Layout = ({ children }) => {
   const serviceVersionFetchStatus = useSelector(
     (state) => state.host.serviceVersionFetchStatus,
   );
-
-  console.log(isSideBarVisible);
-  console.log(currentService);
-  console.log(user);
-  console.log(accountsDataFetchStatus);
-  console.log(isServiceAvailable(currentService, user.account));
 
   const fetchStatuses = [
     accountsDataFetchStatus,
@@ -43,13 +42,17 @@ const Layout = ({ children }) => {
 
   const mainContent =
     finalFetchStatus === REJECTED ? (
-      <Error />
+      <Error
+        error={
+          accountsDataFetchErrorStatus === 403
+            ? NO_ACCESS_ERROR
+            : CRITICAL_DATA_FETCH_ERROR
+        }
+      />
     ) : finalFetchStatus === PENDING ? (
       <Loader active inline="centered" />
-    ) : isServiceAvailable(currentService, user.account) ? (
-      children
     ) : (
-      <h1>No Access</h1>
+      <AppRoutes />
     );
 
   return (

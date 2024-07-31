@@ -6,6 +6,13 @@ import { changeUserInfo } from "../redux/actions";
 import styles from "../styles/LocationSelector.module.css";
 import { useTranslation } from "react-i18next";
 
+const toDropdownOptions = (options) =>
+  options.map((option) => ({
+    key: option,
+    text: option,
+    value: option,
+  }));
+
 const LocationSelector = () => {
   const dispatch = useDispatch();
   const { t } = useTranslation();
@@ -14,36 +21,21 @@ const LocationSelector = () => {
   const currentServiceName = useSelector((state) => state.host.currentService);
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
 
-  const getLocationsAvailability = () => {
-    const availableLocations = [],
-      notAvailableLocations = [];
+  const allLocationsNames = Object.keys(baseUrls);
+  const servicesInLocation = fullAccountsInfo[account]?.servicesInLocations;
 
-    Object.keys(baseUrls).forEach((locationName) => {
-      if (
-        fullAccountsInfo[account].servicesInLocations[location][
-          currentServiceName
-        ]
-      ) {
-        availableLocations.push({
-          key: locationName,
-          text: locationName,
-          value: locationName,
-        });
-      } else {
-        notAvailableLocations.push({
-          key: locationName,
-          text: locationName,
-          value: locationName,
-          disabled: true,
-        });
-      }
-    });
+  if (!servicesInLocation) return null;
 
-    return { availableLocations, notAvailableLocations };
-  };
-
-  const { availableLocations, notAvailableLocations } =
-    getLocationsAvailability();
+  const availableLocations = toDropdownOptions(
+    allLocationsNames.filter(
+      (locationName) => servicesInLocation[locationName][currentServiceName],
+    ),
+  );
+  const notAvailableLocations = toDropdownOptions(
+    allLocationsNames.filter(
+      (locationName) => !servicesInLocation[locationName][currentServiceName],
+    ),
+  );
 
   const changeLocation = (newLocation) => {
     dispatch(changeUserInfo(newLocation));

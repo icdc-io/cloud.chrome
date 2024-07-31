@@ -1,33 +1,33 @@
-import axios from "axios";
+// import axios from "axios";
 
-const API = {
-  get(url, headers = {}, params = {}) {
-    return axios.get(url, {
-      headers,
-      params,
-    });
-  },
-  patch(url, data = {}, headers = {}) {
-    return axios.patch(url, data, {
-      headers,
-    });
-  },
-  put(url, data = {}, headers = {}) {
-    return axios.put(url, data, {
-      headers,
-    });
-  },
-  post(url, headers = {}, data = {}) {
-    return axios.post(url, data, {
-      headers,
-    });
-  },
-  delete(url, headers = {}) {
-    return axios.delete(url, {
-      headers,
-    });
-  },
-};
+// const API = {
+//   get(url, headers = {}, params = {}) {
+//     return axios.get(url, {
+//       headers,
+//       params,
+//     });
+//   },
+//   patch(url, data = {}, headers = {}) {
+//     return axios.patch(url, data, {
+//       headers,
+//     });
+//   },
+//   put(url, data = {}, headers = {}) {
+//     return axios.put(url, data, {
+//       headers,
+//     });
+//   },
+//   post(url, headers = {}, data = {}) {
+//     return axios.post(url, data, {
+//       headers,
+//     });
+//   },
+//   delete(url, headers = {}) {
+//     return axios.delete(url, {
+//       headers,
+//     });
+//   },
+// };
 
 export const getInfoForRequest = () => {
   return new Promise((resolve, reject) => {
@@ -62,10 +62,25 @@ const getHeaders = (token, user, initialHeaders) => ({
   "x-icdc-location": user.location,
 });
 
+const request = async (config) => {
+  const response = await fetch(config.url, {
+    ...config,
+    body: config.body ? JSON.stringify(config.body) : undefined,
+  });
+  if (!response.ok) {
+    throw new Error(response.statusText || "Something went Wrong", {
+      cause: response.status,
+    });
+  }
+  if (response.headers.get("Content-Type").includes("application/json"))
+    return await response.json();
+  return response;
+};
+
 export const fetchData = async (
   initialUrl,
   initialHeaders = {},
-  options = {},
+  // options = {},
 ) => {
   const { token, user, baseUrl } = await getInfoForRequest();
   const url = getFullUrl(
@@ -73,8 +88,10 @@ export const fetchData = async (
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  const response = await API.get(url, headers, options);
-  return response.data;
+  return await request({
+    url,
+    headers,
+  });
 };
 
 export const updateData = async (initialUrl, data, initialHeaders = {}) => {
@@ -84,8 +101,12 @@ export const updateData = async (initialUrl, data, initialHeaders = {}) => {
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  const response = await API.put(url, data, headers);
-  return response.data;
+  return await request({
+    url,
+    headers,
+    method: "PUT",
+    body: data,
+  });
 };
 
 export const patchData = async (initialUrl, data, initialHeaders = {}) => {
@@ -95,8 +116,12 @@ export const patchData = async (initialUrl, data, initialHeaders = {}) => {
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  const response = await API.patch(url, data, headers);
-  return response.data;
+  return await request({
+    url,
+    headers,
+    method: "PATCH",
+    body: data,
+  });
 };
 
 export const createData = async (initialUrl, data, initialHeaders = {}) => {
@@ -106,8 +131,12 @@ export const createData = async (initialUrl, data, initialHeaders = {}) => {
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  const response = await API.post(url, headers, data);
-  return response.data;
+  return await request({
+    url,
+    headers,
+    method: "POST",
+    body: data,
+  });
 };
 
 export const deleteData = async (initialUrl, params, initialHeaders = {}) => {
@@ -117,8 +146,11 @@ export const deleteData = async (initialUrl, params, initialHeaders = {}) => {
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  const response = await API.delete(url, headers, params);
-  return response.data;
+  return await request({
+    url,
+    headers,
+    method: "DELETE",
+  });
 };
 
 export const exportData = async (initialUrl, initialHeaders = {}, params) => {

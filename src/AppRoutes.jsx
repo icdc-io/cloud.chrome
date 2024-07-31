@@ -1,22 +1,28 @@
 import React, { useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import {
+  Navigate,
+  Route,
+  Routes,
+  useLocation,
+  useNavigate,
+} from "react-router-dom";
 import RemoteComponent from "./components/RemoteComponent";
-import Layout from "./components/Layout";
 import { useDispatch, useSelector } from "react-redux";
 import {
   changeBurgerVisibility,
-  // changeCurrentService,
   changeSidebarVisibility,
 } from "./redux/actions";
 import { Loader } from "semantic-ui-react";
 import { store } from "./redux/store";
 import AvailableRoute from "./components/AvailableRoute";
 
+const Home = React.lazy(() => import("home/home"));
+
 const AppRoutes = () => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
   const remotes = useSelector((state) => state.host.remotes);
-  // const currentService = useSelector((state) => state.host.currentService);
   const uniqueInternalServices = useSelector(
     (state) => state.host.uniqueInternalServices,
   );
@@ -25,8 +31,6 @@ const AppRoutes = () => {
 
   useEffect(() => {
     const newService = location.pathname.split("/")[1];
-    // if (newService !== currentService)
-    //   dispatch(changeCurrentService(newService));
     dispatch(changeSidebarVisibility(Boolean(newService)));
     dispatch(changeBurgerVisibility(Boolean(newService)));
   }, [location.pathname]);
@@ -90,18 +94,26 @@ const AppRoutes = () => {
       );
   };
 
+  useEffect(() => {
+    const messageListener = (e) => {
+      navigate(e.detail.to);
+    };
+
+    window.addEventListener("switchRoute", messageListener);
+
+    return () => window.removeEventListener("switchRoute", messageListener);
+  }, []);
+
   return (
-    <Layout>
-      {!uniqueInternalServicesList.length ? (
-        <Loader active inline="centered" />
-      ) : (
-        <Routes>
-          <Route index element={<h1>Home</h1>} />
-          {routes()}
-          <Route path="*" element={<Navigate to="/" replace />} />
-        </Routes>
-      )}
-    </Layout>
+    <React.Suspense fallback={<Loader active inline="centered" />}>
+      <Routes>
+        <Route path="/" Component={AvailableRoute}>
+          <Route index Component={Home} />
+        </Route>
+        {routes()}
+        <Route path="*" element={<Navigate to="/" replace />} />
+      </Routes>
+    </React.Suspense>
   );
 };
 

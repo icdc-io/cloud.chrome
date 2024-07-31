@@ -1,5 +1,7 @@
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import ErrorEn from "./images/error_en.svg";
+import ErrorRu from "./images/error_ru.svg";
 
 export const resources = {
   en: {
@@ -7,7 +9,10 @@ export const resources = {
       lang: "English",
       notAvailable:
         "The service is not available in this location. Please choose another location.",
-      wrong: "Something went wrong. Please try again later.",
+      wrong: "Oops, something went wrong.",
+      wrongDescription: "If this issue persists, please visit our",
+      statusPage: "Status Page",
+      refresh: "Refresh",
       noAccess: "You don't have enough rights.",
       noAccessAcc: "No access",
       notMatch:
@@ -21,19 +26,29 @@ export const resources = {
       thank: "Thank you for your understanding.",
       supportBtn: "Support",
       exitBtn: "Log out",
+      errorImg: ErrorEn,
+      error: "Error",
+      logout: "Log out",
+      unauthTitle: "401 Unauthorized",
+      unAuthDescription:
+        "Try selecting the correct role, and if the issue persists, please try logging in and out.",
+      unAvailable: "The service is not available in this location",
       location: "Location",
       role: "Role",
       accounts: "Accounts",
       language: "Language",
-      logout: "Logout",
+      unavailableDescription: "Please choose another location.",
     },
   },
   ru: {
     translation: {
       lang: "Русский",
       notAvailable:
-        "Сервис недоступен в этой локации. Пожалуйста, выберите другую.",
-      wrong: "Что-то пошло не так. Пожалуйста, попробуте позже.",
+        "Сервис недоступен в этой локации. Пожалуйста, выберите другую локацию.",
+      wrong: "Упс, что-то пошло не так.",
+      wrongDescription: "Если проблема сохраняется, пожалуйста, посетите нашу",
+      statusPage: "страницу статуса",
+      refresh: "Обновить",
       noAccess: "Недостаточно прав.",
       noAccessAcc: "Нет доступа",
       notMatch:
@@ -47,11 +62,18 @@ export const resources = {
       thank: "Благодарим за понимание.",
       supportBtn: "Поддержка",
       exitBtn: "Выйти",
+      errorImg: ErrorRu,
+      error: "Ошибка",
+      logout: "Выйти",
+      unauthTitle: "401 Ошибка доступа",
+      unAuthDescription:
+        "Попробуйте выбрать правильную роль, и если проблема сохраняется, пожалуйста, попробуйте перезайти в систему.",
+      unAvailable: "Сервис недоступен в текущей локации",
       location: "Локация",
       role: "Роль",
       accounts: "Аккаунты",
       language: "Язык",
-      logout: "Выход",
+      unavailableDescription: "Пожалуйста, выберите другую локацию.",
     },
   },
 };

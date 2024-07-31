@@ -1,5 +1,6 @@
 import { fetchData } from "../general/api";
 import { kc } from "../keycloak";
+import { availableRoles } from "../utils/roleUtils";
 import {
   CHANGE_BURGER_VISIBILITY,
   CHANGE_CURRENT_SERVICE,
@@ -7,9 +8,11 @@ import {
   CHANGE_SIDEBAR_VISIBILITY,
   CHANGE_USER_INFO,
   FETCH_ACCOUNTS_DATA,
+  FETCH_LOCATION_DATA,
   FETCH_SERVICE_VERSION_DATA,
-  SET_AVAILABLE_SERVICES,
+  // SET_AVAILABLE_SERVICES,
   SET_REMOTES,
+  UPDATE_TOKEN_INFO,
   UPDATE_USER,
 } from "./constants";
 
@@ -45,6 +48,9 @@ const parseAccountsData = async (accountsDataPromise) => {
   };
 
   const currentAccountInfo = accounts[user.account];
+  const currentAccountRoles = accounts[user.account].roles.filter((role) =>
+    availableRoles.includes(role),
+  );
 
   user.location =
     isUserInfoInvalid ||
@@ -52,11 +58,11 @@ const parseAccountsData = async (accountsDataPromise) => {
       ? currentAccountInfo.locations[0]
       : userInfo.location; //check if location from localStorage is valid, otherwise set first available location
   user.role =
-    isUserInfoInvalid || !currentAccountInfo.roles.includes(userInfo.role)
-      ? currentAccountInfo.roles[0]
+    isUserInfoInvalid || !currentAccountRoles.includes(userInfo.role)
+      ? currentAccountRoles[0]
       : userInfo.role; //check if role from localStorage is valid, otherwise set first available role
 
-  if (isUserInfoInvalid) localStorage.setItem("user", JSON.stringify(user));
+  localStorage.setItem("user", JSON.stringify(user));
 
   const uniqueInternalServices = {};
 
@@ -112,10 +118,10 @@ export const changeLang = (newLang) => ({
   type: CHANGE_LANG,
   payload: newLang,
 });
-export const setInfo = (info) => ({
-  type: SET_AVAILABLE_SERVICES,
-  payload: info,
-});
+// export const setInfo = (info) => ({
+//   type: SET_AVAILABLE_SERVICES,
+//   payload: info,
+// });
 export const fetchAccountsData = () => ({
   type: FETCH_ACCOUNTS_DATA,
   payload: parseAccountsData(
@@ -157,3 +163,13 @@ export const fetchRemotesApps = () => {
     "https://api.dcz.lab.icdc.io/api/delivery/v1/service/networking/version",
   );
 };
+export const fetchLocationData = (currentLocation) => ({
+  type: FETCH_LOCATION_DATA,
+  payload: fetchData(
+    `${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/locations/${currentLocation}`,
+  ),
+});
+export const updateTokenInfo = (tokenInfo) => ({
+  type: UPDATE_TOKEN_INFO,
+  payload: tokenInfo,
+});

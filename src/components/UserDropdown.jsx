@@ -8,12 +8,12 @@ import { changeLang, changeUserInfo } from "../redux/actions";
 import { filterAndSort } from "../utils/roleUtils";
 import styles from "../styles/UserDropdown.module.css";
 import { useTranslation } from "react-i18next";
+import PropTypes from "prop-types";
 
-const UserDropdown = () => {
+const UserDropdown = ({ isFullInfoAvailable }) => {
   const dispatch = useDispatch();
   const { t, i18n } = useTranslation();
-  const username = useSelector((state) => state.host.username);
-  const email = useSelector((state) => state.host.email);
+  const userInfo = useSelector((state) => state.host.userInfo);
   const { account, role, location } = useSelector((state) => state.host.user);
   const locale = useSelector((state) => state.host.lang);
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
@@ -21,16 +21,6 @@ const UserDropdown = () => {
   const logout = () => {
     kc.logout();
   };
-
-  const accountsDropdown = Object.values(fullAccountsInfo).map(
-    (accountInfo) => ({
-      key: accountInfo.name,
-      text: accountInfo.display_name,
-      value: accountInfo.name,
-    }),
-  );
-
-  const roles = fullAccountsInfo[account].roles;
 
   const changeLocale = (newLang) => {
     dispatch(changeLang(newLang));
@@ -56,12 +46,83 @@ const UserDropdown = () => {
           : newAccountInfo.locations[0],
         role: newAccountInfo.roles.includes(role)
           ? role
-          : newAccountInfo.roles[0],
+          : filterAndSort(newAccountInfo.roles)[0],
       };
     }
     dispatch(changeUserInfo(newUserInfo));
     localStorage.setItem("user", JSON.stringify(newUserInfo));
   };
+
+  const accountsSection = isFullInfoAvailable ? (
+    <DropdownMenu.Sub>
+      <DropdownMenu.SubTrigger className={styles["select-item"]}>
+        {t("accounts")}
+        <div className={styles["RightSlot"]}>
+          <span className={styles["selected-value"]}>{account}</span>
+          <ChevronRightIcon />
+        </div>
+      </DropdownMenu.SubTrigger>
+      <DropdownMenu.Portal>
+        <DropdownMenu.SubContent className={styles["user-select"]}>
+          <DropdownMenu.RadioGroup
+            value={account}
+            onValueChange={(newAccount) =>
+              changeCurrentInfo("account", newAccount)
+            }
+          >
+            {Object.values(fullAccountsInfo)
+              .map((accountInfo) => ({
+                key: accountInfo.name,
+                text: accountInfo.display_name,
+                value: accountInfo.name,
+              }))
+              .map((currentAccount) => (
+                <DropdownMenu.RadioItem
+                  key={currentAccount.key}
+                  className={styles["select-item"]}
+                  value={currentAccount.value}
+                >
+                  {currentAccount.text}
+                </DropdownMenu.RadioItem>
+              ))}
+          </DropdownMenu.RadioGroup>
+        </DropdownMenu.SubContent>
+      </DropdownMenu.Portal>
+    </DropdownMenu.Sub>
+  ) : null;
+
+  const rolesSection = isFullInfoAvailable ? (
+    <>
+      <DropdownMenu.Sub>
+        <DropdownMenu.SubTrigger className={styles["select-item"]}>
+          {t("role")}
+          <div className={styles["RightSlot"]}>
+            <span className={styles["selected-value"]}>{role}</span>
+            <ChevronRightIcon />
+          </div>
+        </DropdownMenu.SubTrigger>
+        <DropdownMenu.Portal>
+          <DropdownMenu.SubContent className={styles["user-select"]}>
+            <DropdownMenu.RadioGroup
+              value={role}
+              onValueChange={(newRole) => changeCurrentInfo("role", newRole)}
+            >
+              {filterAndSort(fullAccountsInfo[account].roles).map((role) => (
+                <DropdownMenu.RadioItem
+                  key={role.key}
+                  className={styles["select-item"]}
+                  value={role.value}
+                >
+                  {role.text}
+                </DropdownMenu.RadioItem>
+              ))}
+            </DropdownMenu.RadioGroup>
+          </DropdownMenu.SubContent>
+        </DropdownMenu.Portal>
+      </DropdownMenu.Sub>
+      <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
+    </>
+  ) : null;
 
   return (
     <DropdownMenu.Root>
@@ -70,7 +131,7 @@ const UserDropdown = () => {
           className={styles["user-select__trigger"]}
           aria-label="User options"
         >
-          {username}
+          {userInfo.given_name} {userInfo.family_name}
           <ChevronDownIcon color="white" />
         </button>
       </DropdownMenu.Trigger>
@@ -80,68 +141,11 @@ const UserDropdown = () => {
           <DropdownMenu.Label
             className={`${styles["select-item"]} ${styles["label"]}`}
           >
-            {email}
+            {userInfo.email}
           </DropdownMenu.Label>
           <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
-          <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={styles["select-item"]}>
-              {t("accounts")}
-              <div className={styles["RightSlot"]}>
-                <span className={styles["selected-value"]}>{account}</span>
-                <ChevronRightIcon />
-              </div>
-            </DropdownMenu.SubTrigger>
-            <DropdownMenu.Portal>
-              <DropdownMenu.SubContent className={styles["user-select"]}>
-                <DropdownMenu.RadioGroup
-                  value={account}
-                  onValueChange={(newAccount) =>
-                    changeCurrentInfo("account", newAccount)
-                  }
-                >
-                  {accountsDropdown.map((currentAccount) => (
-                    <DropdownMenu.RadioItem
-                      key={currentAccount.key}
-                      className={styles["select-item"]}
-                      value={currentAccount.value}
-                    >
-                      {currentAccount.text}
-                    </DropdownMenu.RadioItem>
-                  ))}
-                </DropdownMenu.RadioGroup>
-              </DropdownMenu.SubContent>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
-          <DropdownMenu.Sub>
-            <DropdownMenu.SubTrigger className={styles["select-item"]}>
-              {t("role")}
-              <div className={styles["RightSlot"]}>
-                <span className={styles["selected-value"]}>{role}</span>
-                <ChevronRightIcon />
-              </div>
-            </DropdownMenu.SubTrigger>
-            <DropdownMenu.Portal>
-              <DropdownMenu.SubContent className={styles["user-select"]}>
-                <DropdownMenu.RadioGroup
-                  value={role}
-                  onValueChange={(newRole) =>
-                    changeCurrentInfo("role", newRole)
-                  }
-                >
-                  {filterAndSort(roles).map((role) => (
-                    <DropdownMenu.RadioItem
-                      key={role.key}
-                      className={styles["select-item"]}
-                      value={role.value}
-                    >
-                      {role.text}
-                    </DropdownMenu.RadioItem>
-                  ))}
-                </DropdownMenu.RadioGroup>
-              </DropdownMenu.SubContent>
-            </DropdownMenu.Portal>
-          </DropdownMenu.Sub>
-          <DropdownMenu.Separator className={styles["DropdownMenuSeparator"]} />
+          {accountsSection}
+          {rolesSection}
           <DropdownMenu.Sub>
             <DropdownMenu.SubTrigger className={styles["select-item"]}>
               {t("language")}
@@ -178,6 +182,10 @@ const UserDropdown = () => {
       </DropdownMenu.Portal>
     </DropdownMenu.Root>
   );
+};
+
+UserDropdown.propTypes = {
+  isFullInfoAvailable: PropTypes.bool,
 };
 
 export default UserDropdown;

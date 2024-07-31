@@ -6,7 +6,6 @@ import menuItemsTypes from "../constants/menuItemsTypes";
 import PropTypes from "prop-types";
 
 const OptionsMenu = ({ children, options }) => {
-  console.log(options);
   const optionsMapper = {
     [menuItemsTypes.SUBMENU]: (itemInfo, key) => (
       <DropdownMenu.Sub key={key}>

@@ -1,20 +1,16 @@
-import { kc } from "../keycloak";
+const adminServicesOnly = ["admin", "billing"];
 
-export const adminServicesOnly = ["admin", "billing"];
-
-export const servicesRoles = {
+const servicesRoles = {
   openshift: ["member"],
   devops: ["member"],
   projects: ["admin", "billing", "manager"],
 };
 
-const isAdminRightsValid = () => {
-  const token = kc.getUserInfo();
+const isAdminRightsValid = (token) => {
   return token && token.groups.some((group) => /.cloud$/.test(group));
 };
 
-const isServiceRightsValid = (availableRolesInService, account) => {
-  const token = kc.getUserInfo();
+const isServiceRightsValid = (availableRolesInService, account, token) => {
   return (
     token &&
     availableRolesInService.some(
@@ -23,11 +19,11 @@ const isServiceRightsValid = (availableRolesInService, account) => {
   );
 };
 
-export const isServiceAvailable = (serviceName, account) => {
+export const isServiceAvailable = (serviceName, account, token) => {
   if (servicesRoles[serviceName])
-    return isServiceRightsValid(servicesRoles[serviceName], account);
+    return isServiceRightsValid(servicesRoles[serviceName], account, token);
 
   if (!adminServicesOnly.includes(serviceName)) return true;
 
-  return isAdminRightsValid();
+  return isAdminRightsValid(token);
 };

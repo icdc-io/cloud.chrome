@@ -1,4 +1,4 @@
-const availableRoles = ["admin", "operator", "billing", "member"];
+export const availableRoles = ["admin", "operator", "billing", "member"];
 
 const filterAndSort = (list) => {
   if (!list || !list.length) {

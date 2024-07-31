@@ -16,7 +16,7 @@ const GeneralInput = ({
     <Form.Field
       error={touched && error ? true : false}
       disabled={readOnly}
-      style={{ marginTop: 20, opacity: 1 }}
+      // style={{ marginTop: 20, opacity: 1 }}
     >
       <label style={isNsField ? { opacity: 1 } : {}}>{label}</label>
       <Input

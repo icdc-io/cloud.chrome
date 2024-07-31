@@ -10,13 +10,16 @@ import {
   CHANGE_LANG,
   CHANGE_SIDEBAR_VISIBILITY,
   CHANGE_USER_INFO,
+  defaultLocationData,
   FETCH_ACCOUNTS_DATA,
+  FETCH_LOCATION_DATA,
   FETCH_SERVICE_VERSION_DATA,
   FULFILLED,
   PENDING,
   REJECTED,
-  SET_AVAILABLE_SERVICES,
+  // SET_AVAILABLE_SERVICES,
   SET_REMOTES,
+  UPDATE_TOKEN_INFO,
   UPDATE_USER,
 } from "./constants";
 import { currentLang } from "../i18n";
@@ -24,10 +27,10 @@ import { currentLang } from "../i18n";
 const initialState = Immutable({
   user: {},
   lang: currentLang(),
-  servicesAvailability: null,
+  // servicesAvailability: null,
   remotes: {},
   remotesFetchStatus: PENDING,
-  fullAccountsInfo: null,
+  fullAccountsInfo: {},
   baseUrls: {},
   uniqueInternalServices: {},
   accountsDataFetchStatus: PENDING,
@@ -38,6 +41,10 @@ const initialState = Immutable({
   serviceVersion: "",
   serviceVersionFetchStatus: PENDING,
   currentService: window.location.pathname.split("/")[1],
+  locationData: defaultLocationData,
+  token: "",
+  userInfo: null,
+  accountsDataFetchErrorStatus: 0,
 });
 
 const hostReducer = (state = initialState, action) => {
@@ -48,8 +55,8 @@ const hostReducer = (state = initialState, action) => {
     case CHANGE_LANG:
       return state.set("lang", action.payload);
 
-    case SET_AVAILABLE_SERVICES:
-      return state.set("servicesAvailability", action.payload);
+    // case SET_AVAILABLE_SERVICES:
+    //   return state.set("servicesAvailability", action.payload);
 
     case CHANGE_SIDEBAR_VISIBILITY:
       return state.set("isSideBarVisible", action.payload);
@@ -75,11 +82,18 @@ const hostReducer = (state = initialState, action) => {
 
     case `${FETCH_ACCOUNTS_DATA}_PENDING`:
       return state.set("accountsDataFetchStatus", PENDING);
-    case `${FETCH_ACCOUNTS_DATA}_REJECTED`:
-      return state.set("accountsDataFetchStatus", REJECTED);
+    case `${FETCH_ACCOUNTS_DATA}_REJECTED`: {
+      const errorStatus = action.payload?.response?.status;
+      return state.merge({
+        accountsDataFetchStatus: REJECTED,
+        accountsDataFetchErrorStatus:
+          errorStatus || state.accountsDataFetchErrorStatus,
+      });
+    }
     case `${FETCH_ACCOUNTS_DATA}_FULFILLED`:
       return state.merge({
         accountsDataFetchStatus: FULFILLED,
+        accountsDataFetchErrorStatus: 0,
         ...action.payload,
       });
 
@@ -92,6 +106,19 @@ const hostReducer = (state = initialState, action) => {
         serviceVersionFetchStatus: FULFILLED,
         serviceVersion: action.payload,
       });
+
+    case `${FETCH_LOCATION_DATA}_REJECTED`:
+      return state.set("locationData", defaultLocationData);
+    case `${FETCH_LOCATION_DATA}_FULFILLED`:
+      return state.set("locationData", action.payload);
+
+    case UPDATE_TOKEN_INFO: {
+      return state.merge({
+        token: action.payload.token,
+        userInfo: action.payload.userInfo,
+      });
+    }
+
     default:
       return state;
   }
@@ -117,9 +144,9 @@ export default function configureStore() {
 
   const middlewareList = [promiseMiddleware, thunk];
 
-  if (process.env.NODE_ENV === "development") {
-    middlewareList.push(logger);
-  }
+  // if (process.env.NODE_ENV === "development") {
+  middlewareList.push(logger);
+  // }
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewareList));
 

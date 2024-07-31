@@ -1,6 +1,5 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import AppRoutes from "./AppRoutes";
 import { kc, initOptions } from "./keycloak";
 import {
   // changeCurrentService,
@@ -13,6 +12,7 @@ import {
 // import { initGeneralUtils } from "./general/api";
 // import { loadComponent } from "./utils";
 // import { generalModules } from "./constants/generalModules";
+const Layout = React.lazy(() => import("./components/Layout"));
 
 const keycloakRequest = kc.init(initOptions);
 
@@ -38,7 +38,6 @@ const App = () => {
         kc.login();
       } else {
         fetchRemotesApps().then((data) => console.log(data));
-        // dispatch(changeCurrentService(window.location.pathname.split("/")[1]));
         dispatch(fetchAccountsData());
         dispatch(fetchServiceVersion());
         dispatch(fetchRemotes());
@@ -60,6 +59,8 @@ const App = () => {
   }, [initSuccess]);
 
   useEffect(() => {
+    // if (!user.location) return;
+
     const messageListener = (e) => {
       e.detail.getUserInfo({
         token: kc.getToken(),
@@ -72,7 +73,7 @@ const App = () => {
     return () => window.removeEventListener("requestInfo", messageListener);
   }, [user]);
 
-  return <AppRoutes />;
+  return <Layout />;
 };
 
 export default App;

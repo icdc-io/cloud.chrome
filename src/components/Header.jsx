@@ -16,6 +16,7 @@ const Header = ({ status }) => {
   const isBurgerVisible = useSelector((state) => state.host.isBurgerVisible);
   const isSideBarVisible = useSelector((state) => state.host.isSideBarVisible);
   const dynamicfilename = process.env.REACT_APP_CP_VENDOR || "icdc";
+  const userInfo = useSelector((state) => state.host.userInfo);
 
   const onClick = () => {
     dispatch(changeSidebarVisibility(!isSideBarVisible));
@@ -26,8 +27,8 @@ const Header = ({ status }) => {
   const infoSectionContent = () => (
     <>
       <HelpDropdown />
-      <LocationSelector />
-      <UserDropdown />
+      {isStatusFulfilled && <LocationSelector />}
+      <UserDropdown isFullInfoAvailable={isStatusFulfilled} />
     </>
   );
 
@@ -47,7 +48,7 @@ const Header = ({ status }) => {
         />
       </Link>
       <div className={styles["info-section"]}>
-        <ExtendedInfoSection isStatusFulfilled={isStatusFulfilled} />
+        <ExtendedInfoSection isStatusFulfilled={Boolean(userInfo)} />
       </div>
     </header>
   );

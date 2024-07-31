@@ -1,11 +1,10 @@
-/* eslint-disable camelcase */
 import React, { useState, useRef } from "react";
 import { Icon, Popup } from "semantic-ui-react";
 import PropTypes from "prop-types";
 import CodeSnippetOptions from "./ApiDialog/CodeSnippetOptions";
 import CodeSnippet from "./ApiDialog/CodeSnippet";
-// import { getInfoForRequest } from "../api";
 import { useSelector } from "react-redux";
+import "./apiButton.scss";
 
 const ApiButton = ({
   element,
@@ -25,8 +24,7 @@ const ApiButton = ({
     action: "TOKEN",
     tool: "CURL",
   });
-  const token = useSelector((state) => state.host.user);
-  console.log(token);
+  const token = useSelector((state) => state.host.token);
   const [position, setPosition] = useState("center");
   const apiButtonRef = useRef();
 
@@ -202,11 +200,6 @@ const ApiButton = ({
   });
 
   const data = (item, type) => {
-    /*eslint-disable*/
-    console.log("wwwwwwwwwww");
-    console.log(element);
-    console.log(type);
-    console.log(item);
     switch (element) {
       case "network":
         return JSON.stringify(
@@ -229,7 +222,6 @@ const ApiButton = ({
           type === "create" ? rulesForCreate(item) : rulesForDelete(item),
         );
       case "route": {
-        console.log("qqqqqqqqqqqqq");
         return JSON.stringify(
           type === "create" ? routesForCreate(item) : routesForDelete(item),
         );
@@ -413,7 +405,7 @@ const ApiButton = ({
     /*eslint-disable*/
     switch (activeItem.action.toLowerCase()) {
       case "token":
-        return `export TOKEN="${"sdf"}"`;
+        return `export TOKEN="${token}"`;
       case "create":
         return `curl -X POST -H "Authorization: Bearer $TOKEN" -H "x-miq-group: ${user.account}.${user.role}" -H "x-icdc-account: ${user.account}" -H "x-icdc-role: ${user.role}" -H "Content-Type: application/json" -d \n'${data(item, "create")}' \n${url()} \n${element === "dnsRecords" ? dnsRecordsCreate(item).comment : ""}`;
       case "get":
