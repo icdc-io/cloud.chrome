@@ -392,6 +392,7 @@ const resources = {
       postInstallationSteps: "Post-installation steps",
       refresh: "Refresh",
       enhancements: "Enhancements",
+      searchField: "Search",
     },
   },
   ru: {
@@ -773,6 +774,7 @@ const resources = {
       knownIssues: "Известные проблемы",
       refresh: "Обновить",
       enhancements: "Улучшения",
+      searchField: "Поиск...",
     },
   },
 };
