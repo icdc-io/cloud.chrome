@@ -7,6 +7,8 @@ import {
   CHANGE_LANG,
   CHANGE_SIDEBAR_VISIBILITY,
   CHANGE_USER_INFO,
+  CONTACTS_FETCH,
+  CONTACTS_FETCH_URL,
   FETCH_ACCOUNTS_DATA,
   FETCH_LOCATION_DATA,
   FETCH_SERVICE_VERSION_DATA,
@@ -172,4 +174,8 @@ export const fetchLocationData = (currentLocation) => ({
 export const updateTokenInfo = (tokenInfo) => ({
   type: UPDATE_TOKEN_INFO,
   payload: tokenInfo,
+});
+export const fetchContacts = (lang) => ({
+  type: CONTACTS_FETCH,
+  payload: fetchData(CONTACTS_FETCH_URL(lang)),
 });

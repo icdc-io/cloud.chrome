@@ -1,11 +1,5 @@
 import React, { useEffect } from "react";
-import {
-  Navigate,
-  Route,
-  Routes,
-  useLocation,
-  useNavigate,
-} from "react-router-dom";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
 import RemoteComponent from "./components/RemoteComponent";
 import { useDispatch, useSelector } from "react-redux";
 import {
@@ -15,12 +9,12 @@ import {
 import { Loader } from "semantic-ui-react";
 import { store } from "./redux/store";
 import AvailableRoute from "./components/AvailableRoute";
-
-const Home = React.lazy(() => import("home/home"));
+import { builtInServices } from "./constants/builtInServices";
+import "semantic-ui-css/semantic.min.css";
+import "./index.css";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();
-  const navigate = useNavigate();
   const fullAccountsInfo = useSelector((state) => state.host.fullAccountsInfo);
   const remotes = useSelector((state) => state.host.remotes);
   const uniqueInternalServices = useSelector(
@@ -74,6 +68,14 @@ const AppRoutes = () => {
                 />
               ),
             )}
+            {builtInServices[serviceInfo.name] &&
+              builtInServices[serviceInfo.name].map((builtInServiceInfo) => (
+                <Route
+                  key={builtInServiceInfo.route}
+                  path={builtInServiceInfo.route}
+                  Component={builtInServiceInfo.Component}
+                />
+              ))}
             <Route
               path="*"
               element={
@@ -94,21 +96,21 @@ const AppRoutes = () => {
       );
   };
 
-  useEffect(() => {
-    const messageListener = (e) => {
-      navigate(e.detail.to);
-    };
-
-    window.addEventListener("switchRoute", messageListener);
-
-    return () => window.removeEventListener("switchRoute", messageListener);
-  }, []);
-
   return (
     <React.Suspense fallback={<Loader active inline="centered" />}>
       <Routes>
         <Route path="/" Component={AvailableRoute}>
-          <Route index Component={Home} />
+          <Route
+            index
+            element={
+              <RemoteComponent
+                fallback={<Loader active inline="centered" />}
+                remoteUrl={"http://localhost:8080"} //change remote Home app url for production
+                remote={"home"}
+                store={store}
+              />
+            }
+          />
         </Route>
         {routes()}
         <Route path="*" element={<Navigate to="/" replace />} />

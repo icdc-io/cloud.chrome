@@ -13,6 +13,9 @@ export const CHANGE_CURRENT_SERVICE = "CHANGE_CURRENT_SERVICE";
 export const CHANGE_USER_INFO = "CHANGE_USER_INFO";
 export const FETCH_LOCATION_DATA = "FETCH_LOCATION_DATA";
 export const UPDATE_TOKEN_INFO = "UPDATE_TOKEN_INFO";
+export const CONTACTS_FETCH = "CONTACTS_FETCH";
+export const CONTACTS_FETCH_URL = (lang) =>
+  `/api/helpdesk/v1/contacts?lang=${lang}`;
 
 export const defaultLocationData = {
   footer_message: "IBA IT Park. All rights reserved.",

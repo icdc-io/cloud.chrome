@@ -10,6 +10,7 @@ import {
   CHANGE_LANG,
   CHANGE_SIDEBAR_VISIBILITY,
   CHANGE_USER_INFO,
+  CONTACTS_FETCH,
   defaultLocationData,
   FETCH_ACCOUNTS_DATA,
   FETCH_LOCATION_DATA,
@@ -45,6 +46,8 @@ const initialState = Immutable({
   token: "",
   userInfo: null,
   accountsDataFetchErrorStatus: 0,
+  contacts: [],
+  contactsFetchStatus: "",
 });
 
 const hostReducer = (state = initialState, action) => {
@@ -118,6 +121,16 @@ const hostReducer = (state = initialState, action) => {
         userInfo: action.payload.userInfo,
       });
     }
+
+    case `${CONTACTS_FETCH}_PENDING`:
+      return state.set("contactsFetchStatus", "pending");
+    case `${CONTACTS_FETCH}_REJECTED`:
+      return state.set("contactsFetchStatus", "rejected");
+    case `${CONTACTS_FETCH}_FULFILLED`:
+      return Immutable.merge(state, {
+        contacts: action.payload,
+        contactsFetchStatus: "fulfilled",
+      });
 
     default:
       return state;

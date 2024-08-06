@@ -277,4 +277,53 @@ button:focus-visible {
   color: #969696;
 }
 
+.general-container {
+  background: #ffffff;
+  padding: 1.25rem;
+}
+
+.consoles {
+  max-width: 658px;
+  width: 100%;
+}
+
+.consoles h2,
+.consoles .consoles-description {
+  padding: 0 1rem;
+}
+
+.consoles .consoles-description {
+  color: #767676;
+  font-weight: 500;
+  max-width: 650px;
+}
+
+.consoles .service-block {
+  background: #f5f5f5;
+  border-radius: 6px;
+  padding: 1rem;
+  margin-bottom: 0.75rem;
+}
+
+.consoles .service-block h6 {
+  font-weight: 600;
+  font-size: 16px;
+  margin: 0;
+}
+
+.consoles .service-block p {
+  color: #767676;
+  font-size: 13px;
+  margin-top: 0.75rem;
+}
+
+.consoles .service-block .ui.primary.button {
+  max-width: 210px;
+  width: 100%;
+}
+
+.consoles .service-block .ui.primary.button img {
+  margin-left: 0.75rem;
+}
+
 /* general networking styles to rewrite in future end*/

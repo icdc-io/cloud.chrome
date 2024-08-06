@@ -131,11 +131,6 @@
         "route": "reports",
         "name": "Reports",
         "url": "http://localhost:8030"
-      },
-      {
-        "route": "consoles",
-        "name": "Admin Consoles",
-        "url": "http://localhost:8031"
       }
     ],
     "support": [

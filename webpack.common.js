@@ -44,17 +44,13 @@ module.exports = {
     new HtmlWebpackPlugin({
       filename: "silent-check-sso.html",
       template: "public/silent-check-sso.html",
+      inject: false,
     }),
     // new ContextReplacementPlugin(/moment[/\\]locale$/, /(en-gb)$/),
     new CleanWebpackPlugin(),
     new ModuleFederationPlugin({
       name: "host",
       filename: "general.js",
-      remotes: {
-        home: isEnvProduction
-          ? "home@http://localhost:8080/remoteEntry.js"
-          : "home@http://localhost:8080/remoteEntry.js",
-      },
       exposes: {
         "./Api": "./src/general/api.js",
         "./Store": "./src/redux/store.js",

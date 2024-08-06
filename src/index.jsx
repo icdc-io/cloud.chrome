@@ -5,8 +5,6 @@ import { BrowserRouter as Router } from "react-router-dom";
 import { store } from "./redux/store.js";
 import { Provider } from "react-redux";
 import i18nInstance from "./i18n";
-import "semantic-ui-css/semantic.min.css";
-import "./index.css";
 import { I18nextProvider } from "react-i18next";
 
 ReactDOM.createRoot(document.getElementById("root")).render(

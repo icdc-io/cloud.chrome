@@ -3,16 +3,21 @@ import Skeleton from "./Skeleton";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
 import styles from "../styles/RemotesList.module.css";
+import { builtInServices } from "../constants/builtInServices";
 
 const RemotesList = ({ currentRemotesList }) => {
   const currentService = useSelector((state) => state.host.currentService);
   const location = useLocation();
   const currentRemote = location.pathname.split("/")[2];
 
-  const remotesRoutesList = currentRemotesList.length ? (
+  const remotesServicesList = builtInServices[currentService]
+    ? [...currentRemotesList, ...builtInServices[currentService]]
+    : currentRemotesList;
+
+  const remotesRoutesList = remotesServicesList.length ? (
     <nav>
       <ul className={styles["remote-app-routes"]}>
-        {currentRemotesList.map((remoteInfo) => (
+        {remotesServicesList.map((remoteInfo) => (
           <li
             key={remoteInfo.route}
             className={`
