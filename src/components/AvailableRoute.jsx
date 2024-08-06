@@ -6,6 +6,8 @@ import { changeCurrentService, fetchLocationData } from "../redux/actions";
 import { HOME } from "../constants/servicesNames";
 import { isServiceAvailable } from "../utils/availability";
 import { kc } from "../keycloak";
+import Error from "./Error";
+import { NO_ACCESS_ERROR } from "../constants/errors";
 
 const AvailableRoute = () => {
   const currentServiceName = useSelector((state) => state.host.currentService);
@@ -31,7 +33,7 @@ const AvailableRoute = () => {
   }, [user.location]);
 
   if (!isServiceAvailable(currentService, user.account, kc.getUserInfo()))
-    return <h1>wwwwwwwwwww</h1>;
+    return <Error errorStatus={NO_ACCESS_ERROR} />;
 
   return <Outlet />;
 };
