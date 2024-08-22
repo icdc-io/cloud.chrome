@@ -72,6 +72,7 @@ module.exports = {
         "./composeValidators": "./src/general/utils/composeValidators.js",
         "./isServiceAvailable": "./src/utils/availability.js",
         "./Error": "./src/general/components/ErrorScreen.jsx",
+        "./computeStyles": "./src/general/styles/compute.css",
       },
       shared: {
         react: {
