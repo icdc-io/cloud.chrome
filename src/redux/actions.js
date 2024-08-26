@@ -148,9 +148,9 @@ export const changeBurgerVisibility = (isOpen) => ({
 });
 export const fetchServiceVersion = () => ({
   type: FETCH_SERVICE_VERSION_DATA,
-  payload: fetch("/api/delivery/v1/service/networking/install").then(
-    () => "3.0.2",
-  ),
+  payload: fetchData(
+    `${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/install`,
+  ).then(() => "3.0.2"),
 });
 export const changeCurrentService = (service) => ({
   type: CHANGE_CURRENT_SERVICE,
@@ -162,7 +162,7 @@ export const changeUserInfo = (newInfo) => ({
 });
 export const fetchRemotesApps = () => {
   return fetchData(
-    "https://api.dcz.lab.icdc.io/api/delivery/v1/service/networking/version",
+    `${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/version`,
   );
 };
 export const fetchLocationData = (currentLocation) => ({
