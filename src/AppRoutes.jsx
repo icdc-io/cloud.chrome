@@ -105,7 +105,7 @@ const AppRoutes = () => {
             element={
               <RemoteComponent
                 fallback={<Loader active inline="centered" />}
-                remoteUrl={"http://localhost:8080"} //change remote Home app url for production
+                remoteUrl={process.env.REACT_APP_HOME_REMOTE_APP_URL} //change remote Home app url for production
                 remote={"home"}
                 store={store}
               />
