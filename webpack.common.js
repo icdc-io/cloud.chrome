@@ -71,45 +71,32 @@ module.exports = {
           "./src/general/networking/ApiDialog/CodeSnippet.js",
         "./composeValidators": "./src/general/utils/composeValidators.js",
         "./isServiceAvailable": "./src/utils/availability.js",
-        "./Error": "./src/general/components/ErrorScreen.jsx",
-        "./computeStyles": "./src/general/styles/compute.css",
       },
       shared: {
         react: {
           singleton: true, // true - load this module once
           strictVersion: true, // only necessary version
           requiredVersion: dependencies.react, // define required module version
-          eager: true, // true - load module immediately, not on demand
         },
-        // "react-redux": {
-        //   singleton: true,
-        //   strictVersion: true,
-        //   requiredVersion: dependencies["react-redux"],
-        //   eager: true,
-        // },
         "react-router-dom": {
           singleton: true,
           strictVersion: true,
           requiredVersion: dependencies["react-router-dom"],
-          eager: true,
         },
         "react-i18next": {
           singleton: true,
           strictVersion: true,
           requiredVersion: dependencies["react-i18next"],
-          eager: true,
         },
-        // "seamless-immutable": {
-        //   singleton: true,
-        //   strictVersion: true,
-        //   requiredVersion: dependencies["seamless-immutable"],
-        //   eager: true,
-        // },
         "semantic-ui-react": {
           singleton: true,
           strictVersion: true,
-          requiredVersion: dependencies["semantic-ui-react"],
-          eager: true,
+          requiredVersion: dependencies["seamless-ui-react"],
+        },
+        "react-redux": {
+          singleton: true,
+          strictVersion: true,
+          requiredVersion: dependencies["react-redux"],
         },
       },
     }),
