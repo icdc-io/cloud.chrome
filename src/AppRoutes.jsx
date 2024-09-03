@@ -1,15 +1,15 @@
 import React, { useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
-import RemoteComponent from "./components/RemoteComponent";
 import { useDispatch, useSelector } from "react-redux";
+import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import { Loader } from "semantic-ui-react";
+import AvailableRoute from "./components/AvailableRoute";
+import RemoteComponent from "./components/RemoteComponent";
+import { builtInServices } from "./constants/builtInServices";
 import {
   changeBurgerVisibility,
   changeSidebarVisibility,
 } from "./redux/actions";
-import { Loader } from "semantic-ui-react";
 import { store } from "./redux/store";
-import AvailableRoute from "./components/AvailableRoute";
-import { builtInServices } from "./constants/builtInServices";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
 

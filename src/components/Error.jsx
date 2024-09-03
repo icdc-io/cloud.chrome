@@ -1,13 +1,13 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { useTranslation } from "react-i18next";
-import { kc } from "../keycloak";
-import PropTypes from "prop-types";
-import UnauthorizeImg from "../images/401.svg";
-import NoAccessImg from "../images/403.svg";
 import {
   NO_ACCESS_ERROR,
   UNAVAILABLE_IN_CURRENT_LOCATION_STATUS,
 } from "../constants/errors";
+import UnauthorizeImg from "../images/401.svg";
+import NoAccessImg from "../images/403.svg";
+import { kc } from "../keycloak";
 import "../styles/Error.scss";
 
 const NoAccessError = () => {
@@ -25,10 +25,10 @@ const NoAccessError = () => {
         <br />
         <p>{t("thank")}</p>
         <div className="actions">
-          <button onClick={() => window.open(supportLink)}>
+          <button type="button" onClick={() => window.open(supportLink)}>
             {t("supportBtn")}
           </button>
-          <button color="black" onClick={() => kc.logout()}>
+          <button type="button" color="black" onClick={() => kc.logout()}>
             {t("exitBtn")}
           </button>
         </div>
@@ -45,9 +45,11 @@ const UnauthorizeError = () => {
       <div className={`textBlock ${i18n.language}`}>
         <h2>{t("unauthTitle")}</h2>
         <p>{t("unAuthDescription")}</p>
-        <button onClick={() => kc.logout()}>{t("logout")}</button>
+        <button onClick={() => kc.logout()} type="button">
+          {t("logout")}
+        </button>
       </div>
-      <img src={UnauthorizeImg} className="imgBlock" />
+      <img src={UnauthorizeImg} className="imgBlock" alt="Unauthorized" />
     </div>
   );
 };
@@ -81,14 +83,16 @@ const GeneralError = () => {
         <p>
           {t("wrongDescription")} <a href={statusPage}>{t("statusPage")}</a>
         </p>
-        <button onClick={onReload}>{t("refresh")}</button>
+        <button onClick={onReload} type="button">
+          {t("refresh")}
+        </button>
       </div>
       <img src={t("errorImg")} alt={t("error")} className="imgBlock" />
     </div>
   );
 };
 
-const Error = ({ errorStatus }) => {
+const ErrorScreen = ({ errorStatus }) => {
   const mapStatusToErrorComponent = () => {
     if (errorStatus === 401) return <UnauthorizeError />;
     if (errorStatus === NO_ACCESS_ERROR) return <NoAccessError />;
@@ -101,8 +105,8 @@ const Error = ({ errorStatus }) => {
   return <div className="errorScreen">{mapStatusToErrorComponent()}</div>;
 };
 
-Error.propTypes = {
+ErrorScreen.propTypes = {
   errorStatus: PropTypes.string,
 };
 
-export default Error;
+export default ErrorScreen;

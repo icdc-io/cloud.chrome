@@ -1,5 +1,5 @@
-import React from "react";
 import PropTypes from "prop-types";
+import React from "react";
 import { Grid, Header } from "semantic-ui-react";
 
 const ItemHeader = ({ title, traefik, isTabbedView }) => {

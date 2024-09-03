@@ -1,6 +1,6 @@
+import PropTypes from "prop-types";
 import React from "react";
 import Skeleton from "../components/Skeleton";
-import PropTypes from "prop-types";
 
 // eslint-disable-next-line react/display-name
 export const withSkeleton = (Component) => {

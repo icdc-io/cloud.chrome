@@ -1,6 +1,6 @@
 import React, { useCallback, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { kc, initOptions } from "./keycloak";
+import { initOptions, kc } from "./keycloak";
 import {
   // changeCurrentService,
   fetchAccountsData,

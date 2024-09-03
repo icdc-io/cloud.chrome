@@ -1,8 +1,8 @@
+import PropTypes from "prop-types";
 import React from "react";
 import { Grid, Loader } from "semantic-ui-react";
 import ItemHeader from "./itemHeader";
 import NoContent from "./noContent";
-import PropTypes from "prop-types";
 
 const ContentPage = ({
   statuses,

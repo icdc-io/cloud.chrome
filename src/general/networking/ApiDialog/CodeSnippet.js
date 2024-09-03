@@ -1,5 +1,5 @@
-import React, { useState } from "react";
 import PropTypes from "prop-types";
+import React, { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { base16AteliersulphurpoolLight } from "react-syntax-highlighter/dist/esm/styles/prism";
 import { Header, Icon, Popup } from "semantic-ui-react";
@@ -25,7 +25,7 @@ const CodeSnippet = ({
   };
 
   const copyButton = (
-    <button onClick={() => copyFuncion(content)}>
+    <button onClick={() => copyFuncion(content)} type="button">
       <Icon name="copy" />
     </button>
   );

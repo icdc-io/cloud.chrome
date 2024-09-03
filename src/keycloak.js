@@ -1,7 +1,7 @@
 import Keycloak from "keycloak-js";
-import { store } from "./redux/store";
 import { updateTokenInfo } from "./redux/actions";
-export const onLoad = "check-sso";
+import { store } from "./redux/store";
+export const onLoad = "login-required";
 
 const keycloakOptions = {
   url: process.env.REACT_APP_KEYCLOAK_URL,
@@ -10,7 +10,7 @@ const keycloakOptions = {
   onLoad,
 };
 
-export const kc = (function (options) {
+export const kc = ((options) => {
   const kc = new Keycloak(options);
   let refreshTokenInterval;
 

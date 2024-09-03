@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+sed -i "s/<title>Rsbuild App<\/title>/<title>ICDC Cloud<\/title><meta name='description' content='ICDC cloud' \/><link rel='preconnect' href='https:\/\/fonts.googleapis.com' \/><link rel='preconnect' href='https:\/\/fonts.gstatic.com' crossorigin \/><link rel='icon' href='favicon.ico' \/><meta name='robots' content='noarchive, max-image-preview:large' \/><link href='https:\/\/fonts.googleapis.com\/css2?family=Roboto:wght@400;500;600;700;800\&display=swap' rel='stylesheet' \/>/g" ./dist/index.html

@@ -1,6 +1,6 @@
-import React from "react";
-import { Header, Segment, Icon } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import React from "react";
+import { Header, Icon, Segment } from "semantic-ui-react";
 
 const NoContent = ({ textMessage, icon }) => (
   <Segment placeholder>

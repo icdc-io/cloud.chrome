@@ -1,9 +1,9 @@
-import React, { useState, useRef } from "react";
-import { Icon, Popup } from "semantic-ui-react";
 import PropTypes from "prop-types";
-import CodeSnippetOptions from "./ApiDialog/CodeSnippetOptions";
-import CodeSnippet from "./ApiDialog/CodeSnippet";
+import React, { useState, useRef } from "react";
 import { useSelector } from "react-redux";
+import { Icon, Popup } from "semantic-ui-react";
+import CodeSnippet from "./ApiDialog/CodeSnippet";
+import CodeSnippetOptions from "./ApiDialog/CodeSnippetOptions";
 import "./apiButton.scss";
 
 const ApiButton = ({
@@ -29,9 +29,9 @@ const ApiButton = ({
   const apiButtonRef = useRef();
 
   const returnPorts = (ports) => {
-    let dashPosition = ports.indexOf("-");
-    let minPort = ports.substring(0, dashPosition);
-    let maxPort = ports.substring(dashPosition + 1);
+    const dashPosition = ports.indexOf("-");
+    const minPort = ports.substring(0, dashPosition);
+    const maxPort = ports.substring(dashPosition + 1);
     return {
       min: minPort,
       max: maxPort,
@@ -71,7 +71,7 @@ const ApiButton = ({
     },
   };
 
-  let dnsTypeToData = {
+  const dnsTypeToData = {
     A: {
       data: {
         type: "A",
@@ -440,6 +440,7 @@ const ApiButton = ({
 
   const displayApiButton = (
     <button
+      type="button"
       className={"api-button"}
       onClick={() => setPosition(getPosition())}
       ref={apiButtonRef}

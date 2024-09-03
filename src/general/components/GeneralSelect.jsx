@@ -1,9 +1,9 @@
-import * as React from "react";
+import { Combobox, Transition } from "@headlessui/react";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
 import PropTypes from "prop-types";
-import styles from "../styles/GeneralSelect.module.css";
+import * as React from "react";
 import { Fragment, useState } from "react";
-import { Combobox, Transition } from "@headlessui/react";
+import styles from "../styles/GeneralSelect.module.css";
 
 const GeneralSelect = React.forwardRef(
   (

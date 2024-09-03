@@ -1,17 +1,17 @@
-import React from "react";
-import Sidebar from "./Sidebar";
-import Header from "./Header";
-import { useSelector } from "react-redux";
 import PropTypes from "prop-types";
-import { FULFILLED, PENDING, REJECTED } from "../redux/constants.js";
+import React from "react";
+import { useSelector } from "react-redux";
 import { Loader } from "semantic-ui-react";
-import Error from "./Error";
-import styles from "../styles/Layout.module.css";
 import AppRoutes from "../AppRoutes";
 import {
   CRITICAL_DATA_FETCH_ERROR,
   NO_ACCESS_ERROR,
 } from "../constants/errors";
+import { FULFILLED, PENDING, REJECTED } from "../redux/constants.js";
+import styles from "../styles/Layout.module.css";
+import ErrorScreen from "./Error";
+import Header from "./Header";
+import Sidebar from "./Sidebar";
 
 const Layout = () => {
   const isSideBarVisible = useSelector((state) => state.host.isSideBarVisible);
@@ -42,7 +42,7 @@ const Layout = () => {
 
   const mainContent =
     finalFetchStatus === REJECTED ? (
-      <Error
+      <ErrorScreen
         error={
           accountsDataFetchErrorStatus === 403
             ? NO_ACCESS_ERROR

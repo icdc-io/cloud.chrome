@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { fetchContacts } from "../../redux/actions";
-import { Loader } from "semantic-ui-react";
 import { useTranslation } from "react-i18next";
+import { useDispatch, useSelector } from "react-redux";
+import { Loader } from "semantic-ui-react";
+import { fetchContacts } from "../../redux/actions";
 
 const ContactsPage = () => {
   const { t, i18n } = useTranslation();
@@ -23,7 +23,7 @@ const ContactsPage = () => {
   }
 
   return (
-    <div className="contacts-page">
+    <div className="helpdesk-content">
       <h1>{t("contactsTitle")}</h1>
       {contacts?.map((contact, key) => (
         <div key={key} className="contact-item">

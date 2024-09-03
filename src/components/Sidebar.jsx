@@ -1,12 +1,12 @@
+import PropTypes from "prop-types";
 import React from "react";
-import Home from "../images/home.svg";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import ServicesDropdown from "./ServicesDropdown";
-import RemotesList from "./RemotesList";
+import Home from "../images/home.svg";
 import { FULFILLED } from "../redux/constants";
-import PropTypes from "prop-types";
 import styles from "../styles/Layout.module.css";
+import RemotesList from "./RemotesList";
+import ServicesDropdown from "./ServicesDropdown";
 
 const Sidebar = ({ status }) => {
   const remotes = useSelector((state) => state.host.remotes);
@@ -32,7 +32,7 @@ const Sidebar = ({ status }) => {
 
   return (
     <aside className={styles.aside}>
-      <div className={styles["sidebar__header"]}>{sidebarHeader}</div>
+      <div className={styles.sidebar__header}>{sidebarHeader}</div>
       <RemotesList currentRemotesList={currentRemotesList} />
     </aside>
   );

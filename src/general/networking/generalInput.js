@@ -1,6 +1,6 @@
-import React from "react";
-import { Form, Label, Input } from "semantic-ui-react";
 import PropTypes from "prop-types";
+import React from "react";
+import { Form, Input, Label } from "semantic-ui-react";
 
 const GeneralInput = ({
   input,
@@ -14,7 +14,7 @@ const GeneralInput = ({
   const isNsField = dnsType === "NS";
   return (
     <Form.Field
-      error={touched && error ? true : false}
+      error={!!(touched && error)}
       disabled={readOnly}
       // style={{ marginTop: 20, opacity: 1 }}
     >

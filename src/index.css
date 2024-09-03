@@ -327,3 +327,10 @@ button:focus-visible {
 }
 
 /* general networking styles to rewrite in future end*/
+
+.helpdesk-content {
+  font-family: "Poppins", sans-serif;
+  background: white;
+  min-height: calc(100vh - 140px);
+  padding: 20px 34px;
+}

@@ -7,7 +7,7 @@ const servicesRoles = {
 };
 
 const isAdminRightsValid = (token) => {
-  return token && token.groups.some((group) => /.cloud$/.test(group));
+  return token?.groups.some((group) => /.cloud$/.test(group));
 };
 
 const isServiceRightsValid = (availableRolesInService, account, token) => {

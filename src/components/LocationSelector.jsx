@@ -1,10 +1,10 @@
-import React from "react";
-import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import * as Select from "@radix-ui/react-select";
+import React from "react";
+import { useTranslation } from "react-i18next";
 import { useDispatch, useSelector } from "react-redux";
 import { changeUserInfo } from "../redux/actions";
 import styles from "../styles/LocationSelector.module.css";
-import { useTranslation } from "react-i18next";
 
 const toDropdownOptions = (options) =>
   options.map((option) => ({
@@ -82,7 +82,7 @@ const LocationSelector = () => {
                   </Select.Item>
                 ))}
               </Select.Group>
-              <Select.Separator className={styles["SelectSeparator"]} />
+              <Select.Separator className={styles.SelectSeparator} />
               <Select.Group>
                 {notAvailableLocations.map((currentLocation) => (
                   <Select.Item

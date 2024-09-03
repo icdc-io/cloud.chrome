@@ -1,9 +1,9 @@
-import React from "react";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import PropTypes from "prop-types";
+import React from "react";
+import menuItemsTypes from "../constants/menuItemsTypes";
 // import { ReactComponent as Dots } from "../../images/dots.svg";
 import styles from "../styles/OptionsMenu.module.css";
-import menuItemsTypes from "../constants/menuItemsTypes";
-import PropTypes from "prop-types";
 
 const OptionsMenu = ({ children, options }) => {
   const optionsMapper = {
@@ -56,7 +56,11 @@ const OptionsMenu = ({ children, options }) => {
     <DropdownMenu.Root>
       <DropdownMenu.Trigger asChild>
         {children || (
-          <button className={styles["menu-button"]} aria-label="Menu options">
+          <button
+            className={styles["menu-button"]}
+            type="button"
+            aria-label="Menu options"
+          >
             xxx
           </button>
         )}

@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
-import { Button, Loader } from "semantic-ui-react";
 import { useSelector } from "react-redux";
+import { Button, Loader } from "semantic-ui-react";
 import External from "../../images/external.svg";
 
 const Consoles = () => {

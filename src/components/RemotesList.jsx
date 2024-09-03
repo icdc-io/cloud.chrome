@@ -1,9 +1,9 @@
 import React from "react";
-import Skeleton from "./Skeleton";
 import { useSelector } from "react-redux";
 import { Link, useLocation } from "react-router-dom";
-import styles from "../styles/RemotesList.module.css";
 import { builtInServices } from "../constants/builtInServices";
+import styles from "../styles/RemotesList.module.css";
+import Skeleton from "./Skeleton";
 
 const RemotesList = ({ currentRemotesList }) => {
   const currentService = useSelector((state) => state.host.currentService);

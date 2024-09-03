@@ -1,15 +1,15 @@
-import React from "react";
-import Homepage from "../images/homepage.svg";
-import Skeleton from "./Skeleton";
-import * as Select from "@radix-ui/react-select";
 import { ChevronDownIcon } from "@radix-ui/react-icons";
+import * as Select from "@radix-ui/react-select";
+import React from "react";
 import { useSelector } from "react-redux";
 import { useNavigate } from "react-router-dom";
-import { isServiceAvailable } from "../utils/availability";
-import { servicesImages } from "../constants/viewConstants";
-import styles from "../styles/ServicesDropdown.module.css";
-import { kc } from "../keycloak";
 import { HOME } from "../constants/servicesNames";
+import { servicesImages } from "../constants/viewConstants";
+import Homepage from "../images/homepage.svg";
+import { kc } from "../keycloak";
+import styles from "../styles/ServicesDropdown.module.css";
+import { isServiceAvailable } from "../utils/availability";
+import Skeleton from "./Skeleton";
 
 const ServicesDropdown = () => {
   const navigate = useNavigate();
@@ -36,7 +36,7 @@ const ServicesDropdown = () => {
       typeof position === "number" ? position : 999;
 
     return [...servicesInfoSet]
-      .filter((location) => location && location.displayName && location.name)
+      .filter((location) => location?.displayName && location.name)
       .sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
       .filter((service) =>
         isServiceAvailable(service.name, user.account, kc.getUserInfo()),
@@ -106,15 +106,15 @@ const ServicesDropdown = () => {
                   className={`${styles["select-item"]} ${styles[service.className]}`}
                   value={service.value}
                 >
-                  <img src={service.image.src || ""} />
+                  <img src={service.image.src || ""} alt="Service icon" />
                   <Select.ItemText>{service.text}</Select.ItemText>
                 </Select.Item>
               ))}
             </Select.Group>
-            <Select.Separator className={styles["separator"]} />
+            <Select.Separator className={styles.separator} />
             <Select.Group>
               <Select.Item className={styles["select-item"]}>
-                <img src={homepage.image.src} />
+                <img src={homepage.image.src} alt="Service icon" />
                 <Select.ItemText>{homepage.text}</Select.ItemText>
               </Select.Item>
             </Select.Group>

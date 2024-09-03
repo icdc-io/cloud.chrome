@@ -1,9 +1,10 @@
-import promiseMiddleware from "redux-promise-middleware";
-import { compose, createStore, applyMiddleware, combineReducers } from "redux";
-import { thunk } from "redux-thunk";
+import { applyMiddleware, combineReducers, compose, createStore } from "redux";
 import { logger } from "redux-logger";
+import promiseMiddleware from "redux-promise-middleware";
+import { thunk } from "redux-thunk";
 import Immutable from "seamless-immutable";
 
+import { currentLang } from "../i18n";
 import {
   CHANGE_BURGER_VISIBILITY,
   CHANGE_CURRENT_SERVICE,
@@ -11,7 +12,6 @@ import {
   CHANGE_SIDEBAR_VISIBILITY,
   CHANGE_USER_INFO,
   CONTACTS_FETCH,
-  defaultLocationData,
   FETCH_ACCOUNTS_DATA,
   FETCH_LOCATION_DATA,
   FETCH_SERVICE_VERSION_DATA,
@@ -22,8 +22,8 @@ import {
   SET_REMOTES,
   UPDATE_TOKEN_INFO,
   UPDATE_USER,
+  defaultLocationData,
 } from "./constants";
-import { currentLang } from "../i18n";
 
 const initialState = Immutable({
   user: {},

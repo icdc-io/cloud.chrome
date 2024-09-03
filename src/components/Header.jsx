@@ -1,15 +1,15 @@
-import React from "react";
-import Burger from "../images/burger.svg";
 import PropTypes from "prop-types";
+import React from "react";
+import { useDispatch, useSelector } from "react-redux";
+import { Link } from "react-router-dom";
+import { withSkeleton } from "../hocs/withSkeleton";
+import Burger from "../images/burger.svg";
+import { changeSidebarVisibility } from "../redux/actions";
+import { FULFILLED } from "../redux/constants";
+import styles from "../styles/Header.module.css";
 import HelpDropdown from "./HelpDropdown";
 import LocationSelector from "./LocationSelector";
 import UserDropdown from "./UserDropdown";
-import { Link } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { changeSidebarVisibility } from "../redux/actions";
-import { FULFILLED } from "../redux/constants";
-import { withSkeleton } from "../hocs/withSkeleton";
-import styles from "../styles/Header.module.css";
 
 const Header = ({ status }) => {
   const dispatch = useDispatch();
