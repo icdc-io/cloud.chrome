@@ -47,7 +47,7 @@
         "url": "http://localhost:8017"
       },
       {
-        "route": "load_balancer",
+        "route": "loadbalancer",
         "name": "Load Balancer",
         "url": "http://localhost:8018"
       },
