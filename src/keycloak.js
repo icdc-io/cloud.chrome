@@ -1,7 +1,7 @@
 import Keycloak from "keycloak-js";
 import { updateTokenInfo } from "./redux/actions";
 import { store } from "./redux/store";
-export const onLoad = "login-required";
+export const onLoad = "check-sso";
 
 const keycloakOptions = {
   url: process.env.REACT_APP_KEYCLOAK_URL,
