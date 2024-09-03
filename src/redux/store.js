@@ -157,9 +157,9 @@ export default function configureStore() {
 
   const middlewareList = [promiseMiddleware, thunk];
 
-  // if (process.env.NODE_ENV === "development") {
-  middlewareList.push(logger);
-  // }
+  if (process.env.NODE_ENV === "development") {
+    middlewareList.push(logger);
+  }
 
   const enhancer = composeEnhancers(applyMiddleware(...middlewareList));
 
