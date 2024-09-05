@@ -4,6 +4,10 @@
   min-width: 160px;
 }
 
+.acc_name {
+  color: gray;
+}
+
 .user-dropdown .menu.transition.visible.first-level {
   left: -16px;
   top: 36px;

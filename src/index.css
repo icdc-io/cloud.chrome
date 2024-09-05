@@ -91,6 +91,10 @@ button:focus-visible {
   display: flex;
 }
 
+i.trash:hover {
+  color: red;
+}
+
 .sidebar-open .submit-banner {
   padding-left: 327px;
 }

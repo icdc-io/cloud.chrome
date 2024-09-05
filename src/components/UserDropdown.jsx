@@ -82,7 +82,10 @@ const UserDropdown = ({ isFullInfoAvailable }) => {
                   className={styles["select-item"]}
                   value={currentAccount.value}
                 >
-                  {currentAccount.text}
+                  {currentAccount.text}&nbsp;
+                  <span className={styles.acc_name}>
+                    ({currentAccount.value.toUpperCase()})
+                  </span>
                 </DropdownMenu.RadioItem>
               ))}
           </DropdownMenu.RadioGroup>

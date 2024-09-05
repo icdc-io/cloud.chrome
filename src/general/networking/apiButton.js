@@ -6,6 +6,212 @@ import CodeSnippet from "./ApiDialog/CodeSnippet";
 import CodeSnippetOptions from "./ApiDialog/CodeSnippetOptions";
 import "./apiButton.scss";
 
+const networks = {
+  action: "create",
+  name: "loc_icdc_name",
+  subnet: {
+    cidr: "10.208.25.0/24",
+    ip_version: 4,
+    network_protocol: "ipv4",
+    dns_nameservers: ["213.222.50.226"],
+    name: "loc_icdc_name_subnet",
+  },
+};
+
+const dnsZonesCreate = {
+  name: "zone_name",
+  metadata: {
+    account: "account_name",
+    owner: "user@example.com",
+    zone: true,
+    service: true,
+  },
+};
+
+const dnsTypeToData = {
+  A: {
+    data: {
+      type: "A",
+      name: "rec_name",
+      data: "10.10.10.10",
+      ttl: 300,
+    },
+    comment: "",
+  },
+  AAAA: {
+    data: {
+      type: "AAAA",
+      name: "rec_name",
+      data: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
+      ttl: 300,
+    },
+    comment: "",
+  },
+  CNAME: {
+    data: {
+      type: "CNAME",
+      name: "rec_name",
+      data: "hostname",
+      ttl: 300,
+    },
+    comment: "",
+  },
+  TXT: {
+    data: {
+      type: "TXT",
+      name: "rec_name",
+      data: "text",
+      ttl: 300,
+    },
+    comment: "",
+  },
+  SRV: {
+    data: {
+      type: "SRV",
+      name: "rec_name",
+      data: "hostname",
+      ttl: 300,
+      weight: "10",
+      priority: "10",
+      port: "1600",
+    },
+    comment: "# weight, priority-optional fields",
+  },
+  MX: {
+    data: {
+      type: "MX",
+      name: "rec_name",
+      data: "ip/hostname",
+      priority: "10",
+      ttl: 300,
+    },
+    comment: "# priority - optional field",
+  },
+  NS: {
+    data: {
+      type: "NS",
+      name: "rec_name.ns.dns",
+      data: "10.10.10.10",
+      ttl: 300,
+    },
+    comment: "# name MUST contain .ns.dns",
+  },
+};
+
+const instanceCreate = {
+  name: "prod-db",
+  engine: "1",
+  version: "8.0.26",
+  master_username: "admin",
+  master_password: "master_password",
+  cpu: "1",
+  ram: "2",
+  disk_size: "20",
+  subnet_ids: "ycz_icdc_base",
+  sg_id: "ycz_icdc_dbaas",
+  public_access: true,
+  parameter_group_id: "3",
+  init_db: "hello_db",
+  delete_protection: true,
+  backup_enabled: true,
+  retenntion_period: "10",
+  backup_window: "12:00",
+  maintenance_window: true,
+  start_day: "Monday",
+  start_time: "12:00",
+  duration: "4",
+};
+
+const parameterGroupsCreate = {
+  description: "Default parameter group for mysql8.0",
+  engine: 1,
+  inherit_from: 1,
+  name: "default.mysql8.0",
+};
+
+const vpnDeviceCreate = {
+  name: "John Doe Notebook",
+  ip: "10.207.0.6",
+  public_key: "string",
+  keepalived: "25",
+  enabled: true,
+  subnets: "10.10.10.0/24,10.10.20.0/24",
+  owner: "johnDoe@ibagroup.eu",
+};
+
+const vpnNatMappingCreate = {
+  vpn_ip: "10.253.25.131",
+  local_ip: "198.18.0.5",
+  host: "engine-ovirt",
+};
+
+const vpnRemoteGatewaysCreate = {
+  name: "zby",
+  endpoint: "sys.vpn.zby.icdc.io",
+  ip: "10.253.25.1/24",
+  public_key: "string",
+  subnets: "10.254.64.0/24,10.254.0.0/19",
+};
+
+const vpnConnectionCreate = {
+  name: "test connection",
+  ip: "10.207.0.1/24",
+  port: "2200",
+  mtu: "1420",
+};
+
+const gatewayCreate = {
+  name: "cloudgw-a843bf2a",
+  public_key: "string",
+  private_key: "string",
+  hostname: "acc.vpn.loc.icdc.io",
+  nat_subnet: "10.253.25.128/25",
+};
+
+const routesCreate = {
+  route: {
+    name: "route_name",
+    hostname: "acc.vpn.loc.icdc.io",
+    target_port: "443",
+    tls_termination: "re-encrypt",
+    owner: " user@example.com",
+    cloud_gateway_id: "1",
+    path: "/",
+    source_proto: "tcp",
+    destination_proto: "tcp",
+    ip_version: "4",
+    services: [
+      {
+        id: "1",
+      },
+    ],
+    certificate_id: "1",
+    insecure: "redirect",
+  },
+};
+
+const certificateCreate = {
+  name: "test.zby.icdc.io",
+  cert: `-----BEGIN CERTIFICATE-----
+      /*certificate content here*/
+      -----END CERTIFICATE-----`,
+  key: `-----BEGIN PRIVATE KEY-----
+      /*private key content here*/
+      -----END PRIVATE KEY-----`,
+  ca: "",
+  dest_ca: "",
+  owner: " user@example.com",
+};
+
+const portForwardingCreate = {
+  service_id: "26000000000123",
+  name: "port_forwarding_name",
+  internal_ip: "192.168.123.123",
+  protocol: "TCP",
+  internal_port: "123",
+  external_port: "123",
+};
+
 const ApiButton = ({
   element,
   item,
@@ -15,11 +221,14 @@ const ApiButton = ({
   gatewayId,
   connectionId,
   locationUrl,
+  service,
 }) => {
   const baseUrl = `${locationUrl}/api/compute/v1`;
   const traefikBaseUrl = `${locationUrl}/api/traefik_manager/v1`;
   const vpnBaseUrl = `${locationUrl}/api/wireguard/v1`;
   const dnsBaseUrl = `${locationUrl}/api/dns/v1`;
+  const databaseBaseUrl = `${locationUrl}/api/database/v1`;
+
   const [activeItem, setActiveItem] = useState({
     action: "TOKEN",
     tool: "CURL",
@@ -38,18 +247,6 @@ const ApiButton = ({
     };
   };
 
-  const networks = {
-    action: "create",
-    name: "loc_icdc_name",
-    subnet: {
-      cidr: "10.208.25.0/24",
-      ip_version: 4,
-      network_protocol: "ipv4",
-      dns_nameservers: ["213.222.50.226"],
-      name: "loc_icdc_name_subnet",
-    },
-  };
-
   const groupsCreate = (group) => ({
     action: "create",
     name: group.name,
@@ -60,86 +257,6 @@ const ApiButton = ({
     name: group.name,
     id: group.id,
   });
-
-  const dnsZonesCreate = {
-    name: "zone_name",
-    metadata: {
-      account: "account_name",
-      owner: "user@example.com",
-      zone: true,
-      service: true,
-    },
-  };
-
-  const dnsTypeToData = {
-    A: {
-      data: {
-        type: "A",
-        name: "rec_name",
-        data: "10.10.10.10",
-        ttl: 300,
-      },
-      comment: "",
-    },
-    AAAA: {
-      data: {
-        type: "AAAA",
-        name: "rec_name",
-        data: "2001:0db8:85a3:0000:0000:8a2e:0370:7334",
-        ttl: 300,
-      },
-      comment: "",
-    },
-    CNAME: {
-      data: {
-        type: "CNAME",
-        name: "rec_name",
-        data: "hostname",
-        ttl: 300,
-      },
-      comment: "",
-    },
-    TXT: {
-      data: {
-        type: "TXT",
-        name: "rec_name",
-        data: "text",
-        ttl: 300,
-      },
-      comment: "",
-    },
-    SRV: {
-      data: {
-        type: "SRV",
-        name: "rec_name",
-        data: "hostname",
-        ttl: 300,
-        weight: "10",
-        priority: "10",
-        port: "1600",
-      },
-      comment: "# weight, priority-optional fields",
-    },
-    MX: {
-      data: {
-        type: "MX",
-        name: "rec_name",
-        data: "ip/hostname",
-        priority: "10",
-        ttl: 300,
-      },
-      comment: "# priority - optional field",
-    },
-    NS: {
-      data: {
-        type: "NS",
-        name: "rec_name.ns.dns",
-        data: "10.10.10.10",
-        ttl: 300,
-      },
-      comment: "# name MUST contain .ns.dns",
-    },
-  };
 
   const dnsRecordsCreate = (item) => {
     return dnsTypeToData[item.dnsType];
@@ -250,90 +367,13 @@ const ApiButton = ({
         return type === "create" && JSON.stringify(dnsRecordsCreate(item).data);
       case "port-forwarding":
         return type === "create" && JSON.stringify(portForwardingCreate);
+      case "parameterGroups":
+        return type === "create" && JSON.stringify(parameterGroupsCreate);
+      case "instances":
+        return type === "create" && JSON.stringify(instanceCreate);
+      case "snapshots":
+        return type === "create" && JSON.stringify({});
     }
-  };
-
-  const vpnDeviceCreate = {
-    name: "John Doe Notebook",
-    ip: "10.207.0.6",
-    public_key: "string",
-    keepalived: "25",
-    enabled: true,
-    subnets: "10.10.10.0/24,10.10.20.0/24",
-    owner: "johnDoe@ibagroup.eu",
-  };
-
-  const vpnNatMappingCreate = {
-    vpn_ip: "10.253.25.131",
-    local_ip: "198.18.0.5",
-    host: "engine-ovirt",
-  };
-
-  const vpnRemoteGatewaysCreate = {
-    name: "zby",
-    endpoint: "sys.vpn.zby.icdc.io",
-    ip: "10.253.25.1/24",
-    public_key: "string",
-    subnets: "10.254.64.0/24,10.254.0.0/19",
-  };
-
-  const vpnConnectionCreate = {
-    name: "test connection",
-    ip: "10.207.0.1/24",
-    port: "2200",
-    mtu: "1420",
-  };
-
-  const gatewayCreate = {
-    name: "cloudgw-a843bf2a",
-    public_key: "string",
-    private_key: "string",
-    hostname: "acc.vpn.loc.icdc.io",
-    nat_subnet: "10.253.25.128/25",
-  };
-
-  const routesCreate = {
-    route: {
-      name: "route_name",
-      hostname: "acc.vpn.loc.icdc.io",
-      target_port: "443",
-      tls_termination: "re-encrypt",
-      owner: " user@example.com",
-      cloud_gateway_id: "1",
-      path: "/",
-      source_proto: "tcp",
-      destination_proto: "tcp",
-      ip_version: "4",
-      services: [
-        {
-          id: "1",
-        },
-      ],
-      certificate_id: "1",
-      insecure: "redirect",
-    },
-  };
-
-  const certificateCreate = {
-    name: "test.zby.icdc.io",
-    cert: `-----BEGIN CERTIFICATE-----
-        /*certificate content here*/
-        -----END CERTIFICATE-----`,
-    key: `-----BEGIN PRIVATE KEY-----
-        /*private key content here*/
-        -----END PRIVATE KEY-----`,
-    ca: "",
-    dest_ca: "",
-    owner: " user@example.com",
-  };
-
-  const portForwardingCreate = {
-    service_id: "26000000000123",
-    name: "port_forwarding_name",
-    internal_ip: "192.168.123.123",
-    protocol: "TCP",
-    internal_port: "123",
-    external_port: "123",
   };
 
   const url = () => {
@@ -398,11 +438,49 @@ const ApiButton = ({
         return activeItem.action.toLowerCase() !== "delete"
           ? `${baseUrl}/port_forwardings`
           : `${baseUrl}/port_forwardings/:id`;
+      case "parameterGroups":
+        return activeItem.action.toLowerCase() !== "delete"
+          ? `${databaseBaseUrl}/parameter_groups`
+          : `${databaseBaseUrl}/parameter_groups/:id`;
+      case "paramsList":
+        return `${databaseBaseUrl}/parameter_groups/:id/params`;
+      case "instances":
+        return activeItem.action.toLowerCase() !== "delete"
+          ? `${databaseBaseUrl}/instances`
+          : `${databaseBaseUrl}/instances/:instance_id`;
+      case "snapshots":
+        return activeItem.action.toLowerCase() !== "create"
+          ? `${databaseBaseUrl}/snapshots`
+          : `${databaseBaseUrl}/snapshots/:snapshot_id/restore`;
+      case "logs":
+        return activeItem.action.toLowerCase() !== "get :item"
+          ? `${databaseBaseUrl}/logs`
+          : `${databaseBaseUrl}/logs/:log_id`;
     }
   };
 
   const displaySnippet = () => {
-    /*eslint-disable*/
+    if (service === "database") {
+      switch (activeItem.action.toLowerCase()) {
+        case "token":
+          return `export TOKEN="${token}"`;
+        case "create":
+          return `curl -X POST -H "Authorization: Bearer $TOKEN" -H "x-auth-group: ${user.account}.${user.role}" -H "Content-Type: application/json" -d \n'${data(
+            item,
+            "create",
+          )}' \n${url()}`;
+        case "get":
+          return `curl -H "Authorization: Bearer $TOKEN" -H "x-auth-group: ${user.account}.${user.role}" \n${url()}`;
+        case "get :item":
+          return `curl -H "Authorization: Bearer $TOKEN" -H "x-auth-group: ${user.account}.${user.role}" \n${url()}`;
+        case "delete":
+          return `curl -X ${data(item, "delete") !== false ? "POST" : "DELETE"} -H "Authorization: Bearer $TOKEN" -H "x-auth-group: ${user.account}.${
+            user.role
+          }" -H "Content-Type: application/json" \n${url()}`;
+        case "list":
+          return `curl -H "Authorization: Bearer $TOKEN" -H "x-icdc-account: ${user.account}" -H "x-icdc-role: ${user.role}" \n${url()}`;
+      }
+    }
     switch (activeItem.action.toLowerCase()) {
       case "token":
         return `export TOKEN="${token}"`;
@@ -431,6 +509,16 @@ const ApiButton = ({
         return ["TOKEN", "CREATE", "DELETE"];
       case "allFirewalls":
         return ["TOKEN", "LIST"];
+      case "parameterGroups":
+        return ["TOKEN", "GET", "CREATE", "DELETE"];
+      case "paramsList":
+        return ["TOKEN", "GET"];
+      case "instances":
+        return ["TOKEN", "GET", "CREATE", "DELETE"];
+      case "logs":
+        return ["TOKEN", "GET", "GET :ITEM"];
+      case "snapshots":
+        return ["TOKEN", "GET", "CREATE"];
       default:
         return ["TOKEN", "GET", "CREATE", "DELETE"];
     }

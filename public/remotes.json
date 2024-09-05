@@ -161,6 +161,28 @@
         "name": "Reports",
         "url": "http://localhost:8035"
       }
+    ],
+    "database": [
+      {
+        "route": "instances",
+        "name": "Instances",
+        "url": "http://localhost:8036"
+      },
+      {
+        "route": "logs",
+        "name": "Logs",
+        "url": "http://localhost:8037"
+      },
+      {
+        "route": "parameters",
+        "name": "Parameters",
+        "url": "http://localhost:8038"
+      },
+      {
+        "route": "snapshots",
+        "name": "Snapshots",
+        "url": "http://localhost:8039"
+      }
     ]
   }
 }

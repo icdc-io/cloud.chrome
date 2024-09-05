@@ -6,7 +6,7 @@ const NoContent = ({ textMessage, icon }) => (
   <Segment placeholder>
     <Header icon>
       <Icon
-        name={icon === "frown" || icon === "meh" ? icon + " outline" : icon}
+        name={icon === "frown" || icon === "meh" ? `${icon} outline` : icon}
       />
       {textMessage}
     </Header>
