@@ -2,6 +2,7 @@ import PropTypes from "prop-types";
 import React from "react";
 import { useSelector } from "react-redux";
 import { Loader } from "semantic-ui-react";
+import { Toaster } from "sonner";
 import AppRoutes from "../AppRoutes";
 import {
   CRITICAL_DATA_FETCH_ERROR,
@@ -64,6 +65,7 @@ const Layout = () => {
         <Sidebar status={finalFetchStatus} />
         <div className={styles["main-content"]}>{mainContent}</div>
       </div>
+      <Toaster richColors />
     </>
   );
 };

@@ -56,6 +56,7 @@ const getFullUrl = (initialUrl, baseUrl) =>
 const getHeaders = (token, user, initialHeaders) => ({
   ...initialHeaders,
   Authorization: `Bearer ${token}`,
+  "Content-Type": "application/json",
   "x-auth-group": `${user.account}.${user.role}`,
   "x-icdc-account": user.account,
   "x-icdc-role": user.role,
@@ -63,25 +64,40 @@ const getHeaders = (token, user, initialHeaders) => ({
 });
 
 const request = async (config) => {
-  const response = await fetch(config.url, {
+  if (!navigator.onLine)
+    throw {
+      response: {
+        data: "No internet connection",
+        statusText: "No internet connection",
+      },
+    };
+
+  let url = config.url;
+  if (config.options)
+    url += `?${new URLSearchParams(config.options || {}).toString()}`;
+  const response = await fetch(url, {
     ...config,
     body: config.body ? JSON.stringify(config.body) : undefined,
   });
   if (!response.ok) {
-    throw new Error(response.statusText || "Something went Wrong", {
-      cause: response.status,
-    });
+    if (!response.body && !response.statusText)
+      throw { response: response.status };
+
+    if (!response.body)
+      throw {
+        response: { statusText: response.statusText },
+      };
+
+    const responseError = await response.json();
+    throw { response: { data: responseError } };
   }
+  if (response.status === 204) return;
   if (response.headers.get("Content-Type").includes("application/json"))
     return await response.json();
   return response;
 };
 
-export const fetchData = async (
-  initialUrl,
-  initialHeaders = {},
-  // options = {},
-) => {
+export const fetchData = async (initialUrl, initialHeaders = {}, options) => {
   const { token, user, baseUrl } = await getInfoForRequest();
   const url = getFullUrl(
     initialUrl.replace("{account}", user.account),
@@ -91,6 +107,7 @@ export const fetchData = async (
   return await request({
     url,
     headers,
+    options,
   });
 };
 

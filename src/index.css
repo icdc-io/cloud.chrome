@@ -338,3 +338,35 @@ i.trash:hover {
   min-height: calc(100vh - 140px);
   padding: 20px 34px;
 }
+
+.close-btn {
+  position: absolute;
+  cursor: pointer;
+  right: 15px;
+  top: 20px;
+  width: 30px;
+  height: 30px;
+}
+.close-btn:before,
+.close-btn:after {
+  position: absolute;
+  left: 15px;
+  content: " ";
+  height: 25px;
+  width: 2px;
+  background-color: black;
+}
+.close-btn:before {
+  transform: rotate(45deg);
+}
+.close-btn:after {
+  transform: rotate(-45deg);
+}
+
+.ui.modal > .header {
+  border-bottom: none
+}
+
+.ui.modal > .actions {
+  border-top: none;
+}
