@@ -17,7 +17,6 @@ module.exports = {
     "./ReturnBaseUrl": "./src/general/networking/returnBaseUrl.js",
     "./ContentPage": "./src/general/networking/contentPage.js",
     "./ApiButton": "./src/general/networking/apiButton.js",
-    "./networking/i18n": "./src/general/networking/i18n.js",
     "./networking/GeneralInput": "./src/general/networking/generalInput.js",
     "./networking/NoContent": "./src/general/networking/noContent.js",
     "./networking/ItemHeader": "./src/general/networking/itemHeader.js",

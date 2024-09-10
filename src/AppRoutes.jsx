@@ -62,6 +62,7 @@ const AppRoutes = () => {
                       fallback={<Loader active inline="centered" />}
                       remoteUrl={remoteServiceInfo.url}
                       remote={remoteServiceInfo.route}
+                      service={serviceInfo.name}
                       store={store}
                     />
                   }

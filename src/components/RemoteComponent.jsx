@@ -34,13 +34,23 @@ ErrorBoundary.propTypes = {
 const RemoteComponent = ({
   remote,
   remoteUrl,
+  service = "",
   scope = "default",
   remoteFilename = "remoteEntry",
   fallback = null,
   ...props
 }) => {
+  const remoteFullName = service
+    ? `${service.replace("-", "")}_${remote}`
+    : remote;
   const Component = React.lazy(
-    loadComponent(remote, remoteUrl, `./${remote}`, remoteFilename, scope),
+    loadComponent(
+      remoteFullName,
+      remoteUrl,
+      `./${remote}`,
+      remoteFilename,
+      scope,
+    ),
   );
 
   return (
@@ -55,6 +65,7 @@ const RemoteComponent = ({
 RemoteComponent.propTypes = {
   remote: PropTypes.string,
   remoteUrl: PropTypes.string,
+  service: PropTypes.string,
   scope: PropTypes.string,
   remoteFilename: PropTypes.string,
   fallback: PropTypes.node,

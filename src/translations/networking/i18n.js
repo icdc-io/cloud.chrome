@@ -586,7 +586,7 @@ const resources = {
       deleteRouteMessage: "Вы уверены, что хотите удалить этот маршрут?",
       editRoute: "Редактировать",
       createRoute: "Создать",
-      createWebRoute: "Создать Веб Маршрут",
+      createWebRoute: "Создать веб-маршрут",
       required: "Обязательно для заполнения",
       rules: "Правила",
       editSecurityGroup: "Редактировать группу",

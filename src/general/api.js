@@ -1,34 +1,3 @@
-// import axios from "axios";
-
-// const API = {
-//   get(url, headers = {}, params = {}) {
-//     return axios.get(url, {
-//       headers,
-//       params,
-//     });
-//   },
-//   patch(url, data = {}, headers = {}) {
-//     return axios.patch(url, data, {
-//       headers,
-//     });
-//   },
-//   put(url, data = {}, headers = {}) {
-//     return axios.put(url, data, {
-//       headers,
-//     });
-//   },
-//   post(url, headers = {}, data = {}) {
-//     return axios.post(url, data, {
-//       headers,
-//     });
-//   },
-//   delete(url, headers = {}) {
-//     return axios.delete(url, {
-//       headers,
-//     });
-//   },
-// };
-
 export const getInfoForRequest = () => {
   return new Promise((resolve, reject) => {
     try {
@@ -169,17 +138,3 @@ export const deleteData = async (initialUrl, params, initialHeaders = {}) => {
     method: "DELETE",
   });
 };
-
-export const exportData = async (initialUrl, initialHeaders = {}, params) => {
-  const { token, user } = await getInfoForRequest();
-  const headers = getHeaders(token, user, initialHeaders);
-  const fullUrl = params
-    ? initialUrl + "?" + new URLSearchParams(params).toString()
-    : initialUrl;
-  return fetch(fullUrl, { headers });
-};
-// {
-//   "route": "instances",
-//   "name": "Instances",
-//   "url": "http://localhost:8004"
-// },
