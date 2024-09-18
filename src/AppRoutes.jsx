@@ -12,6 +12,7 @@ import {
 import { store } from "./redux/store";
 import "semantic-ui-css/semantic.min.css";
 import "./index.css";
+import "./styles/Popup.scss";
 
 const AppRoutes = () => {
   const dispatch = useDispatch();

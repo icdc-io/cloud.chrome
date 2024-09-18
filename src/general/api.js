@@ -57,12 +57,20 @@ const request = async (config) => {
         response: { statusText: response.statusText },
       };
 
+    if (response.headers.get("Content-Type").includes("text/html")) {
+      throw { response: { data: response.statusText } };
+    }
+
     const responseError = await response.json();
     throw { response: { data: responseError } };
   }
   if (response.status === 204) return;
-  if (response.headers.get("Content-Type").includes("application/json"))
-    return await response.json();
+  if (
+    response.headers.get("Content-Type").includes("application/json") &&
+    response.body
+  ) {
+    return await response.json().catch((e) => console.log(e));
+  }
   return response;
 };
 

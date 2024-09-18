@@ -23,7 +23,7 @@ const ContactsPage = () => {
   }
 
   return (
-    <div className="helpdesk-content">
+    <div className="contacts-page helpdesk-content">
       <h1>{t("contactsTitle")}</h1>
       {contacts?.map((contact, key) => (
         <div key={key} className="contact-item">

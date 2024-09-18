@@ -24,6 +24,8 @@ module.exports = {
       "./src/general/networking/ApiDialog/CodeSnippet.js",
     "./composeValidators": "./src/general/utils/composeValidators.js",
     "./isServiceAvailable": "./src/utils/availability.js",
+    "./Popup": "./src/general/components/Popup",
+    "./ErrorScreen": "./src/general/components/ErrorScreen",
   },
   shared: {
     react: {

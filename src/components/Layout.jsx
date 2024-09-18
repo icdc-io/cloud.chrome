@@ -60,12 +60,12 @@ const Layout = () => {
     <>
       <Header status={finalFetchStatus} />
       <div
-        className={`${styles[isSideBarVisible ? "" : "without-sidebar"]}  ${styles["below-header"]}`}
+        className={`${styles[isSideBarVisible ? "" : "without-sidebar"]} ${isSideBarVisible ? "sidebar_on" : "sidebar_off"} ${styles["below-header"]}`}
       >
         <Sidebar status={finalFetchStatus} />
         <div className={styles["main-content"]}>{mainContent}</div>
       </div>
-      <Toaster richColors />
+      <Toaster richColors expand={true} />
     </>
   );
 };

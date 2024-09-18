@@ -370,3 +370,48 @@ i.trash:hover {
 .ui.modal > .actions {
   border-top: none;
 }
+
+.modal-dimmer {
+  z-index: 9999 !important;
+  opacity: 0.5 !important;
+  position: fixed !important;
+}
+
+.dimmed.dimmable > .ui.animating.dimmer, .dimmed.dimmable > .ui.visible.dimmer, .ui.active.dimmer {
+  z-index: 8;
+}
+
+.ui.dropdown .menu {
+  z-index: 7 !important;
+}
+
+.ui.dropdown .menu>.item.delete {
+  color: red;
+}
+
+.ui.basic.label {
+  border: 1px solid #9f3a38;
+  color: #9f3a38;
+}
+
+.contacts-page {
+  font-family: "Roboto", sans-serif;
+}
+
+.contacts-page h1 {
+  font-size: 20px;
+  margin-bottom: 24px;
+}
+
+.contacts-page .contact-item {
+  margin-bottom: 16px;
+}
+
+.contacts-page .contact-item b {
+  margin-bottom: 8px;
+  display: block;
+}
+
+.contacts-page .contact-item p:last-child {
+  margin-top: 8px;
+}
