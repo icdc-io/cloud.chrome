@@ -291,6 +291,15 @@ i.trash:hover {
   width: 100%;
 }
 
+.consoles h2 {
+  margin-bottom: 1rem;
+}
+
+.consoles p {
+  line-height: 1.4285em;
+  margin: 0 0 1em;
+}
+
 .consoles h2,
 .consoles .consoles-description {
   padding: 0 1rem;
@@ -322,7 +331,7 @@ i.trash:hover {
 }
 
 .consoles .service-block .ui.primary.button {
-  max-width: 210px;
+  max-width: 168px;
   width: 100%;
 }
 
@@ -387,11 +396,6 @@ i.trash:hover {
 
 .ui.dropdown .menu>.item.delete {
   color: red;
-}
-
-.ui.basic.label {
-  border: 1px solid #9f3a38;
-  color: #9f3a38;
 }
 
 .contacts-page {
