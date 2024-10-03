@@ -419,3 +419,8 @@ i.trash:hover {
 .contacts-page .contact-item p:last-child {
   margin-top: 8px;
 }
+
+.error.field .ui.basic.label {
+  border: 1px solid #9f3a38;
+  color: #9f3a38;
+}
