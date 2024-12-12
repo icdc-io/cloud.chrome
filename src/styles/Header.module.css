@@ -1,6 +1,6 @@
 .chrome-header {
   height: 76px;
-  background-color: #151515;
+  background-color: var(--header-bg);
   position: fixed;
   width: 100vw;
   height: 76px;

@@ -18,18 +18,18 @@
 .active.item {
   background: hsla(0, 0%, 100%, 0.15);
   font-weight: 700;
+}
 
-  &::after {
-    content: "";
-    position: absolute;
-    width: 20%;
-    height: 2px;
-    background: #2185d0;
-    top: 95%;
-    left: 0;
-    display: block;
-    margin-left: 16px;
-  }
+.active.item::after {
+  content: "";
+  position: absolute;
+  width: 20%;
+  height: 2px;
+  background: #2185d0;
+  top: 95%;
+  left: 0;
+  display: block;
+  margin-left: 16px;
 }
 
 .item::before {

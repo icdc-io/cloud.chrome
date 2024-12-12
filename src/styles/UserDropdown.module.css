@@ -105,6 +105,7 @@
   display: flex;
   align-items: center;
   gap: 6px;
+  width: calc(100% - 20px);
 }
 
 .DropdownMenuSeparator {
@@ -116,4 +117,5 @@
 .selected-value {
   text-transform: uppercase;
   color: gray;
+  margin-left: auto;
 }

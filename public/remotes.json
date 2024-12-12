@@ -65,6 +65,11 @@
         "route": "vpn",
         "name": "VPN",
         "url": "http://localhost:8021"
+      },
+      {
+        "route": "gateways",
+        "name": "Gateways",
+        "url": "http://localhost:8043"
       }
     ],
     "outrun-cloud": [
@@ -182,6 +187,21 @@
         "route": "snapshots",
         "name": "Snapshots",
         "url": "http://localhost:8039"
+      },
+      {
+        "route": "catalog",
+        "name": "Catalog",
+        "url": "http://localhost:8040"
+      },
+      {
+        "route": "instancegroups",
+        "name": "Instance Groups",
+        "url": "http://localhost:8041"
+      },
+      {
+        "route": "instances",
+        "name": "Instances",
+        "url": "http://localhost:8042"
       }
     ]
   }
