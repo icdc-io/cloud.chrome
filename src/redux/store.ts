@@ -5,8 +5,6 @@ import {
   legacy_createStore as createStore,
   type Dispatch,
   type Middleware,
-  // UnknownAction,
-  type Store,
 } from "redux";
 import { logger } from "redux-logger";
 import promiseMiddleware, {
@@ -15,7 +13,7 @@ import promiseMiddleware, {
 } from "redux-promise-middleware";
 import { thunk } from "redux-thunk";
 import Immutable from "seamless-immutable";
-import { currentLang } from "../i18n";
+import { currentLang } from "@/shared/translations/i18n";
 import {
   CHANGE_BURGER_VISIBILITY,
   CHANGE_CURRENT_SERVICE,
@@ -34,9 +32,9 @@ import {
   UPDATE_TOKEN_INFO,
   UPDATE_USER,
   defaultLocationData,
-} from "./constants";
-import type { ActionsTypes } from "./actionTypes";
-import type { CustomStore, HostReducerType } from "./types";
+} from "@/redux/constants";
+import type { ActionsTypes } from "@/redux/actionTypes";
+import type { CustomStore, HostReducerType } from "@/redux/types";
 import {
   type TypedUseSelectorHook,
   useDispatch,

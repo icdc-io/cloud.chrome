@@ -12,9 +12,13 @@
   },
   "aliases": {
     "components": "@/components",
-    "utils": "@/lib/utils",
-    "ui": "@/components/ui",
-    "lib": "@/lib",
-    "hooks": "@/hooks"
+    "app": "@/app",
+    "entities": "@/entities",
+    "pages": "@/pages",
+    "redux": "@/redux",
+    "shared": "@/shared",
+    "styles": "@/styles",
+    "types": "@/types",
+    "widgets": "@/widgets"
   }
 }

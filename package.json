@@ -85,7 +85,6 @@
     "redux-thunk": "^3.1.0",
     "seamless-immutable": "^7.1.4",
     "semantic-ui-css": "^2.5.0",
-    "semantic-ui-react": "^2.1.5",
     "sonner": "^1.4.0",
     "tailwind-merge": "^2.5.3",
     "tailwindcss-animate": "^1.0.7",

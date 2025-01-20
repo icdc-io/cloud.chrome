@@ -88,6 +88,6 @@
 }
 
 .item.external::after {
-  content: url(../images/external.svg);
+  content: url(../shared/images/external.svg);
   margin-left: auto;
 }

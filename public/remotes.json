@@ -17,29 +17,34 @@
       {
         "route": "billing",
         "name": "Billing",
-        "url": "http://localhost:8011"
+        "url": "http://localhost:8011",
+        "api": ""
       },
       {
         "route": "info",
         "name": "Account",
-        "url": "http://localhost:8012"
+        "url": "http://localhost:8012",
+        "api": ""
       },
       {
         "route": "reports",
         "name": "Reports",
-        "url": "http://localhost:8013"
+        "url": "http://localhost:8013",
+        "api": ""
       },
       {
         "route": "users",
         "name": "Users",
-        "url": "http://localhost:8014"
+        "url": "http://localhost:8014",
+        "api": ""
       }
     ],
     "networking": [
       {
         "route": "dns",
         "name": "DNS",
-        "url": "http://localhost:8016"
+        "url": "http://localhost:8016",
+        "api": ""
       },
       {
         "route": "firewall",
@@ -202,6 +207,18 @@
         "route": "instances",
         "name": "Instances",
         "url": "http://localhost:8042"
+      }
+    ],
+    "mq": [
+      {
+        "route": "brokers",
+        "name": "Brokers",
+        "url": "http://localhost:8044"
+      },
+      {
+        "route": "configurations",
+        "name": "Configurations",
+        "url": "http://localhost:8045"
       }
     ]
   }

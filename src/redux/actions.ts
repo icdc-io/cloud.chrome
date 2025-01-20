@@ -1,7 +1,7 @@
-import type { Langs } from "@/i18n";
-import { fetchData } from "@/general/api";
-import { kc } from "@/keycloak";
-import { availableRoles } from "@/utils/roleUtils";
+import type { Langs } from "@/shared/translations/i18n";
+import { fetchData } from "@/shared/api";
+import { kc } from "@/entities/keycloak";
+import { availableRoles } from "@/shared/lib/roleUtils";
 import {
   CONTACTS_FETCH,
   CONTACTS_FETCH_URL,
@@ -23,6 +23,8 @@ import {
   UPDATE_TOKEN_INFO,
   UPDATE_USER,
 } from "@/redux/constants";
+import type { components } from "@/shared/schemas/account-api";
+import { parseLocalStorage } from "@/shared/lib/parseLocalStorage";
 import type {
   External,
   FullAccountsInfo,
@@ -31,9 +33,7 @@ import type {
   UniqueInternalServices,
   UpdateTokenInfoPayload,
   User,
-} from "@/redux/types";
-import type { components } from "@/schemas/account-api";
-import { parseLocalStorage } from "@/utils/parseLocalStorage";
+} from "@/types/entities";
 
 function infernalLiteral<U, T extends U>(arg: T): T {
   return arg;

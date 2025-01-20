@@ -1,0 +1,43 @@
+.error-segment {
+  max-width: initial;
+  background: #f9fafb;
+  flex-direction: column;
+  justify-content: center;
+  align-items: stretch;
+  min-height: 18rem;
+  padding: 1em;
+  animation: none;
+  display: flex;
+  overflow: visible;
+  box-shadow: inset 0 2px 25px #2224260d;
+  border: 1px solid #22242626;
+  border-radius: .285714rem;
+  margin: 1rem 0;
+  position: relative;
+}
+
+.error-header {
+  position: relative;
+  overflow: hidden;
+  text-align: center;
+  margin: 2rem 0 1rem;
+  display: inline-block;
+  text-transform: none;
+  color: #000000de;
+  border: none;
+  padding: 0;
+  font-family: Lato, Helvetica Neue, Arial, Helvetica, sans-serif;
+  font-weight: 700;
+  line-height: 1.28571em;
+  font-size: 18px;
+}
+
+.error-header:first-child {
+  margin-top: 0;
+}
+
+.error-icon {
+  width: 100%;
+  justify-content: center;
+  display: flex;
+}
