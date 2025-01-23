@@ -4,7 +4,7 @@ import type Immutable from "seamless-immutable";
 import type { Store } from "redux";
 import type { components as helpdeskComponents } from "@/shared/schemas/helpdesk-api";
 import type { FluxStandardAction } from "redux-promise-middleware";
-import type { ImmutableObject, ImmutableObjectMixin } from "seamless-immutable";
+import type { ImmutableObject } from "seamless-immutable";
 import type {
   BaseUrls,
   FullAccountsInfoType,
@@ -56,11 +56,11 @@ export type CustomStore = Store<
 > & {
   dispatch: unknown;
   asyncReducers?: { [key: string]: unknown };
-  injectReducer?: (
+  injectReducer?: <T>(
     key: string,
-    asyncReducer: <T>(
-      state: ImmutableObjectMixin<T> | undefined,
+    asyncReducer: (
+      state: ImmutableObject<T> | undefined,
       action: FluxStandardAction,
-    ) => ImmutableObjectMixin<T>,
+    ) => ImmutableObject<T>,
   ) => void;
 };
