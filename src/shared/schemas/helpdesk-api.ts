@@ -4,505 +4,505 @@
  */
 
 export interface paths {
-    "/config": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** Show a current provider configuration */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Config"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+  "/config": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/contacts": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Show a current provider configuration */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["Config"];
+          };
         };
-        /** Show a contact info describing other ways for contacting support team */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["ContactCollection"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-            };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
         };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/tickets": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List of users tickets */
-        get: {
-            parameters: {
-                query?: never;
-                header?: {
-                    project_id?: string;
-                };
-                path?: never;
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["TicketCollection"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        /** Create a new ticket */
-        post: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path?: never;
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        /** @example compute-helpdesk */
-                        project_id?: string;
-                        /** @example 2 */
-                        priority_id?: number;
-                        /** @example 3 */
-                        tracker_id?: number;
-                        /** @example uploads ticket */
-                        subject?: string;
-                        /** @example Ticket with uploads */
-                        description?: string;
-                        uploads?: {
-                            /** @example screenshot1.png */
-                            name?: string;
-                            /** @example PNG image in Base64 format */
-                            content?: string;
-                        }[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Operation successfull */
-                201: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Ticket"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-            };
-        };
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/contacts": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
-    "/tickets/{id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
+    /** Show a contact info describing other ways for contacting support team */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["ContactCollection"];
+          };
         };
-        /** List of users tickets */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Ticket"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-                /** @description Ticket not found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["NotFoundError"];
-                    };
-                };
-            };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
         };
-        /** List of users tickets */
-        put: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                };
-                cookie?: never;
-            };
-            requestBody: {
-                content: {
-                    "application/json": {
-                        /** @example A new one comment */
-                        notes?: string;
-                        uploads?: {
-                            /** @example screenshot2.png */
-                            name?: string;
-                            /** @example A new pic in base64 format */
-                            content?: string;
-                        }[];
-                    };
-                };
-            };
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Ticket"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-                /** @description Ticket not found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["NotFoundError"];
-                    };
-                };
-            };
-        };
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+      };
     };
-    "/tickets/{id}/attachments/{attachment_id}": {
-        parameters: {
-            query?: never;
-            header?: never;
-            path?: never;
-            cookie?: never;
-        };
-        /** List of ticket attachments */
-        get: {
-            parameters: {
-                query?: never;
-                header?: never;
-                path: {
-                    id: number;
-                    attachment_id: number;
-                };
-                cookie?: never;
-            };
-            requestBody?: never;
-            responses: {
-                /** @description Operation successfull */
-                200: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["schemas"]["Ticket"];
-                    };
-                };
-                /** @description Access token is missing or invalid */
-                401: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["UnauthorizedError"];
-                    };
-                };
-                /** @description Attachments not found */
-                404: {
-                    headers: {
-                        [name: string]: unknown;
-                    };
-                    content: {
-                        "application/json": components["responses"]["NotFoundError"];
-                    };
-                };
-            };
-        };
-        put?: never;
-        post?: never;
-        delete?: never;
-        options?: never;
-        head?: never;
-        patch?: never;
-        trace?: never;
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/tickets": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
     };
+    /** List of users tickets */
+    get: {
+      parameters: {
+        query?: never;
+        header?: {
+          project_id?: string;
+        };
+        path?: never;
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["TicketCollection"];
+          };
+        };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
+        };
+      };
+    };
+    put?: never;
+    /** Create a new ticket */
+    post: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path?: never;
+        cookie?: never;
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            /** @example compute-helpdesk */
+            project_id?: string;
+            /** @example 2 */
+            priority_id?: number;
+            /** @example 3 */
+            tracker_id?: number;
+            /** @example uploads ticket */
+            subject?: string;
+            /** @example Ticket with uploads */
+            description?: string;
+            uploads?: {
+              /** @example screenshot1.png */
+              name?: string;
+              /** @example PNG image in Base64 format */
+              content?: string;
+            }[];
+          };
+        };
+      };
+      responses: {
+        /** @description Operation successfull */
+        201: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["Ticket"];
+          };
+        };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
+        };
+      };
+    };
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/tickets/{id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List of users tickets */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["Ticket"];
+          };
+        };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
+        };
+        /** @description Ticket not found */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["NotFoundError"];
+          };
+        };
+      };
+    };
+    /** List of users tickets */
+    put: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: number;
+        };
+        cookie?: never;
+      };
+      requestBody: {
+        content: {
+          "application/json": {
+            /** @example A new one comment */
+            notes?: string;
+            uploads?: {
+              /** @example screenshot2.png */
+              name?: string;
+              /** @example A new pic in base64 format */
+              content?: string;
+            }[];
+          };
+        };
+      };
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["Ticket"];
+          };
+        };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
+        };
+        /** @description Ticket not found */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["NotFoundError"];
+          };
+        };
+      };
+    };
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
+  "/tickets/{id}/attachments/{attachment_id}": {
+    parameters: {
+      query?: never;
+      header?: never;
+      path?: never;
+      cookie?: never;
+    };
+    /** List of ticket attachments */
+    get: {
+      parameters: {
+        query?: never;
+        header?: never;
+        path: {
+          id: number;
+          attachment_id: number;
+        };
+        cookie?: never;
+      };
+      requestBody?: never;
+      responses: {
+        /** @description Operation successfull */
+        200: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["schemas"]["Ticket"];
+          };
+        };
+        /** @description Access token is missing or invalid */
+        401: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["UnauthorizedError"];
+          };
+        };
+        /** @description Attachments not found */
+        404: {
+          headers: {
+            [name: string]: unknown;
+          };
+          content: {
+            "application/json": components["responses"]["NotFoundError"];
+          };
+        };
+      };
+    };
+    put?: never;
+    post?: never;
+    delete?: never;
+    options?: never;
+    head?: never;
+    patch?: never;
+    trace?: never;
+  };
 }
 export type webhooks = Record<string, never>;
 export interface components {
-    schemas: {
-        ContactCollection: components["schemas"]["Contact"][];
-        Contact: {
-            /** @example phone */
-            kind?: string;
-            /** @example +48 139 170 104 */
-            value?: string;
-            /** @example 24/7 support line */
-            comment?: string;
-        };
-        Config: {
-            projects?: Record<string, never>[];
-            projects_ids?: Record<string, never>[];
-            /** @example {
-             *       "bug": 1,
-             *       "support": 3
-             *     } */
-            trackers?: Record<string, never>;
-            /** @example {
-             *       "low": 1,
-             *       "normal": 2,
-             *       "high": 3,
-             *       "urgent": 4,
-             *       "immediate": 5
-             *     } */
-            priorities?: Record<string, never>;
-            /** @example {
-             *       "New": 1,
-             *       "Queue": 2,
-             *       "In progress": 3,
-             *       "Rejected": 4,
-             *       "Closed": 5
-             *     } */
-            statuses?: Record<string, never>;
-            sys_messages?: string[];
-        };
-        TicketCollection: {
-            /** @example 17 */
-            readonly id?: number;
-            /** @example Aliaksei Hrechushkin */
-            author?: string;
-            /** @example Request #15 */
-            subject?: string;
-            /** @example Something went wrong with my VM. */
-            description?: string;
-            /** @example 2 */
-            priority_id?: number;
-            /** @example 1 */
-            tracker_id?: number;
-            /** @example New */
-            readonly status?: string;
-            /** @example 2022-06-10T07:10:54Z */
-            readonly created_on?: string;
-            /** @example 2022-06-10T07:10:54Z */
-            readonly updated_on?: string;
-        }[];
-        Ticket: {
-            /** @example 17 */
-            readonly id?: number;
-            /** @example Aliaksei Hrechushkin */
-            author?: string;
-            /** @example Request #15 */
-            subject?: string;
-            /** @example Something went wrong with my VM. */
-            description?: string;
-            /** @example 2 */
-            priority_id?: number;
-            /** @example 1 */
-            tracker_id?: number;
-            /** @example New */
-            readonly status?: string;
-            /** @example 2022-06-10T07:10:54Z */
-            readonly created_on?: string;
-            /** @example 2022-06-10T07:10:54Z */
-            readonly updated_on?: string;
-            readonly comments?: components["schemas"]["Comment"][];
-            readonly attachments?: components["schemas"]["TicketAttachment"][];
-            uploads?: {
-                /** @example screenshot1.png */
-                name?: string;
-                /** @example PNG image in Base64 format */
-                content?: string;
-            }[];
-        };
-        Comment: {
-            /** @example 11 */
-            id?: number;
-            user?: components["schemas"]["User"];
-            /** @example My comment */
-            notes?: string;
-            details?: {
-                /** @example attachment */
-                property?: string;
-                /** @example 17 */
-                name?: string;
-                /** @example null */
-                old_value?: string;
-                /** @example screen1.png */
-                new_value?: string;
-            }[];
-        };
-        TicketAttachment: {
-            /** @example 1 */
-            id?: number;
-            /** @example abc.png */
-            filename?: string;
-            /** @example 76249 */
-            filesize?: number;
-            /** @example image/png */
-            content_type?: string;
-            /** @example description */
-            description?: string;
-            author?: components["schemas"]["User"];
-            /** @example 2022-06-10T07:10:54Z */
-            readonly created_on?: string;
-        };
-        User: {
-            /** @example 5 */
-            id?: number;
-            /** @example Aliaksei Hrechushkin */
-            name?: string;
-        };
+  schemas: {
+    ContactCollection: components["schemas"]["Contact"][];
+    Contact: {
+      /** @example phone */
+      kind?: string;
+      /** @example +48 139 170 104 */
+      value?: string;
+      /** @example 24/7 support line */
+      comment?: string;
     };
-    responses: {
-        /** @description Access token is missing or invalid */
-        UnauthorizedError: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content?: never;
-        };
-        /** @description Object not found */
-        NotFoundError: {
-            headers: {
-                [name: string]: unknown;
-            };
-            content?: never;
-        };
+    Config: {
+      projects?: Record<string, never>[];
+      projects_ids?: Record<string, never>[];
+      /** @example {
+       *       "bug": 1,
+       *       "support": 3
+       *     } */
+      trackers?: Record<string, never>;
+      /** @example {
+       *       "low": 1,
+       *       "normal": 2,
+       *       "high": 3,
+       *       "urgent": 4,
+       *       "immediate": 5
+       *     } */
+      priorities?: Record<string, never>;
+      /** @example {
+       *       "New": 1,
+       *       "Queue": 2,
+       *       "In progress": 3,
+       *       "Rejected": 4,
+       *       "Closed": 5
+       *     } */
+      statuses?: Record<string, never>;
+      sys_messages?: string[];
     };
-    parameters: never;
-    requestBodies: never;
-    headers: never;
-    pathItems: never;
+    TicketCollection: {
+      /** @example 17 */
+      readonly id?: number;
+      /** @example Aliaksei Hrechushkin */
+      author?: string;
+      /** @example Request #15 */
+      subject?: string;
+      /** @example Something went wrong with my VM. */
+      description?: string;
+      /** @example 2 */
+      priority_id?: number;
+      /** @example 1 */
+      tracker_id?: number;
+      /** @example New */
+      readonly status?: string;
+      /** @example 2022-06-10T07:10:54Z */
+      readonly created_on?: string;
+      /** @example 2022-06-10T07:10:54Z */
+      readonly updated_on?: string;
+    }[];
+    Ticket: {
+      /** @example 17 */
+      readonly id?: number;
+      /** @example Aliaksei Hrechushkin */
+      author?: string;
+      /** @example Request #15 */
+      subject?: string;
+      /** @example Something went wrong with my VM. */
+      description?: string;
+      /** @example 2 */
+      priority_id?: number;
+      /** @example 1 */
+      tracker_id?: number;
+      /** @example New */
+      readonly status?: string;
+      /** @example 2022-06-10T07:10:54Z */
+      readonly created_on?: string;
+      /** @example 2022-06-10T07:10:54Z */
+      readonly updated_on?: string;
+      readonly comments?: components["schemas"]["Comment"][];
+      readonly attachments?: components["schemas"]["TicketAttachment"][];
+      uploads?: {
+        /** @example screenshot1.png */
+        name?: string;
+        /** @example PNG image in Base64 format */
+        content?: string;
+      }[];
+    };
+    Comment: {
+      /** @example 11 */
+      id?: number;
+      user?: components["schemas"]["User"];
+      /** @example My comment */
+      notes?: string;
+      details?: {
+        /** @example attachment */
+        property?: string;
+        /** @example 17 */
+        name?: string;
+        /** @example null */
+        old_value?: string;
+        /** @example screen1.png */
+        new_value?: string;
+      }[];
+    };
+    TicketAttachment: {
+      /** @example 1 */
+      id?: number;
+      /** @example abc.png */
+      filename?: string;
+      /** @example 76249 */
+      filesize?: number;
+      /** @example image/png */
+      content_type?: string;
+      /** @example description */
+      description?: string;
+      author?: components["schemas"]["User"];
+      /** @example 2022-06-10T07:10:54Z */
+      readonly created_on?: string;
+    };
+    User: {
+      /** @example 5 */
+      id?: number;
+      /** @example Aliaksei Hrechushkin */
+      name?: string;
+    };
+  };
+  responses: {
+    /** @description Access token is missing or invalid */
+    UnauthorizedError: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+    /** @description Object not found */
+    NotFoundError: {
+      headers: {
+        [name: string]: unknown;
+      };
+      content?: never;
+    };
+  };
+  parameters: never;
+  requestBodies: never;
+  headers: never;
+  pathItems: never;
 }
 export type $defs = Record<string, never>;
 export type operations = Record<string, never>;
