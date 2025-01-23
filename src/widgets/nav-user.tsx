@@ -93,7 +93,7 @@ export function NavUser({ isFullInfoAvailable }: UserDropdownType) {
     localStorage.setItem("user", JSON.stringify(newUserInfo));
   };
 
-  const accountsSection = isFullInfoAvailable ? (
+  const accountsSection = isFullInfoAvailable && fullAccountsInfo ? (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger>
         {t("accounts")} {account}
@@ -106,7 +106,7 @@ export function NavUser({ isFullInfoAvailable }: UserDropdownType) {
               changeCurrentInfo("account", newAccount)
             }
           >
-            {Object.values({ ...fullAccountsInfo })
+            {Object.values(fullAccountsInfo)
               .map((accountInfo) => ({
                 key: accountInfo?.name,
                 text: accountInfo?.display_name || "",

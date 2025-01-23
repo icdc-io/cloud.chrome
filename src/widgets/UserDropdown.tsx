@@ -76,7 +76,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
     localStorage.setItem("user", JSON.stringify(newUserInfo));
   };
 
-  const accountsSection = isFullInfoAvailable ? (
+  const accountsSection = isFullInfoAvailable && fullAccountsInfo ? (
     <DropdownMenuSub>
       <DropdownMenuSubTrigger className={styles["select-item"]}>
         <div className={styles.RightSlot}>
@@ -92,7 +92,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
               changeCurrentInfo("account", newAccount)
             }
           >
-            {Object.values({ ...fullAccountsInfo })
+            {Object.values(fullAccountsInfo)
               .map((accountInfo) => ({
                 key: accountInfo?.name,
                 text: accountInfo?.display_name || "",
