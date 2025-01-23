@@ -1,46 +1,23 @@
 import type { UserInfo } from "@/types/entities";
+import { OPERATOR } from "./roleUtils";
 
-const adminServicesOnly = ["admin", "billing"];
-
-// type ServicesRoles = {
-//   [key: string]: string[];
-// };
-
-// const servicesRoles: ServicesRoles = {
-//   openshift: ["member"],
-//   devops: ["member"],
-//   projects: ["admin", "billing", "manager"],
-// };
-
-const isAdminRightsValid = (token: UserInfo) => {
-  if (!token) return false;
-  return token.groups?.some((group) => /.cloud$/.test(group));
+type ProtectedServices = {
+  [key: string]: (a: string[]) => boolean;
 };
 
-// const isServiceRightsValid = (
-//   availableRolesInService: string[],
-//   account: string,
-//   token: UserInfo,
-// ) => {
-//   return (
-//     token &&
-//     availableRolesInService.some(
-//       (role) => token.external.accounts[account].roles.indexOf(role) !== -1,
-//     )
-//   );
-// };
+const protectedServices: ProtectedServices = {
+  admin: (groups: string[]) => groups?.some((group) => /.cloud$/.test(group)),
+  billing: (groups: string[]) =>
+    groups?.some((group) => /.operator$/.test(group)),
+};
 
 export const isServiceAvailable = (
   serviceName: string | undefined,
-  // account: string,
-  token: UserInfo,
+  userInfo: UserInfo,
 ) => {
-  if (!serviceName) return;
+  if (!serviceName || !userInfo) return false;
 
-  // if (servicesRoles[serviceName])
-  //   return isServiceRightsValid(servicesRoles[serviceName], account, token);
+  if (!protectedServices[serviceName]) return true;
 
-  if (!adminServicesOnly.includes(serviceName)) return true;
-
-  return isAdminRightsValid(token);
+  return protectedServices[serviceName](userInfo.groups);
 };

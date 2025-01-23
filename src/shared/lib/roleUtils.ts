@@ -1,6 +1,12 @@
 import type { ImmutableArray } from "seamless-immutable";
 
-export const availableRoles = ["admin", "operator", "billing", "member"];
+export const OPERATOR = "operator";
+export const OWNER = "owner";
+export const ADMIN = "admin";
+export const MEMBER = "member";
+
+export const rolesWithAdminRights = [OPERATOR, OWNER, ADMIN];
+export const availableRoles = [...rolesWithAdminRights, MEMBER];
 
 const filterAndSort = (list: ImmutableArray<string> | undefined) => {
   if (!list || !list.length) {

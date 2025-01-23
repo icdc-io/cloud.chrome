@@ -1,7 +1,6 @@
 import { useNavigate } from "react-router-dom";
-import { HOME } from "@/shared/constants/servicesNames";
+import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
-import Homepage from "@/shared/images/homepage.svg";
 import { kc } from "@/entities/keycloak";
 import styles from "@/styles/ServicesDropdown.module.css";
 import { isServiceAvailable } from "@/shared/lib/availability";
@@ -22,8 +21,10 @@ import {
   useSidebar,
 } from "@/shared/ui/sidebar";
 import type { components } from "@/shared/schemas/account-api";
+import { useTranslation } from "react-i18next";
 
 const ServicesDropdown = () => {
+  const { t } = useTranslation();
   const { isMobile } = useSidebar();
   const navigate = useNavigate();
 
@@ -38,14 +39,6 @@ const ServicesDropdown = () => {
     fullAccountsInfo?.[user.account]?.servicesInLocations?.[user.location] ||
       {},
   );
-
-  const homepage = {
-    text: "Home",
-    value: HOME,
-    image: {
-      src: Homepage,
-    },
-  };
 
   const mapServicesInLocation = (
     servicesInfo: components["schemas"]["Service"][],
@@ -162,7 +155,7 @@ const ServicesDropdown = () => {
             >
               <img src={homepage.image.src || ""} alt="Service icon" />
               <span className="hover:text-white text-white text-base">
-                {homepage.text}
+                {t(homepage.text)}
               </span>
             </DropdownMenuItem>
           </DropdownMenuContent>

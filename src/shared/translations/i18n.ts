@@ -54,6 +54,7 @@ export const resources: LanguageResources = {
       language: "Language",
       unavailableDescription: "Please choose another location.",
       loading: "Loading...",
+      toHome: "Home",
     },
   },
   ru: {
@@ -91,6 +92,7 @@ export const resources: LanguageResources = {
       language: "Язык",
       unavailableDescription: "Пожалуйста, выберите другую локацию.",
       loading: "Загрузка...",
+      toHome: "На главную",
     },
   },
 };

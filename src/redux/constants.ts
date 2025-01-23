@@ -7,6 +7,7 @@ export const UPDATE_USER = "UPDATE_USER";
 export const CHANGE_LANG = "CHANGE_LANG";
 // export const SET_AVAILABLE_SERVICES = "SET_AVAILABLE_SERVICES";
 export const SET_REMOTES = "SET_REMOTES";
+export const FETCH_SERVICES_STATUSES = "FETCH_SERVICES_STATUSES";
 export const FETCH_REMOTES_APPS = "FETCH_REMOTES_APPS";
 export const FETCH_ACCOUNTS_DATA = "FETCH_ACCOUNTS_DATA";
 export const CHANGE_SIDEBAR_VISIBILITY = "CHANGE_SIDEBAR_VISIBILITY";
@@ -19,6 +20,7 @@ export const UPDATE_TOKEN_INFO = "UPDATE_TOKEN_INFO";
 export const CONTACTS_FETCH = "CONTACTS_FETCH";
 export const CONTACTS_FETCH_URL = (lang: Langs) =>
   `/api/helpdesk/v1/contacts?lang=${lang}`;
+export const SERVICES_STATUSES_URL = "/api/delivery/v1/services/status";
 
 export const defaultLocationData = {
   footer_message: "IBA IT Park. All rights reserved.",

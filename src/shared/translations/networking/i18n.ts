@@ -490,6 +490,7 @@ const resources = {
       privatePort: "Приватный порт",
       service: "Сервис",
       vmName: "Имя VM",
+      availableVMs: "Доступные ВМ",
       nic: "NIC",
       // vmId: "Id",
       ipv4: "IPv4",

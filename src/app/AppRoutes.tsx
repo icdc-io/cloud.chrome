@@ -11,6 +11,7 @@ import { store, useAppDispatch, useAppSelector } from "@/redux/store";
 import "semantic-ui-css/semantic.min.css";
 import "@/styles/Popup.scss";
 import Loader from "@/shared/ui/loader";
+import { HOME } from "@/shared/constants/servicesNames";
 
 const AppRoutes = () => {
   const dispatch = useAppDispatch();
@@ -110,7 +111,7 @@ const AppRoutes = () => {
               <RemoteComponent
                 fallback={<Loader />}
                 remoteUrl={process.env.REACT_APP_HOME_REMOTE_APP_URL} //change remote Home app url for production
-                remote={"home"}
+                remote={HOME}
                 store={store}
               />
             }

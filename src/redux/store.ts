@@ -8,6 +8,7 @@ import {
 } from "redux";
 import { logger } from "redux-logger";
 import promiseMiddleware, {
+  type AsyncAction,
   // type AsyncAction,
   type FluxStandardAction,
 } from "redux-promise-middleware";
@@ -23,6 +24,7 @@ import {
   // CONTACTS_FETCH,
   FETCH_ACCOUNTS_DATA,
   FETCH_LOCATION_DATA,
+  FETCH_SERVICES_STATUSES,
   FETCH_SERVICE_VERSION_DATA,
   FULFILLED,
   PENDING,
@@ -33,7 +35,7 @@ import {
   UPDATE_USER,
   defaultLocationData,
 } from "@/redux/constants";
-import type { ActionsTypes } from "@/redux/actionTypes";
+import { servicesWithCompletedStatus } from "@/shared/constants/servicesWithCompletedStatus";
 import type { CustomStore, HostReducerType } from "@/redux/types";
 import {
   type TypedUseSelectorHook,
@@ -68,12 +70,11 @@ const initialState: HostReducerType = Immutable({
   accountsDataFetchErrorStatus: 0,
   contacts: null,
   contactsFetchStatus: PENDING,
+  servicesWithCompletedStatus: new Set(servicesWithCompletedStatus),
+  servicesWithCompletedStatusFetchStatus: PENDING,
 });
 
-const hostReducer = (
-  state = initialState,
-  action: /*ActionsTypes*/ FluxStandardAction,
-) => {
+const hostReducer = (state = initialState, action: FluxStandardAction) => {
   switch (action.type) {
     case UPDATE_USER:
       return state.set("user", action.payload);
@@ -145,6 +146,37 @@ const hostReducer = (
       });
     }
 
+    case `${FETCH_SERVICES_STATUSES}_PENDING`:
+      return state.set("servicesWithCompletedStatusFetchStatus", PENDING);
+    case `${FETCH_SERVICES_STATUSES}_REJECTED`:
+      return state.set("servicesWithCompletedStatusFetchStatus", REJECTED);
+    case `${FETCH_SERVICES_STATUSES}_FULFILLED`: {
+      console.log(state);
+      console.log(action.payload);
+      const servicesWithCompletedStatus = action.payload.data.reduce(
+        (acc: Array<string>, curr: any) => {
+          if (curr.common_service_status === "Complete")
+            acc.push(curr.common_name);
+          return acc;
+        },
+        [],
+      );
+      console.log(state.servicesWithCompletedStatus);
+      console.log(
+        new Set([
+          state.servicesWithCompletedStatus,
+          ...servicesWithCompletedStatus,
+        ]),
+      );
+      return state.merge({
+        servicesWithCompletedStatusFetchStatus: FULFILLED,
+        servicesWithCompletedStatus: new Set([
+          state.servicesWithCompletedStatus,
+          ...servicesWithCompletedStatus,
+        ]),
+      });
+    }
+
     // case `${CONTACTS_FETCH}_PENDING`:
     //   return state.set("contactsFetchStatus", "pending");
     // case `${CONTACTS_FETCH}_REJECTED`:
@@ -193,7 +225,7 @@ export default function configureStore() {
     promiseMiddleware as Middleware<
       HostReducerType,
       FluxStandardAction,
-      Dispatch<ActionsTypes>
+      Dispatch<AsyncAction>
     >,
     thunk,
   ];

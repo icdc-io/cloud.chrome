@@ -15,7 +15,7 @@ import type {
   UserType,
 } from "@/types/entities";
 
-type StoreType = {
+export type StoreType = {
   user: UserType;
   lang: Langs;
   remotes: Remotes;
@@ -37,6 +37,8 @@ type StoreType = {
   accountsDataFetchErrorStatus: number;
   contacts: helpdeskComponents["schemas"]["Contact"][] | null;
   contactsFetchStatus: STATUSES_TYPES[number];
+  servicesWithCompletedStatusFetchStatus: string;
+  servicesWithCompletedStatus: Set<string>;
 };
 
 export type ReducerType<T> = Immutable.ImmutableObject<T>;

@@ -6,6 +6,8 @@ import {
   CONTACTS_FETCH,
   CONTACTS_FETCH_URL,
   DEFAULT_LOCATION_DATA,
+  FETCH_SERVICES_STATUSES,
+  SERVICES_STATUSES_URL,
 } from "@/redux/constants";
 import {
   CHANGE_BURGER_VISIBILITY,
@@ -34,6 +36,11 @@ import type {
   UpdateTokenInfoPayload,
   User,
 } from "@/types/entities";
+import type { ThunkAction } from "redux-thunk";
+import type { HostReducerType } from "./types";
+import type { AsyncAction } from "redux-promise-middleware";
+
+const isServicesFiltrationNecessary = () => !!process.env.CHROME_ENV;
 
 function infernalLiteral<U, T extends U>(arg: T): T {
   return arg;
@@ -157,21 +164,38 @@ export const changeLang = (newLang: Langs) =>
     type: inferStringLiteral(CHANGE_LANG),
     payload: newLang,
   }) as const;
-// export const setInfo = (info) => ({
-//   type: inferStringLiteral(SET_AVAILABLE_SERVICES,
-//   payload: info,
-// });
 export const fetchAccountsData = () =>
   ({
     type: inferStringLiteral(FETCH_ACCOUNTS_DATA),
     payload: parseAccountsData(
       fetchData(
         `${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
-        {},
-        {},
       ),
-    ),
+    ).then(),
   }) as const;
+
+export const fetchServicesStatuses = () =>
+  ({
+    type: inferStringLiteral(FETCH_SERVICES_STATUSES),
+    payload: fetchData(SERVICES_STATUSES_URL),
+  }) as const;
+
+export const fetchAccountsAndFetchServicesStatus = (): ThunkAction<
+  void,
+  HostReducerType,
+  unknown,
+  AsyncAction
+> => {
+  return async (dispatch) => {
+    try {
+      const rr = await dispatch(fetchAccountsData());
+      console.log(rr);
+      dispatch(fetchServicesStatuses());
+    } catch (error) {
+      console.error(error);
+    }
+  };
+};
 export const fetchRemotes = () =>
   ({
     type: inferStringLiteral(SET_REMOTES),
