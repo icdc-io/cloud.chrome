@@ -19,15 +19,15 @@ export const FETCH_LOCATION_DATA = "FETCH_LOCATION_DATA";
 export const UPDATE_TOKEN_INFO = "UPDATE_TOKEN_INFO";
 export const CONTACTS_FETCH = "CONTACTS_FETCH";
 export const CONTACTS_FETCH_URL = (lang: Langs) =>
-  `/api/helpdesk/v1/contacts?lang=${lang}`;
+	`/api/helpdesk/v1/contacts?lang=${lang}`;
 export const SERVICES_STATUSES_URL = "/api/delivery/v1/services/status";
 
 export const defaultLocationData = {
-  footer_message: "IBA IT Park. All rights reserved.",
-  privacy_policy_url: "https://ibacloud.by/privacy-policy-en",
-  cookies_policy_url: "https://ibacloud.by/cookies-policy-en",
-  status_page_url: "https://status.ibacloud.by",
-  back_to_url: "https://ibacloud.by",
+	footer_message: "IBA IT Park. All rights reserved.",
+	privacy_policy_url: "https://ibacloud.by/privacy-policy-en",
+	cookies_policy_url: "https://ibacloud.by/cookies-policy-en",
+	status_page_url: "https://status.ibacloud.by",
+	back_to_url: "https://ibacloud.by",
 } as const;
 
 const STATUSES = [PENDING, REJECTED, FULFILLED, ""] as const;

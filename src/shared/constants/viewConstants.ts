@@ -20,28 +20,28 @@ import storage from "@/shared/images/storage.svg";
 import support from "@/shared/images/support.svg";
 
 type ServicesImages = {
-  [index: string]: string;
+	[index: string]: string;
 };
 
 export const servicesImages: ServicesImages = {
-  account,
-  admin,
-  artifactory,
-  code,
-  compliance,
-  compute,
-  devops,
-  disk,
-  migrator,
-  networking,
-  openshift,
-  projects,
-  question,
-  storage,
-  support,
-  billing,
-  database,
-  "outrun-cloud": outrunCloud,
-  "outrun-dedicated": outrunDedicated,
-  "outrun-service": outrunService,
+	account,
+	admin,
+	artifactory,
+	code,
+	compliance,
+	compute,
+	devops,
+	disk,
+	migrator,
+	networking,
+	openshift,
+	projects,
+	question,
+	storage,
+	support,
+	billing,
+	database,
+	"outrun-cloud": outrunCloud,
+	"outrun-dedicated": outrunDedicated,
+	"outrun-service": outrunService,
 };
