@@ -1,6 +1,7 @@
 const resources = {
   en: {
     translation: {
+      noResults:"No results.",
       submit: "Submit",
       confirm: "Confirm",
       delete: "Delete",
@@ -471,6 +472,7 @@ const resources = {
   },
   ru: {
     translation: {
+      noResults:"Нет результатов.",
       type: "Тип",
       subnet: "Подсеть",
       gateway: "Шлюз",
