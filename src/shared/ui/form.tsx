@@ -8,6 +8,7 @@ import {
   type FieldValues,
   FormProvider,
   useFormContext,
+  useForm,
 } from "react-hook-form";
 
 import { cn } from "@/shared/lib/utils";
@@ -174,4 +175,5 @@ export {
   FormDescription,
   FormMessage,
   FormField,
+  useForm
 };
