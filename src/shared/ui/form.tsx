@@ -10,7 +10,7 @@ import {
   useFormContext,
   useForm,
 } from "react-hook-form";
-
+import { zodResolver } from "@hookform/resolvers/zod";
 import { cn } from "@/shared/lib/utils";
 import { Label } from "@/shared/ui/label";
 
@@ -175,5 +175,6 @@ export {
   FormDescription,
   FormMessage,
   FormField,
-  useForm
+  useForm,
+  zodResolver,
 };

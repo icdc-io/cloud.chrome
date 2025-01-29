@@ -3,7 +3,6 @@ import type { DEFAULT_LOCATION_DATA, STATUSES_TYPES } from "@/redux/constants";
 import type Immutable from "seamless-immutable";
 import type { Store } from "redux";
 import type { components as helpdeskComponents } from "@/shared/schemas/helpdesk-api";
-import type { FluxStandardAction } from "redux-promise-middleware";
 import type { ImmutableObject } from "seamless-immutable";
 import type {
   BaseUrls,
@@ -58,11 +57,11 @@ export type CustomStore = Store<
 > & {
   dispatch: unknown;
   asyncReducers?: { [key: string]: unknown };
-  injectReducer?: <T>(
+  injectReducer?: <TState,TAction>(
     key: string,
     asyncReducer: (
-      state: ImmutableObject<T> | undefined,
-      action: FluxStandardAction,
-    ) => ImmutableObject<T>,
+      state: ImmutableObject<TState> | undefined,
+      action: TAction,
+    ) => ImmutableObject<TState>,
   ) => void;
 };
