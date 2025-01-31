@@ -1,6 +1,6 @@
 import type { List, User } from "@/types/entities";
 
-type ObjectRecord =
+export type ObjectRecord =
 	| {
 			[key: string]: string;
 	  }
@@ -41,10 +41,14 @@ export const getInfoForRequest = (): Promise<UserInfoParams> => {
 	});
 };
 
-const getFullUrl = (initialUrl: string, baseUrl: string) =>
+export const getFullUrl = (initialUrl: string, baseUrl: string) =>
 	initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
 
-const getHeaders = (token: string, user: User, initialHeaders: List = {}) => ({
+export const getHeaders = (
+	token: string,
+	user: User,
+	initialHeaders: List = {},
+) => ({
 	...initialHeaders,
 	Authorization: `Bearer ${token}`,
 	"Content-Type": initialHeaders["Content-Type"] || "application/json",
@@ -54,14 +58,8 @@ const getHeaders = (token: string, user: User, initialHeaders: List = {}) => ({
 	"x-icdc-location": user.location,
 });
 
-const request = async (config: RequestParamsType) => {
-	if (!navigator.onLine)
-		throw {
-			response: {
-				data: "No internet connection",
-				statusText: "No internet connection",
-			},
-		};
+export const request = async (config: RequestParamsType) => {
+	if (!navigator.onLine) throw "noInternet";
 
 	let url = config.url;
 	if (config.options)
@@ -71,24 +69,20 @@ const request = async (config: RequestParamsType) => {
 		body: config.body ? JSON.stringify(config.body) : undefined,
 	});
 	if (!response.ok) {
-		if (!response.body && !response.statusText)
-			throw { response: response.status };
+		if (!response.body && !response.statusText) throw response.status;
 
-		if (!response.body)
-			throw {
-				response: { statusText: response.statusText },
-			};
+		if (!response.body) throw response.statusText;
 
 		const contentType = response.headers.get("Content-Type");
 
-		if (!contentType) return response;
+		if (!contentType) throw "wrong";
 
 		if (["text/html", "text/plain"].includes(contentType.split(" ")[0])) {
-			throw { response: { data: response.statusText } };
+			throw response.statusText;
 		}
 
 		const responseError = await response.json();
-		throw { response: { data: responseError } };
+		throw responseError?.error || responseError;
 	}
 	if (response.status === 204) return;
 	if (
@@ -98,98 +92,4 @@ const request = async (config: RequestParamsType) => {
 		return await response.json().catch((e) => console.log(e));
 	}
 	return response;
-};
-
-export const fetchData = async (
-	initialUrl: string,
-	initialHeaders?: ObjectRecord,
-	options?: ObjectRecord,
-) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
-		url,
-		headers,
-		options,
-	});
-};
-
-export const updateData = async (
-	initialUrl: string,
-	data: unknown,
-	initialHeaders = {},
-) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
-		url,
-		headers,
-		method: "PUT",
-		body: data,
-	});
-};
-
-export const patchData = async (
-	initialUrl: string,
-	data: unknown,
-	initialHeaders = {},
-) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
-		url,
-		headers,
-		method: "PATCH",
-		body: data,
-	});
-};
-
-export const createData = async (
-	initialUrl: string,
-	data: unknown,
-	initialHeaders = {},
-) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
-		url,
-		headers,
-		method: "POST",
-		body: data,
-	});
-};
-
-export const deleteData = async (
-	initialUrl: string,
-	params = {},
-	initialHeaders = {},
-) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
-		url,
-		headers,
-		method: "DELETE",
-		options: params,
-	});
 };

@@ -7,8 +7,8 @@ import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar";
 import styles from "@/styles/Layout.module.css";
 import ErrorScreen from "@/widgets/Error";
 import Header from "@/widgets/Header";
+import ToastNotifications from "@/widgets/ToastNotifications";
 import { AppSidebar } from "@/widgets/app-sidebar";
-import { Toaster } from "sonner";
 import "@/styles/index.css";
 
 const Layout = () => {
@@ -58,13 +58,13 @@ const Layout = () => {
 	return (
 		<SidebarProvider>
 			<Header status={finalFetchStatus} />
-			<div className="flex h-[calc(100svh-var(--header-height))]">
+			<div className="flex min-h-[calc(100svh-var(--header-height))]">
 				<AppSidebar status={finalFetchStatus} />
 				<SidebarInset>
 					<div className={styles["main-content"]}>{mainContent}</div>
 				</SidebarInset>
 			</div>
-			<Toaster richColors expand={true} />
+			<ToastNotifications />
 		</SidebarProvider>
 	);
 };

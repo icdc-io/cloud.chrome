@@ -2,7 +2,7 @@ import { fetchContacts } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import type { Langs } from "@/shared/translations/i18n";
 import Loader from "@/shared/ui/loader";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { useTranslation } from "react-i18next";
 
 const ContactsPage = () => {
@@ -19,7 +19,7 @@ const ContactsPage = () => {
 		dispatch(fetchContacts(i18n.language as Langs));
 	}, [user.account, user.location, user.role, i18n.language]);
 
-	if (!contactsFetchStatus || contactsFetchStatus === "pending") {
+	if (contactsFetchStatus === "pending") {
 		return <Loader />;
 	}
 

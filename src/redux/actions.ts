@@ -22,7 +22,7 @@ import {
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
 } from "@/redux/constants";
-import { fetchData } from "@/shared/api";
+import { fetchData } from "@/shared/api/shared";
 import { parseLocalStorage } from "@/shared/lib/parseLocalStorage";
 import { availableRoles } from "@/shared/lib/roleUtils";
 import type { components } from "@/shared/schemas/account-api";

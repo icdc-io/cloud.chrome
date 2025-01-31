@@ -9,6 +9,7 @@ import database from "@/shared/images/database.svg";
 import devops from "@/shared/images/devops.svg";
 import disk from "@/shared/images/disk.svg";
 import migrator from "@/shared/images/migrator.svg";
+import mq from "@/shared/images/mq.svg";
 import networking from "@/shared/images/networking.svg";
 import openshift from "@/shared/images/openshift.svg";
 import outrunCloud from "@/shared/images/outrunCloud.svg";
@@ -18,7 +19,6 @@ import projects from "@/shared/images/projects.svg";
 import question from "@/shared/images/question.svg";
 import storage from "@/shared/images/storage.svg";
 import support from "@/shared/images/support.svg";
-
 type ServicesImages = {
 	[index: string]: string;
 };
@@ -44,4 +44,5 @@ export const servicesImages: ServicesImages = {
 	"outrun-cloud": outrunCloud,
 	"outrun-dedicated": outrunDedicated,
 	"outrun-service": outrunService,
+	mq,
 };

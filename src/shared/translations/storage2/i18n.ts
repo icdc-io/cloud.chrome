@@ -29,7 +29,7 @@ const resources = {
 			quotas: "Quotas",
 			addQuota: "Add Quota",
 			deleteS3userConfirmMessage:
-				"Are you sure you want to permamentaly delete {{name}} S3 user and all its data?",
+				"Are you sure you want to permanently delete {{name}} S3 user and all its data?",
 			deleteS3userConfirName: "Delete S3 User Confirmation",
 			overviewTab: "Overview",
 			resourcesTab: "Resources",
@@ -44,7 +44,7 @@ const resources = {
 			deleteS3user: "Delete S3 User",
 			addBucket: "Add a Bucket",
 			deleteBucketConfirmMessage:
-				"Are you sure you want to permamentaly delete {{name}} bucket and all its data?",
+				"Are you sure you want to permanently delete {{name}} bucket and all its data?",
 			deleteBucketConfirmName: "Delete Bucket Confirmation",
 			createBucket: "Create New Bucket",
 			bucketsUser: "Buckets per S3 User",
@@ -86,7 +86,7 @@ const resources = {
 			deleteClient: "Delete Client",
 			assignedDisks: "Assigned Disks",
 			search: "Search",
-			chapAuth: "CHAP Authentification",
+			chapAuth: "CHAP Authentication",
 			create: "Create",
 			save: "Save",
 			diskSpace: "Space (GiB)",
@@ -160,6 +160,9 @@ const resources = {
 			objectsQuota: "Objects",
 			bucketsQuota: "Buckets",
 			bucketParamsPlaceholder: "E.g. 10, leave empty if no limit",
+			processError: "Please try again later.",
+			deleteDiskError:
+				"Unassign clients and delete snapshots before deleting disk.",
 		},
 	},
 	ru: {
@@ -193,7 +196,7 @@ const resources = {
 			addQuota: "Добавить квоту",
 			storageType: "Тип хранилища",
 			deleteS3userConfirmMessage:
-				"Вы уверены, что хотите удалить S3 ползователя {{name}} и все его данные?",
+				"Вы уверены, что хотите удалить S3 пользователя {{name}} и все его данные?",
 			deleteS3userConfirName: "Подтвердите удаление S3-пользователя",
 			overviewTab: "Обзор",
 			resourcesTab: "Ресурсы",
@@ -324,6 +327,9 @@ const resources = {
 			objectsQuota: "Квота объектов",
 			bucketsQuota: "Квота корзин",
 			bucketParamsPlaceholder: "Например 10, оставьте пустым, если нет лимита",
+			processError: "Повторите попытку позже.",
+			deleteDiskError:
+				"Отсоедините клиентов и удалите снапшоты перед удалением диска.",
 		},
 	},
 };

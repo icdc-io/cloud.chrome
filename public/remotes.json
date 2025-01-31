@@ -96,6 +96,18 @@
 				"url": "http://localhost:8002"
 			}
 		],
+		"storage": [
+			{
+				"route": "amazon",
+				"name": "S3 Object Storage",
+				"url": "http://localhost:8001"
+			},
+			{
+				"route": "iscsi",
+				"name": "iSCSI Block Storage",
+				"url": "http://localhost:8002"
+			}
+		],
 		"admin": [
 			{
 				"route": "general",

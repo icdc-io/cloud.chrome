@@ -5,7 +5,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 	name: "host",
 	filename: "general.js",
 	exposes: {
-		"./Api": "./src/shared/api",
+		"./Api": "./src/shared/api/shared",
 		// "./Store": "./src/redux/store",
 		"./Loader": "./src/shared/ui/loader",
 		// './GeneralSelect': './src/general/components/GeneralSelect',
@@ -37,6 +37,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Tooltip": "./src/shared/ui/tooltip",
 		"./Label": "./src/shared/ui/label",
 		"./ReduxTypes": "./src/redux/types",
+		"./roleUtils": "./src/shared/lib/roleUtils",
 	},
 	shared: {
 		react: {

@@ -26,4 +26,6 @@ const filterAndSort = (list: ImmutableArray<string> | undefined) => {
 
 const getAvailableRoles = () => availableRoles;
 
-export { filterAndSort, getAvailableRoles };
+const isAdminRights = (role: string) => rolesWithAdminRights.includes(role);
+
+export { filterAndSort, getAvailableRoles, isAdminRights };

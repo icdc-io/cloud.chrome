@@ -32,12 +32,25 @@
 	font-size: 18px;
 }
 
+.error-header p {
+	font-weight: 400;
+	font-size: 16px;
+	line-height: 36px;
+}
+
 .error-header:first-child {
 	margin-top: 0;
 }
 
 .error-icon {
 	width: 100%;
-	justify-content: center;
-	display: flex;
+	text-align: center;
+}
+
+.error-icon svg {
+	margin: auto;
+}
+
+.error-icon h3 {
+	line-height: 30px;
 }

@@ -4,7 +4,7 @@ import {
 	CHANGE_LANG,
 	CHANGE_SIDEBAR_VISIBILITY,
 	CHANGE_USER_INFO,
-	// CONTACTS_FETCH,
+	CONTACTS_FETCH,
 	FETCH_ACCOUNTS_DATA,
 	FETCH_LOCATION_DATA,
 	FETCH_SERVICES_STATUSES,
@@ -168,15 +168,15 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 		// 	});
 		// }
 
-		// case `${CONTACTS_FETCH}_PENDING`:
-		//   return state.set("contactsFetchStatus", "pending");
-		// case `${CONTACTS_FETCH}_REJECTED`:
-		//   return state.set("contactsFetchStatus", "rejected");
-		// case `${CONTACTS_FETCH}_FULFILLED`:
-		//   return Immutable.merge(state, {
-		//     contacts: action.payload,
-		//     contactsFetchStatus: "fulfilled",
-		//   });
+		case `${CONTACTS_FETCH}_PENDING`:
+			return state.set("contactsFetchStatus", "pending");
+		case `${CONTACTS_FETCH}_REJECTED`:
+			return state.set("contactsFetchStatus", "rejected");
+		case `${CONTACTS_FETCH}_FULFILLED`:
+			return state.merge({
+				contacts: action.payload,
+				contactsFetchStatus: "fulfilled",
+			});
 
 		default:
 			return state;

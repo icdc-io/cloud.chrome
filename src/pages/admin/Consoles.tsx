@@ -39,7 +39,7 @@ const Consoles = () => {
 							rel="noreferrer"
 						>
 							<Button variant="primary">
-								{t(`consolesItem${index + 1}Button`)}
+								{t(`consolesItem${index + 1}Button`)}&nbsp;&nbsp;&nbsp;
 								<img src={External} alt="External link" />
 							</Button>
 						</a>

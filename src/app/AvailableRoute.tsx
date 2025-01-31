@@ -3,11 +3,12 @@ import { changeCurrentService, fetchLocationData } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
+import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
 import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
-import React, { useEffect } from "react";
+import { useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 const changeMetaData = (serviceInfo: Service | undefined) => {
@@ -31,6 +32,7 @@ const changeMetaData = (serviceInfo: Service | undefined) => {
 };
 
 const AvailableRoute = () => {
+	useSpecificTranslations();
 	const currentServiceName = useAppSelector(
 		(state) => state.host.currentService,
 	);

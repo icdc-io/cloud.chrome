@@ -55,6 +55,10 @@ export const resources: LanguageResources = {
 			unavailableDescription: "Please choose another location.",
 			loading: "Loading...",
 			toHome: "Home",
+			accessDeniedTitle: "Access Denied",
+			accessDeniedDescript: "You don't have access to the service",
+			noInternet: "No internet connection",
+			success: "Success",
 		},
 	},
 	ru: {
@@ -93,6 +97,10 @@ export const resources: LanguageResources = {
 			unavailableDescription: "Пожалуйста, выберите другую локацию.",
 			loading: "Загрузка...",
 			toHome: "На главную",
+			accessDeniedTitle: "В доступе отказано",
+			accessDeniedDescript: "У вас нет доступа к сервису",
+			noInternet: "Нет подключения к Интернету",
+			success: "Успешно",
 		},
 	},
 };
