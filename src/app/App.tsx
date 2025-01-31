@@ -1,12 +1,12 @@
-import React, { useCallback, useEffect } from "react";
 import { initOptions, kc } from "@/entities/keycloak";
 import {
-  fetchAccountsAndFetchServicesStatus,
+  fetchAccountsData,
   fetchRemotes,
   fetchServiceVersion,
   // fetchAllData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
+import React, { useCallback, useEffect } from "react";
 // import { initGeneralUtils } from "./general/api";
 // import { loadComponent } from "./utils";
 // import { generalModules } from "./constants/generalModules";
@@ -36,7 +36,7 @@ const App = () => {
         kc.login();
       } else {
         // dispatch(fetchRemotesApps());
-        dispatch(fetchAccountsAndFetchServicesStatus());
+        dispatch(fetchAccountsData());
         dispatch(fetchServiceVersion());
         dispatch(fetchRemotes());
         // dispatch(fetchAllData());

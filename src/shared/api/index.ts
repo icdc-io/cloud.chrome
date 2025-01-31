@@ -54,8 +54,9 @@ const getHeaders = (token: string, user: User, initialHeaders: List = {}) => ({
   "x-icdc-location": user.location,
 });
 
+// biome-ignore lint/suspicious/noExplicitAny: <for compatibility>
 const request = async <T = any>(
-  config: RequestParamsType
+  config: RequestParamsType,
 ): Promise<T | Response> => {
   if (!navigator.onLine)
     throw {
@@ -83,7 +84,7 @@ const request = async <T = any>(
 
     const contentType = response.headers.get("Content-Type");
 
-    if (!contentType) return response;
+    if (!contentType) throw { response: { data: response.statusText } };
 
     if (["text/html", "text/plain"].includes(contentType.split(" ")[0])) {
       throw { response: { data: response.statusText } };
@@ -92,7 +93,7 @@ const request = async <T = any>(
     const responseError = await response.json();
     throw { response: { data: responseError } };
   }
-  // if (response.status === 204) return null;
+  if (response.status === 204) return response;
   if (
     response.headers.get("Content-Type")?.includes("application/json") &&
     response.body
