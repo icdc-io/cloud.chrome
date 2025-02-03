@@ -733,11 +733,6 @@ const ApiButtonView = ({ actionsData }: ApiButtonView) => {
 		return halfFromScreenWidth > apiButtonPosition ? "left" : "right";
 	};
 
-	console.log(actions);
-	console.log(tools);
-	console.log(actionsData);
-	// console.log(actions)
-
 	const popupContent = action && (
 		<div className="dropdown-api">
 			<div style={{ display: "flex", flexDirection: "column" }}>

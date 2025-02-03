@@ -19,7 +19,6 @@ const Select = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
 >(({ children, ...props }, ref) => {
-	console.log(props);
 	return <SelectPrimitive.Root {...props}>{children}</SelectPrimitive.Root>;
 });
 Select.displayName = SelectPrimitive.Root.displayName;
@@ -28,7 +27,6 @@ const SelectTrigger = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Trigger>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
 >(({ className, children, ...props }, ref) => {
-	// console.log(props);
 	return (
 		<SelectPrimitive.Trigger
 			ref={ref}

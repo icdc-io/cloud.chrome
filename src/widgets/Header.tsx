@@ -31,8 +31,6 @@ const Header = ({ status }: HeaderType) => {
 
 	const ExtendedInfoSection = withSkeleton(infoSectionContent);
 
-	console.log(currentService);
-
 	return (
 		<header className={styles["chrome-header"]}>
 			<div className={styles["left-section"]}>

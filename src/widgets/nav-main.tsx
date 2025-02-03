@@ -25,47 +25,9 @@ export function NavMain({
 }) {
 	const location = useLocation();
 	const currentRemote = location.pathname.split("/")[2];
-	console.log(builtInServices[currentService]);
-	console.log(builtInServices);
-	console.log(currentService);
-
 	return (
 		<SidebarGroup>
-			{/* <SidebarGroupLabel>Platform</SidebarGroupLabel> */}
 			<SidebarMenu>
-				{/* <SidebarMenuItem>
-          <SidebarMenuSub>
-            {items.map((subItem) => (
-              <SidebarMenuButton tooltip={subItem.title} key={subItem.title}>
-                <Link
-                  className="py-2.5"
-                  to={`/${currentService}/${subItem.url}`}
-                >
-                  <BrickWall size={24} />
-                  <span>{subItem.title}</span>
-                </Link>
-              </SidebarMenuButton>
-            ))}
-          </SidebarMenuSub>
-        </SidebarMenuItem> */}
-
-				{/* <SidebarMenuSubItem
-          key={subItem.title}
-          className="text-base font-bold text-white"
-        >
-          <SidebarMenuSubButton
-            asChild
-            isActive={subItem.url === currentRemote}
-          >
-            <Link className="py-2.5" to={`/${currentService}/${subItem.url}`}>
-              <BrickWall size={24} />
-              <span className="text-base font-bold text-white">
-                {subItem.title}
-              </span>
-            </Link>
-          </SidebarMenuSubButton>
-        </SidebarMenuSubItem> */}
-
 				{items.map((item) => (
 					<Collapsible
 						key={item.title}
