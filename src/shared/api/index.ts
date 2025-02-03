@@ -49,12 +49,15 @@ const getHeaders = (token: string, user: User, initialHeaders: List = {}) => ({
   Authorization: `Bearer ${token}`,
   "Content-Type": initialHeaders["Content-Type"] || "application/json",
   "x-auth-group": `${user.account}.${user.role}`,
-  "x-icdc-account": user.account,
-  "x-icdc-role": user.role,
+  "x-auth-account": user.account,
+  "x-auth-role": user.role,
   "x-icdc-location": user.location,
 });
 
-const request = async (config: RequestParamsType) => {
+// biome-ignore lint/suspicious/noExplicitAny: <for compatibility>
+const request = async <T = any>(
+  config: RequestParamsType,
+): Promise<T | Response> => {
   if (!navigator.onLine)
     throw {
       response: {
@@ -81,7 +84,7 @@ const request = async (config: RequestParamsType) => {
 
     const contentType = response.headers.get("Content-Type");
 
-    if (!contentType) return response;
+    if (!contentType) throw { response: { data: response.statusText } };
 
     if (["text/html", "text/plain"].includes(contentType.split(" ")[0])) {
       throw { response: { data: response.statusText } };
@@ -90,12 +93,12 @@ const request = async (config: RequestParamsType) => {
     const responseError = await response.json();
     throw { response: { data: responseError } };
   }
-  if (response.status === 204) return;
+  if (response.status === 204) return response;
   if (
     response.headers.get("Content-Type")?.includes("application/json") &&
     response.body
   ) {
-    return await response.json().catch((e) => console.log(e));
+    return (await response.json()) as T;
   }
   return response;
 };
@@ -156,9 +159,9 @@ export const patchData = async (
   });
 };
 
-export const createData = async (
+export const createData = async <T>(
   initialUrl: string,
-  data: unknown,
+  data: Omit<T, "id">,
   initialHeaders = {},
 ) => {
   const { token, user, baseUrl } = await getInfoForRequest();
@@ -167,7 +170,7 @@ export const createData = async (
     baseUrl,
   );
   const headers = getHeaders(token, user, initialHeaders);
-  return await request({
+  return await request<T>({
     url,
     headers,
     method: "POST",
