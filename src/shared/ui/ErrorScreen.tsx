@@ -3,12 +3,12 @@ import { Frown, TriangleAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const variants = {
-	fetchError: {
+	0: {
 		icon: Frown,
 		title: "wrong",
 		description: "",
 	},
-	accessError: {
+	403: {
 		icon: TriangleAlert,
 		title: "accessDeniedTitle",
 		description: "accessDeniedDescript",
@@ -16,15 +16,18 @@ const variants = {
 };
 
 type ErrorScreenProps = {
-	type: keyof typeof variants;
+	status: keyof typeof variants;
 };
 
-const ErrorScreen = ({ type = "fetchError" }: ErrorScreenProps) => {
+const ErrorScreen = ({
+	status = 0,
+	...props
+}: ErrorScreenProps & JSX.IntrinsicElements["div"]) => {
 	const { t } = useTranslation();
-	const errorContent = variants[type];
+	const errorContent = variants[status];
 
 	return (
-		<>
+		<div {...props}>
 			<div className={styles["error-segment"]}>
 				<div className={styles["error-header"]}>
 					<div className={styles["error-icon"]}>
@@ -34,7 +37,7 @@ const ErrorScreen = ({ type = "fetchError" }: ErrorScreenProps) => {
 					<p>{t(errorContent.description)}</p>
 				</div>
 			</div>
-		</>
+		</div>
 	);
 };
 

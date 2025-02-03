@@ -76,47 +76,48 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 		localStorage.setItem("user", JSON.stringify(newUserInfo));
 	};
 
-	const accountsSection = isFullInfoAvailable ? (
-		<DropdownMenuSub>
-			<DropdownMenuSubTrigger className={styles["select-item"]}>
-				<div className={styles.RightSlot}>
-					<span>{t("accounts")}</span>
-					<span className={styles["selected-value"]}>{account}</span>
-				</div>
-			</DropdownMenuSubTrigger>
-			<DropdownMenuPortal>
-				<DropdownMenuSubContent className={styles["user-select"]}>
-					<DropdownMenuRadioGroup
-						value={account}
-						onValueChange={(newAccount) =>
-							changeCurrentInfo("account", newAccount)
-						}
-					>
-						{Object.values({ ...fullAccountsInfo })
-							.map((accountInfo) => ({
-								key: accountInfo?.name,
-								text: accountInfo?.display_name || "",
-								value: accountInfo?.name,
-							}))
-							.map((currentAccount) => (
-								<DropdownMenuRadioItem
-									key={currentAccount.key}
-									className={styles["select-item"]}
-									value={currentAccount.value || ""}
-								>
-									<div>
-										{currentAccount.text}&nbsp;
-										<span className={styles.acc_name}>
-											({currentAccount.value?.toUpperCase()})
-										</span>
-									</div>
-								</DropdownMenuRadioItem>
-							))}
-					</DropdownMenuRadioGroup>
-				</DropdownMenuSubContent>
-			</DropdownMenuPortal>
-		</DropdownMenuSub>
-	) : null;
+	const accountsSection =
+		isFullInfoAvailable && fullAccountsInfo ? (
+			<DropdownMenuSub>
+				<DropdownMenuSubTrigger className={styles["select-item"]}>
+					<div className={styles.RightSlot}>
+						<span>{t("accounts")}</span>
+						<span className={styles["selected-value"]}>{account}</span>
+					</div>
+				</DropdownMenuSubTrigger>
+				<DropdownMenuPortal>
+					<DropdownMenuSubContent className={styles["user-select"]}>
+						<DropdownMenuRadioGroup
+							value={account}
+							onValueChange={(newAccount) =>
+								changeCurrentInfo("account", newAccount)
+							}
+						>
+							{Object.values(fullAccountsInfo)
+								.map((accountInfo) => ({
+									key: accountInfo?.name,
+									text: accountInfo?.display_name || "",
+									value: accountInfo?.name,
+								}))
+								.map((currentAccount) => (
+									<DropdownMenuRadioItem
+										key={currentAccount.key}
+										className={styles["select-item"]}
+										value={currentAccount.value || ""}
+									>
+										<div>
+											{currentAccount.text}&nbsp;
+											<span className={styles.acc_name}>
+												({currentAccount.value?.toUpperCase()})
+											</span>
+										</div>
+									</DropdownMenuRadioItem>
+								))}
+						</DropdownMenuRadioGroup>
+					</DropdownMenuSubContent>
+				</DropdownMenuPortal>
+			</DropdownMenuSub>
+		) : null;
 
 	const rolesSection = isFullInfoAvailable ? (
 		<>

@@ -1,3 +1,6 @@
+import { cn } from "@/shared/lib/utils";
+import { Label } from "@/shared/ui/label";
+import { zodResolver } from "@hookform/resolvers/zod";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
 import * as React from "react";
@@ -7,11 +10,9 @@ import {
 	type FieldPath,
 	type FieldValues,
 	FormProvider,
+	useForm,
 	useFormContext,
 } from "react-hook-form";
-
-import { cn } from "@/shared/lib/utils";
-import { Label } from "@/shared/ui/label";
 
 const Form = FormProvider;
 
@@ -174,4 +175,6 @@ export {
 	FormDescription,
 	FormMessage,
 	FormField,
+	useForm,
+	zodResolver,
 };

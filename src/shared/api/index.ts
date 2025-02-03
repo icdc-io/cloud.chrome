@@ -56,6 +56,8 @@ export const getHeaders = (
 	"x-auth-group": `${user.account}.${user.role}`,
 	"x-icdc-account": user.account,
 	"x-icdc-role": user.role,
+	"x-auth-account": user.account,
+	"x-auth-role": user.role,
 	"x-icdc-location": user.location,
 });
 
@@ -95,12 +97,12 @@ export const request = async <T>(config: RequestParamsType) => {
 	if (!navigator.onLine) throw new RequestError("noInternet", 0);
 
 	try {
-		const response = (await ky(config.url, {
+		const response = await ky<T>(config.url, {
 			method: config.method ?? "GET",
 			headers: config.headers,
 			json: config.body,
 			searchParams: config.options,
-		})) as KyResponse<T>;
+		});
 
 		if (response.status === 204) {
 			return response;

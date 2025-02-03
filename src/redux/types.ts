@@ -5,15 +5,13 @@ import type {
 	BaseUrls,
 	FullAccountsInfoType,
 	Remotes,
-	Service,
 	UniqueInternalServicesType,
 	UserInfo,
 	UserType,
 } from "@/types/entities";
 import type { Store } from "redux";
-import type { FluxStandardAction } from "redux-promise-middleware";
+import type { ImmutableObject } from "seamless-immutable";
 import type Immutable from "seamless-immutable";
-import type { ImmutableObject, ImmutableObjectMixin } from "seamless-immutable";
 
 export type StoreType = {
 	user: UserType;
@@ -56,11 +54,11 @@ export type CustomStore = Store<
 > & {
 	dispatch: unknown;
 	asyncReducers?: { [key: string]: unknown };
-	injectReducer?: (
+	injectReducer?: <TState, TAction>(
 		key: string,
-		asyncReducer: <T>(
-			state: ImmutableObjectMixin<T> | undefined,
-			action: FluxStandardAction,
-		) => ImmutableObjectMixin<T>,
+		asyncReducer: (
+			state: ImmutableObject<TState> | undefined,
+			action: TAction,
+		) => ImmutableObject<TState>,
 	) => void;
 };

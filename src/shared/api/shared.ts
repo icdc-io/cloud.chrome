@@ -17,11 +17,11 @@ export const fetchData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return (await request({
+	return await request<T>({
 		url,
 		headers,
 		options,
-	})) as T;
+	});
 };
 
 export const updateData = async <T>(
@@ -35,12 +35,12 @@ export const updateData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return (await request({
+	return await request<T>({
 		url,
 		headers,
 		method: "PUT",
 		body: data,
-	})) as T;
+	});
 };
 
 export const patchData = async <T>(
@@ -54,17 +54,17 @@ export const patchData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return (await request({
+	return await request<T>({
 		url,
 		headers,
 		method: "PATCH",
 		body: data,
-	})) as T;
+	});
 };
 
 export const createData = async <T>(
 	initialUrl: string,
-	data: unknown,
+	data: Omit<T, "id">,
 	initialHeaders = {},
 ) => {
 	const { token, user, baseUrl } = await getInfoForRequest();
@@ -73,12 +73,12 @@ export const createData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return (await request({
+	return await request<T>({
 		url,
 		headers,
 		method: "POST",
 		body: data,
-	})) as T;
+	});
 };
 
 export const deleteData = async <T>(

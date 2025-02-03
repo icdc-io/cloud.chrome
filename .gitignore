@@ -22,6 +22,7 @@
 
 # MF Types
 @mf-types
+<<<<<<< HEAD
 
 # misc
 .DS_Store
@@ -33,3 +34,6 @@
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
+=======
+/build
+>>>>>>> updated_v3
