@@ -12,8 +12,10 @@
 	top: 0;
 }
 
-.header-logo {
-	margin-left: 20px;
+.left-section {
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .info-section {

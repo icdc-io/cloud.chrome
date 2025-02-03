@@ -59,8 +59,6 @@ const initialState: HostReducerType = Immutable({
 	accountsDataFetchStatus: PENDING,
 	username: "",
 	email: "",
-	isSideBarVisible: true,
-	isBurgerVisible: true,
 	serviceVersion: "",
 	serviceVersionFetchStatus: PENDING,
 	currentService: window.location.pathname.split("/")[1],
@@ -81,15 +79,6 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 
 		case CHANGE_LANG:
 			return state.set("lang", action.payload);
-
-		// case SET_AVAILABLE_SERVICES:
-		//   return state.set("servicesAvailability", action.payload);
-
-		case CHANGE_SIDEBAR_VISIBILITY:
-			return state.set("isSideBarVisible", action.payload);
-
-		case CHANGE_BURGER_VISIBILITY:
-			return state.set("isBurgerVisible", action.payload);
 
 		case CHANGE_CURRENT_SERVICE:
 			return state.set("currentService", action.payload);

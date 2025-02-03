@@ -1,4 +1,5 @@
 import type { List, User } from "@/types/entities";
+import ky, { HTTPError, type KyResponse } from "ky";
 
 export type ObjectRecord =
 	| {
@@ -58,38 +59,70 @@ export const getHeaders = (
 	"x-icdc-location": user.location,
 });
 
-export const request = async (config: RequestParamsType) => {
-	if (!navigator.onLine) throw "noInternet";
+class RequestError extends Error {
+	constructor(
+		message: string,
+		public status?: number,
+	) {
+		super(message);
+		this.name = "error";
+	}
+}
 
-	let url = config.url;
-	if (config.options)
-		url += `?${new URLSearchParams(config.options || {}).toString()}`;
-	const response = await fetch(url, {
-		...config,
-		body: config.body ? JSON.stringify(config.body) : undefined,
-	});
-	if (!response.ok) {
-		if (!response.body && !response.statusText) throw response.status;
+const CONTENT_TYPE_JSON = "application/json";
 
-		if (!response.body) throw response.statusText;
+const isJSONType = (contentType: string | null) =>
+	contentType?.includes(CONTENT_TYPE_JSON);
 
-		const contentType = response.headers.get("Content-Type");
+const parseError = (errorData: unknown): string => {
+	if (!errorData) return "";
+	if (typeof errorData === "string") return errorData;
+	if (typeof errorData === "object")
+		return [
+			...(Array.isArray(errorData)
+				? errorData
+				: Object.values(errorData)
+			).reduce((acc, curr) => {
+				const msg = parseError(curr).trim();
+				if (msg) acc.add(msg);
+				return acc;
+			}, new Set()),
+		].join("\n");
+	return "";
+};
 
-		if (!contentType) throw "wrong";
+export const request = async <T>(config: RequestParamsType) => {
+	if (!navigator.onLine) throw new RequestError("noInternet", 0);
 
-		if (["text/html", "text/plain"].includes(contentType.split(" ")[0])) {
-			throw response.statusText;
+	try {
+		const response = (await ky(config.url, {
+			method: config.method ?? "GET",
+			headers: config.headers,
+			json: config.body,
+			searchParams: config.options,
+		})) as KyResponse<T>;
+
+		if (response.status === 204) {
+			return response;
 		}
 
-		const responseError = await response.json();
-		throw responseError?.error || responseError;
+		if (isJSONType(response.headers.get("Content-Type"))) {
+			return await response.json();
+		}
+
+		return response;
+	} catch (error) {
+		if (error instanceof HTTPError) {
+			const { response } = error;
+			if (isJSONType(response.headers.get("Content-Type"))) {
+				const errorData = await response.json();
+				throw new RequestError(parseError(errorData), response.status);
+			}
+			const errorMessage = response.statusText || "unknown_error";
+
+			throw new RequestError(errorMessage, response.status);
+		}
+
+		throw new RequestError("network_error", 0);
 	}
-	if (response.status === 204) return;
-	if (
-		response.headers.get("Content-Type")?.includes("application/json") &&
-		response.body
-	) {
-		return await response.json().catch((e) => console.log(e));
-	}
-	return response;
 };

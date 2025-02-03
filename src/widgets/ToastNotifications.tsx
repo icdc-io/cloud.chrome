@@ -33,7 +33,13 @@ const ToastNotifications = () => {
 			);
 	}, []);
 
-	return <Toaster richColors expand={true} toastOptions={{ duration: 5000 }} />;
+	return (
+		<Toaster
+			richColors
+			expand={true}
+			toastOptions={{ duration: 5000, style: { whiteSpace: "pre-line" } }}
+		/>
+	);
 };
 
 export default ToastNotifications;

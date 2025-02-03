@@ -12,9 +12,6 @@ import { AppSidebar } from "@/widgets/app-sidebar";
 import "@/styles/index.css";
 
 const Layout = () => {
-	const isSideBarVisible = useAppSelector(
-		(state) => state.host.isSideBarVisible,
-	);
 	const accountsDataFetchErrorStatus = useAppSelector(
 		(state) => state.host.accountsDataFetchErrorStatus,
 	);

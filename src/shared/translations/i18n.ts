@@ -59,6 +59,8 @@ export const resources: LanguageResources = {
 			accessDeniedDescript: "You don't have access to the service",
 			noInternet: "No internet connection",
 			success: "Success",
+			unknown_error: "Unknown error",
+			network_error: "Network error or CORS issue",
 		},
 	},
 	ru: {
@@ -101,6 +103,8 @@ export const resources: LanguageResources = {
 			accessDeniedDescript: "У вас нет доступа к сервису",
 			noInternet: "Нет подключения к Интернету",
 			success: "Успешно",
+			unknown_error: "Неизвестная ошибка",
+			network_error: "Ошибка сети или проблема CORS",
 		},
 	},
 };

@@ -26,8 +26,6 @@ export type StoreType = {
 	accountsDataFetchStatus: STATUSES_TYPES[number];
 	username: string;
 	email: string;
-	isSideBarVisible: boolean;
-	isBurgerVisible: boolean;
 	serviceVersion: string;
 	serviceVersionFetchStatus: STATUSES_TYPES[number];
 	currentService: string | undefined;

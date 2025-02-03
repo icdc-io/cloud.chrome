@@ -6,7 +6,7 @@ import {
 	request,
 } from "@/shared/api";
 
-export const fetchData = async (
+export const fetchData = async <T>(
 	initialUrl: string,
 	initialHeaders?: ObjectRecord,
 	options?: ObjectRecord,
@@ -17,14 +17,14 @@ export const fetchData = async (
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
+	return (await request({
 		url,
 		headers,
 		options,
-	});
+	})) as T;
 };
 
-export const updateData = async (
+export const updateData = async <T>(
 	initialUrl: string,
 	data: unknown,
 	initialHeaders = {},
@@ -35,15 +35,15 @@ export const updateData = async (
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
+	return (await request({
 		url,
 		headers,
 		method: "PUT",
 		body: data,
-	});
+	})) as T;
 };
 
-export const patchData = async (
+export const patchData = async <T>(
 	initialUrl: string,
 	data: unknown,
 	initialHeaders = {},
@@ -54,15 +54,15 @@ export const patchData = async (
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
+	return (await request({
 		url,
 		headers,
 		method: "PATCH",
 		body: data,
-	});
+	})) as T;
 };
 
-export const createData = async (
+export const createData = async <T>(
 	initialUrl: string,
 	data: unknown,
 	initialHeaders = {},
@@ -73,15 +73,15 @@ export const createData = async (
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
+	return (await request({
 		url,
 		headers,
 		method: "POST",
 		body: data,
-	});
+	})) as T;
 };
 
-export const deleteData = async (
+export const deleteData = async <T>(
 	initialUrl: string,
 	params = {},
 	initialHeaders = {},
@@ -92,12 +92,12 @@ export const deleteData = async (
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request({
+	return (await request({
 		url,
 		headers,
 		method: "DELETE",
 		options: params,
-	});
+	})) as T;
 };
 
 type Error = {

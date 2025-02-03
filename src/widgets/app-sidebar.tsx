@@ -57,7 +57,6 @@ export function AppSidebar({ status, ...props }: AppSidebarType) {
 							currentService={currentService}
 							items={[...currentRemotesList]}
 						/>
-						{/* <NavProjects projects={data.projects} /> */}
 					</SidebarContent>
 					{isMobile && (
 						<SidebarFooter>
