@@ -4,2093 +4,2093 @@
  */
 
 export interface paths {
-  "/accounts": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get list of accounts from JWT with entitled locations and services */
-    get: operations["getAccounts"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get basic account info with entitled locations and services by accountName */
-    get: operations["getAccount"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/general": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get general account information by name */
-    get: operations["getAccountGeneral"];
-    /** Update general account information */
-    put: operations["updateAccountGeneral"];
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/billing": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get billing account information (for current account) */
-    get: operations["getAccountBilling"];
-    /** Update billing account information */
-    put: operations["updateAccountBilling"];
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/accounts/{account_name}/billing": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get billing account information by name */
-    get: operations["getAccountBillingByName"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/users": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get a list of users in the system */
-    get: operations["getUsers"];
-    put?: never;
-    /** Create a new user */
-    post: operations["createUser"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/users": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get a list of account members grouped by roles */
-    get: operations["getMembers"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/users/{userId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /** Add a member to the account with specific role */
-    post: operations["addMember"];
-    /** Remove user with specific role (or all roles) from the account */
-    delete: operations["removeMember"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/service_providers": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get a list of Partner's account which assign Customer Account
-     * @description (1) Request all Accounts in prepare lookup (dict) by accountName (2) Find account by accountName, take accountId (2) Take list of locations which account is connected to. Api/V8/module/Accounts/<accountId>/relationships/icdc_location_accounts (3) Get list of ServiceProvider IDs from icdc_location.service_provider. Make unique list (4) Find ServiceProvider accounts from lookup by name
-     *
-     */
-    get: operations["getServiceProviders"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/payment_methods": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get a list of payment methods stored for this account */
-    get: operations["getPaymentMethods"];
-    put?: never;
-    /**
-     * Create a payment methods (ususally bind credit card)
-     * @description TODO: please ask Daniil Satsura if something is not well defined here
-     */
-    post: operations["createPaymentMethod"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/payment_methods/{paymentMethodId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get details of payment methods stored for this account */
-    get: operations["getPaymentMethod"];
-    /**
-     * Update payment methods (ususally bind credit card)
-     * @description This method is used to finish Stripe save-and-reuse flow and save paymentmethod_id (which comes to frontend from result.SetupIntent.PaymentMethod
-     */
-    put: operations["updatePaymentMethod"];
-    post?: never;
-    /** Remove payment method */
-    delete: operations["removePaymentMethod"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/invoices": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get a list of account Invoices
-     * @description (1) Get accountId by accountName (2) Request Invoices with filter by billing_account_id field.
-     *
-     */
-    get: operations["getInvoices"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/account/invoices/{invoiceId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get invoice information
-     * @description invoiceNumber field should be unique across CRM, but not restricted by database to be unique.
-     *
-     */
-    get: operations["getInvoice"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/share/invoices/{invoiceId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Download Invoice as PDF
-     * @description invoiceNumber field should be unique across CRM, but not restricted by database to be unique. For PDF format we provide simple permanent link so anybody who has link can access it without authentication. Basically authentication is not needed here and it's ok because it's usefull for information exchange via email or messengers.
-     *
-     */
-    get: operations["shareInvoice"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/locations/{locationName}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get location information */
-    get: operations["getLocation"];
-    /** Update location information */
-    put: operations["updateLocation"];
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/locations/{locationName}/available_accounts": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get a list of accounts that not on this location but can be added to the location
-     * @description (1) Get all locations managed by Partner with request Api/V8/module/icdc_location?filter[account_id_c][eq]=PARTNER_ACCOUNT_ID (2) Get all accounts for all locations and put into one unique set of accounts (3) Remove accounts that already connected to this location
-     *
-     */
-    get: operations["getAvailableAccounts"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/locations/{locationName}/accounts": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get a list of accounts that use the location */
-    get: operations["getLocationAccounts"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/locations/{locationName}/accounts/{accountName}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /** Attach an account to the location */
-    post: operations["attachLocationAccount"];
-    /** Detach an account from the location */
-    delete: operations["deleteLocationAccount"];
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/service_provider/payment_systems": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get information service providers integrations with payment systems
-     * @description Payment
-     *
-     */
-    get: operations["getPaymentSystems"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/service_provider/invoices": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /**
-     * Get a list of invoices which connected to service provider
-     * @description (1) Find all invoices issued by active ServiceProvider account with request Api/V8/module/Invoices?filter[account_id_c][eq]=PROVIDER_ACCOUNT_ID
-     *
-     */
-    get: operations["getProviderInvoices"];
-    put?: never;
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/service_provider/invoices/{invoiceId}": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** Get details of the invoices which connected to service provider */
-    get: operations["getProviderInvoice"];
-    /** Update invoice information */
-    put: operations["updateProviderInvoice"];
-    post?: never;
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
-  "/registration": {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    get?: never;
-    put?: never;
-    /** Create an account, single request to configure everything; this request goes from Partner website to Central API Gateway */
-    post: operations["createAccounts"];
-    delete?: never;
-    options?: never;
-    head?: never;
-    patch?: never;
-    trace?: never;
-  };
+	"/accounts": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get list of accounts from JWT with entitled locations and services */
+		get: operations["getAccounts"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get basic account info with entitled locations and services by accountName */
+		get: operations["getAccount"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/general": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get general account information by name */
+		get: operations["getAccountGeneral"];
+		/** Update general account information */
+		put: operations["updateAccountGeneral"];
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/billing": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get billing account information (for current account) */
+		get: operations["getAccountBilling"];
+		/** Update billing account information */
+		put: operations["updateAccountBilling"];
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/accounts/{account_name}/billing": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get billing account information by name */
+		get: operations["getAccountBillingByName"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/users": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of users in the system */
+		get: operations["getUsers"];
+		put?: never;
+		/** Create a new user */
+		post: operations["createUser"];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/users": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of account members grouped by roles */
+		get: operations["getMembers"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/users/{userId}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get?: never;
+		put?: never;
+		/** Add a member to the account with specific role */
+		post: operations["addMember"];
+		/** Remove user with specific role (or all roles) from the account */
+		delete: operations["removeMember"];
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/service_providers": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get a list of Partner's account which assign Customer Account
+		 * @description (1) Request all Accounts in prepare lookup (dict) by accountName (2) Find account by accountName, take accountId (2) Take list of locations which account is connected to. Api/V8/module/Accounts/<accountId>/relationships/icdc_location_accounts (3) Get list of ServiceProvider IDs from icdc_location.service_provider. Make unique list (4) Find ServiceProvider accounts from lookup by name
+		 *
+		 */
+		get: operations["getServiceProviders"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/payment_methods": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of payment methods stored for this account */
+		get: operations["getPaymentMethods"];
+		put?: never;
+		/**
+		 * Create a payment methods (ususally bind credit card)
+		 * @description TODO: please ask Daniil Satsura if something is not well defined here
+		 */
+		post: operations["createPaymentMethod"];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/payment_methods/{paymentMethodId}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get details of payment methods stored for this account */
+		get: operations["getPaymentMethod"];
+		/**
+		 * Update payment methods (ususally bind credit card)
+		 * @description This method is used to finish Stripe save-and-reuse flow and save paymentmethod_id (which comes to frontend from result.SetupIntent.PaymentMethod
+		 */
+		put: operations["updatePaymentMethod"];
+		post?: never;
+		/** Remove payment method */
+		delete: operations["removePaymentMethod"];
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/invoices": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get a list of account Invoices
+		 * @description (1) Get accountId by accountName (2) Request Invoices with filter by billing_account_id field.
+		 *
+		 */
+		get: operations["getInvoices"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/account/invoices/{invoiceId}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get invoice information
+		 * @description invoiceNumber field should be unique across CRM, but not restricted by database to be unique.
+		 *
+		 */
+		get: operations["getInvoice"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/share/invoices/{invoiceId}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Download Invoice as PDF
+		 * @description invoiceNumber field should be unique across CRM, but not restricted by database to be unique. For PDF format we provide simple permanent link so anybody who has link can access it without authentication. Basically authentication is not needed here and it's ok because it's usefull for information exchange via email or messengers.
+		 *
+		 */
+		get: operations["shareInvoice"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/locations/{locationName}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get location information */
+		get: operations["getLocation"];
+		/** Update location information */
+		put: operations["updateLocation"];
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/locations/{locationName}/available_accounts": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get a list of accounts that not on this location but can be added to the location
+		 * @description (1) Get all locations managed by Partner with request Api/V8/module/icdc_location?filter[account_id_c][eq]=PARTNER_ACCOUNT_ID (2) Get all accounts for all locations and put into one unique set of accounts (3) Remove accounts that already connected to this location
+		 *
+		 */
+		get: operations["getAvailableAccounts"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/locations/{locationName}/accounts": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get a list of accounts that use the location */
+		get: operations["getLocationAccounts"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/locations/{locationName}/accounts/{accountName}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get?: never;
+		put?: never;
+		/** Attach an account to the location */
+		post: operations["attachLocationAccount"];
+		/** Detach an account from the location */
+		delete: operations["deleteLocationAccount"];
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/service_provider/payment_systems": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get information service providers integrations with payment systems
+		 * @description Payment
+		 *
+		 */
+		get: operations["getPaymentSystems"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/service_provider/invoices": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/**
+		 * Get a list of invoices which connected to service provider
+		 * @description (1) Find all invoices issued by active ServiceProvider account with request Api/V8/module/Invoices?filter[account_id_c][eq]=PROVIDER_ACCOUNT_ID
+		 *
+		 */
+		get: operations["getProviderInvoices"];
+		put?: never;
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/service_provider/invoices/{invoiceId}": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** Get details of the invoices which connected to service provider */
+		get: operations["getProviderInvoice"];
+		/** Update invoice information */
+		put: operations["updateProviderInvoice"];
+		post?: never;
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
+	"/registration": {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		get?: never;
+		put?: never;
+		/** Create an account, single request to configure everything; this request goes from Partner website to Central API Gateway */
+		post: operations["createAccounts"];
+		delete?: never;
+		options?: never;
+		head?: never;
+		patch?: never;
+		trace?: never;
+	};
 }
 export type webhooks = Record<string, never>;
 export interface components {
-  schemas: {
-    Account_General: {
-      /**
-       * @description CRM: Account.name
-       * @example iba2d
-       */
-      readonly name?: string;
-      /**
-       * @description CRM: Account.display_name_c; Show as 'Full Name' in UI; Admin can edit this
-       * @example IBA 2nd Department Shared
-       */
-      display_name?: string;
-      /**
-       * @description CRM: Account.email1; Show as 'Business Email' in UI
-       * @example contact@company.com
-       */
-      email?: string;
-      /**
-       * @description CRM: Account.phone_office; Show as 'Business Phone' in UI
-       * @example +375123456789
-       */
-      phone?: string;
-      contact?: components["schemas"]["Contact"];
-    };
-    Account_Locations: {
-      /**
-       * @description CRM: Account.name
-       * @example iba2d
-       */
-      readonly name?: string;
-      /**
-       * @description CRM: Account.display_name_c
-       * @example IBA IT Park - 2nd Dep
-       */
-      readonly display_name?: string;
-      /**
-       * @description CRM: Account.dep_id_c
-       * @example 2d
-       */
-      dep_id?: string;
-      /**
-       * @description CRM: Account.dep_name_c
-       * @example 2nd Department
-       */
-      dep_name?: string;
-      /**
-       * @description CRM: Account.org_id_c
-       * @example iba
-       */
-      org_id?: string;
-      /**
-       * @description CRM: Account.org_name_c
-       * @example IBA IT Park
-       */
-      org_name?: string;
-      /** @description CRM: Location objects related to Account */
-      locations?: components["schemas"]["Account_Location"][];
-    };
-    Account_Location: {
-      /** @example xby */
-      name?: string;
-      /** @example https://api.xby.icdc.io */
-      api?: string;
-      services?: components["schemas"]["Service"][];
-    };
-    Service: {
-      /** @example compute */
-      name?: string;
-      /**
-       * @description CRM: icdc_service.description
-       * @example Order cloud services directly from the catalog: virtual machines, application images, and network access.
-       */
-      readonly description?: string;
-      /** @example IBACloud Compute */
-      display_name?: string;
-      displayName?: string;
-      /** @example  */
-      path?: string;
-      /** @example https://compute.xby.icdc.io */
-      url?: string;
-      /** @example 3 */
-      position?: number;
-    };
-    Account_Billing: {
-      /**
-       * @description CRM: Account.business_name_c; Show as 'Business Name' in UI
-       * @example Иностранное производственное унитарное предприятие «АйБиЭй АйТи Парк»
-       */
-      name?: string;
-      /**
-       * @description CRM: Account.email1; Show as 'Business Email' in UI
-       * @example petrov@example.com
-       */
-      email?: string;
-      /**
-       * @description CRM: Account.phone_office; Show as 'Business Phone' in UI
-       * @example +375296287743
-       */
-      phone?: string;
-      address?: components["schemas"]["Address"];
-      contact?: components["schemas"]["Contact"];
-      /**
-       * @description CRM: Account.tax_exempt_c
-       * @example none
-       */
-      tax_exempt?: string;
-      /**
-       * @description CRM: Account.tax_id_type_c
-       * @example eu_vat
-       */
-      tax_id_type?: string;
-      /**
-       * @description CRM: Account.tax_id_c
-       * @example 190743344
-       */
-      tax_id?: string;
-      /**
-       * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
-       * @example pk_test_TYooMQauvdEDq54NiTphI7jx
-       */
-      stripe_publishable_key?: string;
-      /**
-       * @description CRM: Account.stripe_secret_key_c; Section 'Stripe' in UI
-       * @example sk_test_4eC39HqLyjWDarjtT1zdp7dc
-       */
-      stripe_secret_key?: string;
-    };
-    Address: {
-      /**
-       * @description CRM: Account.billing_address_country or PaymentMethod.transfer_bankaddr_country
-       * @example Belarus
-       */
-      country?: string;
-      /**
-       * @description CRM: Account.billing_address_state or PaymentMethod.transfer_bankaddr_state
-       * @example Minskaya
-       */
-      state?: string;
-      /**
-       * @description CRM: Account.billing_address_city or PaymentMethod.transfer_bankaddr_city
-       * @example Minsk
-       */
-      city?: string;
-      /**
-       * @description CRM: Account.billing_address_postalcode or PaymentMethod.transfer_bankaddr_postalcode
-       * @example 220141
-       */
-      postal_code?: string;
-      /**
-       * @description CRM: Account.billing_address_street
-       * @example ул. Программистов 3, офис 41, 1 этаж
-       */
-      street?: string;
-      /**
-       * @description CRM: split into lines Account.billing_address_street or PaymentMethod.transfer_bankaddr
-       * @example [
-       *       "ул. Программистов",
-       *       "3, офис 41, 1 этаж"
-       *     ]
-       */
-      lines?: string[];
-    };
-    ServiceProvider: {
-      /**
-       * @description CRM: Account.name; select account_type == Partner
-       * @example stone
-       */
-      readonly name?: string;
-      /**
-       * @description CRM: Account.business_name_c
-       * @example StoneComputers Ltd.
-       */
-      readonly business_name?: string;
-      business_address?: components["schemas"]["Address"];
-      /**
-       * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
-       * @example pk_test_TYooMQauvdEDq54NiTphI7jx
-       */
-      stripe_publishable_key?: string;
-    };
-    PaymentMethod_Create: {
-      /**
-       * @description CRM: PaymentMethod.id
-       * @example 4455b818-8d3b-b49d-c29b-603374788990
-       */
-      readonly id?: string;
-      /**
-       * @description CRM: PaymentMethod.type
-       * @example stripe
-       */
-      type?: string;
-      /**
-       * @description CRM: PaymentMethod.partner
-       * @example stone
-       */
-      service_provider?: string;
-      /**
-       * @description CRM: PaymentMethod.default; Single method can be enable for Account
-       * @example true
-       */
-      default?: boolean;
-      stripe_card?: components["schemas"]["PaymentMethod_Stripe_Card_Create"];
-      bank_transfer?: components["schemas"]["PaymentMethod_Transfer"];
-    };
-    PaymentMethod_Stripe_Card_Create: {
-      /**
-       * @description Stripe: SetupIntent.client_secret
-       * @example cs_test_51C5AG3IassNf4c4p0Yb7c2P1Fb6Ysa2yGENOb7Z00bqMiG15j
-       */
-      readonly client_secret?: string;
-      /**
-       * @description CRM: PaymentMethod.stripe_paymentmethod
-       * @example pm_1ITUIxIassNf4c4pgWQzlq4z
-       */
-      payment_method_id?: string;
-    };
-    PaymentMethod: {
-      /**
-       * @description CRM: PaymentMethod.id
-       * @example 4455b818-8d3b-b49d-c29b-603374788990
-       */
-      id?: string;
-      /**
-       * @description CRM: PaymentMethod.type
-       * @example stripe
-       */
-      type?: string;
-      /**
-       * @description CRM: PaymentMethod.partner
-       * @example stone
-       */
-      service_provider?: string;
-      /**
-       * @description CRM: PaymentMethod.default; Single method can be enable for Account
-       * @example true
-       */
-      default?: boolean;
-      stripe_card?: components["schemas"]["PaymentMethod_Stripe_Card"];
-      bank_transfer?: components["schemas"]["PaymentMethod_Transfer"];
-    };
-    PaymentMethod_Stripe_Card: {
-      /**
-       * @description Stripe: SetupIntent.client_secret
-       * @example cs_test_51C5AG3IassNf4c4p0Yb7c2P1Fb6Ysa2yGENOb7Z00bqMiG15j
-       */
-      client_secret?: string;
-      /**
-       * @description Stripe: PaymentMethod.card.brand
-       * @example visa
-       */
-      readonly brand?: string;
-      /**
-       * @description Stripe: PaymentMethod.card.exp_year
-       * @example 2024
-       */
-      readonly exp_year?: string;
-      /**
-       * @description Stripe: PaymentMethod.card.exp_month
-       * @example 8
-       */
-      readonly exp_month?: string;
-      /**
-       * @description Stripe: PaymentMethod.card.last4
-       * @example 4566
-       */
-      readonly last4?: string;
-      /**
-       * @description Stripe: PaymentMethod.billing_details.name
-       * @example Daniil Satsura
-       */
-      readonly card_holder?: string;
-    };
-    PaymentMethod_Transfer: {
-      /**
-       * @description CRM: PaymentMethod.transfer_iban
-       * @example BY11 ALFA 3012 2073 8000 3027 0000
-       */
-      iban?: string;
-      /**
-       * @description CRM: PaymentMethod.transfer_bic
-       * @example ALFABY2X
-       */
-      bic?: string;
-      /**
-       * @description CRM: PaymentMethod.transfer_bankname
-       * @example ЗАО «Альфа-Банк»
-       */
-      bank_name?: string;
-      bank_address?: components["schemas"]["Address"];
-    };
-    PaymentSystems: {
-      stripe?: components["schemas"]["PaymentSystem_Stripe"];
-    };
-    PaymentSystem_Stripe: {
-      /**
-       * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
-       * @example pk_test_TYooMQauvdEDq54NiTphI7jx
-       */
-      publishable_key?: string;
-      /**
-       * @description CRM: Account.stripe_secret_key_c; Section 'Stripe' in UI
-       * @example sk_test_4eC39HqLyjWDarjtT1zdp7dc
-       */
-      secret_key?: string;
-    };
-    Invoice: {
-      /**
-       * @description CRM: Invoice.name
-       * @example Month-to-Date Invoice for March 2021
-       */
-      name?: string;
-      /**
-       * @description CRM: Invoice.service_provider + Invoice.number; Unique for ServiceProvider, human readable invoice ID
-       * @example stone_35
-       */
-      number?: string;
-      /**
-       * @description CRM: Invoice.id
-       * @example 3fc4b818-8d3b-b49d-c29b-603374765245
-       */
-      readonly id?: string;
-      /**
-       * @description CRM: Invoice.service_provider_c (it's short ServiceProvider account name) or Invoice.account_id_c (is an ID of service provider)
-       * @example ibacl
-       */
-      service_provider?: string;
-      /**
-       * @description CRM: Invoice.billing_account; Show only in ServiceProvider UI
-       * @example ymik
-       */
-      account?: string;
-      /**
-       * @description CRM: Invoice.due_date
-       * @example 2021-04-15
-       */
-      due_date?: string;
-      /**
-       * @description CRM: Invoice.status
-       * @example draft
-       * @enum {string}
-       */
-      status?: "draft" | "unpaid" | "paid";
-      /**
-       * @description CRM: Invoice.used_payment_method_c; This capture of actual payment_method used for this invoice
-       * @example Visa - 9999
-       */
-      payment_method?: string;
-      /**
-       * @description CRM: Invoice.payment_date_c; change it when payment is done or may be changed manually. Stored in UTC (but CRM stored in it's local time)
-       * @example 2021-04-13 10:00:23
-       */
-      payment_date?: string;
-      /**
-       * @description CRM: Invoice.total_amount in selected currency
-       * @example 156.34
-       */
-      readonly amount?: number;
-      /**
-       * @description CRM: Invoice.currency_id, if not specified then USD; I think we should hardcode currency mapping because it hard to request every time
-       * @example BGN
-       * @enum {string}
-       */
-      readonly currency?: "BGN" | "BYN" | "USD" | "EUR";
-    };
-    Contact: {
-      /** @example Daniil */
-      first_name?: string;
-      /** @example Satsura */
-      last_name?: string;
-      /**
-       * Format: email
-       * @example dsatsura@gmail.com
-       */
-      email?: string;
-      /**
-       * @description CRM: Contact.phone_mobile
-       * @example +375296287743
-       */
-      phone?: string;
-      /** @example Системный администратор */
-      title?: string;
-    };
-    Location: {
-      /**
-       * @description CRM: icdc_location.name
-       * @example xby
-       */
-      readonly name?: string;
-      /**
-       * @description CRM: icdc_location.display_name
-       * @example OneCloud, Sofia
-       */
-      display_name?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.url
-       * @example https://api.xby.icdc.io
-       */
-      readonly url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.service_provider
-       * @example stone
-       */
-      readonly service_provider?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.back_to_url; Section 'Home Page' in UI
-       * @example https://ibacloud.by
-       */
-      back_to_url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.status_page_url; Section 'Home Page' in UI
-       * @example https://status.ibacloud.by
-       */
-      status_page_url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.privacy_policy_url; Section 'Home Page' in UI
-       * @example https://ibacloud.by/privacy-policy-en
-       */
-      privacy_policy_url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.cookies_policy_url; Section 'Home Page' in UI
-       * @example https://ibacloud.by/cookies-policy-en
-       */
-      cookies_policy_url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.tos_url; Section 'Home Page' in UI
-       * @example https://ibacloud.by/terms-of-service-en
-       */
-      tos_url?: string;
-      /**
-       * Format: url
-       * @description CRM: icdc_location.dpa_url; Section 'Home Page' in UI
-       * @example https://ibacloud.by/data-processing-aggrement-en
-       */
-      dpa_url?: string;
-      /**
-       * @description CRM: icdc_location.footer_message; Section 'Home Page' in UI
-       * @example ®2020 IBA IT Park. All rights reserved.
-       */
-      footer_message?: string;
-    };
-    StorageQuota_s3: {
-      /** @example 1000 */
-      number_of_objects?: number;
-      /** @example 50000 */
-      data_size_mb?: number;
-      /** @example 20 */
-      buckets_per_s3user?: number;
-      /** @example 100 */
-      number_of_s3users?: number;
-    };
-    StorageQuota_iscsi: {
-      /** @example 50 */
-      number_of_clients?: number;
-      /** @example 5000 */
-      storage_size_gb?: number;
-      /** @example 20 */
-      number_of_disks?: number;
-    };
-    RoleWithMembers: {
-      /** @example member */
-      role?: string;
-      members?: components["schemas"]["User"][];
-    };
-    User: {
-      /** @example 3d96d265-6696-46de-86e0-42d8b426be31 */
-      readonly id?: string;
-      /** @example username@example.com */
-      username?: string;
-      /** @example Name */
-      first_name?: string;
-      /** @example Surname */
-      last_name?: string;
-      /** @example username@example.com */
-      email?: string;
-    };
-  };
-  responses: {
-    /** @description Access token is missing or invalid */
-    UnauthorizedError: {
-      headers: {
-        [name: string]: unknown;
-      };
-      content?: never;
-    };
-    /** @description Insufficient permissions to perform the operation */
-    ForbiddenError: {
-      headers: {
-        [name: string]: unknown;
-      };
-      content?: never;
-    };
-  };
-  parameters: {
-    /** @description Name of the account (5-character string) */
-    Account: string;
-    /** @description Role name */
-    Role: string;
-    /** @description Location name */
-    Location: string;
-  };
-  requestBodies: never;
-  headers: never;
-  pathItems: never;
+	schemas: {
+		Account_General: {
+			/**
+			 * @description CRM: Account.name
+			 * @example iba2d
+			 */
+			readonly name?: string;
+			/**
+			 * @description CRM: Account.display_name_c; Show as 'Full Name' in UI; Admin can edit this
+			 * @example IBA 2nd Department Shared
+			 */
+			display_name?: string;
+			/**
+			 * @description CRM: Account.email1; Show as 'Business Email' in UI
+			 * @example contact@company.com
+			 */
+			email?: string;
+			/**
+			 * @description CRM: Account.phone_office; Show as 'Business Phone' in UI
+			 * @example +375123456789
+			 */
+			phone?: string;
+			contact?: components["schemas"]["Contact"];
+		};
+		Account_Locations: {
+			/**
+			 * @description CRM: Account.name
+			 * @example iba2d
+			 */
+			readonly name?: string;
+			/**
+			 * @description CRM: Account.display_name_c
+			 * @example IBA IT Park - 2nd Dep
+			 */
+			readonly display_name?: string;
+			/**
+			 * @description CRM: Account.dep_id_c
+			 * @example 2d
+			 */
+			dep_id?: string;
+			/**
+			 * @description CRM: Account.dep_name_c
+			 * @example 2nd Department
+			 */
+			dep_name?: string;
+			/**
+			 * @description CRM: Account.org_id_c
+			 * @example iba
+			 */
+			org_id?: string;
+			/**
+			 * @description CRM: Account.org_name_c
+			 * @example IBA IT Park
+			 */
+			org_name?: string;
+			/** @description CRM: Location objects related to Account */
+			locations?: components["schemas"]["Account_Location"][];
+		};
+		Account_Location: {
+			/** @example xby */
+			name?: string;
+			/** @example https://api.xby.icdc.io */
+			api?: string;
+			services?: components["schemas"]["Service"][];
+		};
+		Service: {
+			/** @example compute */
+			name?: string;
+			/**
+			 * @description CRM: icdc_service.description
+			 * @example Order cloud services directly from the catalog: virtual machines, application images, and network access.
+			 */
+			readonly description?: string;
+			/** @example IBACloud Compute */
+			display_name?: string;
+			displayName?: string;
+			/** @example  */
+			path?: string;
+			/** @example https://compute.xby.icdc.io */
+			url?: string;
+			/** @example 3 */
+			position?: number;
+		};
+		Account_Billing: {
+			/**
+			 * @description CRM: Account.business_name_c; Show as 'Business Name' in UI
+			 * @example Иностранное производственное унитарное предприятие «АйБиЭй АйТи Парк»
+			 */
+			name?: string;
+			/**
+			 * @description CRM: Account.email1; Show as 'Business Email' in UI
+			 * @example petrov@example.com
+			 */
+			email?: string;
+			/**
+			 * @description CRM: Account.phone_office; Show as 'Business Phone' in UI
+			 * @example +375296287743
+			 */
+			phone?: string;
+			address?: components["schemas"]["Address"];
+			contact?: components["schemas"]["Contact"];
+			/**
+			 * @description CRM: Account.tax_exempt_c
+			 * @example none
+			 */
+			tax_exempt?: string;
+			/**
+			 * @description CRM: Account.tax_id_type_c
+			 * @example eu_vat
+			 */
+			tax_id_type?: string;
+			/**
+			 * @description CRM: Account.tax_id_c
+			 * @example 190743344
+			 */
+			tax_id?: string;
+			/**
+			 * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
+			 * @example pk_test_TYooMQauvdEDq54NiTphI7jx
+			 */
+			stripe_publishable_key?: string;
+			/**
+			 * @description CRM: Account.stripe_secret_key_c; Section 'Stripe' in UI
+			 * @example sk_test_4eC39HqLyjWDarjtT1zdp7dc
+			 */
+			stripe_secret_key?: string;
+		};
+		Address: {
+			/**
+			 * @description CRM: Account.billing_address_country or PaymentMethod.transfer_bankaddr_country
+			 * @example Belarus
+			 */
+			country?: string;
+			/**
+			 * @description CRM: Account.billing_address_state or PaymentMethod.transfer_bankaddr_state
+			 * @example Minskaya
+			 */
+			state?: string;
+			/**
+			 * @description CRM: Account.billing_address_city or PaymentMethod.transfer_bankaddr_city
+			 * @example Minsk
+			 */
+			city?: string;
+			/**
+			 * @description CRM: Account.billing_address_postalcode or PaymentMethod.transfer_bankaddr_postalcode
+			 * @example 220141
+			 */
+			postal_code?: string;
+			/**
+			 * @description CRM: Account.billing_address_street
+			 * @example ул. Программистов 3, офис 41, 1 этаж
+			 */
+			street?: string;
+			/**
+			 * @description CRM: split into lines Account.billing_address_street or PaymentMethod.transfer_bankaddr
+			 * @example [
+			 *       "ул. Программистов",
+			 *       "3, офис 41, 1 этаж"
+			 *     ]
+			 */
+			lines?: string[];
+		};
+		ServiceProvider: {
+			/**
+			 * @description CRM: Account.name; select account_type == Partner
+			 * @example stone
+			 */
+			readonly name?: string;
+			/**
+			 * @description CRM: Account.business_name_c
+			 * @example StoneComputers Ltd.
+			 */
+			readonly business_name?: string;
+			business_address?: components["schemas"]["Address"];
+			/**
+			 * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
+			 * @example pk_test_TYooMQauvdEDq54NiTphI7jx
+			 */
+			stripe_publishable_key?: string;
+		};
+		PaymentMethod_Create: {
+			/**
+			 * @description CRM: PaymentMethod.id
+			 * @example 4455b818-8d3b-b49d-c29b-603374788990
+			 */
+			readonly id?: string;
+			/**
+			 * @description CRM: PaymentMethod.type
+			 * @example stripe
+			 */
+			type?: string;
+			/**
+			 * @description CRM: PaymentMethod.partner
+			 * @example stone
+			 */
+			service_provider?: string;
+			/**
+			 * @description CRM: PaymentMethod.default; Single method can be enable for Account
+			 * @example true
+			 */
+			default?: boolean;
+			stripe_card?: components["schemas"]["PaymentMethod_Stripe_Card_Create"];
+			bank_transfer?: components["schemas"]["PaymentMethod_Transfer"];
+		};
+		PaymentMethod_Stripe_Card_Create: {
+			/**
+			 * @description Stripe: SetupIntent.client_secret
+			 * @example cs_test_51C5AG3IassNf4c4p0Yb7c2P1Fb6Ysa2yGENOb7Z00bqMiG15j
+			 */
+			readonly client_secret?: string;
+			/**
+			 * @description CRM: PaymentMethod.stripe_paymentmethod
+			 * @example pm_1ITUIxIassNf4c4pgWQzlq4z
+			 */
+			payment_method_id?: string;
+		};
+		PaymentMethod: {
+			/**
+			 * @description CRM: PaymentMethod.id
+			 * @example 4455b818-8d3b-b49d-c29b-603374788990
+			 */
+			id?: string;
+			/**
+			 * @description CRM: PaymentMethod.type
+			 * @example stripe
+			 */
+			type?: string;
+			/**
+			 * @description CRM: PaymentMethod.partner
+			 * @example stone
+			 */
+			service_provider?: string;
+			/**
+			 * @description CRM: PaymentMethod.default; Single method can be enable for Account
+			 * @example true
+			 */
+			default?: boolean;
+			stripe_card?: components["schemas"]["PaymentMethod_Stripe_Card"];
+			bank_transfer?: components["schemas"]["PaymentMethod_Transfer"];
+		};
+		PaymentMethod_Stripe_Card: {
+			/**
+			 * @description Stripe: SetupIntent.client_secret
+			 * @example cs_test_51C5AG3IassNf4c4p0Yb7c2P1Fb6Ysa2yGENOb7Z00bqMiG15j
+			 */
+			client_secret?: string;
+			/**
+			 * @description Stripe: PaymentMethod.card.brand
+			 * @example visa
+			 */
+			readonly brand?: string;
+			/**
+			 * @description Stripe: PaymentMethod.card.exp_year
+			 * @example 2024
+			 */
+			readonly exp_year?: string;
+			/**
+			 * @description Stripe: PaymentMethod.card.exp_month
+			 * @example 8
+			 */
+			readonly exp_month?: string;
+			/**
+			 * @description Stripe: PaymentMethod.card.last4
+			 * @example 4566
+			 */
+			readonly last4?: string;
+			/**
+			 * @description Stripe: PaymentMethod.billing_details.name
+			 * @example Daniil Satsura
+			 */
+			readonly card_holder?: string;
+		};
+		PaymentMethod_Transfer: {
+			/**
+			 * @description CRM: PaymentMethod.transfer_iban
+			 * @example BY11 ALFA 3012 2073 8000 3027 0000
+			 */
+			iban?: string;
+			/**
+			 * @description CRM: PaymentMethod.transfer_bic
+			 * @example ALFABY2X
+			 */
+			bic?: string;
+			/**
+			 * @description CRM: PaymentMethod.transfer_bankname
+			 * @example ЗАО «Альфа-Банк»
+			 */
+			bank_name?: string;
+			bank_address?: components["schemas"]["Address"];
+		};
+		PaymentSystems: {
+			stripe?: components["schemas"]["PaymentSystem_Stripe"];
+		};
+		PaymentSystem_Stripe: {
+			/**
+			 * @description CRM: Account.stripe_publishable_key_c; Section 'Stripe' in UI
+			 * @example pk_test_TYooMQauvdEDq54NiTphI7jx
+			 */
+			publishable_key?: string;
+			/**
+			 * @description CRM: Account.stripe_secret_key_c; Section 'Stripe' in UI
+			 * @example sk_test_4eC39HqLyjWDarjtT1zdp7dc
+			 */
+			secret_key?: string;
+		};
+		Invoice: {
+			/**
+			 * @description CRM: Invoice.name
+			 * @example Month-to-Date Invoice for March 2021
+			 */
+			name?: string;
+			/**
+			 * @description CRM: Invoice.service_provider + Invoice.number; Unique for ServiceProvider, human readable invoice ID
+			 * @example stone_35
+			 */
+			number?: string;
+			/**
+			 * @description CRM: Invoice.id
+			 * @example 3fc4b818-8d3b-b49d-c29b-603374765245
+			 */
+			readonly id?: string;
+			/**
+			 * @description CRM: Invoice.service_provider_c (it's short ServiceProvider account name) or Invoice.account_id_c (is an ID of service provider)
+			 * @example ibacl
+			 */
+			service_provider?: string;
+			/**
+			 * @description CRM: Invoice.billing_account; Show only in ServiceProvider UI
+			 * @example ymik
+			 */
+			account?: string;
+			/**
+			 * @description CRM: Invoice.due_date
+			 * @example 2021-04-15
+			 */
+			due_date?: string;
+			/**
+			 * @description CRM: Invoice.status
+			 * @example draft
+			 * @enum {string}
+			 */
+			status?: "draft" | "unpaid" | "paid";
+			/**
+			 * @description CRM: Invoice.used_payment_method_c; This capture of actual payment_method used for this invoice
+			 * @example Visa - 9999
+			 */
+			payment_method?: string;
+			/**
+			 * @description CRM: Invoice.payment_date_c; change it when payment is done or may be changed manually. Stored in UTC (but CRM stored in it's local time)
+			 * @example 2021-04-13 10:00:23
+			 */
+			payment_date?: string;
+			/**
+			 * @description CRM: Invoice.total_amount in selected currency
+			 * @example 156.34
+			 */
+			readonly amount?: number;
+			/**
+			 * @description CRM: Invoice.currency_id, if not specified then USD; I think we should hardcode currency mapping because it hard to request every time
+			 * @example BGN
+			 * @enum {string}
+			 */
+			readonly currency?: "BGN" | "BYN" | "USD" | "EUR";
+		};
+		Contact: {
+			/** @example Daniil */
+			first_name?: string;
+			/** @example Satsura */
+			last_name?: string;
+			/**
+			 * Format: email
+			 * @example dsatsura@gmail.com
+			 */
+			email?: string;
+			/**
+			 * @description CRM: Contact.phone_mobile
+			 * @example +375296287743
+			 */
+			phone?: string;
+			/** @example Системный администратор */
+			title?: string;
+		};
+		Location: {
+			/**
+			 * @description CRM: icdc_location.name
+			 * @example xby
+			 */
+			readonly name?: string;
+			/**
+			 * @description CRM: icdc_location.display_name
+			 * @example OneCloud, Sofia
+			 */
+			display_name?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.url
+			 * @example https://api.xby.icdc.io
+			 */
+			readonly url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.service_provider
+			 * @example stone
+			 */
+			readonly service_provider?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.back_to_url; Section 'Home Page' in UI
+			 * @example https://ibacloud.by
+			 */
+			back_to_url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.status_page_url; Section 'Home Page' in UI
+			 * @example https://status.ibacloud.by
+			 */
+			status_page_url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.privacy_policy_url; Section 'Home Page' in UI
+			 * @example https://ibacloud.by/privacy-policy-en
+			 */
+			privacy_policy_url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.cookies_policy_url; Section 'Home Page' in UI
+			 * @example https://ibacloud.by/cookies-policy-en
+			 */
+			cookies_policy_url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.tos_url; Section 'Home Page' in UI
+			 * @example https://ibacloud.by/terms-of-service-en
+			 */
+			tos_url?: string;
+			/**
+			 * Format: url
+			 * @description CRM: icdc_location.dpa_url; Section 'Home Page' in UI
+			 * @example https://ibacloud.by/data-processing-aggrement-en
+			 */
+			dpa_url?: string;
+			/**
+			 * @description CRM: icdc_location.footer_message; Section 'Home Page' in UI
+			 * @example ®2020 IBA IT Park. All rights reserved.
+			 */
+			footer_message?: string;
+		};
+		StorageQuota_s3: {
+			/** @example 1000 */
+			number_of_objects?: number;
+			/** @example 50000 */
+			data_size_mb?: number;
+			/** @example 20 */
+			buckets_per_s3user?: number;
+			/** @example 100 */
+			number_of_s3users?: number;
+		};
+		StorageQuota_iscsi: {
+			/** @example 50 */
+			number_of_clients?: number;
+			/** @example 5000 */
+			storage_size_gb?: number;
+			/** @example 20 */
+			number_of_disks?: number;
+		};
+		RoleWithMembers: {
+			/** @example member */
+			role?: string;
+			members?: components["schemas"]["User"][];
+		};
+		User: {
+			/** @example 3d96d265-6696-46de-86e0-42d8b426be31 */
+			readonly id?: string;
+			/** @example username@example.com */
+			username?: string;
+			/** @example Name */
+			first_name?: string;
+			/** @example Surname */
+			last_name?: string;
+			/** @example username@example.com */
+			email?: string;
+		};
+	};
+	responses: {
+		/** @description Access token is missing or invalid */
+		UnauthorizedError: {
+			headers: {
+				[name: string]: unknown;
+			};
+			content?: never;
+		};
+		/** @description Insufficient permissions to perform the operation */
+		ForbiddenError: {
+			headers: {
+				[name: string]: unknown;
+			};
+			content?: never;
+		};
+	};
+	parameters: {
+		/** @description Name of the account (5-character string) */
+		Account: string;
+		/** @description Role name */
+		Role: string;
+		/** @description Location name */
+		Location: string;
+	};
+	requestBodies: never;
+	headers: never;
+	pathItems: never;
 }
 export type $defs = Record<string, never>;
 export interface operations {
-  getAccounts: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_Locations"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getAccount: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_Locations"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getAccountGeneral: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_General"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  updateAccountGeneral: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    /** @description Account general information */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Account_General"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_General"];
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  getAccountBilling: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_Billing"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  updateAccountBilling: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    /** @description Account billing information */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Account_Billing"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_Billing"];
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  getAccountBillingByName: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-        /** @description Location name */
-        "x-icdc-location": components["parameters"]["Location"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_Billing"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getUsers: {
-    parameters: {
-      query?: {
-        /** @description Part of the username, first name or last name  to search for the result */
-        search?: string;
-        /** @description Limit of the results */
-        limit?: number;
-        /** @description Offset of the results */
-        offset?: number;
-      };
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["User"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  createUser: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    /** @description User info */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["User"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["User"];
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  getMembers: {
-    parameters: {
-      query?: {
-        /** @description Role in the account */
-        role?: string;
-      };
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["RoleWithMembers"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  addMember: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description ID of the user */
-        userId: string;
-      };
-      cookie?: never;
-    };
-    /** @description Members info */
-    requestBody: {
-      content: {
-        "application/json": {
-          /** @example member */
-          role?: string;
-        };
-      };
-    };
-    responses: {
-      /** @description No Content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  removeMember: {
-    parameters: {
-      query?: {
-        /** @description Role in the account */
-        role?: string;
-      };
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description ID of the user */
-        userId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description No content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getServiceProviders: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["ServiceProvider"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getPaymentMethods: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["PaymentMethod"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  createPaymentMethod: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    /** @description Payment Method info */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["PaymentMethod_Create"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["PaymentMethod_Create"];
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  getPaymentMethod: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description Id of payment method object */
-        paymentMethodId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["PaymentMethod"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  updatePaymentMethod: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description Id of payment method object */
-        paymentMethodId: string;
-      };
-      cookie?: never;
-    };
-    /** @description Payment Method info */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["PaymentMethod_Create"];
-      };
-    };
-    responses: {
-      /** @description No content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  removePaymentMethod: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description ID of the payment method */
-        paymentMethodId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description No content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getInvoices: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getInvoice: {
-    parameters: {
-      query?: {
-        /** @description invoice file format */
-        format?: "pdf" | "json";
-      };
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description invoice ID */
-        invoiceId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  shareInvoice: {
-    parameters: {
-      query?: {
-        /** @description invoice file format */
-        format?: "pdf";
-      };
-      header?: never;
-      path: {
-        /** @description invoice ID */
-        invoiceId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getLocation: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Location"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  updateLocation: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-      };
-      cookie?: never;
-    };
-    /** @description Payment Method info */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Location"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Location"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getAvailableAccounts: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_General"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getLocationAccounts: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Account_General"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  attachLocationAccount: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-        /** @description Name of the account (5-character string) */
-        accountName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description No content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  deleteLocationAccount: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path: {
-        /** @description Name of the location */
-        locationName: string;
-        /** @description Name of the account (5-character string) */
-        accountName: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description No content */
-      204: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getPaymentSystems: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      200: components["schemas"]["PaymentSystems"];
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getProviderInvoices: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path?: never;
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"][];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  getProviderInvoice: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description invoice ID */
-        invoiceId: string;
-      };
-      cookie?: never;
-    };
-    requestBody?: never;
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"];
-        };
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-      /** @description Not found */
-      404: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-    };
-  };
-  updateProviderInvoice: {
-    parameters: {
-      query?: never;
-      header: {
-        /** @description Name of the account (5-character string) */
-        "x-icdc-account": components["parameters"]["Account"];
-        /** @description Role name */
-        "x-icdc-role": components["parameters"]["Role"];
-      };
-      path: {
-        /** @description invoice ID */
-        invoiceId: string;
-      };
-      cookie?: never;
-    };
-    /** @description Invoice fields that can be changed by service provider */
-    requestBody: {
-      content: {
-        "application/json": components["schemas"]["Invoice"];
-      };
-    };
-    responses: {
-      /** @description Successful */
-      200: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content: {
-          "application/json": components["schemas"]["Invoice"];
-        };
-      };
-      /** @description Bad request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
-  createAccounts: {
-    parameters: {
-      query?: never;
-      header?: never;
-      path?: never;
-      cookie?: never;
-    };
-    /** @description Account info */
-    requestBody: {
-      content: {
-        "application/json": {
-          /** @example iba2d */
-          name?: string;
-          /** @example [
-           *       "xby",
-           *       "zby"
-           *     ] */
-          locations?: string[];
-          general?: components["schemas"]["Account_General"];
-          billing?: components["schemas"]["Account_Billing"];
-          payment_methods?: components["schemas"]["PaymentMethod_Create"][];
-        };
-      };
-    };
-    responses: {
-      /** @description Created */
-      201: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      /** @description Bad Request */
-      400: {
-        headers: {
-          [name: string]: unknown;
-        };
-        content?: never;
-      };
-      401: components["responses"]["UnauthorizedError"];
-      403: components["responses"]["ForbiddenError"];
-    };
-  };
+	getAccounts: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_Locations"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getAccount: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_Locations"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getAccountGeneral: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_General"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	updateAccountGeneral: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		/** @description Account general information */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["Account_General"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_General"];
+				};
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	getAccountBilling: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_Billing"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	updateAccountBilling: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		/** @description Account billing information */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["Account_Billing"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_Billing"];
+				};
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	getAccountBillingByName: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+				/** @description Location name */
+				"x-icdc-location": components["parameters"]["Location"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_Billing"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getUsers: {
+		parameters: {
+			query?: {
+				/** @description Part of the username, first name or last name  to search for the result */
+				search?: string;
+				/** @description Limit of the results */
+				limit?: number;
+				/** @description Offset of the results */
+				offset?: number;
+			};
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["User"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	createUser: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		/** @description User info */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["User"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["User"];
+				};
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	getMembers: {
+		parameters: {
+			query?: {
+				/** @description Role in the account */
+				role?: string;
+			};
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["RoleWithMembers"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	addMember: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description ID of the user */
+				userId: string;
+			};
+			cookie?: never;
+		};
+		/** @description Members info */
+		requestBody: {
+			content: {
+				"application/json": {
+					/** @example member */
+					role?: string;
+				};
+			};
+		};
+		responses: {
+			/** @description No Content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	removeMember: {
+		parameters: {
+			query?: {
+				/** @description Role in the account */
+				role?: string;
+			};
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description ID of the user */
+				userId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description No content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getServiceProviders: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["ServiceProvider"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getPaymentMethods: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["PaymentMethod"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	createPaymentMethod: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		/** @description Payment Method info */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["PaymentMethod_Create"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["PaymentMethod_Create"];
+				};
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	getPaymentMethod: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description Id of payment method object */
+				paymentMethodId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["PaymentMethod"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	updatePaymentMethod: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description Id of payment method object */
+				paymentMethodId: string;
+			};
+			cookie?: never;
+		};
+		/** @description Payment Method info */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["PaymentMethod_Create"];
+			};
+		};
+		responses: {
+			/** @description No content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	removePaymentMethod: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description ID of the payment method */
+				paymentMethodId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description No content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getInvoices: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getInvoice: {
+		parameters: {
+			query?: {
+				/** @description invoice file format */
+				format?: "pdf" | "json";
+			};
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description invoice ID */
+				invoiceId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	shareInvoice: {
+		parameters: {
+			query?: {
+				/** @description invoice file format */
+				format?: "pdf";
+			};
+			header?: never;
+			path: {
+				/** @description invoice ID */
+				invoiceId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getLocation: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Location"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	updateLocation: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+			};
+			cookie?: never;
+		};
+		/** @description Payment Method info */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["Location"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Location"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getAvailableAccounts: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_General"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getLocationAccounts: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Account_General"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	attachLocationAccount: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+				/** @description Name of the account (5-character string) */
+				accountName: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description No content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	deleteLocationAccount: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path: {
+				/** @description Name of the location */
+				locationName: string;
+				/** @description Name of the account (5-character string) */
+				accountName: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description No content */
+			204: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getPaymentSystems: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			200: components["schemas"]["PaymentSystems"];
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getProviderInvoices: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path?: never;
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"][];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	getProviderInvoice: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description invoice ID */
+				invoiceId: string;
+			};
+			cookie?: never;
+		};
+		requestBody?: never;
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"];
+				};
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+			/** @description Not found */
+			404: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+		};
+	};
+	updateProviderInvoice: {
+		parameters: {
+			query?: never;
+			header: {
+				/** @description Name of the account (5-character string) */
+				"x-icdc-account": components["parameters"]["Account"];
+				/** @description Role name */
+				"x-icdc-role": components["parameters"]["Role"];
+			};
+			path: {
+				/** @description invoice ID */
+				invoiceId: string;
+			};
+			cookie?: never;
+		};
+		/** @description Invoice fields that can be changed by service provider */
+		requestBody: {
+			content: {
+				"application/json": components["schemas"]["Invoice"];
+			};
+		};
+		responses: {
+			/** @description Successful */
+			200: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content: {
+					"application/json": components["schemas"]["Invoice"];
+				};
+			};
+			/** @description Bad request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
+	createAccounts: {
+		parameters: {
+			query?: never;
+			header?: never;
+			path?: never;
+			cookie?: never;
+		};
+		/** @description Account info */
+		requestBody: {
+			content: {
+				"application/json": {
+					/** @example iba2d */
+					name?: string;
+					/** @example [
+					 *       "xby",
+					 *       "zby"
+					 *     ] */
+					locations?: string[];
+					general?: components["schemas"]["Account_General"];
+					billing?: components["schemas"]["Account_Billing"];
+					payment_methods?: components["schemas"]["PaymentMethod_Create"][];
+				};
+			};
+		};
+		responses: {
+			/** @description Created */
+			201: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			/** @description Bad Request */
+			400: {
+				headers: {
+					[name: string]: unknown;
+				};
+				content?: never;
+			};
+			401: components["responses"]["UnauthorizedError"];
+			403: components["responses"]["ForbiddenError"];
+		};
+	};
 }

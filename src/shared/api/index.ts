@@ -1,198 +1,130 @@
 import type { List, User } from "@/types/entities";
+import ky, { HTTPError, type KyResponse } from "ky";
 
-type ObjectRecord =
-  | {
-      [key: string]: string;
-    }
-  | undefined;
+export type ObjectRecord =
+	| {
+			[key: string]: string;
+	  }
+	| undefined;
 
 type UserInfoParams = {
-  token: string;
-  user: User;
-  baseUrl: string;
+	token: string;
+	user: User;
+	baseUrl: string;
 };
 
 type RequestParamsType = {
-  url: string;
-  headers: ObjectRecord;
-  method?: "PUT" | "POST" | "GET" | "PATCH" | "DELETE";
-  body?: unknown;
-  options?: ObjectRecord;
+	url: string;
+	headers: ObjectRecord;
+	method?: "PUT" | "POST" | "GET" | "PATCH" | "DELETE";
+	body?: unknown;
+	options?: ObjectRecord;
 };
 
 export const getInfoForRequest = (): Promise<UserInfoParams> => {
-  return new Promise((resolve, reject) => {
-    try {
-      window.dispatchEvent(
-        new CustomEvent("requestInfo", {
-          detail: {
-            getUserInfo: ({ token, user, baseUrl }: UserInfoParams) =>
-              resolve({ token, user, baseUrl }),
-          },
-        }),
-      );
-    } catch (e) {
-      reject({
-        token: "",
-        user: {},
-        baseUrl: "",
-      });
-    }
-  });
+	return new Promise((resolve, reject) => {
+		try {
+			window.dispatchEvent(
+				new CustomEvent("requestInfo", {
+					detail: {
+						getUserInfo: ({ token, user, baseUrl }: UserInfoParams) =>
+							resolve({ token, user, baseUrl }),
+					},
+				}),
+			);
+		} catch (e) {
+			reject({
+				token: "",
+				user: {},
+				baseUrl: "",
+			});
+		}
+	});
 };
 
-const getFullUrl = (initialUrl: string, baseUrl: string) =>
-  initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
+export const getFullUrl = (initialUrl: string, baseUrl: string) =>
+	initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
 
-const getHeaders = (token: string, user: User, initialHeaders: List = {}) => ({
-  ...initialHeaders,
-  Authorization: `Bearer ${token}`,
-  "Content-Type": initialHeaders["Content-Type"] || "application/json",
-  "x-auth-group": `${user.account}.${user.role}`,
-  "x-auth-account": user.account,
-  "x-auth-role": user.role,
-  "x-icdc-location": user.location,
+export const getHeaders = (
+	token: string,
+	user: User,
+	initialHeaders: List = {},
+) => ({
+	...initialHeaders,
+	Authorization: `Bearer ${token}`,
+	"Content-Type": initialHeaders["Content-Type"] || "application/json",
+	"x-auth-group": `${user.account}.${user.role}`,
+	"x-icdc-account": user.account,
+	"x-icdc-role": user.role,
+	"x-auth-account": user.account,
+	"x-auth-role": user.role,
+	"x-icdc-location": user.location,
 });
 
-// biome-ignore lint/suspicious/noExplicitAny: <for compatibility>
-const request = async <T = any>(
-  config: RequestParamsType,
-): Promise<T | Response> => {
-  if (!navigator.onLine)
-    throw {
-      response: {
-        data: "No internet connection",
-        statusText: "No internet connection",
-      },
-    };
+class RequestError extends Error {
+	constructor(
+		message: string,
+		public status?: number,
+	) {
+		super(message);
+		this.name = "error";
+	}
+}
 
-  let url = config.url;
-  if (config.options)
-    url += `?${new URLSearchParams(config.options || {}).toString()}`;
-  const response = await fetch(url, {
-    ...config,
-    body: config.body ? JSON.stringify(config.body) : undefined,
-  });
-  if (!response.ok) {
-    if (!response.body && !response.statusText)
-      throw { response: response.status };
+const CONTENT_TYPE_JSON = "application/json";
 
-    if (!response.body)
-      throw {
-        response: { statusText: response.statusText },
-      };
+const isJSONType = (contentType: string | null) =>
+	contentType?.includes(CONTENT_TYPE_JSON);
 
-    const contentType = response.headers.get("Content-Type");
-
-    if (!contentType) throw { response: { data: response.statusText } };
-
-    if (["text/html", "text/plain"].includes(contentType.split(" ")[0])) {
-      throw { response: { data: response.statusText } };
-    }
-
-    const responseError = await response.json();
-    throw { response: { data: responseError } };
-  }
-  if (response.status === 204) return response;
-  if (
-    response.headers.get("Content-Type")?.includes("application/json") &&
-    response.body
-  ) {
-    return (await response.json()) as T;
-  }
-  return response;
+const parseError = (errorData: unknown): string => {
+	if (!errorData) return "";
+	if (typeof errorData === "string") return errorData;
+	if (typeof errorData === "object")
+		return [
+			...(Array.isArray(errorData)
+				? errorData
+				: Object.values(errorData)
+			).reduce((acc, curr) => {
+				const msg = parseError(curr).trim();
+				if (msg) acc.add(msg);
+				return acc;
+			}, new Set()),
+		].join("\n");
+	return "";
 };
 
-export const fetchData = async (
-  initialUrl: string,
-  initialHeaders?: ObjectRecord,
-  options?: ObjectRecord,
-) => {
-  const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(
-    initialUrl.replace("{account}", user.account),
-    baseUrl,
-  );
-  const headers = getHeaders(token, user, initialHeaders);
-  return await request({
-    url,
-    headers,
-    options,
-  });
-};
+export const request = async <T>(config: RequestParamsType) => {
+	if (!navigator.onLine) throw new RequestError("noInternet", 0);
 
-export const updateData = async (
-  initialUrl: string,
-  data: unknown,
-  initialHeaders = {},
-) => {
-  const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(
-    initialUrl.replace("{account}", user.account),
-    baseUrl,
-  );
-  const headers = getHeaders(token, user, initialHeaders);
-  return await request({
-    url,
-    headers,
-    method: "PUT",
-    body: data,
-  });
-};
+	try {
+		const response = await ky<T>(config.url, {
+			method: config.method ?? "GET",
+			headers: config.headers,
+			json: config.body,
+			searchParams: config.options,
+		});
 
-export const patchData = async (
-  initialUrl: string,
-  data: unknown,
-  initialHeaders = {},
-) => {
-  const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(
-    initialUrl.replace("{account}", user.account),
-    baseUrl,
-  );
-  const headers = getHeaders(token, user, initialHeaders);
-  return await request({
-    url,
-    headers,
-    method: "PATCH",
-    body: data,
-  });
-};
+		if (response.status === 204) {
+			return response;
+		}
 
-export const createData = async <T>(
-  initialUrl: string,
-  data: Omit<T, "id">,
-  initialHeaders = {},
-) => {
-  const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(
-    initialUrl.replace("{account}", user.account),
-    baseUrl,
-  );
-  const headers = getHeaders(token, user, initialHeaders);
-  return await request<T>({
-    url,
-    headers,
-    method: "POST",
-    body: data,
-  });
-};
+		if (isJSONType(response.headers.get("Content-Type"))) {
+			return await response.json();
+		}
 
-export const deleteData = async (
-  initialUrl: string,
-  params = {},
-  initialHeaders = {},
-) => {
-  const { token, user, baseUrl } = await getInfoForRequest();
-  const url = getFullUrl(
-    initialUrl.replace("{account}", user.account),
-    baseUrl,
-  );
-  const headers = getHeaders(token, user, initialHeaders);
-  return await request({
-    url,
-    headers,
-    method: "DELETE",
-    options: params,
-  });
+		return response;
+	} catch (error) {
+		if (error instanceof HTTPError) {
+			const { response } = error;
+			if (isJSONType(response.headers.get("Content-Type"))) {
+				const errorData = await response.json();
+				throw new RequestError(parseError(errorData), response.status);
+			}
+			const errorMessage = response.statusText || "unknown_error";
+
+			throw new RequestError(errorMessage, response.status);
+		}
+
+		throw new RequestError("network_error", 0);
+	}
 };
