@@ -1,19 +1,19 @@
-import type React from "react";
 import { Skeleton } from "@/shared/ui/skeleton";
+import type React from "react";
 
 type HocType = {
-  isStatusFulfilled: boolean;
+	isStatusFulfilled: boolean;
 };
 
 export function withSkeleton<T extends object>(
-  Component: React.ComponentType<T>,
+	Component: React.ComponentType<T>,
 ): React.FC<T & { isStatusFulfilled: boolean }> {
-  const wrapped = ({ isStatusFulfilled, ...props }: HocType) => {
-    return isStatusFulfilled ? (
-      <Component {...(props as T)} />
-    ) : (
-      <Skeleton className="h-8 bg-[var(--sidebar-skeleton)] w-full" />
-    );
-  };
-  return wrapped;
+	const wrapped = ({ isStatusFulfilled, ...props }: HocType) => {
+		return isStatusFulfilled ? (
+			<Component {...(props as T)} />
+		) : (
+			<Skeleton className="h-8 bg-[var(--sidebar-skeleton)] w-full" />
+		);
+	};
+	return wrapped;
 }

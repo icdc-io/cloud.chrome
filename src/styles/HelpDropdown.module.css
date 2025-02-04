@@ -1,27 +1,27 @@
 .help__content {
-  font-size: 14px;
-  background-color: white;
-  color: black;
-  border: 1px solid rgba(34, 36, 38, 0.15);
-  border-radius: 0.28571429rem;
-  box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
-  z-index: 30;
+	font-size: 14px;
+	background-color: white;
+	color: black;
+	border: 1px solid rgba(34, 36, 38, 0.15);
+	border-radius: 0.28571429rem;
+	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	z-index: 30;
 }
 
 .help-item {
-  padding: 11px 16px;
-  line-height: 1;
-  cursor: pointer;
+	padding: 11px 16px;
+	line-height: 1;
+	cursor: pointer;
 }
 
 .help-item:hover {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
-  outline: none;
+	background: rgba(0, 0, 0, 0.05);
+	color: rgba(0, 0, 0, 0.95);
+	outline: none;
 }
 
 .help-item:focus-visible {
-  background: rgba(0, 0, 0, 0.05);
-  color: rgba(0, 0, 0, 0.95);
-  outline: none;
+	background: rgba(0, 0, 0, 0.05);
+	color: rgba(0, 0, 0, 0.95);
+	outline: none;
 }

@@ -5,18 +5,18 @@ const Consoles = React.lazy(() => import("@/pages/admin/Consoles"));
 const ContactsPage = React.lazy(() => import("@/pages/support/ContactsPage"));
 
 type BuiltInService = RemoteApp & {
-  Component: React.LazyExoticComponent<() => JSX.Element>;
+	Component: React.LazyExoticComponent<() => JSX.Element>;
 };
 
 type BuiltInServices = {
-  [key: string]: BuiltInService[];
+	[key: string]: BuiltInService[];
 };
 
 export const builtInServices: BuiltInServices = {
-  admin: [
-    { route: "consoles", name: "Admin Consoles", Component: Consoles, url: "" },
-  ],
-  support: [
-    { route: "contacts", name: "Contacts", Component: ContactsPage, url: "" },
-  ],
+	admin: [
+		{ route: "consoles", name: "Admin Consoles", Component: Consoles, url: "" },
+	],
+	support: [
+		{ route: "contacts", name: "Contacts", Component: ContactsPage, url: "" },
+	],
 };
