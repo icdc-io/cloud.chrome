@@ -1,6 +1,8 @@
 const resources = {
 	en: {
 		translation: {
+			vpc: "VPC",
+			account_name: "Account",
 			noResults: "No results.",
 			submit: "Submit",
 			confirm: "Confirm",
@@ -472,6 +474,8 @@ const resources = {
 	},
 	ru: {
 		translation: {
+			vpc: "VPC",
+			account_name: "Имя аккаунта",
 			noResults: "Нет результатов.",
 			type: "Тип",
 			subnet: "Подсеть",
