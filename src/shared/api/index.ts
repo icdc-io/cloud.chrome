@@ -61,7 +61,7 @@ export const getHeaders = (
 	"x-icdc-location": user.location,
 });
 
-class RequestError extends Error {
+export class RequestError extends Error {
 	constructor(
 		message: string,
 		public status?: number,
@@ -73,7 +73,7 @@ class RequestError extends Error {
 
 const CONTENT_TYPE_JSON = "application/json";
 
-const isJSONType = (contentType: string | null) =>
+export const isJSONType = (contentType: string | null) =>
 	contentType?.includes(CONTENT_TYPE_JSON);
 
 const parseError = (errorData: unknown): string => {
@@ -104,51 +104,19 @@ export const request = async <T>(config: RequestParamsType) => {
 			searchParams: config.options,
 		});
 
-		if (response.status === 204) {
-			return response;
-		}
-
-		if (isJSONType(response.headers.get("Content-Type"))) {
-			return await response.json();
-		}
-
 		return response;
 	} catch (error) {
-		await handleErrors(error);
-	}
-};
+		if (error instanceof HTTPError) {
+			const { response } = error;
+			if (isJSONType(response.headers.get("Content-Type"))) {
+				const errorData = await response.json();
+				throw new RequestError(parseError(errorData), response.status);
+			}
+			const errorMessage = response.statusText || "unknown_error";
 
-export const requestJSON = async <T>(config: RequestParamsType) => {
-	if (!navigator.onLine) throw new RequestError("noInternet", 0);
-
-	try {
-		const response = await ky<T>(config.url, {
-			method: config.method ?? "GET",
-			headers: config.headers,
-			json: config.body,
-			searchParams: config.options,
-		});
-
-		if (isJSONType(response.headers.get("Content-Type"))) {
-			return await response.json();
+			throw new RequestError(errorMessage, response.status);
 		}
-	} catch (error) {
-		await handleErrors(error);
+
+		throw new RequestError("network_error", 0);
 	}
-	throw new RequestError("Invalid response type", 0);
-};
-
-const handleErrors = async (error: unknown) => {
-	if (error instanceof HTTPError) {
-		const { response } = error;
-		if (isJSONType(response.headers.get("Content-Type"))) {
-			const errorData = await response.json();
-			throw new RequestError(parseError(errorData), response.status);
-		}
-		const errorMessage = response.statusText || "unknown_error";
-
-		throw new RequestError(errorMessage, response.status);
-	}
-
-	throw new RequestError("network_error", 0);
 };

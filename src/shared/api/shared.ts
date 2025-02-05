@@ -1,11 +1,32 @@
 import {
 	type ObjectRecord,
+	RequestError,
 	getFullUrl,
 	getHeaders,
 	getInfoForRequest,
+	isJSONType,
 	request,
-	requestJSON,
 } from "@/shared/api";
+import type { KyResponse } from "ky";
+
+const processUnknownResponse = async <T>(response: KyResponse<T>) => {
+	if (response.status === 204) {
+		return response;
+	}
+
+	if (isJSONType(response.headers.get("Content-Type"))) {
+		return await response.json();
+	}
+
+	return response;
+};
+
+const processJSONnResponse = async <T>(response: KyResponse<T>) => {
+	if (isJSONType(response.headers.get("Content-Type"))) {
+		return await response.json();
+	}
+	throw new RequestError("Invalid response type", 0);
+};
 
 export const fetchData = async <T>(
 	initialUrl: string,
@@ -18,11 +39,13 @@ export const fetchData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request<T>({
-		url,
-		headers,
-		options,
-	});
+	return await processUnknownResponse(
+		await request<T>({
+			url,
+			headers,
+			options,
+		}),
+	);
 };
 
 export const updateData = async <T>(
@@ -36,12 +59,14 @@ export const updateData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request<T>({
-		url,
-		headers,
-		method: "PUT",
-		body: data,
-	});
+	return await processUnknownResponse(
+		await request<T>({
+			url,
+			headers,
+			method: "PUT",
+			body: data,
+		}),
+	);
 };
 
 export const patchData = async <T>(
@@ -55,12 +80,14 @@ export const patchData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request<T>({
-		url,
-		headers,
-		method: "PATCH",
-		body: data,
-	});
+	return await processUnknownResponse(
+		await request<T>({
+			url,
+			headers,
+			method: "PATCH",
+			body: data,
+		}),
+	);
 };
 
 export const createData = async <T>(
@@ -74,12 +101,14 @@ export const createData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await request<T>({
-		url,
-		headers,
-		method: "POST",
-		body: data,
-	});
+	return await processUnknownResponse(
+		await request<T>({
+			url,
+			headers,
+			method: "POST",
+			body: data,
+		}),
+	);
 };
 
 export const deleteData = async <T>(
@@ -93,12 +122,14 @@ export const deleteData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return (await request({
-		url,
-		headers,
-		method: "DELETE",
-		options: params,
-	})) as T;
+	return (await processUnknownResponse(
+		await request({
+			url,
+			headers,
+			method: "DELETE",
+			options: params,
+		}),
+	)) as T;
 };
 
 export const fetchJsonData = async <T>(
@@ -112,11 +143,13 @@ export const fetchJsonData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await requestJSON<T>({
-		url,
-		headers,
-		options,
-	});
+	return await processJSONnResponse<T>(
+		await request<T>({
+			url,
+			headers,
+			options,
+		}),
+	);
 };
 
 export const updateJSONData = async <T>(
@@ -130,12 +163,14 @@ export const updateJSONData = async <T>(
 		baseUrl,
 	);
 	const headers = getHeaders(token, user, initialHeaders);
-	return await requestJSON<T>({
-		url,
-		headers,
-		method: "PUT",
-		body: data,
-	});
+	return await processJSONnResponse(
+		await request<T>({
+			url,
+			headers,
+			method: "PUT",
+			body: data,
+		}),
+	);
 };
 
 type Error = {
