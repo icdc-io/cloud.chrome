@@ -1,6 +1,8 @@
 const resources = {
 	en: {
 		translation: {
+			deleteGatewayMsg:
+				"Are you sure you want to delete the {{name}}  gateway? This action cannot be undone.",
 			vpc: "VPC",
 			account_name: "Account",
 			noResults: "No results.",
@@ -474,6 +476,8 @@ const resources = {
 	},
 	ru: {
 		translation: {
+			deleteGatewayMsg:
+				"Вы уверены, что хотите удалить шлюз {{name}}? Это действие не может быть отменено.",
 			vpc: "VPC",
 			account_name: "Имя аккаунта",
 			noResults: "Нет результатов.",

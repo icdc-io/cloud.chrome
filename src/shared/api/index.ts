@@ -1,5 +1,5 @@
 import type { List, User } from "@/types/entities";
-import ky, { HTTPError, type KyResponse } from "ky";
+import ky, { HTTPError } from "ky";
 
 export type ObjectRecord =
 	| {
@@ -61,7 +61,7 @@ export const getHeaders = (
 	"x-icdc-location": user.location,
 });
 
-class RequestError extends Error {
+export class RequestError extends Error {
 	constructor(
 		message: string,
 		public status?: number,
@@ -73,7 +73,7 @@ class RequestError extends Error {
 
 const CONTENT_TYPE_JSON = "application/json";
 
-const isJSONType = (contentType: string | null) =>
+export const isJSONType = (contentType: string | null) =>
 	contentType?.includes(CONTENT_TYPE_JSON);
 
 const parseError = (errorData: unknown): string => {
@@ -103,14 +103,6 @@ export const request = async <T>(config: RequestParamsType) => {
 			json: config.body,
 			searchParams: config.options,
 		});
-
-		if (response.status === 204) {
-			return response;
-		}
-
-		if (isJSONType(response.headers.get("Content-Type"))) {
-			return await response.json();
-		}
 
 		return response;
 	} catch (error) {

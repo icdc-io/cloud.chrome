@@ -22,7 +22,7 @@ import {
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
 } from "@/redux/constants";
-import { fetchData } from "@/shared/api/shared";
+import { fetchData, fetchJsonData } from "@/shared/api/shared";
 import { parseLocalStorage } from "@/shared/lib/parseLocalStorage";
 import { availableRoles } from "@/shared/lib/roleUtils";
 import type { components } from "@/shared/schemas/account-api";
@@ -168,7 +168,7 @@ export const fetchAccountsData = () =>
 	({
 		type: inferStringLiteral(FETCH_ACCOUNTS_DATA),
 		payload: parseAccountsData(
-			fetchData(
+			fetchJsonData(
 				`${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
 			),
 		).then(),
