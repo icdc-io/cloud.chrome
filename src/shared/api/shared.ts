@@ -4,6 +4,7 @@ import {
 	getHeaders,
 	getInfoForRequest,
 	request,
+	requestJSON,
 } from "@/shared/api";
 
 export const fetchData = async <T>(
@@ -98,6 +99,43 @@ export const deleteData = async <T>(
 		method: "DELETE",
 		options: params,
 	})) as T;
+};
+
+export const fetchJsonData = async <T>(
+	initialUrl: string,
+	initialHeaders?: ObjectRecord,
+	options?: ObjectRecord,
+) => {
+	const { token, user, baseUrl } = await getInfoForRequest();
+	const url = getFullUrl(
+		initialUrl.replace("{account}", user.account),
+		baseUrl,
+	);
+	const headers = getHeaders(token, user, initialHeaders);
+	return await requestJSON<T>({
+		url,
+		headers,
+		options,
+	});
+};
+
+export const updateJSONData = async <T>(
+	initialUrl: string,
+	data: unknown,
+	initialHeaders = {},
+) => {
+	const { token, user, baseUrl } = await getInfoForRequest();
+	const url = getFullUrl(
+		initialUrl.replace("{account}", user.account),
+		baseUrl,
+	);
+	const headers = getHeaders(token, user, initialHeaders);
+	return await requestJSON<T>({
+		url,
+		headers,
+		method: "PUT",
+		body: data,
+	});
 };
 
 type Error = {
