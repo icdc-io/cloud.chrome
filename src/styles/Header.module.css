@@ -48,7 +48,7 @@
 }
 
 .info-section .active.item.selected {
-	color: #4183c4;
+	color: var(--active-primary);
 }
 
 .info-section .available {

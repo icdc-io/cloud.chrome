@@ -21,6 +21,7 @@ import {
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
 import type { UserType } from "@/types/entities";
+import { ChevronDownIcon } from "lucide-react";
 
 type UserDropdownType = {
 	isFullInfoAvailable: boolean;
@@ -160,6 +161,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 					type="button"
 				>
 					{userInfo?.given_name} {userInfo?.family_name}
+					<ChevronDownIcon color="white" size={15} />
 				</button>
 			</DropdownMenuTrigger>
 

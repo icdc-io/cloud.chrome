@@ -5,7 +5,7 @@ import {
 	fetchServiceVersion,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
-import { useCallback, useEffect } from "react";
+import { useEffect } from "react";
 
 const keycloakRequest = kc.init(initOptions);
 
@@ -14,22 +14,15 @@ const useAuth = () => {
 	const user = useAppSelector((state) => state.host.user);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 
-	const initSuccess = useCallback(
-		(authSuccess: boolean) => {
-			if (!authSuccess) {
-				kc.login();
-			} else {
-				// dispatch(fetchRemotesApps());
-				dispatch(fetchAccountsData());
-				dispatch(fetchServiceVersion());
-				dispatch(fetchRemotes());
-				// dispatch(fetchAllData());
-				// initGeneralUtils();
-				// loadGeneralModules(generalModules);
-			}
-		},
-		[dispatch],
-	);
+	const initSuccess = async (authSuccess: boolean) => {
+		if (!authSuccess) {
+			kc.login();
+		} else {
+			await dispatch(fetchAccountsData());
+			dispatch(fetchServiceVersion());
+			dispatch(fetchRemotes());
+		}
+	};
 
 	const initFailed = (e: string) => {
 		console.error("Authenticated Failed " + e);
@@ -38,14 +31,29 @@ const useAuth = () => {
 
 	useEffect(() => {
 		keycloakRequest.then(initSuccess, initFailed);
-	}, [initSuccess]);
+
+		const messageHandler = (event: MessageEvent) => {
+			if (event.origin !== window.origin) return;
+			if (event.data.action === "getToken") {
+				event.source?.postMessage(
+					{
+						token: kc.getToken(),
+						action: "sendToken",
+						requestId: event.data.requestId,
+					},
+					{ targetOrigin: event.origin },
+				);
+			}
+		};
+
+		window.addEventListener("message", messageHandler);
+
+		return () => window.removeEventListener("message", messageHandler);
+	}, []);
 
 	useEffect(() => {
-		// if (!user.location) return;
-
 		const messageListener = (e: CustomEvent) => {
 			e.detail.getUserInfo({
-				token: kc.getToken(),
 				user: user,
 				baseUrl: baseUrls?.[user.location],
 			});

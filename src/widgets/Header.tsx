@@ -2,6 +2,7 @@ import { changeSidebarVisibility } from "@/redux/actions";
 import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
 import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { withSkeleton } from "@/shared/hocs/withSkeleton";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { SidebarTrigger } from "@/shared/ui/sidebar";
 import styles from "@/styles/Header.module.css";
 import HelpDropdown from "@/widgets/HelpDropdown";
@@ -18,6 +19,7 @@ const Header = ({ status }: HeaderType) => {
 	const dynamicfilename = process.env.REACT_APP_CP_VENDOR || "icdc";
 	const userInfo = useAppSelector((state) => state.host.userInfo);
 	const currentService = useAppSelector((state) => state.host.currentService);
+	const isMobile = useIsMobile();
 
 	const isStatusFulfilled = status === FULFILLED;
 
@@ -25,7 +27,7 @@ const Header = ({ status }: HeaderType) => {
 		<>
 			<HelpDropdown />
 			{isStatusFulfilled && <LocationSelector />}
-			<UserDropdown isFullInfoAvailable={isStatusFulfilled} />
+			{!isMobile && <UserDropdown isFullInfoAvailable={isStatusFulfilled} />}
 		</>
 	);
 

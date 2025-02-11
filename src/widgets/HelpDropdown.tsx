@@ -4,12 +4,11 @@ import styles from "@/styles/HelpDropdown.module.css";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 const HelpDropdown = () => {
-	const helpBaseUrl = `https://help.${process.env.REACT_APP_CP_VENDOR || "icdc"}.io`;
+	const vendorDomain = window.location.origin.split(".").slice(-2).join(".");
+	const helpBaseUrl = `https://docs.${vendorDomain}`;
 	const lang = useAppSelector((state) => state.host.lang);
 	const currentService = useAppSelector((state) => state.host.currentService);
-	const helpPath = !currentService
-		? ""
-		: `/${lang}/${currentService}/Welcome.html`;
+	const helpPath = `/${lang}/${currentService || ""}`;
 
 	const goToHelp = () => {
 		window.open(helpBaseUrl + helpPath);

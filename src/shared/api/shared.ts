@@ -33,12 +33,12 @@ export const fetchData = async <T>(
 	initialHeaders?: ObjectRecord,
 	options?: ObjectRecord,
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -53,12 +53,12 @@ export const updateData = async <T>(
 	data: unknown,
 	initialHeaders = {},
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -74,12 +74,12 @@ export const patchData = async <T>(
 	data: unknown,
 	initialHeaders = {},
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -95,12 +95,12 @@ export const createData = async <T>(
 	data: Omit<T, "id">,
 	initialHeaders = {},
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -116,12 +116,12 @@ export const deleteData = async <T>(
 	params = {},
 	initialHeaders = {},
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return (await processUnknownResponse(
 		await request({
 			url,
@@ -137,12 +137,12 @@ export const fetchJsonData = async <T>(
 	initialHeaders?: ObjectRecord,
 	options?: ObjectRecord,
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processJSONnResponse<T>(
 		await request<T>({
 			url,
@@ -157,12 +157,12 @@ export const updateJSONData = async <T>(
 	data: unknown,
 	initialHeaders = {},
 ) => {
-	const { token, user, baseUrl } = await getInfoForRequest();
+	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
 		initialUrl.replace("{account}", user.account),
 		baseUrl,
 	);
-	const headers = getHeaders(token, user, initialHeaders);
+	const headers = await getHeaders(user, initialHeaders);
 	return await processJSONnResponse(
 		await request<T>({
 			url,

@@ -91,6 +91,7 @@
 		--th-border: #9aa5af;
 		--header-bg-hv: hsla(0, 0%, 100%, 0.08);
 		--active-item: hsla(0, 0%, 100%, 0.15);
+		--active-primary: #4183c4;
 	}
 
 	.dark {
@@ -561,7 +562,7 @@ h4 {
 }
 
 a {
-	color: #4183c4;
+	color: var(--active-primary);
 }
 
 .dimmed.dimmable > .ui.animating.dimmer,

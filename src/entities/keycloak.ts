@@ -14,18 +14,17 @@ const keycloakOptions = {
 	onLoad,
 };
 
+const updateToken = (keycloak: Keycloak) => {
+	store.dispatch(updateTokenInfo(keycloak.tokenParsed as UserInfo));
+};
+
 export const kc = ((options: KeycloakConfig) => {
 	const kc = new Keycloak(options);
 	let refreshTokenInterval: ReturnType<typeof setInterval>;
 
 	function onGetToken(isSuccess: boolean): boolean | PromiseLike<boolean> {
 		if (isSuccess) {
-			store.dispatch(
-				updateTokenInfo({
-					token: kc.token,
-					userInfo: kc.tokenParsed,
-				}),
-			);
+			updateToken(kc);
 		}
 		return isSuccess;
 	}

@@ -138,7 +138,7 @@ const ServicesDropdown = () => {
 						{handledServices.map((service) => (
 							<DropdownMenuItem
 								key={service.key}
-								className={`${styles["select-item"]} ${styles[service.className]} `}
+								className={`${styles["select-item"]} ${styles[service.className]} ${currentServiceName === service.value ? styles.active : ""}`}
 								onClick={() => onServiceChange(service.value)}
 								// value={service.value}
 							>
