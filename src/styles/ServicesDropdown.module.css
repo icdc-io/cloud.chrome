@@ -67,7 +67,7 @@
 } */
 
 .select-item[data-highlighted] {
-	background-color: #262626;
+	background-color: #262626 !important;
 }
 
 .services-skeleton {
@@ -75,9 +75,18 @@
 }
 
 .select-item[data-state="checked"] {
-	color: #4183c4;
+	color: var(--active-primary);
 	background: rgba(0, 0, 0, 0.03);
 	cursor: default;
+}
+
+.select-item.active[data-highlighted] {
+	background-color: rgba(0, 0, 0, 0.03);
+	cursor: default;
+}
+
+.select-item.active span {
+	color: var(--active-primary);
 }
 
 /* .select-item[data-highlighted] {
@@ -91,5 +100,5 @@
 }
 
 .select-item[data-state="unchecked"]:hover {
-	background-color: #262626;
+	background-color: #262626 !important;
 }

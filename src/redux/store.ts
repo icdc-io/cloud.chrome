@@ -63,7 +63,6 @@ const initialState: HostReducerType = Immutable({
 	serviceVersionFetchStatus: PENDING,
 	currentService: window.location.pathname.split("/")[1],
 	locationData: defaultLocationData,
-	token: "",
 	userInfo: null,
 	accountsDataFetchErrorStatus: 0,
 	contacts: null,
@@ -130,8 +129,7 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 
 		case UPDATE_TOKEN_INFO: {
 			return state.merge({
-				token: action.payload.token,
-				userInfo: action.payload.userInfo,
+				userInfo: action.payload,
 			});
 		}
 

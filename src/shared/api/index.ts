@@ -8,7 +8,6 @@ export type ObjectRecord =
 	| undefined;
 
 type UserInfoParams = {
-	token: string;
 	user: User;
 	baseUrl: string;
 };
@@ -27,14 +26,13 @@ export const getInfoForRequest = (): Promise<UserInfoParams> => {
 			window.dispatchEvent(
 				new CustomEvent("requestInfo", {
 					detail: {
-						getUserInfo: ({ token, user, baseUrl }: UserInfoParams) =>
-							resolve({ token, user, baseUrl }),
+						getUserInfo: ({ user, baseUrl }: UserInfoParams) =>
+							resolve({ user, baseUrl }),
 					},
 				}),
 			);
 		} catch (e) {
 			reject({
-				token: "",
 				user: {},
 				baseUrl: "",
 			});
@@ -45,21 +43,53 @@ export const getInfoForRequest = (): Promise<UserInfoParams> => {
 export const getFullUrl = (initialUrl: string, baseUrl: string) =>
 	initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
 
-export const getHeaders = (
-	token: string,
-	user: User,
-	initialHeaders: List = {},
-) => ({
-	...initialHeaders,
-	Authorization: `Bearer ${token}`,
-	"Content-Type": initialHeaders["Content-Type"] || "application/json",
-	"x-auth-group": `${user.account}.${user.role}`,
-	"x-icdc-account": user.account,
-	"x-icdc-role": user.role,
-	"x-auth-account": user.account,
-	"x-auth-role": user.role,
-	"x-icdc-location": user.location,
-});
+function getToken(): Promise<string> {
+	return new Promise((resolve) => {
+		if (!window.parent) {
+			console.log("No parent window available");
+			resolve("");
+		}
+
+		const requestId = Math.random().toString(36).substr(2, 9);
+
+		const messageHandler = (event: MessageEvent) => {
+			if (event.origin !== window.origin) return;
+			if (
+				event.data?.requestId === requestId &&
+				event.data?.action === "sendToken"
+			) {
+				window.removeEventListener("message", messageHandler);
+
+				if (event.data?.token) {
+					resolve(event.data.token);
+				} else {
+					console.log("No token received");
+					resolve("");
+				}
+			}
+		};
+
+		window.addEventListener("message", messageHandler);
+
+		window.parent.postMessage({ requestId, action: "getToken" }, window.origin);
+	});
+}
+
+export const getHeaders = async (user: User, initialHeaders: List = {}) => {
+	const token = await getToken();
+
+	return {
+		...initialHeaders,
+		Authorization: `Bearer ${token}`,
+		"Content-Type": initialHeaders["Content-Type"] || "application/json",
+		"x-auth-group": `${user.account}.${user.role}`,
+		"x-icdc-account": user.account,
+		"x-icdc-role": user.role,
+		"x-auth-account": user.account,
+		"x-auth-role": user.role,
+		"x-icdc-location": user.location,
+	};
+};
 
 export class RequestError extends Error {
 	constructor(

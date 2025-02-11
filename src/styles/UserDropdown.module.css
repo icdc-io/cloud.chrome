@@ -1,5 +1,5 @@
 .ui.dropdown.user-dropdown {
-	color: white;
+	color: var(--white);
 	font-size: 16px;
 	min-width: 160px;
 }
@@ -17,18 +17,16 @@
 	background: #ebebeb;
 }
 
-.user-dropdown .link.item {
-	&.accounts {
-		z-index: 3;
-	}
+.user-dropdown .link.item.accounts {
+	z-index: 3;
+}
 
-	&.role {
-		z-index: 2;
-	}
+.user-dropdown .link.item.accounts.role {
+	z-index: 2;
+}
 
-	&.lang {
-		z-index: 1;
-	}
+.user-dropdown .link.item.accounts.lang {
+	z-index: 1;
 }
 
 .user-dropdown .menu.transition.second-level {
@@ -45,16 +43,16 @@
 	align-items: center;
 	gap: 10px;
 	font-size: 16px;
-	color: white;
+	color: var(--white);
 }
 
 .user-select {
 	font-size: 14px;
-	background-color: white;
+	background-color: var(--white);
 	color: rgba(0, 0, 0, 0.85);
 	border: 1px solid rgba(34, 36, 38, 0.15);
 	border-radius: 0.28571429rem;
-	box-shadow: 0 2px 3px 0 rgba(34, 36, 38, 0.15);
+	box-shadow: 0 2px 3px 0 #22242626;
 }
 
 .select-item {
@@ -91,7 +89,7 @@
 }
 
 .select-item[data-state="checked"] {
-	color: #4183c4;
+	color: var(--active-primary);
 	background: rgba(0, 0, 0, 0.03);
 	cursor: default;
 }

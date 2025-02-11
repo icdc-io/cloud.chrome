@@ -59,7 +59,7 @@ export function AppSidebar({ status, ...props }: AppSidebarType) {
 						/>
 					</SidebarContent>
 					{isMobile && (
-						<SidebarFooter>
+						<SidebarFooter className="pl-4 pb-4">
 							<NavUser isFullInfoAvailable={isFulfilled} />
 						</SidebarFooter>
 					)}

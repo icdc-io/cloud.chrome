@@ -28,7 +28,6 @@ export type StoreType = {
 	serviceVersionFetchStatus: STATUSES_TYPES[number];
 	currentService: string | undefined;
 	locationData: DEFAULT_LOCATION_DATA;
-	token: string;
 	userInfo: UserInfo;
 	accountsDataFetchErrorStatus: number;
 	contacts: helpdeskComponents["schemas"]["Contact"][] | null;

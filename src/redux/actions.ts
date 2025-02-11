@@ -33,14 +33,12 @@ import type {
 	ServiceInLocation,
 	ServicesInLocations,
 	UniqueInternalServices,
-	UpdateTokenInfoPayload,
 	User,
+	UserInfo,
 } from "@/types/entities";
 import type { AsyncAction } from "redux-promise-middleware";
 import type { ThunkAction } from "redux-thunk";
 import type { HostReducerType } from "./types";
-
-const isServicesFiltrationNecessary = () => !!process.env.CHROME_ENV;
 
 function infernalLiteral<U, T extends U>(arg: T): T {
 	return arg;
@@ -171,7 +169,7 @@ export const fetchAccountsData = () =>
 			fetchJsonData(
 				`${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
 			),
-		).then(),
+		),
 	}) as const;
 
 export const fetchServicesStatuses = () =>
@@ -242,7 +240,7 @@ export const fetchLocationData = (currentLocation: string) =>
 		) as Promise<components["schemas"]["Location"]>,
 	}) as const;
 
-export const updateTokenInfo = (tokenInfo: UpdateTokenInfoPayload) =>
+export const updateTokenInfo = (tokenInfo: UserInfo) =>
 	({
 		type: inferStringLiteral(UPDATE_TOKEN_INFO),
 		payload: tokenInfo,
