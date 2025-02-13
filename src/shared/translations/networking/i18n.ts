@@ -4,7 +4,7 @@ const resources = {
 			deleteGatewayMsg:
 				"Are you sure you want to delete the {{name}}  gateway? This action cannot be undone.",
 			vpc: "VPC",
-			account_name: "Account",
+			account: "Account",
 			noResults: "No results.",
 			submit: "Submit",
 			confirm: "Confirm",
@@ -479,7 +479,7 @@ const resources = {
 			deleteGatewayMsg:
 				"Вы уверены, что хотите удалить шлюз {{name}}? Это действие не может быть отменено.",
 			vpc: "VPC",
-			account_name: "Имя аккаунта",
+			account: "Имя аккаунта",
 			noResults: "Нет результатов.",
 			type: "Тип",
 			subnet: "Подсеть",

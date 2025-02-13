@@ -178,3 +178,4 @@ export {
 	useForm,
 	zodResolver,
 };
+export type { DefaultValues, SubmitHandler, Path } from "react-hook-form";
