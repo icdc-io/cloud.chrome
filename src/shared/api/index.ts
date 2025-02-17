@@ -12,7 +12,7 @@ type UserInfoParams = {
 	baseUrl: string;
 };
 
-type RequestParamsType<U = unknown> = {
+type RequestParamsType<U> = {
 	url: string;
 	headers: ObjectRecord;
 	method?: "PUT" | "POST" | "GET" | "PATCH" | "DELETE";
