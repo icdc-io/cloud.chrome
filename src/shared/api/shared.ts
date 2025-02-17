@@ -152,6 +152,30 @@ export const fetchJsonData = async <T>(
 	);
 };
 
+export const createJsonData = async <
+	TResponse,
+	PRequest = Omit<TResponse, "id">,
+>(
+	initialUrl: string,
+	data: PRequest,
+	initialHeaders = {},
+) => {
+	const { token, user, baseUrl } = await getInfoForRequest();
+	const url = getFullUrl(
+		initialUrl.replace("{account}", user.account),
+		baseUrl,
+	);
+	const headers = getHeaders(token, user, initialHeaders);
+	return await processJSONnResponse(
+		await request<TResponse>({
+			url,
+			headers,
+			method: "POST",
+			body: data,
+		}),
+	);
+};
+
 export const updateJSONData = async <T>(
 	initialUrl: string,
 	data: unknown,
