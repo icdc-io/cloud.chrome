@@ -1,11 +1,11 @@
 import { kc } from "@/entities/keycloak";
 import { changeLang, changeUserInfo } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
 import { filterAndSort } from "@/shared/lib/roleUtils";
 import { type Langs, langs } from "@/shared/translations/i18n";
 import styles from "@/styles/UserDropdown.module.css";
 import { useTranslation } from "react-i18next";
 
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import {
 	DropdownMenu,
 	DropdownMenuContent,

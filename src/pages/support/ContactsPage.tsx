@@ -1,5 +1,5 @@
 import { fetchContacts } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import type { Langs } from "@/shared/translations/i18n";
 import Loader from "@/shared/ui/loader";
 import { useEffect } from "react";

@@ -1,6 +1,5 @@
 import AppRoutes from "@/app/AppRoutes";
 import { FULFILLED, PENDING, REJECTED } from "@/redux/constants";
-import { useAppSelector } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import Loader from "@/shared/ui/loader";
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar";
@@ -10,6 +9,7 @@ import Header from "@/widgets/Header";
 import ToastNotifications from "@/widgets/ToastNotifications";
 import { AppSidebar } from "@/widgets/app-sidebar";
 import "@/styles/index.css";
+import { useAppSelector } from "@/redux/shared";
 
 const Layout = () => {
 	const accountsDataFetchErrorStatus = useAppSelector(

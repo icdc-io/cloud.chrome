@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/shared";
 import QuestionLogo from "@/shared/images/question.svg";
 import styles from "@/styles/HelpDropdown.module.css";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";

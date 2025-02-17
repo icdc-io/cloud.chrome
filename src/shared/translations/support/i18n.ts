@@ -10,7 +10,7 @@ const resources = {
 			statusDescription: "current status of systems",
 			newTicketTitle: "Didn’t find solution? Submit a support ticket",
 			newTicketDescription:
-				"From a bug to a question, we're here to help you.<br />Submit a Ticket. We'll get back to you soon.",
+				"From a bug to a question, we're here to help you.\nSubmit a Ticket. We'll get back to you soon.",
 			newTicket: "New Ticket",
 			myRequests: "My Requests",
 			search: "Search",
@@ -102,7 +102,7 @@ const resources = {
 			statusDescription: "текущее состояние систем",
 			newTicketTitle: "Не нашли решение? Создайте запрос в службу поддержки",
 			newTicketDescription:
-				"От технической ошибки до вопроса, мы здесь, чтобы помочь вам. Создайте запрос поддержки. Мы свяжемся с вами в кратчайшие сроки.",
+				"От технической ошибки до вопроса, мы здесь, чтобы помочь вам.\nСоздайте запрос поддержки. Мы свяжемся с вами в кратчайшие сроки.",
 			newTicket: "Создать запрос",
 			myRequests: "Мои запросы",
 			search: "Поиск",

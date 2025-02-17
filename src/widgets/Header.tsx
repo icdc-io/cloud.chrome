@@ -1,6 +1,6 @@
 import { changeSidebarVisibility } from "@/redux/actions";
 import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/shared";
 import { withSkeleton } from "@/shared/hocs/withSkeleton";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { SidebarTrigger } from "@/shared/ui/sidebar";

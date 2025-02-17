@@ -38,6 +38,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Label": "./src/shared/ui/label",
 		"./ReduxTypes": "./src/redux/types",
 		"./roleUtils": "./src/shared/lib/roleUtils",
+		"./ReduxActions": "./src/redux/shared",
 	},
 	shared: {
 		react: {
@@ -55,10 +56,10 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 			strictVersion: true,
 			requiredVersion: dependencies["react-i18next"],
 		},
-		sonner: {
+		"@tanstack/react-query": {
 			singleton: true,
 			strictVersion: true,
-			requiredVersion: dependencies.sonner,
+			requiredVersion: dependencies["@tanstack/react-query"],
 		},
 	},
 };

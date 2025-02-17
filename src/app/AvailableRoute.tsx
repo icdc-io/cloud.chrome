@@ -1,6 +1,8 @@
 import { kc } from "@/entities/keycloak";
 import { changeCurrentService, fetchLocationData } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import type { components } from "@/schemas/helpdesk-api";
+import { fetchJsonData, getAppId, useFetchData } from "@/shared/api/shared";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
 import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";

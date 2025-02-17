@@ -2,7 +2,7 @@ import { SquareTerminal } from "lucide-react";
 import type * as React from "react";
 
 import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import {
 	Sidebar,
