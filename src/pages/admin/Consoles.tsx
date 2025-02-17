@@ -1,4 +1,4 @@
-import { useAppSelector } from "@/redux/store";
+import { useAppSelector } from "@/redux/shared";
 import External from "@/shared/images/ext.svg";
 import { Button } from "@/shared/ui/button";
 import Loader from "@/shared/ui/loader";

@@ -1,5 +1,4 @@
 import { kc } from "@/entities/keycloak";
-import { useAppSelector } from "@/redux/store";
 import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
 import { isServiceAvailable } from "@/shared/lib/availability";
@@ -7,6 +6,7 @@ import styles from "@/styles/ServicesDropdown.module.css";
 import { ChevronsUpDown, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
+import { useAppSelector } from "@/redux/shared";
 import type { components } from "@/shared/schemas/account-api";
 import {
 	DropdownMenu,

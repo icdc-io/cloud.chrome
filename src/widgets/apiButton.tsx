@@ -1,10 +1,10 @@
-import { useAppSelector } from "@/redux/store";
 import CodeSnippet from "@/shared/ui/ApiDialog/CodeSnippet";
 import CodeSnippetOptions from "@/shared/ui/ApiDialog/CodeSnippetOptions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { ChevronDown } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import "@/styles/apiButton.scss";
+import { useAppSelector } from "@/redux/shared";
 
 type PositionType = "left" | "right" | "center";
 

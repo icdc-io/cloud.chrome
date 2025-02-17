@@ -12,11 +12,11 @@ type UserInfoParams = {
 	baseUrl: string;
 };
 
-type RequestParamsType = {
+type RequestParamsType<U> = {
 	url: string;
 	headers: ObjectRecord;
 	method?: "PUT" | "POST" | "GET" | "PATCH" | "DELETE";
-	body?: unknown;
+	body?: U;
 	options?: ObjectRecord;
 };
 
@@ -123,7 +123,7 @@ const parseError = (errorData: unknown): string => {
 	return "";
 };
 
-export const request = async <T>(config: RequestParamsType) => {
+export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
 	if (!navigator.onLine) throw new RequestError("noInternet", 0);
 
 	try {

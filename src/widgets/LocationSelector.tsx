@@ -1,5 +1,5 @@
 import { changeUserInfo } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import {
 	Select,
 	SelectContent,

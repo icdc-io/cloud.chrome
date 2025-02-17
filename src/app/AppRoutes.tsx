@@ -3,7 +3,7 @@ import {
 	changeBurgerVisibility,
 	changeSidebarVisibility,
 } from "@/redux/actions";
-import { store, useAppDispatch, useAppSelector } from "@/redux/store";
+import { store } from "@/redux/store";
 import { builtInServices } from "@/shared/constants/builtInServices";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
 import React, { useEffect } from "react";
@@ -12,6 +12,7 @@ import "@/styles/Popup.scss";
 import { HOME } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
 import "semantic-ui-css/semantic.min.css";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 
 const AppRoutes = () => {
 	const dispatch = useAppDispatch();

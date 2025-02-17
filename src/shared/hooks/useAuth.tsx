@@ -4,7 +4,7 @@ import {
 	fetchRemotes,
 	fetchServiceVersion,
 } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/store";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { useEffect } from "react";
 
 const keycloakRequest = kc.init(initOptions);
