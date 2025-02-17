@@ -176,9 +176,12 @@ export const fetchNonJSONData = async <T>(
 	});
 };
 
-export const createJSONData = async <T, U>(
+export const createJsonData = async <
+	TResponse,
+	PRequest = Omit<TResponse, "id">,
+>(
 	initialUrl: string,
-	data: U,
+	data: PRequest,
 	initialHeaders = {},
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
@@ -188,7 +191,7 @@ export const createJSONData = async <T, U>(
 	);
 	const headers = await getHeaders(user, initialHeaders);
 	return await processJSONnResponse(
-		await request<T>({
+		await request<TResponse>({
 			url,
 			headers,
 			method: "POST",
@@ -270,7 +273,7 @@ export const useCreateData = <T, U>({
 
 	const mutationFn = (data: U) => {
 		const query = params ? `?${new URLSearchParams(params)}` : "";
-		return createJSONData<T, U>(`${endpoint}${query}`, data, initialHeaders);
+		return createJsonData<T, U>(`${endpoint}${query}`, data, initialHeaders);
 	};
 
 	return useMutation<T, Error, U>({
