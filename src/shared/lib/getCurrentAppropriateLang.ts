@@ -1,4 +1,4 @@
-import type { Langs } from "@/shared/translations/i18n";
+import type { Langs } from "../../shared/translations/langs";
 
 export const getCurrentAppropriateLang = (lang: Langs) => {
 	return (

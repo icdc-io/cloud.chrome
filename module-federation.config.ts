@@ -39,6 +39,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./ReduxTypes": "./src/redux/types",
 		"./roleUtils": "./src/shared/lib/roleUtils",
 		"./ReduxActions": "./src/redux/shared",
+		"./Langs": "./src/shared/translations/langs",
 	},
 	shared: {
 		react: {

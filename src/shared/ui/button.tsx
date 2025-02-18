@@ -2,10 +2,11 @@ import { Slot } from "@radix-ui/react-slot";
 import { type VariantProps, cva } from "class-variance-authority";
 import * as React from "react";
 
-import { cn } from "@/shared/lib/utils";
+import { ChevronLeft } from "lucide-react";
+import { cn } from "../../shared/lib/utils";
 
 const buttonVariants = cva(
-	"inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
+	"relative inline-flex items-center justify-center whitespace-nowrap rounded-sm text-sm font-medium transition-colors focus-visible:outline-none focus-visible:ring-1 focus-visible:ring-ring disabled:pointer-events-none disabled:opacity-50",
 	{
 		variants: {
 			variant: {
@@ -21,6 +22,7 @@ const buttonVariants = cva(
 					"bg-secondary text-secondary-foreground shadow-sm hover:bg-secondary/80",
 				ghost: "hover:bg-accent hover:text-accent-foreground",
 				link: "text-primary underline-offset-4 hover:underline",
+				back: "bg-[#e0e1e2] text-[#0009] !pl-16 hover:bg-[#cacbcd] hover:text-[##000c] overflow-hidden",
 			},
 			size: {
 				default: "h-9 px-4 py-2",
@@ -43,14 +45,21 @@ export interface ButtonProps
 }
 
 const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
-	({ className, variant, size, asChild = false, ...props }, ref) => {
+	({ className, variant, size, asChild = false, children, ...props }, ref) => {
 		const Comp = asChild ? Slot : "button";
 		return (
 			<Comp
 				className={cn(buttonVariants({ variant, size, className }))}
 				ref={ref}
 				{...props}
-			/>
+			>
+				{variant === "back" && (
+					<span className="bg-[#0000000d] h-[36px] w-[36px] absolute left-0 top-0">
+						<ChevronLeft size={24} className="absolute inset-0 m-auto" />
+					</span>
+				)}
+				{children}
+			</Comp>
 		);
 	},
 );

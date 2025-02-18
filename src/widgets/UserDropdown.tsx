@@ -1,7 +1,8 @@
 import { kc } from "@/entities/keycloak";
 import { changeLang, changeUserInfo } from "@/redux/actions";
 import { filterAndSort } from "@/shared/lib/roleUtils";
-import { type Langs, langs } from "@/shared/translations/i18n";
+import { langs } from "@/shared/translations/i18n";
+import type { Langs } from "@/shared/translations/langs";
 import styles from "@/styles/UserDropdown.module.css";
 import { useTranslation } from "react-i18next";
 
