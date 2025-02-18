@@ -1,13 +1,14 @@
+import type { ImmutableArray, ImmutableObject } from "seamless-immutable";
 import type { UserInfo } from "../../types/entities";
 import { OPERATOR } from "./roleUtils";
 
 type ProtectedServices = {
-	[key: string]: (a: string[]) => boolean;
+	[key: string]: (a: string[] | ImmutableArray<string>) => boolean;
 };
 
 const protectedServices: ProtectedServices = {
-	admin: (groups: string[]) => groups?.some((group) => /.cloud$/.test(group)),
-	billing: (groups: string[]) => {
+	admin: (groups) => groups?.some((group) => /.cloud$/.test(group)),
+	billing: (groups) => {
 		const re = new RegExp(`\.${OPERATOR}$`);
 		return groups?.some((group) => re.test(group));
 	},
@@ -15,7 +16,7 @@ const protectedServices: ProtectedServices = {
 
 export const isServiceAvailable = (
 	serviceName: string | undefined,
-	userInfo: UserInfo,
+	userInfo: ImmutableObject<UserInfo> | UserInfo,
 ) => {
 	if (!serviceName || !userInfo) return false;
 

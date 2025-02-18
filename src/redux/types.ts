@@ -3,7 +3,7 @@ import type { ImmutableObject } from "seamless-immutable";
 import type Immutable from "seamless-immutable";
 import type { DEFAULT_LOCATION_DATA, STATUSES_TYPES } from "../redux/constants";
 import type { components as helpdeskComponents } from "../shared/schemas/helpdesk-api";
-import type { Langs } from "../shared/translations/i18n";
+import type { Langs } from "../shared/translations/langs";
 import type {
 	BaseUrls,
 	FullAccountsInfoType,

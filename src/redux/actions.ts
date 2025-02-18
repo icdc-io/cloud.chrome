@@ -28,7 +28,7 @@ import { fetchData, fetchJsonData } from "../shared/api/shared";
 import { parseLocalStorage } from "../shared/lib/parseLocalStorage";
 import { availableRoles } from "../shared/lib/roleUtils";
 import type { components } from "../shared/schemas/account-api";
-import type { Langs } from "../shared/translations/i18n";
+import type { Langs } from "../shared/translations/langs";
 import type {
 	External,
 	FullAccountsInfo,
