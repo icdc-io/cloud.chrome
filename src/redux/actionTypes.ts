@@ -1,4 +1,4 @@
-import type * as actions from "@/redux/actions";
+import type * as actions from "../redux/actions";
 
 type InferValueTypes<T> = T extends {
 	[key: string]: infer U;

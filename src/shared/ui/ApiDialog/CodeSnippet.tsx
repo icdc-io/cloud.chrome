@@ -1,8 +1,12 @@
-import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Copy } from "lucide-react";
 import { useState } from "react";
 import { Prism as SyntaxHighlighter } from "react-syntax-highlighter";
 import { base16AteliersulphurpoolLight } from "react-syntax-highlighter/dist/esm/styles/prism";
+import {
+	Popover,
+	PopoverContent,
+	PopoverTrigger,
+} from "../../../shared/ui/popover";
 
 type CodeSnippetType = {
 	content: string;

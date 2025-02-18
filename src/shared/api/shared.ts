@@ -1,4 +1,11 @@
 import {
+	type UndefinedInitialDataOptions,
+	type UseMutationOptions,
+	useMutation,
+	useQuery,
+} from "@tanstack/react-query";
+import type { KyResponse } from "ky";
+import {
 	type ObjectRecord,
 	RequestError,
 	getFullUrl,
@@ -6,14 +13,7 @@ import {
 	getInfoForRequest,
 	isJSONType,
 	request,
-} from "@/shared/api";
-import {
-	type UndefinedInitialDataOptions,
-	type UseMutationOptions,
-	useMutation,
-	useQuery,
-} from "@tanstack/react-query";
-import type { KyResponse } from "ky";
+} from "../../shared/api";
 
 const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 	if (response.status === 204) {

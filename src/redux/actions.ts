@@ -1,11 +1,6 @@
-import { kc } from "@/entities/keycloak";
-import {
-	CONTACTS_FETCH,
-	CONTACTS_FETCH_URL,
-	DEFAULT_LOCATION_DATA,
-	FETCH_SERVICES_STATUSES,
-	SERVICES_STATUSES_URL,
-} from "@/redux/constants";
+import type { AsyncAction } from "redux-promise-middleware";
+import type { ThunkAction } from "redux-thunk";
+import { kc } from "../entities/keycloak";
 import {
 	CHANGE_BURGER_VISIBILITY,
 	CHANGE_CURRENT_SERVICE,
@@ -21,12 +16,19 @@ import {
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
-} from "@/redux/constants";
-import { fetchData, fetchJsonData } from "@/shared/api/shared";
-import { parseLocalStorage } from "@/shared/lib/parseLocalStorage";
-import { availableRoles } from "@/shared/lib/roleUtils";
-import type { components } from "@/shared/schemas/account-api";
-import type { Langs } from "@/shared/translations/i18n";
+} from "../redux/constants";
+import {
+	CONTACTS_FETCH,
+	CONTACTS_FETCH_URL,
+	DEFAULT_LOCATION_DATA,
+	FETCH_SERVICES_STATUSES,
+	SERVICES_STATUSES_URL,
+} from "../redux/constants";
+import { fetchData, fetchJsonData } from "../shared/api/shared";
+import { parseLocalStorage } from "../shared/lib/parseLocalStorage";
+import { availableRoles } from "../shared/lib/roleUtils";
+import type { components } from "../shared/schemas/account-api";
+import type { Langs } from "../shared/translations/i18n";
 import type {
 	External,
 	FullAccountsInfo,
@@ -35,9 +37,7 @@ import type {
 	UniqueInternalServices,
 	User,
 	UserInfo,
-} from "@/types/entities";
-import type { AsyncAction } from "redux-promise-middleware";
-import type { ThunkAction } from "redux-thunk";
+} from "../types/entities";
 import type { HostReducerType } from "./types";
 
 function infernalLiteral<U, T extends U>(arg: T): T {

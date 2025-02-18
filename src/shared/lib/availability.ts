@@ -1,4 +1,4 @@
-import type { UserInfo } from "@/types/entities";
+import type { UserInfo } from "../../types/entities";
 import { OPERATOR } from "./roleUtils";
 
 type ProtectedServices = {

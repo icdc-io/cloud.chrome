@@ -1,5 +1,5 @@
-import type { components } from "@/shared/schemas/account-api";
 import type { KeycloakTokenParsed } from "keycloak-js";
+import type { components } from "../shared/schemas/account-api";
 
 export type User = {
 	account: string;
