@@ -37,7 +37,7 @@ const Header = ({ status }: HeaderType) => {
 		<header className={styles["chrome-header"]}>
 			<div className={styles["left-section"]}>
 				{currentService && (
-					<SidebarTrigger className="-ml-1 bg-[var(--header-bg)] hover:bg-[var(--header-bg-hv)]" />
+					<SidebarTrigger className="-ml-1 bg-[var(--header-bg)] hover:bg-[var(--header-bg-hv)] whitespace-pre-line" />
 				)}
 
 				<Link to="/" className={styles["header-logo"]}>
