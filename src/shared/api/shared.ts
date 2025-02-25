@@ -1,13 +1,15 @@
 import {
 	type UndefinedInitialDataOptions,
 	type UseMutationOptions,
+	type UseMutationResult,
 	useMutation,
 	useQuery,
 } from "@tanstack/react-query";
 import type { KyResponse } from "ky";
 import {
+	type MutableHTTPMethod,
 	type ObjectRecord,
-	RequestError,
+	type RequestParamsType,
 	getFullUrl,
 	getHeaders,
 	getInfoForRequest,
@@ -27,11 +29,19 @@ const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 	return response;
 };
 
-const processJSONnResponse = async <T>(response: KyResponse<T>) => {
+export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
 	if (isJSONType(response.headers.get("Content-Type"))) {
+		if (
+			response.status === 204 ||
+			response.headers.get("Content-Length") === "0"
+		) {
+			return response as T;
+		}
 		return await response.json();
 	}
-	throw new RequestError("Invalid response type", 0);
+
+	return response as T;
+	// throw new RequestError("Invalid response type", 0);
 };
 
 export const fetchData = async <T>(
@@ -247,74 +257,103 @@ export const useFetchData = <T, U = T>({
 		return fetchJsonData<T>(`${endpoint}${query}`, initialHeaders);
 	};
 
-	return useQuery({
-		...queryOptions,
+	return {
 		queryKey,
-		queryFn,
-		select,
-	});
+		...useQuery({
+			...queryOptions,
+			queryKey,
+			queryFn,
+			select,
+		}),
+	};
 };
 
-type UseCreateData<T, U> = {
-	endpoint: string;
-	params?: Record<string, string>;
-	initialHeaders?: Record<string, string>;
-} & Omit<UseMutationOptions<T, Error, U>, "mutationFn" | "onSuccess">;
+type MutationVariables<U> =
+	| {
+			method: "DELETE";
+			endpoint: string;
+			params?: ObjectRecord;
+			headers?: ObjectRecord;
+	  }
+	| {
+			method: "POST" | "PUT" | "PATCH";
+			endpoint: string;
+			params?: ObjectRecord;
+			headers?: ObjectRecord;
+			body: U;
+	  };
 
-export const useCreateData = <T, U>({
-	endpoint,
-	params,
-	initialHeaders,
-	...mutationOptions
-}: UseCreateData<T, U>) => {
-	// const queryClient = useQueryClient();
-	const appId = getAppId(window.location.pathname);
-	const mutationKey = [appId, endpoint, params];
+type UseMutateDataOptions<T, U> = Omit<
+	UseMutationOptions<T, Error, MutationVariables<U>>,
+	"mutationFn"
+>;
 
-	const mutationFn = (data: U) => {
-		const query = params ? `?${new URLSearchParams(params)}` : "";
-		return createJsonData<T, U>(`${endpoint}${query}`, data, initialHeaders);
+type MutateJSONData<U> = Omit<RequestParamsType<U>, "method"> & {
+	method: MutableHTTPMethod;
+};
+
+export const mutateJSONData = async <T, U = unknown>(
+	config: MutateJSONData<U>,
+) => {
+	const { user, baseUrl } = await getInfoForRequest();
+	const url = getFullUrl(
+		config.url.replace("{account}", user.account),
+		baseUrl,
+	);
+	const headers = await getHeaders(user, config.headers);
+	return await processJSONnResponse(
+		await request<T, U>({
+			...config,
+			url,
+			headers,
+		}),
+	);
+};
+
+export function useMutateData<T, U = undefined>(
+	options: UseMutateDataOptions<T, U>,
+): UseMutationResult<T, Error, MutationVariables<U>> {
+	const { ...mutationOptions } = options;
+
+	const mutationFn = async (variables: MutationVariables<U>): Promise<T> => {
+		const { method, endpoint, params, headers } = variables;
+
+		if (method !== "DELETE") {
+			const { body } = variables;
+			if (!body) {
+				throw new Error(`The 'body' field is required for ${method} requests.`);
+			}
+
+			return mutateJSONData<T, U>({
+				url: endpoint,
+				method,
+				headers,
+				body,
+				options: params,
+			});
+		}
+
+		return mutateJSONData<T, undefined>({
+			url: endpoint,
+			method,
+			headers: headers,
+			options: params,
+		});
 	};
 
-	return useMutation<T, Error, U>({
+	return useMutation<T, Error, MutationVariables<U>>({
 		...mutationOptions,
 		mutationFn,
-		mutationKey,
-		onSuccess: () => {
-			// 	queryClient.invalidateQueries({ queryKey: [endpoint] });
+		onError: (error, vars, ctx) => {
+			showErrorNotification(error);
+			return mutationOptions.onError?.(error, vars, ctx);
+		},
+		onSuccess: (data, vars, ctx) => {
 			showSuccessNotification();
+			return mutationOptions.onSuccess?.(data, vars, ctx);
 		},
 	});
-};
-
-type UseUpdateData<T, U> = {
-	endpoint: string;
-	params?: Record<string, string>;
-	initialHeaders?: Record<string, string>;
-} & Omit<UseMutationOptions<T, Error, U>, "mutationFn" | "onSuccess">;
-
-export const useUpdateData = <T, U>({
-	endpoint,
-	params,
-	initialHeaders,
-	...mutationOptions
-}: UseUpdateData<T, U>) => {
-	const appId = getAppId(window.location.pathname);
-	const mutationKey = [appId, endpoint, params];
-
-	const mutationFn = (data: U) => {
-		const query = params ? `?${new URLSearchParams(params)}` : "";
-		return updateJSONData<T, U>(`${endpoint}${query}`, data, initialHeaders);
-	};
-
-	return useMutation<T, Error, U>({
-		...mutationOptions,
-		mutationFn,
-		mutationKey,
-		onError: (error) => showErrorNotification(error),
-		onSuccess: () => showSuccessNotification(),
-	});
-};
+}
 
 type ErrorType = {
 	message: string | undefined;

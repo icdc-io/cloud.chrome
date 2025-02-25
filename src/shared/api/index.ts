@@ -12,10 +12,16 @@ type UserInfoParams = {
 	baseUrl: string;
 };
 
-type RequestParamsType<U> = {
+export type ImmutableHTTPMethod = "GET";
+
+export type MutableHTTPMethod = "PUT" | "POST" | "PATCH" | "DELETE";
+
+export type HTTPMethod = MutableHTTPMethod | ImmutableHTTPMethod;
+
+export type RequestParamsType<U> = {
 	url: string;
 	headers: ObjectRecord;
-	method?: "PUT" | "POST" | "GET" | "PATCH" | "DELETE";
+	method?: HTTPMethod;
 	body?: U;
 	options?: ObjectRecord;
 };

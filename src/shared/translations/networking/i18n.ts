@@ -71,7 +71,7 @@ const resources = {
 			noSecurityGroups: "No Security Groups",
 			firewall: "Firewall",
 			firewallRulesDescription:
-				"If you do not specify a remote security group or remote IP subnet, then the access to your service will be open from any IP address {{tag}} (0.0.0.0/0) and any security group. In other words, if your service has a public IP address, then this can lead to your service being {{tag}} accessible for everyone over the Internet.",
+				"If you do not specify a remote security group or remote IP subnet, then the access to your service will be open from any IP address \n (0.0.0.0/0) and any security group. In other words, if your service has a public IP address, then this can lead to your service being \n accessible for everyone over the Internet.",
 			vpcDescription:
 				"All networks created with the selected subnet will be connected to one virtual router, so virtual machines from different networks will see each other.",
 			portForwardingDescription1:
@@ -104,8 +104,8 @@ const resources = {
 			wrong: "Something went wrong",
 			errorNotification: "Error! ",
 			successNotification: "Success! ",
-			maxLength: "Must be {{max}} characters or less",
-			minLength: "Must be {{min}} characters or more",
+			maxLength: "Must be {{value}} characters or less",
+			minLength: "Must be {{value}} characters or more",
 			numberValidation: "Must be a number",
 			traffic: "Traffic",
 			ipType: "IP Type",
@@ -152,21 +152,21 @@ const resources = {
 			dnsRecords: "DNS Records",
 			noDnsRecords: "Record list is empty. You can add a record above.",
 			dnsDescription:
-				"Domains app lets you manage the domain's DNS records for the domains you own.{{tag}} To resolve DNS records from the internet, you need to register a domain name with any DNS registrar and update your domain’s NS records to point to the location's DNS server:",
+				"Domains app lets you manage the domain's DNS records for the domains you own.\n To resolve DNS records from the internet, you need to register a domain name with any DNS registrar and update your domain’s NS records to point to the location's DNS server:",
 			dnsDescA:
-				"Enter a name to create a record in this domain or enter @ to use the domain name itself. {{tag}} 'A' records are for IPv4 addresses only and tell a request where your domain should direct to.",
+				"Enter a name to create a record in this domain or enter @ to use the domain name itself. \n 'A' records are for IPv4 addresses only and tell a request where your domain should direct to.",
 			dnsDescAAAA:
-				"Use @ to create the record at the domain or enter a name to create it. {{tag}} AAAA records are for IPv6 addresses only and tell a request where your domain should direct to.",
+				"Use @ to create the record at the domain or enter a name to create it. \n AAAA records are for IPv6 addresses only and tell a request where your domain should direct to.",
 			dnsDescTXT:
 				"TXT records are used to associate a string of text with a name. These are primarily used for verification.",
 			dnsDescSRV:
-				"SRV records specify the location (name and port number) of servers for specific services.{{tag}} You can use service records to direct certain types of traffic to particular servers.",
+				"SRV records specify the location (name and port number) of servers for specific services.\n You can use service records to direct certain types of traffic to particular servers.",
 			dnsDescMX:
-				"MX records specify the mail servers responsible for accepting emails on behalf of your domain,{{tag}} and priority value if your provider has a number of mail servers for contingency.",
+				"MX records specify the mail servers responsible for accepting emails on behalf of your domain,\n and priority value if your provider has a number of mail servers for contingency.",
 			dnsDescCNAME:
 				"CNAME records act as an alias by mapping a name to another name.",
 			dnsDescNS:
-				"NS records specify the servers which are providing DNS services for your domain.{{tag}} You can use these to create subzones if you need to direct part of your traffic to another DNS service.",
+				"NS records specify the servers which are providing DNS services for your domain.\n You can use these to create subzones if you need to direct part of your traffic to another DNS service.",
 			dnsFormNamePlaceholder: "Enter @ or Name",
 			dnsFormOnlyNamePlaceholder: "Enter Name",
 			dnsFormSrvNamePlaceholder: "e.g. _service._proto",
@@ -176,7 +176,7 @@ const resources = {
 			dnsFormHostnamePlaceholder: "Enter Hostname",
 			dnsFormPriorityPlaceholder: "e.g. 10",
 			dnsFormTextPlaceholder: "Enter Text",
-			dnsFormIpPlaceholder: "e.g. {{ipType}}",
+			dnsFormIpPlaceholder: "e.g. {{value}}",
 			webRoutes: "Web Routes",
 			noWebRoutes: "No Web Routes",
 			targetPort: "Target Port",
@@ -240,7 +240,6 @@ const resources = {
 			deleteCertificateHead: "Delete Certificate?",
 			deleteWebRoute: "Are you sure you want to delete the {{name}} route?",
 			cannotBeUndone: "This action cannot be undone.",
-			copied: "Copied!",
 			// search: "Search",
 			searchField: "Search...",
 			altService: "Alternate service for route traffic",
@@ -295,7 +294,7 @@ const resources = {
 			vpn_ip: "VPN IP",
 			localIp: "Local IP",
 			vpnDescription:
-				"VPN Gateway is a type of virtual network gateway provided on the CloudGateway virtual machine managed by the platform.{{tag}}To obtain an additional VPN Gateway, you have to request a new CloudGateway instance from the support team.",
+				"VPN Gateway is a type of virtual network gateway provided on the CloudGateway virtual machine managed by the platform.\nTo obtain an additional VPN Gateway, you have to request a new CloudGateway instance from the support team.",
 			deleteClientConnection: "Delete Connection?",
 			deleteClientConnectionWarningMessage:
 				"Are you sure you want to delete the {{name}} client? This action cannot be undone.",
@@ -472,6 +471,11 @@ const resources = {
 				"Sorry, only Latin letters (a-z), numbers (0-9), dashes, “_”, and periods",
 			gatewaysDescription:
 				"Gateway is a system or server represented by an IP address, which can be accessed directly from VPC networks. It is used to route traffic to other subnets located behind the gateway.\nAdd a Custom Gateway entry to define the VPN server installed on a virtual machine.",
+			hostnameValidation:
+				"Sorry, only Latin letters (a-z), numbers (0-9), dashes, “_”, dots are allowed",
+			ttlValidation: "Sorry, TTL must be a number (0-9)",
+			ipOrHostnameValidation: "Please enter a valid IP address or hostname",
+			portValidation: "Please enter valid port",
 		},
 	},
 	ru: {
@@ -553,7 +557,7 @@ const resources = {
 			mailServerHostnameOrIp: "Почтовый сервер",
 			add: "Добавить",
 			dnsFormPriorityPlaceholder: "Напр. 10",
-			dnsFormIpPlaceholder: "Напр. {{ipType}}",
+			dnsFormIpPlaceholder: "Напр. {{value}}",
 			dnsFormTtlPlaceholder: "Введите TTL",
 			dnsFormTextPlaceholder: "Введите Текст",
 			dnsFormNamePlaceholder: "Введите @ или имя",
@@ -566,21 +570,21 @@ const resources = {
 			dnsRecords: "DNS записи",
 			createDnsRecord: "Создать новую DNS запись",
 			dnsDescription:
-				"Приложение «Домены» позволяет вам управлять DNS-записями доменов, которыми вы владеете. {{tag}} Для разрешения DNS-записей из интернета вам необходимо зарегистрировать доменное имя у любого DNS регистратора и обновить NS-записи вашего домена, чтобы они указывали на DNS сервер выбранной локации:",
+				"Приложение «Домены» позволяет вам управлять DNS-записями доменов, которыми вы владеете.\n Для разрешения DNS-записей из интернета вам необходимо зарегистрировать доменное имя у любого DNS регистратора и обновить NS-записи вашего домена, чтобы они указывали на DNS сервер выбранной локации:",
 			dnsDescA:
-				"Введите имя, чтобы создать запись в этом домене, или введите @, чтобы использовать само доменное имя.{{tag}} Записи A предназначены только для адресов IPv4 и сообщают запросу, куда должен направлять ваш домен.",
+				"Введите имя, чтобы создать запись в этом домене, или введите @, чтобы использовать само доменное имя.\n Записи A предназначены только для адресов IPv4 и сообщают запросу, куда должен направлять ваш домен.",
 			dnsDescAAAA:
-				"Используйте @, чтобы создать запись в домене, или введите имя, чтобы создать его в другом месте.{{tag}} Записи A предназначены только для адресов IPv4 и сообщают запросу куда домен должен направлять.",
+				"Используйте @, чтобы создать запись в домене, или введите имя, чтобы создать его в другом месте.\n Записи A предназначены только для адресов IPv4 и сообщают запросу куда домен должен направлять.",
 			dnsDescTXT:
 				"Записи TXT используются для связывания строки текста с именем. Они в основном используются для проверки.",
 			dnsDescSRV:
-				"Записи SRV определяют расположение (имя, номер порта) серверов для определенных служб.{{tag}} Вы можете использовать служебные записи для направления определенных типов трафика на определенные серверы.",
+				"Записи SRV определяют расположение (имя, номер порта) серверов для определенных служб.\n Вы можете использовать служебные записи для направления определенных типов трафика на определенные серверы.",
 			dnsDescMX:
-				"Записи MX определяют почтовые серверы, ответственные за прием электронной почты от имени вашего домена,{{tag}} и значение приоритета, если у вашего провайдера есть несколько почтовых серверов на случай непредвиденных обстоятельств.",
+				"Записи MX определяют почтовые серверы, ответственные за прием электронной почты от имени вашего домена,\n и значение приоритета, если у вашего провайдера есть несколько почтовых серверов на случай непредвиденных обстоятельств.",
 			dnsDescCNAME:
 				"Записи CNAME действуют как псевдоним, сопоставляя имя с другим именем.",
 			dnsDescNS:
-				"NS записи определяют серверы, которые предоставляют услуги DNS для вашего домена.{{tag}} Вы можете использовать их для создания подзон, если вам нужно направить часть вашего трафика на другую службу DNS.",
+				"NS записи определяют серверы, которые предоставляют услуги DNS для вашего домена.\n Вы можете использовать их для создания подзон, если вам нужно направить часть вашего трафика на другую службу DNS.",
 			deleteDnsZoneRecord: "Удаление DNS записи",
 			deleteDnsZoneWarningMessage:
 				"Это необратимо. Ваш DNS-домен будет удален, и все связанные виртуальные машины станут недоступны по именам хостов.",
@@ -622,8 +626,8 @@ const resources = {
 			noSecurityGroups: "Нет группы безопасности",
 			errorNotification: "Ошибка! ",
 			successNotification: "Успешно! ",
-			minLength: "Должно быть {{min}} символов или больше",
-			maxLength: "Должно быть {{max}} символов или меньше",
+			minLength: "Должно быть {{value}} символов или больше",
+			maxLength: "Должно быть {{value}} символов или меньше",
 			numberValidation: "Должно быть число",
 			traffic: "Трафик",
 			portRange: "Диапазон портов",
@@ -642,7 +646,7 @@ const resources = {
 			sameRule: "Такое правило уже существует",
 			creatingNetwork: "Создание сети...",
 			firewallRulesDescription:
-				"Если вы не укажете удаленную группу безопасности или удаленную IP-подсеть, - это означает, что вы хотите открыть доступ {{tag}} к вашему сервису от любого IP-адреса (0.0.0.0/0), и от любой группы безопасности. Таким образом, если ваш сервис имеет {{tag}} публичный IP-адрес, то - это может открыть доступ к вашему сервису через интернет для всех.",
+				"Если вы не укажете удаленную группу безопасности или удаленную IP-подсеть, - это означает, что вы хотите открыть доступ \n к вашему сервису от любого IP-адреса (0.0.0.0/0), и от любой группы безопасности. Таким образом, если ваш сервис имеет \n публичный IP-адрес, то - это может открыть доступ к вашему сервису через интернет для всех.",
 			ipType: "Тип IP",
 			noFirewallRules: "Список правил пуст.",
 			webRoutes: "Веб-маршруты",
@@ -652,7 +656,6 @@ const resources = {
 			edit: "Изменить",
 			key: "Ключ",
 			destinationCertificate: "Сертификат CA Назначения",
-			copied: "Скопировано!",
 			tlsTermination: "Терминация TLS",
 			viewWebRoute: "Посмотреть детали",
 			traefikUniqName: "Уникальное название маршрута в рамках проекта",
@@ -762,7 +765,7 @@ const resources = {
 			emptyNatDevices: "NAT сопоставлений",
 			emptyListMessage: "Cписок {{listName}}  пуст.",
 			vpnDescription:
-				"VPN-шлюз - тип шлюза виртуальной сети, предоставляемый на базе виртуальной машины CloudGateway, которая управляется платформой.{{tag}} Чтобы получить дополнительный VPN-шлюз, вам необходимо запросить новый CloudGateway в службе поддержки.",
+				"VPN-шлюз - тип шлюза виртуальной сети, предоставляемый на базе виртуальной машины CloudGateway, которая управляется платформой.\n Чтобы получить дополнительный VPN-шлюз, вам необходимо запросить новый CloudGateway в службе поддержки.",
 			deleteClientConnection: "Удалить подключение ?",
 			deleteClientConnectionWarningMessage:
 				"Вы уверены, что хотите удалить клиент {{name}}? Это действие необратимо.",
@@ -929,6 +932,11 @@ const resources = {
 				"Извините, разрешены только латинские буквы (a-z), цифры (0-9), тире, «_» и точки",
 			gatewaysDescription:
 				"Шлюз — это система или сервер, представленный IP-адресом, к которому можно получить доступ напрямую из сетей VPC. Он используется для маршрутизации трафика в другие подсети, расположенные за шлюзом.\nДобавьте запись Custom Gateway, чтобы определить VPN-сервер, установленный на виртуальной машине.",
+			hostnameValidation:
+				"Извините, разрешены только латинские буквы (a-z), цифры (0-9), тире, «_» и точки",
+			ttlValidation: "Извините, TTL должен быть числом (0-9)",
+			ipOrHostnameValidation: "Введите действительный IP-адреc или hostname",
+			portValidation: "Укажите верное значение порта",
 		},
 	},
 };

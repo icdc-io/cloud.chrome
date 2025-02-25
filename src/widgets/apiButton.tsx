@@ -61,13 +61,6 @@ const ApiButtonView = ({ actionsData }: ApiButtonView) => {
 		setActions(actionNames);
 	}, [actionsData]);
 
-	const copy = (value: string) => {
-		const singleLineValue = value.replaceAll("\n", "");
-		navigator.clipboard.writeText(singleLineValue).catch((err) => {
-			console.log("Something went wrong", err);
-		});
-	};
-
 	const getToken = async () => {
 		const token = await getTokenFromHost();
 		setToken(token);
@@ -130,7 +123,6 @@ const ApiButtonView = ({ actionsData }: ApiButtonView) => {
 							.replaceAll("%ACCOUNT", user.account)
 							.replaceAll("%ROLE", user.role)
 							.replaceAll("%BASE_URL", baseUrls ? baseUrls[user.location] : "")}
-						copyFuncion={copy}
 					/>
 				</div>
 			</div>

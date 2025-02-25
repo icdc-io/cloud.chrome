@@ -147,6 +147,10 @@
 	}
 }
 
+html {
+	font-size: 16px;
+}
+
 body {
 	position: relative;
 	background-color: var(--bg-color);
@@ -311,6 +315,7 @@ i.trash:hover {
 
 .api-dialog-snippet-wrapper .code-snippet-wrapper .language-bash {
 	word-break: break-all !important;
+	white-space: pre-wrap !important;
 }
 
 .api-dialog-snippet-wrapper .header-container {
@@ -335,12 +340,12 @@ i.trash:hover {
 	border: none;
 	background-color: transparent;
 }
-
-.ui.grid > .row.network-delete {
+/* 
+.network-delete {
 	border-top: 3px solid var(--light-border);
 	margin: 0 1rem;
 	padding: 2rem 1.5rem;
-}
+} */
 
 .network-delete {
 	display: flex;
