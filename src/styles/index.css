@@ -570,6 +570,22 @@ a {
 	color: var(--active-primary);
 }
 
+.grid {
+	flex-flow: wrap;
+	align-items: stretch;
+	padding: 0;
+	display: flex;
+}
+.grid .row {
+	justify-content: inherit;
+	flex-flow: wrap;
+	align-items: stretch;
+	padding: 1rem 0;
+	display: flex;
+	position: relative;
+	width: 100% !important;
+}
+
 .dimmed.dimmable > .ui.animating.dimmer,
 .dimmed.dimmable > .ui.visible.dimmer,
 .ui.active.dimmer {
