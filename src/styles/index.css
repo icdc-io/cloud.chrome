@@ -315,6 +315,7 @@ i.trash:hover {
 
 .api-dialog-snippet-wrapper .code-snippet-wrapper .language-bash {
 	word-break: break-all !important;
+	white-space: pre-wrap !important;
 }
 
 .api-dialog-snippet-wrapper .header-container {

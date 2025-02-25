@@ -57,6 +57,7 @@ export const resources: LanguageResources = {
 			success: "Success",
 			unknown_error: "Unknown error",
 			network_error: "Network error or CORS issue",
+			copied: "Copied!",
 		},
 	},
 	ru: {
@@ -101,6 +102,7 @@ export const resources: LanguageResources = {
 			success: "Успешно",
 			unknown_error: "Неизвестная ошибка",
 			network_error: "Ошибка сети или проблема CORS",
+			copied: "Скопировано!",
 		},
 	},
 };

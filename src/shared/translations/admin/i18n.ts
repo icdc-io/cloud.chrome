@@ -409,7 +409,6 @@ const resources = {
 			deployed: "Deployed",
 			accountsWarn: "The following accounts have unauthorized infrastructure: ",
 			learnMore: "Learn more",
-			copied: "Copied",
 			deleted: "Deleted",
 			searchField: "Search",
 		},
@@ -811,7 +810,6 @@ const resources = {
 			accountsWarn:
 				"Следующие аккаунты имеют неавторизованную инфраструктуру: ",
 			learnMore: "Узнать больше",
-			copied: "Скопировано",
 			deleted: "Удалено",
 			searchField: "Поиск...",
 		},

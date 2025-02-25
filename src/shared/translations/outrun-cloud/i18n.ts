@@ -11,7 +11,6 @@ const resources = {
 			ocpClient: "OCP Client:",
 			apiServer: "API Server:",
 			instances: "Instances",
-			copied: "Copied!",
 			instancesDescription:
 				"An Instance is a group of kubernetes namespaces that are allocated to a specific logical project. The instance is used for team collaboration on a specific project. The ICDC Outrun Cloud service allows you to create and manage instances. After they are created, you can connect to the Outrun Cloud cluster using the Web console or through the Command line by following the links available on the main screen of the service.",
 			newInstance: "New Instance",
@@ -100,7 +99,6 @@ const resources = {
 			ocpClient: "OCP Client:",
 			apiServer: "API Server:",
 			instances: "Instances",
-			copied: "Скопировано!",
 			instancesDescription:
 				"Инстанс (Instance) - это группа Outrun Cloud проектов (namespaces), которые выделены под определенный логический проект. Инстанс используется для совместной работы команды над проектом.Сервис ICDC Outrun Cloud позволяет создавать и управлять инстансами, после их создания можно подключаться к кластеру Outrun Cloud при помощи веб-консоли или через командную строку, используя ссылки, доступные на на главном экране сервиса.",
 			newInstance: "Новый инстанс",

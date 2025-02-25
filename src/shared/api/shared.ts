@@ -9,7 +9,6 @@ import type { KyResponse } from "ky";
 import {
 	type MutableHTTPMethod,
 	type ObjectRecord,
-	RequestError,
 	type RequestParamsType,
 	getFullUrl,
 	getHeaders,
@@ -32,9 +31,17 @@ const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 
 export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
 	if (isJSONType(response.headers.get("Content-Type"))) {
+		if (
+			response.status === 204 ||
+			response.headers.get("Content-Length") === "0"
+		) {
+			return response as T;
+		}
 		return await response.json();
 	}
-	throw new RequestError("Invalid response type", 0);
+
+	return response as T;
+	// throw new RequestError("Invalid response type", 0);
 };
 
 export const fetchData = async <T>(
@@ -224,25 +231,6 @@ export const updateJSONData = async <T, U>(
 	);
 };
 
-export const deleteJSONData = async <T>(
-	initialUrl: string,
-	initialHeaders = {},
-) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
-	return await processJSONnResponse(
-		await request<T>({
-			url,
-			headers,
-			method: "DELETE",
-		}),
-	);
-};
-
 export const getAppId = (pathname: string) => {
 	const pathnameParts = pathname.split("/");
 	return pathnameParts.slice(0, 3).join("/");
@@ -278,38 +266,6 @@ export const useFetchData = <T, U = T>({
 			select,
 		}),
 	};
-};
-
-type UseCreateData<T, U> = {
-	endpoint: string;
-	params?: Record<string, string>;
-	initialHeaders?: Record<string, string>;
-} & Omit<UseMutationOptions<T, Error, U>, "mutationFn" | "onSuccess">;
-
-export const useCreateData = <T, U>({
-	endpoint,
-	params,
-	initialHeaders,
-	...mutationOptions
-}: UseCreateData<T, U>) => {
-	// const queryClient = useQueryClient();
-	const appId = getAppId(window.location.pathname);
-	const mutationKey = [appId, endpoint, params];
-
-	const mutationFn = (data: U) => {
-		const query = params ? `?${new URLSearchParams(params)}` : "";
-		return createJsonData<T, U>(`${endpoint}${query}`, data, initialHeaders);
-	};
-
-	return useMutation<T, Error, U>({
-		...mutationOptions,
-		mutationFn,
-		mutationKey,
-		onSuccess: () => {
-			// 	queryClient.invalidateQueries({ queryKey: [endpoint] });
-			showSuccessNotification();
-		},
-	});
 };
 
 type MutationVariables<U> =
@@ -361,10 +317,6 @@ export function useMutateData<T, U = undefined>(
 
 	const mutationFn = async (variables: MutationVariables<U>): Promise<T> => {
 		const { method, endpoint, params, headers } = variables;
-
-		console.log(method);
-		console.log(endpoint);
-		console.log(headers);
 
 		if (method !== "DELETE") {
 			const { body } = variables;

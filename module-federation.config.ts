@@ -42,6 +42,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Langs": "./src/shared/translations/langs",
 		"./Segment": "./src/shared/ui/segment",
 		"./Paginator": "./src/shared/ui/Paginator",
+		"./CopyButton": "./src/shared/ui/CopyButton",
 	},
 	shared: {
 		react: {
