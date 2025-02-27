@@ -476,6 +476,7 @@ const resources = {
 			ttlValidation: "Sorry, TTL must be a number (0-9)",
 			ipOrHostnameValidation: "Please enter a valid IP address or hostname",
 			portValidation: "Please enter valid port",
+			account_name: "Account name",
 		},
 	},
 	ru: {
@@ -937,6 +938,7 @@ const resources = {
 			ttlValidation: "Извините, TTL должен быть числом (0-9)",
 			ipOrHostnameValidation: "Введите действительный IP-адреc или hostname",
 			portValidation: "Укажите верное значение порта",
+			account_name: "Название аккаунта",
 		},
 	},
 };
