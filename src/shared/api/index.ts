@@ -27,22 +27,14 @@ export type RequestParamsType<U> = {
 };
 
 export const getInfoForRequest = (): Promise<UserInfoParams> => {
-	return new Promise((resolve, reject) => {
-		try {
-			window.dispatchEvent(
-				new CustomEvent("requestInfo", {
-					detail: {
-						getUserInfo: ({ user, baseUrl }: UserInfoParams) =>
-							resolve({ user, baseUrl }),
-					},
-				}),
-			);
-		} catch (e) {
-			reject({
-				user: {},
-				baseUrl: "",
-			});
-		}
+	const user: User = JSON.parse(
+		localStorage.getItem("user") || '{"account":"","role":"","location":""}',
+	);
+	return Promise.resolve({
+		user,
+		baseUrl: JSON.parse(localStorage.getItem("baseUrls") || "{}")[
+			user.location
+		],
 	});
 };
 
@@ -83,9 +75,15 @@ function getToken(): Promise<string> {
 
 export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 	const token = await getToken();
+	const headers: Record<string, string> = {};
+	for (const headerInfo in initialHeaders) {
+		headers[headerInfo] = initialHeaders[headerInfo]
+			.replace("%ACCOUNT", user.account)
+			.replace("%ROLE", user.role);
+	}
 
 	return {
-		...initialHeaders,
+		...headers,
 		Authorization: `Bearer ${token}`,
 		"Content-Type": initialHeaders["Content-Type"] || "application/json",
 		"x-auth-group": `${user.account}.${user.role}`,

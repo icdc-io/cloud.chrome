@@ -1,5 +1,10 @@
 import { kc } from "@/entities/keycloak";
-import { changeCurrentService, fetchLocationData } from "@/redux/actions";
+import {
+	changeBurgerVisibility,
+	changeCurrentService,
+	changeSidebarVisibility,
+	fetchLocationData,
+} from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
@@ -51,6 +56,12 @@ const AvailableRoute = () => {
 			currentService || ""
 		];
 	const token = kc.getUserInfo();
+
+	useEffect(() => {
+		const newService = location.pathname.split("/")[1];
+		dispatch(changeSidebarVisibility(Boolean(newService)));
+		dispatch(changeBurgerVisibility(Boolean(newService)));
+	}, [location.pathname]);
 
 	useEffect(() => {
 		loadServiceTranslationsByServiceName(currentServiceName || HOME);

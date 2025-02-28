@@ -120,7 +120,7 @@ const ServicesDropdown = () => {
 									className="m-auto"
 								/>
 							</div>
-							<div className="grid flex-1 text-left text-sm leading-tight">
+							<div className="grid flex-1 text-left text-sm leading-tight ml-2">
 								<span className="truncate font-semibold text-white">
 									{currentService.text}
 								</span>
