@@ -189,11 +189,19 @@ button:focus-visible {
 	font-family: Lato, sans-serif;
 	position: relative;
 	min-height: 100vh;
-	display: grid;
+	display: flex;
 }
 
 .ui.active.centered.loader {
 	margin: auto;
+}
+
+.cloud-sidebar[data-state="collapsed"] ~ main {
+	width: calc(100% - var(--sidebar-width-icon));
+}
+
+.cloud-sidebar[data-state="expanded"] ~ main {
+	width: calc(100% - var(--sidebar-width));
 }
 
 .submit-banner {
