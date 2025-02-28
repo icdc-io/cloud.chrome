@@ -105,6 +105,7 @@ const parseAccountsData = async (
 			: userInfo.role; //check if role from localStorage is valid, otherwise set first available role
 
 	localStorage.setItem("user", JSON.stringify(user));
+	localStorage.setItem("baseUrls", JSON.stringify(locations));
 
 	const uniqueInternalServices: UniqueInternalServices = {};
 

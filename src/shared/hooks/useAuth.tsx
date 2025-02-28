@@ -4,15 +4,13 @@ import {
 	fetchRemotes,
 	fetchServiceVersion,
 } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import { useAppDispatch } from "@/redux/shared";
 import { useEffect } from "react";
 
 const keycloakRequest = kc.init(initOptions);
 
 const useAuth = () => {
 	const dispatch = useAppDispatch();
-	const user = useAppSelector((state) => state.host.user);
-	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 
 	const initSuccess = async (authSuccess: boolean) => {
 		if (!authSuccess) {
@@ -50,22 +48,6 @@ const useAuth = () => {
 
 		return () => window.removeEventListener("message", messageHandler);
 	}, []);
-
-	useEffect(() => {
-		const messageListener = (e: CustomEvent) => {
-			e.detail.getUserInfo({
-				user: user,
-				baseUrl: baseUrls?.[user.location],
-			});
-		};
-		window.addEventListener("requestInfo", messageListener as EventListener);
-
-		return () =>
-			window.removeEventListener(
-				"requestInfo",
-				messageListener as EventListener,
-			);
-	}, [user]);
 
 	return;
 };

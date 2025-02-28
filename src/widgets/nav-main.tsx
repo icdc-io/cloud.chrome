@@ -25,6 +25,7 @@ export function NavMain({
 }) {
 	const location = useLocation();
 	const currentRemote = location.pathname.split("/")[2];
+
 	return (
 		<SidebarGroup>
 			<SidebarMenu>
@@ -43,8 +44,16 @@ export function NavMain({
 										className="py-3 text-base font-bold text-white"
 										isActive={item.url === currentRemote}
 									>
-										<BrickWall size={24} />
-										<span className="text-base font-bold text-white">
+										<div className="min-w-8 flex">
+											<img
+												className="m-auto"
+												src={`/icons/${currentService}_${item.url}.svg`}
+												alt={currentService}
+											/>
+										</div>
+
+										{/* <BrickWall size={24} /> */}
+										<span className="text-base font-bold text-white ml-2">
 											{item.title}
 										</span>
 									</SidebarMenuButton>
@@ -53,7 +62,7 @@ export function NavMain({
 						</SidebarMenuItem>
 					</Collapsible>
 				))}
-				{builtInServices[currentService]?.map((item) => (
+				{/* {builtInServices[currentService]?.map((item) => (
 					<Collapsible
 						key={item.route}
 						asChild
@@ -80,7 +89,7 @@ export function NavMain({
 							</CollapsibleTrigger>
 						</SidebarMenuItem>
 					</Collapsible>
-				))}
+				))} */}
 			</SidebarMenu>
 		</SidebarGroup>
 	);

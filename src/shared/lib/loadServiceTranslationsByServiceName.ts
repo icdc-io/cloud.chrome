@@ -7,7 +7,6 @@ export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 	return fetch(`/translations/${serviceName}/i18n.json`)
 		.then((module) => module.json())
 		.then((module) => {
-			console.log(module);
 			locales.forEach((lang: Langs) => {
 				i18next.addResourceBundle(
 					lang,

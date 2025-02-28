@@ -1,21 +1,16 @@
 import AvailableRoute from "@/app/AvailableRoute";
-import {
-	changeBurgerVisibility,
-	changeSidebarVisibility,
-} from "@/redux/actions";
 import { store } from "@/redux/store";
 import { builtInServices } from "@/shared/constants/builtInServices";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
-import React, { useEffect } from "react";
-import { Navigate, Route, Routes, useLocation } from "react-router-dom";
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import "@/styles/Popup.scss";
 import { HOME } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
 import "semantic-ui-css/semantic.min.css";
-import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import { useAppSelector } from "@/redux/shared";
 
 const AppRoutes = () => {
-	const dispatch = useAppDispatch();
 	const fullAccountsInfo = useAppSelector(
 		(state) => state.host.fullAccountsInfo,
 	);
@@ -23,21 +18,13 @@ const AppRoutes = () => {
 	const uniqueInternalServices = useAppSelector(
 		(state) => state.host.uniqueInternalServices,
 	);
-	const user = useAppSelector((state) => state.host.user);
-	const location = useLocation();
-
-	useEffect(() => {
-		const newService = location.pathname.split("/")[1];
-		dispatch(changeSidebarVisibility(Boolean(newService)));
-		dispatch(changeBurgerVisibility(Boolean(newService)));
-	}, [location.pathname]);
-
-	// if (!fullAccountsInfo || !remotes || !uniqueInternalServices) return;
+	const location = useAppSelector((state) => state.host.user.location);
+	const account = useAppSelector((state) => state.host.user.account);
 
 	const uniqueInternalServicesList = Object.entries(
 		uniqueInternalServices || {},
 	).filter((serviceInfo) => {
-		return remotes?.[user.location]?.[serviceInfo[0].substring(1)];
+		return remotes?.[location]?.[serviceInfo[0].substring(1)];
 	});
 
 	const routes = () => {
@@ -45,9 +32,9 @@ const AppRoutes = () => {
 			.map((serviceInfo) => ({
 				name: serviceInfo[0].substring(1),
 				isAvailableInLocation: Boolean(
-					fullAccountsInfo?.[user.account]?.servicesInLocations?.[
-						user.location
-					]?.[serviceInfo[0].substring(1)],
+					fullAccountsInfo?.[account]?.servicesInLocations?.[location]?.[
+						serviceInfo[0].substring(1)
+					],
 				),
 			}))
 			.map((serviceInfo) => {
@@ -58,23 +45,21 @@ const AppRoutes = () => {
 						path={`${serviceInfo.name}/*`}
 						Component={AvailableRoute}
 					>
-						{remotes[user.location][serviceInfo.name].map(
-							(remoteServiceInfo) => (
-								<Route
-									key={remoteServiceInfo.name}
-									path={`${remoteServiceInfo.route}/*`}
-									element={
-										<RemoteComponent
-											fallback={<Loader />}
-											remoteUrl={remoteServiceInfo.url}
-											remote={remoteServiceInfo.route}
-											service={serviceInfo.name}
-											store={store}
-										/>
-									}
-								/>
-							),
-						)}
+						{remotes[location][serviceInfo.name].map((remoteServiceInfo) => (
+							<Route
+								key={remoteServiceInfo.name}
+								path={`${remoteServiceInfo.route}/*`}
+								element={
+									<RemoteComponent
+										fallback={<Loader />}
+										remoteUrl={remoteServiceInfo.url}
+										remote={remoteServiceInfo.route}
+										service={serviceInfo.name}
+										store={store}
+									/>
+								}
+							/>
+						))}
 						{builtInServices[serviceInfo.name]?.map((builtInServiceInfo) => (
 							<Route
 								key={builtInServiceInfo.route}
@@ -86,7 +71,7 @@ const AppRoutes = () => {
 							path="*"
 							element={
 								<Navigate
-									to={remotes[user.location][serviceInfo.name][0].route}
+									to={remotes[location][serviceInfo.name][0].route}
 									replace
 								/>
 							}
