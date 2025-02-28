@@ -1,19 +1,12 @@
-import { builtInServices } from "@/shared/constants/builtInServices";
-import {
-	Collapsible,
-	CollapsibleContent,
-	CollapsibleTrigger,
-} from "@/shared/ui/collapsible";
+// import { builtInServices } from "@/shared/constants/builtInServices";
+import { Collapsible, CollapsibleTrigger } from "@/shared/ui/collapsible";
 import {
 	SidebarGroup,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
-	SidebarMenuSub,
-	SidebarMenuSubButton,
-	SidebarMenuSubItem,
 } from "@/shared/ui/sidebar";
-import { BrickWall, ChevronRight, type LucideIcon } from "lucide-react";
+import type { LucideIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 
 export function NavMain({
