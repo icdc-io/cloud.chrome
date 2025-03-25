@@ -55,7 +55,7 @@ const Layout = () => {
 	return (
 		<SidebarProvider>
 			<Header status={finalFetchStatus} />
-			<div className="flex min-h-[calc(100svh-var(--header-height))]">
+			<div className="flex min-h-svh">
 				<AppSidebar status={finalFetchStatus} />
 				<SidebarInset>
 					<div className={styles["main-content"]}>{mainContent}</div>

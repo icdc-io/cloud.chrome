@@ -1,15 +1,11 @@
-import {
-	CaretSortIcon,
-	CheckIcon,
-	ChevronDownIcon,
-	ChevronUpIcon,
-} from "@radix-ui/react-icons";
+import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
+import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
-
-// const Select = SelectPrimitive.Root;
+import { X } from "lucide-react";
+import { Button } from "./button";
 
 const SelectGroup = SelectPrimitive.Group;
 
@@ -19,28 +15,51 @@ const Select = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
 >(({ children, ...props }, ref) => {
-	return <SelectPrimitive.Root {...props}>{children}</SelectPrimitive.Root>;
+	return (
+		<SelectPrimitive.Root {...props} data-fill="open">
+			{children}
+		</SelectPrimitive.Root>
+	);
 });
 Select.displayName = SelectPrimitive.Root.displayName;
 
 const SelectTrigger = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Trigger>,
-	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger>
->(({ className, children, ...props }, ref) => {
+	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
+		onClear?: () => void;
+	}
+>(({ className, children, onClear, value, ...props }, ref) => {
+	const isResetButtonVisible = value && !!onClear;
+
 	return (
-		<SelectPrimitive.Trigger
-			ref={ref}
-			className={cn(
-				"flex h-9 w-full items-center justify-between whitespace-nowrap border-solid rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
-				className,
-			)}
-			{...props}
-		>
-			{children}
-			<SelectPrimitive.Icon asChild>
-				<CaretSortIcon className="h-4 w-4 opacity-50" />
-			</SelectPrimitive.Icon>
-		</SelectPrimitive.Trigger>
+		<div className="relative">
+			<SelectPrimitive.Trigger
+				ref={ref}
+				className={cn(
+					"flex h-9 w-full items-center justify-between whitespace-nowrap border-solid rounded-md border border-input bg-transparent px-3 py-2 text-sm shadow-sm ring-offset-background placeholder:text-muted-foreground focus:outline-none focus:ring-1 focus:ring-ring disabled:cursor-not-allowed disabled:opacity-50 [&>span]:line-clamp-1",
+					className,
+				)}
+				{...props}
+			>
+				{children}
+				{!isResetButtonVisible && (
+					<SelectPrimitive.Icon asChild>
+						<ChevronsUpDown className="h-4 w-4 opacity-50" />
+					</SelectPrimitive.Icon>
+				)}
+			</SelectPrimitive.Trigger>
+			{isResetButtonVisible ? (
+				<Button
+					onClick={onClear}
+					type="button"
+					variant="outline"
+					color="reset"
+					className="absolute"
+				>
+					<X size={16} />
+				</Button>
+			) : null}
+		</div>
 	);
 });
 SelectTrigger.displayName = SelectPrimitive.Trigger.displayName;
@@ -138,7 +157,7 @@ const SelectItem = React.forwardRef<
 	>
 		<span className="absolute right-2 flex h-3.5 w-3.5 items-center justify-center">
 			<SelectPrimitive.ItemIndicator>
-				<CheckIcon className="h-4 w-4" />
+				<Check className="h-4 w-4" />
 			</SelectPrimitive.ItemIndicator>
 		</span>
 		<SelectPrimitive.ItemText>{children}</SelectPrimitive.ItemText>

@@ -58,6 +58,8 @@ export const resources: LanguageResources = {
 			unknown_error: "Unknown error",
 			network_error: "Network error or CORS issue",
 			copied: "Copied!",
+			listEmpty: "List is empty",
+			noResults: "No results.",
 		},
 	},
 	ru: {
@@ -103,6 +105,8 @@ export const resources: LanguageResources = {
 			unknown_error: "Неизвестная ошибка",
 			network_error: "Ошибка сети или проблема CORS",
 			copied: "Скопировано!",
+			listEmpty: "Список пуст",
+			noResults: "Нет результатов.",
 		},
 	},
 };
