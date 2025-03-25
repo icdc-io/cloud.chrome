@@ -4,7 +4,7 @@ import CopyButton from "../CopyButton";
 
 type CodeSnippetType = {
 	content: string;
-	activeItem: string;
+	activeItem?: string;
 	title?: string;
 };
 const CodeSnippet = ({
@@ -18,7 +18,7 @@ const CodeSnippet = ({
 		<>
 			<div className="header-container">
 				<h5 style={{ margin: 0, color: "grey" }}>{title}</h5>
-				<CopyButton size={24} content={content} formatText={copy} />
+				<CopyButton size={16} content={content} formatText={copy} />
 			</div>
 			<div className="code-snippet-wrapper">
 				<SyntaxHighlighter

@@ -1,3 +1,4 @@
+import path from "node:path";
 import { ModuleFederationPlugin } from "@module-federation/enhanced/rspack";
 import { defineConfig } from "@rsbuild/core";
 import { pluginReact } from "@rsbuild/plugin-react";
@@ -21,6 +22,10 @@ export default defineConfig({
 		define: {
 			...stringifiedEnvVars,
 		},
+	},
+	html: {
+		template: path.resolve(__dirname, "./public/index.html"),
+		favicon: path.resolve(__dirname, "./public/favicon.ico"),
 	},
 	// mode: process.env.NODE_ENV,
 	tools: {

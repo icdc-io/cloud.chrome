@@ -6,11 +6,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 	filename: "general.js",
 	exposes: {
 		"./Api": "./src/shared/api/shared",
-		// "./Store": "./src/redux/store",
 		"./Loader": "./src/shared/ui/loader",
-		// './GeneralSelect': './src/general/components/GeneralSelect',
-		// './OptionsMenu': './src/general/components/OptionsMenu',
-		// './menuTypes': './src/general/constants/menuItemsTypes',
 		"./getCurrentAppropriateLang": "./src/shared/lib/getCurrentAppropriateLang",
 		"./ReturnBaseUrl": "./src/shared/lib/returnBaseUrl",
 		"./ApiButton": "./src/widgets/apiButton",
@@ -43,6 +39,9 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Segment": "./src/shared/ui/segment",
 		"./Paginator": "./src/shared/ui/Paginator",
 		"./CopyButton": "./src/shared/ui/CopyButton",
+		"./useAvoidFirstRender": "./src/shared/hooks/useAvoidFirstRender",
+		"./Combobox": "./src/shared/ui/combobox",
+		"./Command": "./src/shared/ui/command",
 	},
 	shared: {
 		react: {

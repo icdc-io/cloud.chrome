@@ -7,6 +7,7 @@ import styles from "@/styles/UserDropdown.module.css";
 import { useTranslation } from "react-i18next";
 
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import { useInvalidateQuery } from "@/shared/hooks/useInvalidateQuery";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -39,6 +40,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 	const fullAccountsInfo = useAppSelector(
 		(state) => state.host.fullAccountsInfo,
 	);
+	const invalidateQuery = useInvalidateQuery();
 
 	const logout = () => {
 		kc.logout();
@@ -76,6 +78,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 		}
 		dispatch(changeUserInfo(newUserInfo));
 		localStorage.setItem("user", JSON.stringify(newUserInfo));
+		invalidateQuery();
 	};
 
 	const accountsSection =

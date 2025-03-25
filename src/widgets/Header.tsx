@@ -1,4 +1,4 @@
-import { changeSidebarVisibility } from "@/redux/actions";
+// import { changeSidebarVisibility } from "@/redux/actions";
 import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
 import { useAppSelector } from "@/redux/shared";
 import { withSkeleton } from "@/shared/hocs/withSkeleton";
