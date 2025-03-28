@@ -21,14 +21,14 @@ const Layout = () => {
 	const remotesFetchStatus = useAppSelector(
 		(state) => state.host.remotesFetchStatus,
 	);
-	const serviceVersionFetchStatus = useAppSelector(
-		(state) => state.host.serviceVersionFetchStatus,
-	);
+	// const serviceVersionFetchStatus = useAppSelector(
+	// 	(state) => state.host.serviceVersionFetchStatus,
+	// );
 
 	const fetchStatuses = [
 		accountsDataFetchStatus,
 		remotesFetchStatus,
-		serviceVersionFetchStatus,
+		// serviceVersionFetchStatus,
 	];
 
 	const finalFetchStatus = fetchStatuses.includes(REJECTED)

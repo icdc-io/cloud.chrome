@@ -13,6 +13,8 @@ const CopyButton = ({ content, formatText, size = 16 }: CopyButton) => {
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 
+	if (!content) return null;
+
 	const handleOpen = () => {
 		setIsOpen(true);
 		setTimeout(() => {

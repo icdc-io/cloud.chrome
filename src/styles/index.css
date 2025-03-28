@@ -690,6 +690,42 @@ button[aria-invalid="true"] {
 	background-color: var(--error-input-bg) !important;
 	color: var(--destructive) !important;
 }
+td[width="9"],
+th[width="9"] {
+	width: 56.25%;
+}
+td[width="8"],
+th[width="8"] {
+	width: 50%;
+}
+td[width="7"],
+th[width="7"] {
+	width: 43.75%;
+}
+td[width="6"],
+th[width="6"] {
+	width: 37.5%;
+}
+td[width="5"],
+th[width="5"] {
+	width: 31.25%;
+}
+td[width="4"],
+th[width="4"] {
+	width: 25%;
+}
+td[width="3"],
+th[width="3"] {
+	width: 18.75%;
+}
+td[width="2"],
+th[width="2"] {
+	width: 12.5%;
+}
+td[width="1"],
+th[width="1"] {
+	width: 6.25%;
+}
 
 @layer base {
 	* {
