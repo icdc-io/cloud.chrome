@@ -2,7 +2,7 @@ import { initOptions, kc } from "@/entities/keycloak";
 import {
 	fetchAccountsData,
 	fetchRemotes,
-	fetchServiceVersion,
+	// fetchServiceVersion,
 } from "@/redux/actions";
 import { useAppDispatch } from "@/redux/shared";
 import { useEffect } from "react";
@@ -17,7 +17,7 @@ const useAuth = () => {
 			kc.login();
 		} else {
 			await dispatch(fetchAccountsData());
-			dispatch(fetchServiceVersion());
+			// dispatch(fetchServiceVersion());
 			dispatch(fetchRemotes());
 		}
 	};

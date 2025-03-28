@@ -59,8 +59,8 @@ const initialState: HostReducerType = Immutable({
 	accountsDataFetchStatus: PENDING,
 	username: "",
 	email: "",
-	serviceVersion: "",
-	serviceVersionFetchStatus: PENDING,
+	// serviceVersion: "",
+	// serviceVersionFetchStatus: PENDING,
 	currentService: window.location.pathname.split("/")[1],
 	locationData: defaultLocationData,
 	userInfo: null,
@@ -112,15 +112,15 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 				...action.payload,
 			});
 
-		case `${FETCH_SERVICE_VERSION_DATA}_PENDING`:
-			return state.set("serviceVersionFetchStatus", PENDING);
-		case `${FETCH_SERVICE_VERSION_DATA}_REJECTED`:
-			return state.set("serviceVersionFetchStatus", REJECTED);
-		case `${FETCH_SERVICE_VERSION_DATA}_FULFILLED`:
-			return state.merge({
-				serviceVersionFetchStatus: FULFILLED,
-				serviceVersion: action.payload,
-			});
+		// case `${FETCH_SERVICE_VERSION_DATA}_PENDING`:
+		// 	return state.set("serviceVersionFetchStatus", PENDING);
+		// case `${FETCH_SERVICE_VERSION_DATA}_REJECTED`:
+		// 	return state.set("serviceVersionFetchStatus", REJECTED);
+		// case `${FETCH_SERVICE_VERSION_DATA}_FULFILLED`:
+		// 	return state.merge({
+		// 		serviceVersionFetchStatus: FULFILLED,
+		// 		serviceVersion: action.payload,
+		// 	});
 
 		case `${FETCH_LOCATION_DATA}_REJECTED`:
 			return state.set("locationData", defaultLocationData);

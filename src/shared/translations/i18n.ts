@@ -60,6 +60,7 @@ export const resources: LanguageResources = {
 			copied: "Copied!",
 			listEmpty: "List is empty",
 			noResults: "No results.",
+			required: "Required",
 		},
 	},
 	ru: {
@@ -107,6 +108,7 @@ export const resources: LanguageResources = {
 			copied: "Скопировано!",
 			listEmpty: "Список пуст",
 			noResults: "Нет результатов.",
+			required: "Обязательно для заполнения",
 		},
 	},
 };

@@ -12,6 +12,7 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Check, ChevronsUpDown } from "lucide-react";
 import * as React from "react";
 import { useTranslation } from "react-i18next";
+import { useDebounce } from "../hooks/useDebounce";
 
 type Option = {
 	value: string;
@@ -25,6 +26,13 @@ type Combobox = {
 	onValueChange: (value: string) => void;
 	open?: boolean;
 	value: string;
+	shouldFilter?: boolean;
+	searchQueryFn?: (query: string) => void;
+	formatOption?: (option: Option) => React.ReactNode;
+	emptyMessage?: string | React.ReactNode;
+	onQueryChange?: (query: string) => void;
+	minValueLength?: number;
+	isLoading?: boolean;
 };
 
 export function Combobox({
@@ -34,10 +42,27 @@ export function Combobox({
 	onValueChange,
 	open,
 	value,
+	shouldFilter = true,
+	searchQueryFn,
+	formatOption,
+	emptyMessage,
+	onQueryChange,
+	minValueLength,
+	isLoading,
 }: Combobox) {
 	const { t } = useTranslation();
 	const [localOpen, setLocalOpen] = React.useState(false);
 	const [localValue, setLocalValue] = React.useState("");
+	const [searchQuery, setSearchQuery] = React.useState("");
+	const debouncedSearchQuery = useDebounce(searchQuery, 0);
+
+	React.useEffect(() => {
+		if (!searchQueryFn) return;
+		if (!minValueLength) return searchQueryFn(debouncedSearchQuery);
+		if (debouncedSearchQuery.length >= minValueLength)
+			searchQueryFn(debouncedSearchQuery);
+		return;
+	}, [debouncedSearchQuery]);
 
 	React.useEffect(() => {
 		if (!value) return;
@@ -49,8 +74,8 @@ export function Combobox({
 	}, [localOpen]);
 
 	React.useEffect(() => {
-		onValueChange(localValue);
-	}, [localValue]);
+		onQueryChange?.(searchQuery);
+	}, [searchQuery]);
 
 	React.useEffect(() => {
 		if (open === undefined) return;
@@ -66,6 +91,13 @@ export function Combobox({
 	const currentOption = localValue
 		? options.find((option) => option.value === localValue)?.text
 		: "";
+
+	const onSelect = (currentValue: string) => {
+		const newValue = currentValue === localValue ? "" : currentValue;
+		if (shouldFilter !== false) setLocalValue(newValue);
+		onValueChange(newValue);
+		setLocalOpen(false);
+	};
 
 	return (
 		<Popover open={localOpen} onOpenChange={setLocalOpen}>
@@ -83,26 +115,27 @@ export function Combobox({
 				</Button>
 			</PopoverTrigger>
 			<PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
-				<Command>
+				<Command shouldFilter={shouldFilter}>
 					<CommandInput
+						isLoading={isLoading}
 						placeholder={t(placeholder)}
+						value={searchQuery}
+						onValueChange={setSearchQuery}
 						className="h-9 !outline-0 !outline-none border-none"
 					/>
 					<CommandList>
-						<CommandEmpty>{t("noOptions")}</CommandEmpty>
+						{(minValueLength && minValueLength > searchQuery.length) ||
+						isLoading ? null : (
+							<CommandEmpty>{emptyMessage || t("noOptions")}</CommandEmpty>
+						)}
 						<CommandGroup>
 							{options.map((option) => (
 								<CommandItem
 									key={option.value}
 									value={option.value}
-									onSelect={(currentValue) => {
-										setLocalValue(
-											currentValue === localValue ? "" : currentValue,
-										);
-										setLocalOpen(false);
-									}}
+									onSelect={onSelect}
 								>
-									{option.text}
+									{formatOption?.(option) || option.text}
 									<Check
 										className={cn(
 											"ml-auto",

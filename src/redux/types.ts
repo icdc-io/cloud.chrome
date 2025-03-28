@@ -24,8 +24,8 @@ export type StoreType = {
 	accountsDataFetchStatus: STATUSES_TYPES[number];
 	username: string;
 	email: string;
-	serviceVersion: string;
-	serviceVersionFetchStatus: STATUSES_TYPES[number];
+	// serviceVersion: string;
+	// serviceVersionFetchStatus: STATUSES_TYPES[number];
 	currentService: string | undefined;
 	locationData: DEFAULT_LOCATION_DATA;
 	userInfo: UserInfo;
