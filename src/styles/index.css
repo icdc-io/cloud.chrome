@@ -227,6 +227,10 @@ button:focus-visible {
 	display: flex;
 }
 
+.grid-cols-3 {
+	grid-template-columns: auto auto auto;
+}
+
 i.trash:hover {
 	color: var(--red);
 }
@@ -413,6 +417,14 @@ i.trash:hover {
 
 .color--grey {
 	color: var(--dark-light);
+}
+
+.color--primary {
+	color: var(--primary-blue);
+}
+
+.bg--gray {
+	background-color: var(--light);
 }
 
 .general-container {

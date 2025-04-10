@@ -202,6 +202,13 @@
 				"name": "Configurations",
 				"url": "http://localhost:8045"
 			}
+		],
+		"telemetry": [
+			{
+				"route": "events",
+				"name": "Events",
+				"url": "http://localhost:8046"
+			}
 		]
 	}
 }

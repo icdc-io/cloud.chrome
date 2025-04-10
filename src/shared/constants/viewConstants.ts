@@ -19,6 +19,8 @@ import projects from "@/shared/images/projects.svg";
 import question from "@/shared/images/question.svg";
 import storage from "@/shared/images/storage.svg";
 import support from "@/shared/images/support.svg";
+import telemetry from "@/shared/images/telemetry.svg";
+
 type ServicesImages = {
 	[index: string]: string;
 };
@@ -45,4 +47,5 @@ export const servicesImages: ServicesImages = {
 	"outrun-dedicated": outrunDedicated,
 	"outrun-service": outrunService,
 	mq,
+	telemetry,
 };
