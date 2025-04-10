@@ -1,6 +1,6 @@
 .error-segment {
 	max-width: initial;
-	background: #f9fafb;
+	/* background: #f9fafb; */
 	flex-direction: column;
 	justify-content: center;
 	align-items: stretch;
@@ -9,9 +9,9 @@
 	animation: none;
 	display: flex;
 	overflow: visible;
-	box-shadow: inset 0 2px 25px #2224260d;
+	/* box-shadow: inset 0 2px 25px #2224260d;
 	border: 1px solid #22242626;
-	border-radius: .285714rem;
+	border-radius: .285714rem; */
 	position: relative;
 	min-height: 30vh;
 }

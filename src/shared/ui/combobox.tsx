@@ -33,6 +33,8 @@ type Combobox = {
 	onQueryChange?: (query: string) => void;
 	minValueLength?: number;
 	isLoading?: boolean;
+	disabled?: boolean;
+	unClearable?: boolean;
 };
 
 export function Combobox({
@@ -49,6 +51,8 @@ export function Combobox({
 	onQueryChange,
 	minValueLength,
 	isLoading,
+	disabled,
+	unClearable = false,
 }: Combobox) {
 	const { t } = useTranslation();
 	const [localOpen, setLocalOpen] = React.useState(false);
@@ -93,7 +97,10 @@ export function Combobox({
 		: "";
 
 	const onSelect = (currentValue: string) => {
-		const newValue = currentValue === localValue ? "" : currentValue;
+		const newValueText =
+			currentValue === localValue && !unClearable ? "" : currentValue;
+		const newValue = options.find((item) => item.text === newValueText)?.value;
+		if (!newValue) return;
 		if (shouldFilter !== false) setLocalValue(newValue);
 		onValueChange(newValue);
 		setLocalOpen(false);
@@ -109,6 +116,7 @@ export function Combobox({
 					aria-expanded={localOpen}
 					className="w-full justify-between font-medium border border-input"
 					{...placeholderAttribute}
+					disabled={disabled}
 				>
 					{currentOption || t(placeholder)}
 					<ChevronsUpDown className="h-4 w-4 opacity-50" size={16} />

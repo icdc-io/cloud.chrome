@@ -28,7 +28,7 @@ export interface InputProps
 }
 
 const Input = React.forwardRef<HTMLInputElement, InputProps>(
-	({ className, containerClassName, type, variant, ...props }, ref) => {
+	({ className, containerClassName, variant, ...props }, ref) => {
 		const input = (
 			<input
 				ref={ref}
@@ -46,7 +46,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 					)}
 					cmdk-input-wrapper=""
 				>
-					<Search className="mr-2 h-4 w-4 shrink-0 opacity-50" />
+					<Search className="h-4 w-4 shrink-0 opacity-50" />
 					{input}
 				</div>
 			);

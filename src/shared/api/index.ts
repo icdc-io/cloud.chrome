@@ -1,4 +1,4 @@
-import ky, { HTTPError } from "ky";
+import ky, { HTTPError, type KyResponse } from "ky";
 import type { List, User } from "../../types/entities";
 
 export type ObjectRecord =
@@ -78,7 +78,7 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 	const headers: Record<string, string> = {};
 	for (const headerInfo in initialHeaders) {
 		headers[headerInfo] = initialHeaders[headerInfo]
-			.replace("%ACCOUNT", user.account)
+			?.replace("%ACCOUNT", user.account)
 			.replace("%ROLE", user.role);
 	}
 
@@ -98,10 +98,10 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 export class RequestError extends Error {
 	constructor(
 		message: string,
-		public status?: number,
+		public status?: number | string,
 	) {
 		super(message);
-		this.name = "error";
+		this.name = status?.toString() || "error";
 	}
 }
 

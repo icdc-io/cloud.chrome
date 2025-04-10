@@ -23,7 +23,15 @@ const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 	}
 
 	if (isJSONType(response.headers.get("Content-Type"))) {
-		return await response.json();
+		const totalInstancesCount = response.headers.get("X-Total-Count");
+		const responseBody = await response.json();
+
+		if (!totalInstancesCount) return responseBody;
+
+		return {
+			total: totalInstancesCount,
+			data: responseBody,
+		};
 	}
 
 	return response;

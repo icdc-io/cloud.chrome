@@ -42,6 +42,8 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./useAvoidFirstRender": "./src/shared/hooks/useAvoidFirstRender",
 		"./Combobox": "./src/shared/ui/combobox",
 		"./Command": "./src/shared/ui/command",
+		"./OptionsMenu": "./src/shared/ui/OptionsMenu",
+		"./Switch": "./src/shared/ui/switch",
 	},
 	shared: {
 		react: {
