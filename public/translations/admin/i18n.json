@@ -393,7 +393,21 @@
 			"accountsWarn": "The following accounts have unauthorized infrastructure: ",
 			"learnMore": "Learn more",
 			"deleted": "Deleted",
-			"searchField": "Search"
+			"searchField": "Search",
+			"forbiddenAccountMessage": "Try selecting the account with operator rights, and if the issue persists, please try logging in and out.",
+			"forbiddenRoleMessage": "Try selecting the operator role, and if the issue persists, please try logging in and out.",
+			"unauthorizedTitle": "401 Unauthorized",
+			"forbiddenTitle": "403 Forbidden",
+			"somethingWrongTitle": "Oops, something went wrong.",
+			"incorrectAccount": "Incorrect account",
+			"accountOwnerInfo1": "New user account will be created with email used as username;",
+			"accountOwnerInfo2": "Specified user will get Owner role in account, which is the highest role in account;",
+			"accountOwnerInfo3": "Specified user can manage quotas, so it's responsible for expenditures in account;",
+			"accountOwnerInfo4": "Specified user can manage access to account, inviting another users with any role;",
+			"accountOwnerInfo5": "Specified user becomes technical contact for Support team;",
+			"accountOwnerInfo6": "Specified user will receive an email with temporary credentials.",
+			"billingContactInfo1": "Specified contact used only in invoices as official representative of account.",
+			"accountOwner": "Account Owner"
 		}
 	},
 	"ru": {
@@ -774,7 +788,21 @@
 			"accountsWarn": "Следующие аккаунты имеют неавторизованную инфраструктуру: ",
 			"learnMore": "Узнать больше",
 			"deleted": "Удалено",
-			"searchField": "Поиск..."
+			"searchField": "Поиск...",
+			"forbiddenAccountMessage": "Попробуйте выбрать аккаунт с правами оператора, и если проблема сохраняется, пожалуйста, попробуйте перезайти в систему.",
+			"forbiddenRoleMessage": "Попробуйте выбрать роль оператора, и если проблема сохраняется, пожалуйста, попробуйте перезайти в систему.",
+			"unauthorizedTitle": "401 Ошибка доступа",
+			"forbiddenTitle": "403 Запрещено",
+			"somethingWrongTitle": "Упс, что-то пошло не так.",
+			"incorrectAccount": "Неверный аккаунт",
+			"accountOwnerInfo1": "Новый аккаунт пользователя будет создан с использованием электронной почты в качестве имени пользователя.",
+			"accountOwnerInfo2": "Указанный пользователь получит роль Owner, которая обладает наивысшими полномочиями в аккаунте.",
+			"accountOwnerInfo3": "Указанный пользователь имеет полномочия управлять квотами и несет ответственность за все расходы, связанные с аккаунтом.",
+			"accountOwnerInfo4": "Указанный пользователь может управлять доступом к аккаунту, добавляя других пользователей и назначая им любые роли.",
+			"accountOwnerInfo5": "Указанный пользователь будет являться основным техническим контактом для службы поддержки.",
+			"accountOwnerInfo6": "Указанный пользователь получит электронное письмо с временными учетными данными для входа.",
+			"billingContactInfo1": "Указанный контакт используется исключительно в счетах в качестве официального представителя аккаунта.",
+			"accountOwner": "Владелец аккаунта"
 		}
 	}
 }

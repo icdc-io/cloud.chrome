@@ -685,7 +685,8 @@ button[data-placeholder] {
 }
 
 input[aria-invalid="true"],
-button[aria-invalid="true"] {
+button[aria-invalid="true"],
+textarea[aria-invalid="true"] {
 	border-color: var(--error-input-border) !important;
 	background-color: var(--error-input-bg) !important;
 	color: var(--destructive) !important;

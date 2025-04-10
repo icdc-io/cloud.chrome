@@ -379,7 +379,9 @@
 			"other": "Other",
 			"perTime": "Per Time",
 			"businessName": "Business Name",
-			"gib": "GiB"
+			"gib": "GiB",
+			"selectServices": "Select services and additional fields to export",
+			"additionalFields": "Additional fields"
 		}
 	},
 	"ru": {
@@ -746,7 +748,9 @@
 			"other": "Другие",
 			"perTime": "Период",
 			"businessName": "Наименование/Имя",
-			"gib": "ГиБ"
+			"gib": "ГиБ",
+			"selectServices": "Выберите сервисы и дополнительные поля для экспорта",
+			"additionalFields": "Дополнительные поля"
 		}
 	}
 }

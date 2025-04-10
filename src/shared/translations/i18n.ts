@@ -61,6 +61,7 @@ export const resources: LanguageResources = {
 			listEmpty: "List is empty",
 			noResults: "No results.",
 			required: "Required",
+			noOptions: "No options",
 		},
 	},
 	ru: {
@@ -109,6 +110,7 @@ export const resources: LanguageResources = {
 			listEmpty: "Список пуст",
 			noResults: "Нет результатов.",
 			required: "Обязательно для заполнения",
+			noOptions: "нет вариантов",
 		},
 	},
 };

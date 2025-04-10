@@ -36,7 +36,6 @@ const TabsTrigger = React.forwardRef<
 	React.ElementRef<typeof TabsPrimitive.Trigger>,
 	React.ComponentPropsWithoutRef<typeof TabsPrimitive.Trigger>
 >(({ className, ...props }, ref) => {
-	console.log(props);
 	return (
 		<TabsPrimitive.Trigger
 			ref={ref}
