@@ -6,11 +6,13 @@ type CodeSnippetType = {
 	content: string;
 	activeItem?: string;
 	title?: string;
+	language?: string;
 };
 const CodeSnippet = ({
 	content,
 	activeItem,
 	title = "Terminal",
+	language = "bash",
 }: CodeSnippetType) => {
 	const copy = (value: string) => value.replaceAll("\n", "");
 
@@ -25,7 +27,7 @@ const CodeSnippet = ({
 					customStyle={activeItem === "token" ? { height: "200px" } : {}}
 					wrapLongLines
 					wrapLines
-					language="bash"
+					language={language}
 					style={base16AteliersulphurpoolLight}
 				>
 					{content}
