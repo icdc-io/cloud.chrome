@@ -28,8 +28,7 @@
 			"manyMinutesAgo": "minutes ago",
 			"hourAgo": "hour ago",
 			"fewHourAgo": "hours ago",
-			"manyHoursAgo": "hours ago",
-			"copied": "Copied"
+			"manyHoursAgo": "hours ago"
 		}
 	},
 	"ru": {
@@ -61,8 +60,7 @@
 			"manyMinutesAgo": "минут назад",
 			"hourAgo": "час назад",
 			"fewHourAgo": "часа назад",
-			"manyHoursAgo": "часов назад",
-			"copied": "Скопировано"
+			"manyHoursAgo": "часов назад"
 		}
 	}
 }
