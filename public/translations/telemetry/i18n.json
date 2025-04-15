@@ -28,7 +28,19 @@
 			"manyMinutesAgo": "minutes ago",
 			"hourAgo": "hour ago",
 			"fewHourAgo": "hours ago",
-			"manyHoursAgo": "hours ago"
+			"manyHoursAgo": "hours ago",
+			"notifications": "Notifications",
+			"notificationsDescription": "This page allows you to view notifications across services for the currently selected account and location, stored only for the last week (7 days).",
+			"title": "Title",
+			"message": "Message",
+			"type": "Type",
+			"markAllAsRead": "Mark all as read",
+			"sortByService": "Sort by service",
+			"notificationSettings": "Notification Settings",
+			"notificationSettingsDescription": "This page enables you to create notification configurations to receive notifications about events and status changes of interest.",
+			"createConfiguration": "Create Configuration",
+			"delete": "Delete",
+			"description": "Description"
 		}
 	},
 	"ru": {
@@ -60,7 +72,19 @@
 			"manyMinutesAgo": "минут назад",
 			"hourAgo": "час назад",
 			"fewHourAgo": "часа назад",
-			"manyHoursAgo": "часов назад"
+			"manyHoursAgo": "часов назад",
+			"notifications": "Уведомления",
+			"notificationsDescription": "This page allows you to view notifications across services for the currently selected account and location, stored only for the last week (7 days).",
+			"title": "Title",
+			"message": "Message",
+			"type": "Type",
+			"markAllAsRead": "Пометить все как прочитанное",
+			"sortByService": "Sort by service",
+			"notificationSettings": "Notification Settings",
+			"notificationSettingsDescription": "This page enables you to create notification configurations to receive notifications about events and status changes of interest.",
+			"createConfiguration": "Create Configuration",
+			"delete": "Удалить",
+			"description": "Description"
 		}
 	}
 }

@@ -208,6 +208,16 @@
 				"route": "events",
 				"name": "Events",
 				"url": "http://localhost:8046"
+			},
+			{
+				"route": "notifications",
+				"name": "Notifications",
+				"url": "http://localhost:8047"
+			},
+			{
+				"route": "notificationsettings",
+				"name": "Notification Settings",
+				"url": "http://localhost:8048"
 			}
 		]
 	}
