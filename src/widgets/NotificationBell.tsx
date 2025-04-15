@@ -7,6 +7,35 @@ import { Bell, Check, Ellipsis, Trash2 } from "lucide-react";
 import { useState } from "react";
 import { useTranslation } from "react-i18next";
 
+const NotificationDropdownMenu = ({
+	trigger,
+	items,
+}: {
+	trigger: React.ReactNode;
+	items: Array<{ icon: React.ReactNode; label: string; onSelect: () => void }>;
+}) => (
+	<DropdownMenu.Root>
+		<DropdownMenu.Trigger asChild>{trigger}</DropdownMenu.Trigger>
+		<DropdownMenu.Portal>
+			<DropdownMenu.Content
+				className={styles["notification-bell-content-dropdown"]}
+				sideOffset={5}
+			>
+				{items.map((item, index) => (
+					<DropdownMenu.Item
+						key={index}
+						className={styles["notification-bell-content-dropdown-item"]}
+						onSelect={item.onSelect}
+					>
+						{item.icon}
+						{item.label}
+					</DropdownMenu.Item>
+				))}
+			</DropdownMenu.Content>
+		</DropdownMenu.Portal>
+	</DropdownMenu.Root>
+);
+
 const NotificationBell = () => {
 	const { t } = useTranslation();
 
@@ -70,8 +99,8 @@ const NotificationBell = () => {
 					<div
 						className={`w-2 h-2 rounded-full mt-1 ${notification.read ? "" : "bg-blue-500"}`}
 					/>
-					<DropdownMenu.Root>
-						<DropdownMenu.Trigger asChild>
+					<NotificationDropdownMenu
+						trigger={
 							<button
 								type="button"
 								aria-label="Notification options"
@@ -79,29 +108,20 @@ const NotificationBell = () => {
 							>
 								<Ellipsis size={12} />
 							</button>
-						</DropdownMenu.Trigger>
-						<DropdownMenu.Portal>
-							<DropdownMenu.Content
-								className={styles["notification-bell-content-dropdown"]}
-								sideOffset={5}
-							>
-								<DropdownMenu.Item
-									className={styles["notification-bell-content-dropdown-item"]}
-									onSelect={() => {}}
-								>
-									<Check size={16} />
-									{t(notification.read ? "markAsUnread" : "markAsRead")}
-								</DropdownMenu.Item>
-								<DropdownMenu.Item
-									className={styles["notification-bell-content-dropdown-item"]}
-									onSelect={() => {}}
-								>
-									<Trash2 size={16} />
-									{t("delete")}
-								</DropdownMenu.Item>
-							</DropdownMenu.Content>
-						</DropdownMenu.Portal>
-					</DropdownMenu.Root>
+						}
+						items={[
+							{
+								icon: <Check size={16} />,
+								label: t(notification.read ? "markAsUnread" : "markAsRead"),
+								onSelect: () => {},
+							},
+							{
+								icon: <Trash2 size={16} />,
+								label: t("delete"),
+								onSelect: () => {},
+							},
+						]}
+					/>
 				</div>
 			</div>
 		</div>
@@ -121,8 +141,8 @@ const NotificationBell = () => {
 			<PopoverContent className="w-[420px]">
 				<div className="flex justify-between items-center mb-4">
 					<h3>{t("notifications")}</h3>
-					<DropdownMenu.Root>
-						<DropdownMenu.Trigger asChild>
+					<NotificationDropdownMenu
+						trigger={
 							<button
 								className={styles["help-button"]}
 								type="button"
@@ -130,29 +150,22 @@ const NotificationBell = () => {
 							>
 								<Ellipsis />
 							</button>
-						</DropdownMenu.Trigger>
-						<DropdownMenu.Portal>
-							<DropdownMenu.Content
-								className={styles["notification-bell-content-dropdown"]}
-								sideOffset={5}
-							>
-								<DropdownMenu.Item
-									className={styles["notification-bell-content-dropdown-item"]}
-									onSelect={() => {}}
-								>
-									<Check size={16} />
-									{t("markAllAsRead")}
-								</DropdownMenu.Item>
-								<DropdownMenu.Item
-									className={styles["notification-bell-content-dropdown-item"]}
-									onSelect={() => {}}
-								>
+						}
+						items={[
+							{
+								icon: <Check size={16} />,
+								label: t("markAllAsRead"),
+								onSelect: () => {},
+							},
+							{
+								icon: (
 									<img src={eventsIcon} alt="Events" width={16} height={16} />
-									{t("openEvents")}
-								</DropdownMenu.Item>
-							</DropdownMenu.Content>
-						</DropdownMenu.Portal>
-					</DropdownMenu.Root>
+								),
+								label: t("openEvents"),
+								onSelect: () => {},
+							},
+						]}
+					/>
 				</div>
 				<div>
 					<Tabs.Root value={selectedTab} onValueChange={setSelectedTab}>
