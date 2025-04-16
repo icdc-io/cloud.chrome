@@ -9,6 +9,7 @@ import HelpDropdown from "@/widgets/HelpDropdown";
 import LocationSelector from "@/widgets/LocationSelector";
 import UserDropdown from "@/widgets/UserDropdown";
 import { Link } from "react-router-dom";
+import NotificationBell from "./NotificationBell";
 // import { DrawerTrigger } from "./ui/drawer";
 
 type HeaderType = {
@@ -25,6 +26,7 @@ const Header = ({ status }: HeaderType) => {
 
 	const infoSectionContent = () => (
 		<>
+			<NotificationBell />
 			<HelpDropdown />
 			{isStatusFulfilled && <LocationSelector />}
 			{!isMobile && <UserDropdown isFullInfoAvailable={isStatusFulfilled} />}
