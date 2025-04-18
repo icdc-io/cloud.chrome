@@ -1,0 +1,6 @@
+resolve:
+  http:
+    headers:
+      - matches: https://code.icz.icdc.io/**
+        name: PRIVATE-TOKEN
+        value: 5sYLm8C5ZNy67xs4kx6S

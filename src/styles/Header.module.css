@@ -1,54 +1,57 @@
 .chrome-header {
-  height: 76px;
-  background-color: #151515;
-  position: fixed;
-  width: 100vw;
-  height: 76px;
-  padding: 0 40px 0 24px;
-  display: flex;
-  align-items: center;
-  z-index: 2;
-  left: 0;
-  top: 0;
+	height: 76px;
+	background-color: var(--header-bg);
+	position: fixed;
+	width: 100vw;
+	height: 76px;
+	padding: 0 40px 0 24px;
+	display: flex;
+	align-items: center;
+	z-index: 2;
+	left: 0;
+	top: 0;
+	z-index: 20;
 }
 
-.header-logo {
-  margin-left: 20px;
+.left-section {
+	display: flex;
+	align-items: center;
+	gap: 20px;
 }
 
 .info-section {
-  margin-left: auto;
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  column-gap: 2rem;
-  min-width: 300px;
-  justify-content: flex-end;
+	margin-left: auto;
+	display: flex;
+	flex-direction: row;
+	align-items: center;
+	column-gap: 2rem;
+	min-width: 300px;
+	justify-content: flex-end;
 }
 
 .info-section label {
-  display: flex;
-  color: white;
-  align-items: center;
-  column-gap: 1rem;
+	display: flex;
+	color: white;
+	align-items: center;
+	column-gap: 1rem;
 }
 
 .info-section .ui.fluid.dropdown.locations {
-  width: 125px;
+	width: 125px;
 }
 
 .info-section .menu.transition.visible {
-  max-height: calc(100vh - 60px);
+	max-height: calc(100vh - 60px);
 }
 
 .info-section .menu > .divider {
-  margin: 0;
+	margin: 0;
 }
 
 .info-section .active.item.selected {
-  color: #4183c4;
+	color: var(--active-primary);
 }
 
 .info-section .available {
-  font-weight: 700;
+	font-weight: 700;
 }
