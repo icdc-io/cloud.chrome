@@ -125,7 +125,7 @@ export const resources: LanguageResources = {
 			openEvents: "Открыть события",
 			all: "Все",
 			events: "События",
-			alerts: "Алерты",
+			alerts: "Оповещения",
 			markAsRead: "Отметить как прочитанное",
 			markAsUnread: "Отметить как непрочитанное",
 			delete: "Удалить",
