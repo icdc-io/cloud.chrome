@@ -29,7 +29,7 @@ const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 		if (!totalInstancesCount) return responseBody;
 
 		return {
-			totalCount: totalInstancesCount,
+			total: totalInstancesCount,
 			data: responseBody,
 		};
 	}
