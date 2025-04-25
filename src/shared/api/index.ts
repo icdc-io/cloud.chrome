@@ -91,7 +91,7 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 		"x-icdc-role": user.role,
 		"x-auth-account": user.account,
 		"x-auth-role": user.role,
-		"x-icdc-location": user.location,
+		// "x-icdc-location": user.location,
 	};
 };
 
@@ -128,7 +128,7 @@ const parseError = (errorData: unknown): string => {
 };
 
 export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
-	if (!navigator.onLine) throw new RequestError("noInternet", 0);
+	// if (!navigator.onLine) throw new RequestError("noInternet", 0);
 
 	try {
 		const response = await ky<T>(config.url, {

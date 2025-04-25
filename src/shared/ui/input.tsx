@@ -41,7 +41,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
 			return (
 				<div
 					className={cn(
-						"flex items-center border border-input px-3 rounded-md transition-all focus-within:ring-1 focus-within:ring-ring",
+						"flex items-center border h-9 border-input px-3 rounded-md transition-all focus-within:ring-1 focus-within:ring-ring",
 						containerClassName,
 					)}
 					cmdk-input-wrapper=""

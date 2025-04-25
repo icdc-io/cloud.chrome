@@ -753,6 +753,10 @@ th[width="1"] {
 	width: 6.25%;
 }
 
+.gap-4 {
+	gap: 1rem;
+}
+
 @layer base {
 	* {
 		@apply border-border;

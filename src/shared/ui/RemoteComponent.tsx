@@ -63,13 +63,7 @@ const RemoteComponent = ({
 		? `${service.replace("-", "")}_${remote}`
 		: remote;
 	const Component = React.lazy(
-		loadComponent(
-			remoteFullName,
-			remoteUrl,
-			`./${remote}`,
-			remoteFilename,
-			scope,
-		),
+		loadComponent(remoteFullName, remoteUrl, remote, remoteFilename, scope),
 	);
 
 	return (
