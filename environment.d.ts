@@ -9,7 +9,6 @@ declare global {
 			REACT_APP_LOGOUT_URL: string;
 			REACT_APP_KEYCLOAK_URL: string;
 			REACT_APP_CENTRAL_LOCATION_URL: string;
-			REACT_APP_HOME_REMOTE_APP_URL: string;
 		}
 	}
 }
