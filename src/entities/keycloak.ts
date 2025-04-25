@@ -8,11 +8,13 @@ import Keycloak, {
 export const onLoad = "check-sso";
 
 const keycloakOptions = {
-	url: process.env.REACT_APP_KEYCLOAK_URL,
-	realm: process.env.REACT_APP_KEYCLOAK_REALM,
-	clientId: process.env.REACT_APP_KEYCLOAK_CLIENTID,
+	url: import.meta.env.REACT_APP_KEYCLOAK_URL,
+	realm: import.meta.env.REACT_APP_KEYCLOAK_REALM,
+	clientId: import.meta.env.REACT_APP_KEYCLOAK_CLIENTID,
 	onLoad,
 };
+
+console.log(keycloakOptions);
 
 const updateToken = (keycloak: Keycloak) => {
 	store.dispatch(updateTokenInfo(keycloak.tokenParsed as UserInfo));

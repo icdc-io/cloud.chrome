@@ -1,6 +1,7 @@
 import { initOptions, kc } from "@/entities/keycloak";
 import {
 	fetchAccountsData,
+	fetchAppsData,
 	fetchRemotes,
 	// fetchServiceVersion,
 } from "@/redux/actions";
@@ -17,6 +18,7 @@ const useAuth = () => {
 			kc.login();
 		} else {
 			await dispatch(fetchAccountsData());
+			dispatch(fetchAppsData());
 			// dispatch(fetchServiceVersion());
 			dispatch(fetchRemotes());
 		}

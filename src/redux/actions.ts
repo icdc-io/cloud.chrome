@@ -10,6 +10,7 @@ import {
 	// CONTACTS_FETCH,
 	// CONTACTS_FETCH_URL,
 	FETCH_ACCOUNTS_DATA,
+	FETCH_APPS_DATA,
 	FETCH_LOCATION_DATA,
 	FETCH_SERVICE_VERSION_DATA,
 	// SET_AVAILABLE_SERVICES,
@@ -171,6 +172,12 @@ export const fetchAccountsData = () =>
 				`${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
 			),
 		),
+	}) as const;
+
+export const fetchAppsData = () =>
+	({
+		type: inferStringLiteral(FETCH_APPS_DATA),
+		payload: parseAccountsData(fetchJsonData("/api/delivery/v1/services/apps")),
 	}) as const;
 
 export const fetchServicesStatuses = () =>
