@@ -7,6 +7,7 @@ import { createRoot } from "react-dom/client";
 import { I18nextProvider } from "react-i18next";
 import { Provider } from "react-redux";
 import { BrowserRouter as Router } from "react-router-dom";
+console.log(import.meta.env.REACT_APP_KEYCLOAK_URL);
 
 const container = document.getElementById("root");
 const queryClient = new QueryClient({
