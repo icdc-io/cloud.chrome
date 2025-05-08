@@ -14,8 +14,6 @@ const keycloakOptions = {
 	onLoad,
 };
 
-console.log(keycloakOptions);
-
 const updateToken = (keycloak: Keycloak) => {
 	store.dispatch(updateTokenInfo(keycloak.tokenParsed as UserInfo));
 };

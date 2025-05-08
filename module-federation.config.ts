@@ -44,6 +44,8 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Command": "./src/shared/ui/command",
 		"./OptionsMenu": "./src/shared/ui/OptionsMenu",
 		"./Switch": "./src/shared/ui/switch",
+		"./Breadcrumb": "./src/shared/ui/breadcrumb",
+		"./MultiSelect": "./src/shared/ui/multiselect",
 	},
 	shared: {
 		react: {

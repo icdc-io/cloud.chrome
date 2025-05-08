@@ -62,6 +62,8 @@ export const resources: LanguageResources = {
 			noResults: "No results.",
 			required: "Required",
 			noOptions: "No options",
+			maxLength: "Must be {{value}} characters or less",
+			minLength: "Must be {{value}} characters or more",
 		},
 	},
 	ru: {
@@ -110,7 +112,9 @@ export const resources: LanguageResources = {
 			listEmpty: "Список пуст",
 			noResults: "Нет результатов.",
 			required: "Обязательно для заполнения",
-			noOptions: "нет вариантов",
+			noOptions: "Нет вариантов",
+			minLength: "Должно быть {{value}} символов или больше",
+			maxLength: "Должно быть {{value}} символов или меньше",
 		},
 	},
 };

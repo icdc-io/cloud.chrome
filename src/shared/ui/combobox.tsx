@@ -23,7 +23,7 @@ type Combobox = {
 	options: Option[];
 	placeholder: string;
 	onOpenChange?: (isOpen: boolean) => void;
-	onValueChange: (value: string) => void;
+	onValueChange: (value: string | number | undefined) => void;
 	open?: boolean;
 	value: string;
 	shouldFilter?: boolean;
@@ -35,6 +35,7 @@ type Combobox = {
 	isLoading?: boolean;
 	disabled?: boolean;
 	unClearable?: boolean;
+	className?: string;
 };
 
 export function Combobox({
@@ -53,12 +54,20 @@ export function Combobox({
 	isLoading,
 	disabled,
 	unClearable = false,
+	className = "",
 }: Combobox) {
 	const { t } = useTranslation();
 	const [localOpen, setLocalOpen] = React.useState(false);
 	const [localValue, setLocalValue] = React.useState("");
 	const [searchQuery, setSearchQuery] = React.useState("");
 	const debouncedSearchQuery = useDebounce(searchQuery, 0);
+	const isOptionNumber = typeof options[0]?.value === "number";
+	const formattedOptions = options.map((item) => ({
+		...item,
+		value: item.value ? item.value + "" : item.value,
+		text: item.text + "",
+	}));
+	const formattedValue = value ? value + "" : value;
 
 	React.useEffect(() => {
 		if (!searchQueryFn) return;
@@ -69,9 +78,9 @@ export function Combobox({
 	}, [debouncedSearchQuery]);
 
 	React.useEffect(() => {
-		if (!value) return;
-		setLocalValue(value);
-	}, [value]);
+		if (!formattedValue) return;
+		setLocalValue(formattedValue);
+	}, [formattedValue]);
 
 	React.useEffect(() => {
 		onOpenChange?.(localOpen);
@@ -93,16 +102,20 @@ export function Combobox({
 			};
 
 	const currentOption = localValue
-		? options.find((option) => option.value === localValue)?.text
+		? formattedOptions.find((option) => option.value === localValue)?.text
 		: "";
 
 	const onSelect = (currentValue: string) => {
 		const newValueText =
 			currentValue === localValue && !unClearable ? "" : currentValue;
-		const newValue = options.find((item) => item.text === newValueText)?.value;
+		const newValue = formattedOptions.find(
+			(item) => item.text === newValueText,
+		)?.value;
+
 		if (!newValue) return;
 		if (shouldFilter !== false) setLocalValue(newValue);
-		onValueChange(newValue);
+		const formattedValue = isOptionNumber ? +newValue : newValue;
+		onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
 		setLocalOpen(false);
 	};
 
@@ -114,7 +127,10 @@ export function Combobox({
 					// biome-ignore lint/a11y/useSemanticElements: <explanation>
 					role="combobox"
 					aria-expanded={localOpen}
-					className="w-full justify-between font-medium border border-input"
+					className={cn(
+						"w-full justify-between font-medium border border-input",
+						className,
+					)}
 					{...placeholderAttribute}
 					disabled={disabled}
 				>
@@ -137,17 +153,19 @@ export function Combobox({
 							<CommandEmpty>{emptyMessage || t("noOptions")}</CommandEmpty>
 						)}
 						<CommandGroup>
-							{options.map((option) => (
+							{formattedOptions.map((option) => (
 								<CommandItem
 									key={option.value}
-									value={option.value}
+									value={option.text}
 									onSelect={onSelect}
 								>
 									{formatOption?.(option) || option.text}
 									<Check
 										className={cn(
 											"ml-auto",
-											value === option.value ? "opacity-100" : "opacity-0",
+											formattedValue === option.value
+												? "opacity-100"
+												: "opacity-0",
 										)}
 									/>
 								</CommandItem>

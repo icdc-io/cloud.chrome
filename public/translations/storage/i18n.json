@@ -144,7 +144,15 @@
 			"ipAddress": "IP address",
 			"howToConnect": "How to connect to storage",
 			"bucketsPerS3": "Buckets per S3 User",
-			"cannotBeLess": "Cannot be less than what is already in use. (Used: {{value}})"
+			"cannotBeLess": "Cannot be less than what is already in use. (Used: {{value}})",
+			"numberValidation": "Must be a number",
+			"invalidName": "Invalid name",
+			"diskSize": "Disk size must be larger than the current one",
+			"positiveNumber": "Must be a positive number",
+			"clientNameValidation": "Please type the correct client’s name",
+			"noValidEmail": "Please enter a valid email",
+			"account": "Account",
+			"latin": "Latin letters only"
 		}
 	},
 	"ru": {
@@ -292,7 +300,15 @@
 			"ipAddress": "IP адрес",
 			"howToConnect": "Как подключиться к storage",
 			"bucketsPerS3": "Корзины на пользователя S3",
-			"cannotBeLess": "Не может быть меньше того, что уже используется. (Используется: {{value}})"
+			"cannotBeLess": "Не может быть меньше того, что уже используется. (Используется: {{value}})",
+			"numberValidation": "Должно быть число",
+			"invalidName": "Неправильное имя",
+			"diskSize": "Размер диска должен быть больше текущего",
+			"positiveNumber": "Должно быть положительное число",
+			"clientNameValidation": "Пожалуйста, введите корректное имя клиента",
+			"noValidEmail": "Пожалуйста, введите верный адрес электронной почты",
+			"account": "Аккаунт",
+			"latin": "Только латинские символы"
 		}
 	}
 }

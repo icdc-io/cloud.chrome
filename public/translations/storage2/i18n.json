@@ -151,7 +151,14 @@
 			"bucketsQuota": "Buckets",
 			"bucketParamsPlaceholder": "E.g. 10, leave empty if no limit",
 			"processError": "Please try again later.",
-			"deleteDiskError": "Unassign clients and delete snapshots before deleting disk."
+			"deleteDiskError": "Unassign clients and delete snapshots before deleting disk.",
+			"numberValidation": "Must be a number",
+			"diskSize": "Disk size must be larger than the current one",
+			"positiveNumber": "Must be a positive number",
+			"clientNameValidation": "Please type the correct client’s name",
+			"noValidEmail": "Please enter a valid email",
+			"account": "Account",
+			"latin": "Latin letters only"
 		}
 	},
 	"ru": {
@@ -306,7 +313,15 @@
 			"bucketsQuota": "Квота корзин",
 			"bucketParamsPlaceholder": "Например 10, оставьте пустым, если нет лимита",
 			"processError": "Повторите попытку позже.",
-			"deleteDiskError": "Отсоедините клиентов и удалите снапшоты перед удалением диска."
+			"deleteDiskError": "Отсоедините клиентов и удалите снапшоты перед удалением диска.",
+			"numberValidation": "Должно быть число",
+			"invalidName": "Неправильное имя",
+			"diskSize": "Размер диска должен быть больше текущего",
+			"positiveNumber": "Должно быть положительное число",
+			"clientNameValidation": "Пожалуйста, введите корректное имя клиента",
+			"noValidEmail": "Пожалуйста, введите верный адрес электронной почты",
+			"account": "Аккаунт",
+			"latin": "Только латинские символы"
 		}
 	}
 }
