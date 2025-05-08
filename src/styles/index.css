@@ -645,6 +645,11 @@ button[color="red"] {
 	border-color: var(--red);
 }
 
+button[color="primary"] {
+	color: var(--primary-blue);
+	border-color: var(--primary-blue);
+}
+
 button[color="reset"] {
 	border-color: transparent;
 	padding: 0;
@@ -755,6 +760,12 @@ th[width="1"] {
 
 .gap-4 {
 	gap: 1rem;
+}
+
+label.text-destructive ~ button[role="combobox"] {
+	border-color: var(--error-input-border);
+	background-color: var(--error-input-bg);
+	color: var(--destructive);
 }
 
 @layer base {
