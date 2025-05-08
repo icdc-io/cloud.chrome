@@ -94,6 +94,7 @@
 		--header-bg-hv: hsla(0, 0%, 100%, 0.08);
 		--active-item: hsla(0, 0%, 100%, 0.15);
 		--active-primary: #4183c4;
+		--primary-green: #15803d;
 	}
 
 	.dark {
@@ -225,6 +226,10 @@ button:focus-visible {
 
 .flex {
 	display: flex;
+}
+
+.grid-cols-3 {
+	grid-template-columns: auto auto auto;
 }
 
 i.trash:hover {
@@ -413,6 +418,26 @@ i.trash:hover {
 
 .color--grey {
 	color: var(--dark-light);
+}
+
+.color--red {
+	color: var(--red);
+}
+
+.color--orange {
+	color: var(--primary-red);
+}
+
+.color--green {
+	color: var(--primary-green);
+}
+
+.color--primary {
+	color: var(--primary-blue);
+}
+
+.bg--gray {
+	background-color: var(--light);
 }
 
 .general-container {
