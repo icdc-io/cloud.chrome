@@ -10,26 +10,19 @@ import LocationSelector from "@/widgets/LocationSelector";
 import UserDropdown from "@/widgets/UserDropdown";
 import { Link } from "react-router-dom";
 import NotificationBell from "./NotificationBell";
-// import { DrawerTrigger } from "./ui/drawer";
 
-type HeaderType = {
-	status: STATUSES_TYPES[number];
-};
-
-const Header = ({ status }: HeaderType) => {
+const Header = () => {
 	const dynamicfilename = process.env.REACT_APP_CP_VENDOR || "icdc";
 	const userInfo = useAppSelector((state) => state.host.userInfo);
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const isMobile = useIsMobile();
 
-	const isStatusFulfilled = status === FULFILLED;
-
 	const infoSectionContent = () => (
 		<>
 			<NotificationBell />
 			<HelpDropdown />
-			{isStatusFulfilled && <LocationSelector />}
-			{!isMobile && <UserDropdown isFullInfoAvailable={isStatusFulfilled} />}
+			<LocationSelector />
+			{!isMobile && <UserDropdown />}
 		</>
 	);
 

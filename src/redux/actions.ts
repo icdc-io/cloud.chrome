@@ -33,6 +33,7 @@ import type { Langs } from "../shared/translations/langs";
 import type {
 	External,
 	FullAccountsInfo,
+	Remote,
 	ServiceInLocation,
 	ServicesInLocations,
 	UniqueInternalServices,
@@ -49,22 +50,21 @@ function inferStringLiteral<T extends string>(arg: T): T {
 	return infernalLiteral<string, T>(arg);
 }
 
-const parseAccountsData = async (
-	accountsDataPromise: Promise<components["schemas"]["Account_Locations"][]>,
-) => {
-	const accountsData = await accountsDataPromise;
-	if (!accountsData) return {};
+const parseAccountsData = async () => {
+	// const accountsData = await accountsDataPromise;
+	// if (!accountsData) return {};
 
 	const parsedToken = kc.getUserInfo();
 
 	if (!parsedToken) return {};
 
 	const { accounts, locations } = parsedToken.external as External;
+	const accountsNames = Object.keys(accounts);
 
-	const filteredAccounts = accountsData
-		.map((account) => ({
-			...account,
-			name: account.name || "",
+	const filteredAccounts = accountsNames
+		.map((accountName) => ({
+			...accounts[accountName],
+			name: accountName || "",
 		}))
 		.filter(
 			//filter accounts that contain at least 1 role and 1 location
@@ -108,47 +108,46 @@ const parseAccountsData = async (
 	localStorage.setItem("user", JSON.stringify(user));
 	localStorage.setItem("baseUrls", JSON.stringify(locations));
 
-	const uniqueInternalServices: UniqueInternalServices = {};
+	// const uniqueInternalServices: UniqueInternalServices = {};
 
-	const fullAccountsInfo = filteredAccounts.reduce(
-		(allAccountsData: FullAccountsInfo, currentAccountData) => {
-			allAccountsData[currentAccountData.name] = {
-				...accounts[currentAccountData.name],
-				display_name: currentAccountData.display_name,
-				name: currentAccountData.name,
-				servicesInLocations: currentAccountData.locations?.reduce(
-					(allLocationsData: ServicesInLocations, currentLocationData) => {
-						allLocationsData[currentLocationData.name || ""] =
-							currentLocationData.services?.reduce(
-								(allServicesData: ServiceInLocation, currentServiceData) => {
-									if (currentServiceData.path) {
-										allServicesData[currentServiceData.path.split("/")[1]] =
-											currentServiceData;
-										uniqueInternalServices[currentServiceData.path] =
-											currentServiceData.name;
-									} else {
-										allServicesData[currentServiceData.name || ""] =
-											currentServiceData;
-									}
-									return allServicesData;
-								},
-								{},
-							);
-						return allLocationsData;
-					},
-					{},
-				),
-			};
-			return allAccountsData;
-		},
-		{},
-	);
+	// const fullAccountsInfo = filteredAccounts.reduce(
+	// 	(allAccountsData: FullAccountsInfo, currentAccountData) => {
+	// 		allAccountsData[currentAccountData.name] = {
+	// 			...accounts[currentAccountData.name],
+	// 			display_name: currentAccountData.display_name,
+	// 			name: currentAccountData.name,
+	// 			servicesInLocations: currentAccountData.locations?.reduce(
+	// 				(allLocationsData: ServicesInLocations, currentLocationData) => {
+	// 					allLocationsData[currentLocationData.name || ""] =
+	// 						currentLocationData.services?.reduce(
+	// 							(allServicesData: ServiceInLocation, currentServiceData) => {
+	// 								if (currentServiceData.path) {
+	// 									allServicesData[currentServiceData.path.split("/")[1]] =
+	// 										currentServiceData;
+	// 									// uniqueInternalServices[currentServiceData.path] =
+	// 									// 	currentServiceData.name;
+	// 								} else {
+	// 									allServicesData[currentServiceData.name || ""] =
+	// 										currentServiceData;
+	// 								}
+	// 								return allServicesData;
+	// 							},
+	// 							{},
+	// 						);
+	// 					return allLocationsData;
+	// 				},
+	// 				{},
+	// 			),
+	// 		};
+	// 		return allAccountsData;
+	// 	},
+	// 	{},
+	// );
 
 	return {
-		fullAccountsInfo,
+		// fullAccountsInfo,
 		user,
 		baseUrls: locations,
-		uniqueInternalServices,
 		username: `${parsedToken.given_name} ${parsedToken.family_name}`,
 		email: parsedToken.email,
 	};
@@ -167,17 +166,17 @@ export const changeLang = (newLang: Langs) =>
 export const fetchAccountsData = () =>
 	({
 		type: inferStringLiteral(FETCH_ACCOUNTS_DATA),
-		payload: parseAccountsData(
-			fetchJsonData(
-				`${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/accounts`,
-			),
-		),
+		payload: parseAccountsData(),
 	}) as const;
+
+const formatRemotes = (remotesPromise: Promise<Remote[]>) => {
+	return remotesPromise.then((remotes) => remotes);
+};
 
 export const fetchAppsData = () =>
 	({
-		type: inferStringLiteral(FETCH_APPS_DATA),
-		payload: parseAccountsData(fetchJsonData("/api/delivery/v1/services/apps")),
+		type: inferStringLiteral(SET_REMOTES),
+		payload: formatRemotes(fetchJsonData("/api/delivery/v1/services/apps")),
 	}) as const;
 
 export const fetchServicesStatuses = () =>
@@ -233,13 +232,13 @@ export const changeUserInfo = (newInfo: User) =>
 		type: inferStringLiteral(CHANGE_USER_INFO),
 		payload: newInfo,
 	}) as const;
-export const fetchRemotesApps = () =>
-	({
-		type: inferStringLiteral(SET_REMOTES),
-		payload: fetchData(
-			`${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/version`,
-		),
-	}) as const;
+// export const fetchRemotesApps = () =>
+// 	({
+// 		type: inferStringLiteral(SET_REMOTES),
+// 		payload: fetchData(
+// 			`${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/version`,
+// 		),
+// 	}) as const;
 export const fetchLocationData = (currentLocation: string) =>
 	({
 		type: inferStringLiteral(FETCH_LOCATION_DATA),

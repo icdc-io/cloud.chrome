@@ -1,13 +1,10 @@
-import { kc } from "@/entities/keycloak";
 import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
-import { isServiceAvailable } from "@/shared/lib/availability";
 import styles from "@/styles/ServicesDropdown.module.css";
 import { ChevronsUpDown, Plus } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 import { useAppSelector } from "@/redux/shared";
-import type { components } from "@/shared/schemas/account-api";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -31,29 +28,19 @@ const ServicesDropdown = () => {
 	const currentServiceName = useAppSelector(
 		(state) => state.host.currentService,
 	);
-	const fullAccountsInfo = useAppSelector(
-		(state) => state.host.fullAccountsInfo,
-	);
-	const user = useAppSelector((state) => state.host.user);
-	const servicesInCurrentLocation = Object.values(
-		fullAccountsInfo?.[user.account]?.servicesInLocations?.[user.location] ||
-			{},
-	);
+	const remotes = useAppSelector((state) => state.host.remotes);
 
-	const mapServicesInLocation = (
-		servicesInfo: components["schemas"]["Service"][],
-	) => {
-		const servicesInfoSet = new Set(servicesInfo);
-
+	const mapServicesInLocation = () => {
 		const numberOrLast = (position: number | string | undefined) =>
 			typeof position === "number" ? position : 999;
 
-		return [...servicesInfoSet]
-			.filter((location) => location?.displayName && location.name)
+		if (!remotes) return [];
+
+		return [...remotes]
+			.filter((service) => service?.name && service.display_name)
 			.sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
-			.filter((service) => isServiceAvailable(service.name, kc.getUserInfo()))
 			.map((service, key) => {
-				const shortNameArray = service.displayName?.split("IBACloud ") || [
+				const shortNameArray = service.display_name?.split("IBACloud ") || [
 					"",
 					"",
 				];
@@ -62,7 +49,7 @@ const ServicesDropdown = () => {
 
 				return {
 					key,
-					text: service.displayName?.startsWith("IBACloud")
+					text: service.display_name?.startsWith("IBACloud")
 						? shortNameArray[1]
 						: shortNameArray[0],
 					value: service.path ? service.path.substring(1) : service.name,
@@ -80,7 +67,7 @@ const ServicesDropdown = () => {
 			});
 	};
 
-	const handledServices = mapServicesInLocation(servicesInCurrentLocation);
+	const handledServices = mapServicesInLocation();
 
 	const onServiceChange = (serviceName: string | undefined) => {
 		const highlightedService = handledServices.find(

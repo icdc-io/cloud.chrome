@@ -109,7 +109,7 @@ export function Combobox({
 		const newValueText =
 			currentValue === localValue && !unClearable ? "" : currentValue;
 		const newValue = formattedOptions.find(
-			(item) => item.text === newValueText,
+			(item) => item.text.trim() === newValueText.trim(),
 		)?.value;
 
 		if (!newValue) return;

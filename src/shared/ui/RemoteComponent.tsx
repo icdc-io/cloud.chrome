@@ -46,6 +46,7 @@ type RemoteComponentType = {
 	service?: string;
 	scope?: string;
 	remoteFilename?: string;
+	version?: string;
 	fallback: ReactNode;
 	store: unknown;
 };
@@ -56,6 +57,7 @@ const RemoteComponent = ({
 	service = "",
 	scope = "default",
 	remoteFilename = "remoteEntry",
+	version,
 	fallback = null,
 	...props
 }: RemoteComponentType) => {
@@ -63,7 +65,14 @@ const RemoteComponent = ({
 		? `${service.replace("-", "")}_${remote}`
 		: remote;
 	const Component = React.lazy(
-		loadComponent(remoteFullName, remoteUrl, remote, remoteFilename, scope),
+		loadComponent(
+			remoteFullName,
+			remoteUrl,
+			remote,
+			version,
+			remoteFilename,
+			scope,
+		),
 	);
 
 	return (

@@ -37,20 +37,6 @@ export type UpdateTokenInfoPayload = {
 	userInfo: KeycloakTokenParsed | undefined;
 };
 
-export type RemoteApp = {
-	name: string;
-	route: string;
-	url: string;
-};
-
-type RemoteApps = {
-	[key: string]: RemoteApp[];
-};
-
-export type Remotes = {
-	[key: string]: RemoteApps;
-} | null;
-
 export type Service = components["schemas"]["Service"];
 
 export type BaseUrls = {
@@ -101,3 +87,23 @@ export type UniqueInternalServices = {
 };
 
 export type UniqueInternalServicesType = UniqueInternalServices | null;
+
+export type App = {
+	name: string;
+	title: string;
+	version?: string;
+};
+
+export type Remote = {
+	apps: App[];
+	description: string;
+	display_name: string;
+	label: string;
+	name: string;
+	path: string;
+	position: number;
+	roles?: string;
+	title: string;
+	url: string;
+	version: string;
+};

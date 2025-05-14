@@ -18,9 +18,9 @@ const useAuth = () => {
 			kc.login();
 		} else {
 			await dispatch(fetchAccountsData());
-			dispatch(fetchAppsData());
+
 			// dispatch(fetchServiceVersion());
-			dispatch(fetchRemotes());
+			// dispatch(fetchRemotes());
 		}
 	};
 

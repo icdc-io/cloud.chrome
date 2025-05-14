@@ -34,6 +34,7 @@ export const loadComponent =
 		remoteName,
 		remoteUrl,
 		moduleName,
+		version,
 		remoteFilename = "remoteEntry",
 		scope = "default",
 	) =>
@@ -46,6 +47,7 @@ export const loadComponent =
 			const containerPath = [
 				remoteUrl.replace(/\/$/, ""),
 				process.env.NODE_ENV === "production" && moduleName,
+				!!version && version,
 				`${remoteFilename}.js`,
 			]
 				.filter(Boolean)

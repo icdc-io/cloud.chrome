@@ -152,7 +152,10 @@
 			"clientNameValidation": "Please type the correct client’s name",
 			"noValidEmail": "Please enter a valid email",
 			"account": "Account",
-			"latin": "Latin letters only"
+			"latin": "Latin letters only",
+			"bucketName": "Can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, periods, and dashes",
+			"s3userName": "Only numbers, latin letters, hyphens, periods, @ signs and underscores are allowed",
+			"confirm": "Confirm"
 		}
 	},
 	"ru": {
@@ -308,7 +311,10 @@
 			"clientNameValidation": "Пожалуйста, введите корректное имя клиента",
 			"noValidEmail": "Пожалуйста, введите верный адрес электронной почты",
 			"account": "Аккаунт",
-			"latin": "Только латинские символы"
+			"latin": "Только латинские символы",
+			"bucketName": "Может иметь длину от 3 до 63 символов и содержать только строчные буквы, цифры, точки и тире",
+			"s3userName": "Допускаются только цифры, латинские буквы, дефисы, точки, знаки @ и знаки подчеркивания",
+			"confirm": "Подтвердить"
 		}
 	}
 }

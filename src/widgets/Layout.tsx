@@ -9,27 +9,33 @@ import Header from "@/widgets/Header";
 import ToastNotifications from "@/widgets/ToastNotifications";
 import { AppSidebar } from "@/widgets/app-sidebar";
 import "@/styles/index.css";
-import { useAppSelector } from "@/redux/shared";
+import { fetchAppsData, fetchRemotes } from "@/redux/actions";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import { useEffect } from "react";
 
 const Layout = () => {
-	const accountsDataFetchErrorStatus = useAppSelector(
-		(state) => state.host.accountsDataFetchErrorStatus,
-	);
+	const dispatch = useAppDispatch();
+
 	const accountsDataFetchStatus = useAppSelector(
 		(state) => state.host.accountsDataFetchStatus,
 	);
 	const remotesFetchStatus = useAppSelector(
 		(state) => state.host.remotesFetchStatus,
 	);
-	// const serviceVersionFetchStatus = useAppSelector(
-	// 	(state) => state.host.serviceVersionFetchStatus,
-	// );
+	const { account, role, location } = useAppSelector(
+		(state) => state.host.user,
+	);
 
-	const fetchStatuses = [
-		accountsDataFetchStatus,
-		remotesFetchStatus,
-		// serviceVersionFetchStatus,
-	];
+	useEffect(() => {
+		if (accountsDataFetchStatus !== "fulfilled") return;
+		dispatch(
+			import.meta.env.REACT_APP_LOCAL_DATA_USAGE === "full"
+				? fetchRemotes()
+				: fetchAppsData(),
+		);
+	}, [account, role, location, accountsDataFetchStatus]);
+
+	const fetchStatuses = [accountsDataFetchStatus, remotesFetchStatus];
 
 	const finalFetchStatus = fetchStatuses.includes(REJECTED)
 		? REJECTED
@@ -39,13 +45,7 @@ const Layout = () => {
 
 	const mainContent =
 		finalFetchStatus === REJECTED ? (
-			<ErrorScreen
-				errorStatus={
-					accountsDataFetchErrorStatus === 403
-						? Errors.NO_ACCESS_ERROR
-						: Errors.CRITICAL_DATA_FETCH_ERROR
-				}
-			/>
+			<ErrorScreen errorStatus={Errors.CRITICAL_DATA_FETCH_ERROR} />
 		) : finalFetchStatus === PENDING ? (
 			<Loader />
 		) : (
@@ -54,7 +54,7 @@ const Layout = () => {
 
 	return (
 		<SidebarProvider>
-			<Header status={finalFetchStatus} />
+			<Header />
 			<div className="flex min-h-svh">
 				<AppSidebar status={finalFetchStatus} />
 				<SidebarInset>
