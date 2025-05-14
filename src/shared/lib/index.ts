@@ -31,7 +31,7 @@ export const fetchRemote = (url, remoteName) =>
 
 export const loadComponent =
 	(
-		remoteName,
+		service,
 		remoteUrl,
 		moduleName,
 		version,
@@ -39,6 +39,9 @@ export const loadComponent =
 		scope = "default",
 	) =>
 	async () => {
+		const remoteName = service
+			? `${service.replace("-", "")}_${moduleName}`
+			: moduleName;
 		if (!(remoteName in window)) {
 			// Need to load the remote first
 			// Initializes the shared scope. Fills it with known provided modules from this build and all remotes
@@ -46,12 +49,14 @@ export const loadComponent =
 			await __webpack_init_sharing__(scope); // TODO when would you use a different scope?
 			const containerPath = [
 				remoteUrl.replace(/\/$/, ""),
+				process.env.NODE_ENV === "production" && service,
 				process.env.NODE_ENV === "production" && moduleName,
 				!!version && version,
 				`${remoteFilename}.js`,
 			]
 				.filter(Boolean)
 				.join("/");
+
 			const fetchedContainer = await fetchRemote(containerPath, remoteName);
 			// eslint-disable-next-line no-undef
 			await fetchedContainer.init(__webpack_share_scopes__[scope]);
