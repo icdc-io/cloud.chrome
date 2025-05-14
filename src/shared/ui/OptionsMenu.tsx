@@ -1,4 +1,5 @@
 import { EllipsisVertical } from "lucide-react";
+import { type MouseEvent, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { Button } from "./button";
 import {
@@ -20,11 +21,18 @@ type OptionsMenu<T> = {
 
 const OptionsMenu = <T,>({ options, instance }: OptionsMenu<T>) => {
 	const { t } = useTranslation();
+	const [open, setOpen] = useState(false);
+
+	const onOpenChange = (e: MouseEvent<HTMLButtonElement>) => {
+		e.preventDefault();
+		e.stopPropagation();
+		setOpen(true);
+	};
 
 	return (
-		<DropdownMenu>
+		<DropdownMenu onOpenChange={setOpen} open={open}>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost">
+				<Button variant="ghost" onClick={onOpenChange}>
 					<EllipsisVertical />
 				</Button>
 			</DropdownMenuTrigger>

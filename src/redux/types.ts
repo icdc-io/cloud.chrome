@@ -7,8 +7,7 @@ import type { Langs } from "../shared/translations/langs";
 import type {
 	BaseUrls,
 	FullAccountsInfoType,
-	Remotes,
-	UniqueInternalServicesType,
+	Remote,
 	UserInfo,
 	UserType,
 } from "../types/entities";
@@ -16,11 +15,10 @@ import type {
 export type StoreType = {
 	user: UserType;
 	lang: Langs;
-	remotes: Remotes;
+	remotes: Remote[] | null;
 	remotesFetchStatus: STATUSES_TYPES[number];
 	fullAccountsInfo: FullAccountsInfoType;
 	baseUrls: BaseUrls;
-	uniqueInternalServices: UniqueInternalServicesType;
 	accountsDataFetchStatus: STATUSES_TYPES[number];
 	username: string;
 	email: string;
@@ -29,7 +27,6 @@ export type StoreType = {
 	currentService: string | undefined;
 	locationData: DEFAULT_LOCATION_DATA;
 	userInfo: UserInfo;
-	accountsDataFetchErrorStatus: number;
 	contacts: helpdeskComponents["schemas"]["Contact"][] | null;
 	contactsFetchStatus: STATUSES_TYPES[number];
 	servicesWithCompletedStatusFetchStatus: string;

@@ -13,7 +13,7 @@ import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
-import { useEffect } from "react";
+import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
 const changeMetaData = (serviceInfo: Service | undefined) => {
@@ -36,7 +36,11 @@ const changeMetaData = (serviceInfo: Service | undefined) => {
 	}
 };
 
-const AvailableRoute = () => {
+type AvailableRoute = {
+	children?: ReactNode;
+};
+
+const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	useSpecificTranslations();
 	const currentServiceName = useAppSelector(
 		(state) => state.host.currentService,
@@ -45,16 +49,17 @@ const AvailableRoute = () => {
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.host.user);
 	const currentService = useAppSelector((state) => state.host.currentService);
-	const fullAccountsInfo = useAppSelector(
-		(state) => state.host.fullAccountsInfo,
-	);
+	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentRoute = location.pathname.split("/")[1];
 
 	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo =
-		fullAccountsInfo?.[user.account]?.servicesInLocations?.[user.location]?.[
-			currentService || ""
-		];
+		currentService === ""
+			? undefined
+			: remotes?.find(
+					(service) => service.path.substring(1) === currentService,
+				);
+
 	const token = kc.getUserInfo();
 
 	useEffect(() => {
@@ -82,6 +87,8 @@ const AvailableRoute = () => {
 	useEffect(() => {
 		dispatch(fetchLocationData(user.location));
 	}, [user.location]);
+
+	if (children) return children;
 
 	if (currentService && token && !isServiceAvailable(currentService, token))
 		return <ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />;

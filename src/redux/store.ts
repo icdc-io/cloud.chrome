@@ -55,7 +55,6 @@ const initialState: HostReducerType = Immutable({
 	remotesFetchStatus: PENDING,
 	fullAccountsInfo: null,
 	baseUrls: null,
-	uniqueInternalServices: null,
 	accountsDataFetchStatus: PENDING,
 	username: "",
 	email: "",
@@ -64,7 +63,6 @@ const initialState: HostReducerType = Immutable({
 	currentService: window.location.pathname.split("/")[1],
 	locationData: defaultLocationData,
 	userInfo: null,
-	accountsDataFetchErrorStatus: 0,
 	contacts: null,
 	contactsFetchStatus: PENDING,
 	servicesWithCompletedStatus: new Set(servicesWithCompletedStatus),
@@ -89,26 +87,23 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 			return state.set("remotesFetchStatus", PENDING);
 		case `${SET_REMOTES}_REJECTED`:
 			return state.set("remotesFetchStatus", REJECTED);
-		case `${SET_REMOTES}_FULFILLED`:
+		case `${SET_REMOTES}_FULFILLED`: {
 			return state.merge({
 				remotesFetchStatus: FULFILLED,
 				remotes: action.payload,
 			});
+		}
 
 		case `${FETCH_ACCOUNTS_DATA}_PENDING`:
 			return state.set("accountsDataFetchStatus", PENDING);
 		case `${FETCH_ACCOUNTS_DATA}_REJECTED`: {
-			const errorStatus = action.payload?.response?.status;
 			return state.merge({
 				accountsDataFetchStatus: REJECTED,
-				accountsDataFetchErrorStatus:
-					errorStatus || state.accountsDataFetchErrorStatus,
 			});
 		}
 		case `${FETCH_ACCOUNTS_DATA}_FULFILLED`:
 			return state.merge({
 				accountsDataFetchStatus: FULFILLED,
-				accountsDataFetchErrorStatus: 0,
 				...action.payload,
 			});
 

@@ -1,6 +1,5 @@
 import AvailableRoute from "@/app/AvailableRoute";
 import { store } from "@/redux/store";
-import { builtInServices } from "@/shared/constants/builtInServices";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
@@ -9,80 +8,47 @@ import { HOME } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
 import "semantic-ui-css/semantic.min.css";
 import { useAppSelector } from "@/redux/shared";
+import { Errors } from "@/shared/constants/errors";
+import ErrorScreen from "@/widgets/Error";
 
 const AppRoutes = () => {
-	const fullAccountsInfo = useAppSelector(
-		(state) => state.host.fullAccountsInfo,
-	);
 	const remotes = useAppSelector((state) => state.host.remotes);
-	const uniqueInternalServices = useAppSelector(
-		(state) => state.host.uniqueInternalServices,
-	);
-	const location = useAppSelector((state) => state.host.user.location);
-	const account = useAppSelector((state) => state.host.user.account);
-
-	const uniqueInternalServicesList = Object.entries(
-		uniqueInternalServices || {},
-	).filter((serviceInfo) => {
-		return remotes?.[location]?.[serviceInfo[0].substring(1)];
-	});
 
 	const routes = () => {
-		return uniqueInternalServicesList
-			.map((serviceInfo) => ({
-				name: serviceInfo[0].substring(1),
-				isAvailableInLocation: Boolean(
-					fullAccountsInfo?.[account]?.servicesInLocations?.[location]?.[
-						serviceInfo[0].substring(1)
-					],
-				),
-			}))
+		if (!remotes) return null;
+		return remotes
+			.filter((serviceInfo) => !!serviceInfo.name && !!serviceInfo.path)
 			.map((serviceInfo) => {
-				if (!remotes) return;
-				return serviceInfo.isAvailableInLocation ? (
+				const route = serviceInfo.path.substring(1);
+				return (
 					<Route
 						key={serviceInfo.name}
-						path={`${serviceInfo.name}/*`}
+						path={`${route}/*`}
 						Component={AvailableRoute}
 					>
-						{remotes[location][serviceInfo.name].map((remoteServiceInfo) => (
-							<Route
-								key={remoteServiceInfo.name}
-								path={`${remoteServiceInfo.route}/*`}
-								element={
-									<RemoteComponent
-										fallback={<Loader />}
-										remoteUrl={remoteServiceInfo.url}
-										remote={remoteServiceInfo.route}
-										service={serviceInfo.name}
-										store={store}
-									/>
-								}
-							/>
-						))}
-						{builtInServices[serviceInfo.name]?.map((builtInServiceInfo) => (
-							<Route
-								key={builtInServiceInfo.route}
-								path={builtInServiceInfo.route}
-								Component={builtInServiceInfo.Component}
-							/>
-						))}
+						{serviceInfo.apps.map((remoteServiceInfo) => {
+							return (
+								<Route
+									key={remoteServiceInfo.name}
+									path={`${remoteServiceInfo.name}/*`}
+									element={
+										<RemoteComponent
+											fallback={<Loader />}
+											remoteUrl={window.origin}
+											remote={remoteServiceInfo.name}
+											service={serviceInfo.name}
+											version={remoteServiceInfo.version}
+											store={store}
+										/>
+									}
+								/>
+							);
+						})}
 						<Route
 							path="*"
-							element={
-								<Navigate
-									to={remotes[location][serviceInfo.name][0].route}
-									replace
-								/>
-							}
+							element={<Navigate to={serviceInfo.apps[0].name} replace />}
 						/>
 					</Route>
-				) : (
-					<Route
-						key={serviceInfo.name}
-						path={serviceInfo.name}
-						element={<h1>Not available in this location</h1>}
-					/>
 				);
 			});
 	};
@@ -108,7 +74,14 @@ const AppRoutes = () => {
 					/>
 				</Route>
 				{routes()}
-				<Route path="*" element={<Navigate to="/" replace />} />
+				<Route
+					path="*"
+					element={
+						<AvailableRoute>
+							<ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />
+						</AvailableRoute>
+					}
+				/>
 			</Routes>
 		</React.Suspense>
 	);

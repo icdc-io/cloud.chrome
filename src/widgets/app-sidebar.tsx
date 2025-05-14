@@ -24,19 +24,19 @@ export function AppSidebar({ status, ...props }: AppSidebarType) {
 	const isMobile = useIsMobile();
 	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentService = useAppSelector((state) => state.host.currentService);
-	const user = useAppSelector((state) => state.host.user);
 	const isFulfilled = status === FULFILLED;
 
 	if (!remotes || !currentService) return;
 
-	const remotesByServices = remotes[user.location] || {};
-	const currentRemotesList = (remotesByServices[currentService] || []).map(
-		(remote) => ({
-			title: remote.name,
-			url: remote.route,
-			icon: SquareTerminal,
-		}),
+	const currentRemoteService = remotes.find(
+		(serviceInfo) => serviceInfo.path.substring(1) === currentService,
 	);
+	const currentRemotesList =
+		currentRemoteService?.apps?.map((remote) => ({
+			title: remote.title,
+			url: remote.name,
+			icon: SquareTerminal,
+		})) || [];
 
 	return (
 		<Sidebar collapsible="icon" {...props}>

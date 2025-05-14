@@ -5,18 +5,18 @@ import {
 	SelectContent,
 	SelectGroup,
 	SelectItem,
-	SelectSeparator,
+	// SelectSeparator,
 	SelectTrigger,
 	SelectValue,
 } from "@/shared/ui/select";
 import { useTranslation } from "react-i18next";
 
-const toDropdownOptions = (options: string[]) =>
-	options.map((option) => ({
-		key: option,
-		text: option,
-		value: option,
-	}));
+// const toDropdownOptions = (options: string[]) =>
+// 	options.map((option) => ({
+// 		key: option,
+// 		text: option,
+// 		value: option,
+// 	}));
 
 const LocationSelector = () => {
 	const dispatch = useAppDispatch();
@@ -24,32 +24,37 @@ const LocationSelector = () => {
 	const { account, location, role } = useAppSelector(
 		(state) => state.host.user,
 	);
-	const baseUrls = useAppSelector((state) => state.host.baseUrls);
-	const currentServiceName =
-		useAppSelector((state) => state.host.currentService) || "";
-	const fullAccountsInfo = useAppSelector(
-		(state) => state.host.fullAccountsInfo,
-	);
+	// const baseUrls = useAppSelector((state) => state.host.baseUrls);
+	// const currentServiceName =
+	// 	useAppSelector((state) => state.host.currentService) || "";
+	const userInfo = useAppSelector((state) => state.host.userInfo);
 
-	const allLocationsNames = Object.keys(baseUrls || {});
-	const servicesInLocation = fullAccountsInfo?.[account]?.servicesInLocations;
+	// const allLocationsNames = Object.keys(baseUrls || {});
+	// const servicesInLocation = fullAccountsInfo?.[account]?.servicesInLocations;
 
-	if (!servicesInLocation) return null;
+	if (!userInfo || !account) return null;
 
-	const availableLocations = toDropdownOptions(
-		allLocationsNames.filter((locationName) =>
-			currentServiceName === ""
-				? true
-				: servicesInLocation?.[locationName]?.[currentServiceName],
-		),
-	);
-	const notAvailableLocations = toDropdownOptions(
-		allLocationsNames.filter((locationName) =>
-			currentServiceName === ""
-				? false
-				: !servicesInLocation?.[locationName]?.[currentServiceName],
-		),
-	);
+	const availableLocations = (
+		userInfo.external.accounts[account]?.locations || []
+	).map((locationName) => ({
+		value: locationName,
+		text: locationName,
+	}));
+
+	// const availableLocations = toDropdownOptions(
+	// 	allLocationsNames.filter((locationName) =>
+	// 		currentServiceName === ""
+	// 			? true
+	// 			: servicesInLocation?.[locationName]?.[currentServiceName],
+	// 	),
+	// );
+	// const notAvailableLocations = toDropdownOptions(
+	// 	allLocationsNames.filter((locationName) =>
+	// 		currentServiceName === ""
+	// 			? false
+	// 			: !servicesInLocation?.[locationName]?.[currentServiceName],
+	// 	),
+	// );
 
 	const changeLocation = (newLocation: string) => {
 		const newUserInfo = { account, role, location: newLocation };
@@ -81,7 +86,7 @@ const LocationSelector = () => {
 								</SelectItem>
 							))}
 						</SelectGroup>
-						{notAvailableLocations.length > 0 && <SelectSeparator />}
+						{/* {notAvailableLocations.length > 0 && <SelectSeparator />}
 						<SelectGroup>
 							{notAvailableLocations.map((currentLocation) => (
 								<SelectItem
@@ -92,7 +97,7 @@ const LocationSelector = () => {
 									<span>{currentLocation.text}</span>
 								</SelectItem>
 							))}
-						</SelectGroup>
+						</SelectGroup> */}
 					</SelectContent>
 				</Select>
 			</div>

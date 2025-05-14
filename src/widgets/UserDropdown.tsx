@@ -25,21 +25,24 @@ import {
 import type { UserType } from "@/types/entities";
 import { ChevronDownIcon } from "lucide-react";
 
-type UserDropdownType = {
-	isFullInfoAvailable: boolean;
-};
-
-const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
+const UserDropdown = () => {
 	const dispatch = useAppDispatch();
 	const { t, i18n } = useTranslation();
 	const userInfo = useAppSelector((state) => state.host.userInfo);
 	const { account, role, location } = useAppSelector(
 		(state) => state.host.user,
 	);
+
+	if (!userInfo || !account) return null;
+
+	const { accounts } = userInfo.external;
 	const locale = useAppSelector((state) => state.host.lang);
-	const fullAccountsInfo = useAppSelector(
-		(state) => state.host.fullAccountsInfo,
+	const filteredAccounts = Object.keys(accounts).filter(
+		(accountName) =>
+			accounts[accountName].locations.length &&
+			accounts[accountName].roles.length,
 	);
+
 	const invalidateQuery = useInvalidateQuery();
 
 	const logout = () => {
@@ -54,23 +57,21 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 
 	const changeCurrentInfo = (name: keyof UserType, value: string) => {
 		let newUserInfo: UserType;
-		if (name === "role") {
+		if (name !== "account") {
 			newUserInfo = {
 				account,
 				location,
-				role: value,
+				role,
+				[name]: value,
 			};
 		} else {
-			if (!fullAccountsInfo) return;
-			const newAccountInfo = fullAccountsInfo[value];
+			const newAccountInfo = accounts[value];
 
 			if (!newAccountInfo) return;
 
 			newUserInfo = {
 				account: value,
-				location: newAccountInfo.servicesInLocations?.[location]
-					? location
-					: newAccountInfo.locations[0],
+				location: newAccountInfo.locations[0],
 				role: newAccountInfo.roles.includes(role)
 					? role
 					: filterAndSort(newAccountInfo.roles)[0].value,
@@ -81,50 +82,49 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 		invalidateQuery();
 	};
 
-	const accountsSection =
-		isFullInfoAvailable && fullAccountsInfo ? (
-			<DropdownMenuSub>
-				<DropdownMenuSubTrigger className={styles["select-item"]}>
-					<div className={styles.RightSlot}>
-						<span>{t("accounts")}</span>
-						<span className={styles["selected-value"]}>{account}</span>
-					</div>
-				</DropdownMenuSubTrigger>
-				<DropdownMenuPortal>
-					<DropdownMenuSubContent className={styles["user-select"]}>
-						<DropdownMenuRadioGroup
-							value={account}
-							onValueChange={(newAccount) =>
-								changeCurrentInfo("account", newAccount)
-							}
-						>
-							{Object.values(fullAccountsInfo)
-								.map((accountInfo) => ({
-									key: accountInfo?.name,
-									text: accountInfo?.display_name || "",
-									value: accountInfo?.name,
-								}))
-								.map((currentAccount) => (
-									<DropdownMenuRadioItem
-										key={currentAccount.key}
-										className={styles["select-item"]}
-										value={currentAccount.value || ""}
-									>
-										<div>
-											{currentAccount.text}&nbsp;
-											<span className={styles.acc_name}>
-												({currentAccount.value?.toUpperCase()})
-											</span>
-										</div>
-									</DropdownMenuRadioItem>
-								))}
-						</DropdownMenuRadioGroup>
-					</DropdownMenuSubContent>
-				</DropdownMenuPortal>
-			</DropdownMenuSub>
-		) : null;
+	const accountsSection = userInfo ? (
+		<DropdownMenuSub>
+			<DropdownMenuSubTrigger className={styles["select-item"]}>
+				<div className={styles.RightSlot}>
+					<span>{t("accounts")}</span>
+					<span className={styles["selected-value"]}>{account}</span>
+				</div>
+			</DropdownMenuSubTrigger>
+			<DropdownMenuPortal>
+				<DropdownMenuSubContent className={styles["user-select"]}>
+					<DropdownMenuRadioGroup
+						value={account}
+						onValueChange={(newAccount) =>
+							changeCurrentInfo("account", newAccount)
+						}
+					>
+						{filteredAccounts
+							.map((accountName) => ({
+								key: accountName,
+								text: accountName,
+								value: accountName,
+							}))
+							.map((currentAccount) => (
+								<DropdownMenuRadioItem
+									key={currentAccount.key}
+									className={styles["select-item"]}
+									value={currentAccount.value || ""}
+								>
+									<div>
+										{currentAccount.text}&nbsp;
+										<span className={styles.acc_name}>
+											({currentAccount.value?.toUpperCase()})
+										</span>
+									</div>
+								</DropdownMenuRadioItem>
+							))}
+					</DropdownMenuRadioGroup>
+				</DropdownMenuSubContent>
+			</DropdownMenuPortal>
+		</DropdownMenuSub>
+	) : null;
 
-	const rolesSection = isFullInfoAvailable ? (
+	const rolesSection = userInfo ? (
 		<>
 			<DropdownMenuSub>
 				<DropdownMenuSubTrigger className={styles["select-item"]}>
@@ -139,7 +139,7 @@ const UserDropdown = ({ isFullInfoAvailable }: UserDropdownType) => {
 							value={role}
 							onValueChange={(newRole) => changeCurrentInfo("role", newRole)}
 						>
-							{filterAndSort(fullAccountsInfo?.[account]?.roles).map((role) => (
+							{filterAndSort(accounts[account].roles).map((role) => (
 								<DropdownMenuRadioItem
 									key={role.key}
 									className={styles["select-item"]}

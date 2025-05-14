@@ -1,8 +1,13 @@
-import type { RemoteApp } from "@/types/entities";
 import React from "react";
 
 const Consoles = React.lazy(() => import("@/pages/admin/Consoles"));
 const ContactsPage = React.lazy(() => import("@/pages/support/ContactsPage"));
+
+type RemoteApp = {
+	name: string;
+	route: string;
+	url: string;
+};
 
 type BuiltInService = RemoteApp & {
 	Component: React.LazyExoticComponent<() => JSX.Element>;
