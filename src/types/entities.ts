@@ -92,6 +92,7 @@ export type App = {
 	name: string;
 	title: string;
 	version?: string;
+	url?: string;
 };
 
 export type Remote = {

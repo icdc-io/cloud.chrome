@@ -407,7 +407,23 @@
 			"accountOwnerInfo5": "Specified user becomes technical contact for Support team;",
 			"accountOwnerInfo6": "Specified user will receive an email with temporary credentials.",
 			"billingContactInfo1": "Specified contact used only in invoices as official representative of account.",
-			"accountOwner": "Account Owner"
+			"accountOwner": "Account Owner",
+			"sucEditNotif": "Changes saved",
+			"sucDeleteNotif": "Deletion completed.",
+			"errDeleteNotif": "Deletion failed.",
+			"sucInstallNotif": "Installation completed.",
+			"startInstallNotif": "Installation started.",
+			"errInstallNotif": "Installation failed.",
+			"sucUpdateNotif": "Update completed.",
+			"startUpdateNotif": "Update started.",
+			"errUpdateNotif": "Update failed.",
+			"sucDowngradeNotif": "Downgrade completed.",
+			"startDowngradeNotif": "Downgrade started.",
+			"errDowngradeNotif": "Downgrade failed.",
+			"sucReleaseNotif": "Release completed.",
+			"startReleaseNotif": "Release  started.",
+			"errReleaseNotif": "Release failed",
+			"errorFetch": "Error while fetching data"
 		}
 	},
 	"ru": {
@@ -802,7 +818,23 @@
 			"accountOwnerInfo5": "Указанный пользователь будет являться основным техническим контактом для службы поддержки.",
 			"accountOwnerInfo6": "Указанный пользователь получит электронное письмо с временными учетными данными для входа.",
 			"billingContactInfo1": "Указанный контакт используется исключительно в счетах в качестве официального представителя аккаунта.",
-			"accountOwner": "Владелец аккаунта"
+			"accountOwner": "Владелец аккаунта",
+			"sucEditNotif": "Изменения сохранены",
+			"sucDeleteNotif": "Удаление завершено.",
+			"errDeleteNotif": "Удаление не удалось.",
+			"sucInstallNotif": "Установка завершена.",
+			"startInstallNotif": "Установка начата.",
+			"errInstallNotif": "Установка не удалась",
+			"sucUpdateNotif": "Обновление завершено.",
+			"startUpdateNotif": "Обновление начато.",
+			"errUpdateNotif": "Обновление не удалось.",
+			"sucDowngradeNotif": "Откат завершен.",
+			"startDowngradeNotif": "Откат начат.",
+			"errDowngradeNotif": "Откат не удался.",
+			"sucReleaseNotif": "Обновление завершено.",
+			"startReleaseNotif": "Обновление начато.",
+			"errReleaseNotif": "Обновление не удалось.",
+			"errorFetch": "Ошибка получения данных"
 		}
 	}
 }

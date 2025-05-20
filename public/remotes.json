@@ -1,224 +1,247 @@
-{
-	"icz": {
-		"account": {},
-		"admin": {},
-		"networking": {},
-		"storage": {},
-		"billing": {}
+[
+	{
+		"apps": [
+			{
+				"name": "billing",
+				"title": "Billing",
+				"url": "http://localhost:8011"
+			},
+			{
+				"name": "info",
+				"title": "Account",
+				"url": "http://localhost:8012"
+			},
+			{
+				"name": "reports",
+				"title": "Reports",
+				"url": "http://localhost:8013"
+			},
+			{
+				"name": "users",
+				"title": "Users",
+				"url": "http://localhost:8014"
+			}
+		],
+		"path": "/account",
+		"name": "account",
+		"display_name": "Account Settings"
 	},
-	"sbg": {},
-	"dby": {},
-	"cby": {},
-	"zby": {},
-	"ycz": {},
-	"pkz": {},
-	"dcz": {
-		"account": [
+	{
+		"apps": [
 			{
-				"route": "billing",
-				"name": "Billing",
-				"url": "http://localhost:8011",
-				"api": ""
-			},
-			{
-				"route": "info",
-				"name": "Account",
-				"url": "http://localhost:8012",
-				"api": ""
-			},
-			{
-				"route": "reports",
-				"name": "Reports",
-				"url": "http://localhost:8013",
-				"api": ""
-			},
-			{
-				"route": "users",
-				"name": "Users",
-				"url": "http://localhost:8014",
-				"api": ""
-			}
-		],
-		"networking": [
-			{
-				"route": "dns",
-				"name": "DNS",
-				"url": "http://localhost:8016",
-				"api": ""
-			},
-			{
-				"route": "firewall",
-				"name": "Firewall",
-				"url": "http://localhost:8017"
-			},
-			{
-				"route": "loadbalancer",
-				"name": "Load Balancer",
-				"url": "http://localhost:8018"
-			},
-			{
-				"route": "portforward",
-				"name": "Port Forwarding",
-				"url": "http://localhost:8019"
-			},
-			{
-				"route": "vpc",
-				"name": "VPC",
-				"url": "http://localhost:8020"
-			},
-			{
-				"route": "vpn",
-				"name": "VPN",
-				"url": "http://localhost:8021"
-			},
-			{
-				"route": "gateways",
-				"name": "Gateways",
-				"url": "http://localhost:8043"
-			}
-		],
-		"outrun-cloud": [
-			{
-				"route": "instances",
-				"name": "Instances",
+				"name": "instances",
+				"title": "Instances",
 				"url": "http://localhost:8004"
 			}
 		],
-		"storage2": [
+		"path": "/outrun-cloud",
+		"name": "outrun-cloud",
+		"display_name": "Outrun Cloud"
+	},
+	{
+		"apps": [
 			{
-				"route": "amazon",
-				"name": "S3 Object Storage",
+				"name": "dns",
+				"title": "DNS",
+				"url": "http://localhost:8016"
+			},
+			{
+				"name": "firewall",
+				"title": "Firewall",
+				"url": "http://localhost:8017"
+			},
+			{
+				"name": "loadbalancer",
+				"title": "Load Balancer",
+				"url": "http://localhost:8018"
+			},
+			{
+				"name": "portforward",
+				"title": "Port Forwarding",
+				"url": "http://localhost:8019"
+			},
+			{
+				"name": "vpc",
+				"title": "VPC",
+				"url": "http://localhost:8020"
+			},
+			{
+				"name": "vpn",
+				"title": "VPN",
+				"url": "http://localhost:8021"
+			},
+			{
+				"name": "gateways",
+				"title": "Gateways",
+				"url": "http://localhost:8043"
+			}
+		],
+		"path": "/networking",
+		"name": "networking",
+		"display_name": "Networking"
+	},
+	{
+		"apps": [
+			{
+				"name": "amazon",
+				"title": "S3 Object Storage",
 				"url": "http://localhost:8001"
 			},
 			{
-				"route": "iscsi",
-				"name": "iSCSI Block Storage",
+				"name": "iscsi",
+				"title": "iSCSI Block Storage",
 				"url": "http://localhost:8002"
 			}
 		],
-		"storage": [
+		"path": "/storage2",
+		"name": "storage",
+		"display_name": "Storage"
+	},
+	{
+		"apps": [
 			{
-				"route": "amazon",
-				"name": "S3 Object Storage",
-				"url": "http://localhost:8001"
-			},
-			{
-				"route": "iscsi",
-				"name": "iSCSI Block Storage",
-				"url": "http://localhost:8002"
-			}
-		],
-		"admin": [
-			{
-				"route": "general",
-				"name": "General",
+				"name": "general",
+				"title": "General",
 				"url": "http://localhost:8025"
 			},
 			{
-				"route": "accounts",
-				"name": "Accounts",
+				"name": "accounts",
+				"title": "Accounts",
 				"url": "http://localhost:8022"
 			},
 			{
-				"route": "delivery",
-				"name": "Service Delivery",
+				"name": "delivery",
+				"title": "Service Delivery",
 				"url": "http://localhost:8029"
+			},
+			{
+				"name": "consoles",
+				"title": "Consoles",
+				"url": "http://localhost:8048"
 			}
 		],
-		"support": [
+		"path": "/admin",
+		"name": "admin",
+		"display_name": "Location Admin"
+	},
+	{
+		"apps": [
 			{
-				"route": "requests",
-				"name": "HelpDesk",
+				"name": "helpdesk",
+				"title": "HelpDesk",
 				"url": "http://localhost:8032"
+			},
+			{
+				"name": "contacts",
+				"title": "Contacts",
+				"url": "http://localhost:8049"
 			}
 		],
-		"billing": [
+		"path": "/support",
+		"name": "support",
+		"display_name": "Support"
+	},
+	{
+		"apps": [
 			{
-				"route": "billing",
-				"name": "Billing",
+				"name": "billing",
+				"title": "Billing",
 				"url": "http://localhost:8015"
 			},
 			{
-				"route": "invoices",
-				"name": "Invoices",
+				"name": "invoices",
+				"title": "Invoices",
 				"url": "http://localhost:8033"
 			},
 			{
-				"route": "payments",
-				"name": "Payments",
+				"name": "payments",
+				"title": "Payments",
 				"url": "http://localhost:8034"
 			},
 			{
-				"route": "reports",
-				"name": "Reports",
+				"name": "reports",
+				"title": "Reports",
 				"url": "http://localhost:8035"
 			}
 		],
-		"database": [
+		"path": "/billing",
+		"name": "billing",
+		"display_name": "Billing"
+	},
+	{
+		"apps": [
 			{
-				"route": "instances",
-				"name": "Instances",
+				"name": "instances",
+				"title": "Instances",
 				"url": "http://localhost:8036"
 			},
 			{
-				"route": "logs",
-				"name": "Logs",
+				"name": "logs",
+				"title": "Logs",
 				"url": "http://localhost:8037"
 			},
 			{
-				"route": "parameters",
-				"name": "Parameters",
+				"name": "parameters",
+				"title": "Parameters",
 				"url": "http://localhost:8038"
 			},
 			{
-				"route": "snapshots",
-				"name": "Snapshots",
+				"name": "snapshots",
+				"title": "Snapshots",
 				"url": "http://localhost:8039"
 			},
 			{
-				"route": "catalog",
-				"name": "Catalog",
+				"name": "catalog",
+				"title": "Catalog",
 				"url": "http://localhost:8040"
 			},
 			{
-				"route": "instancegroups",
-				"name": "Instance Groups",
+				"name": "instancegroups",
+				"title": "Instance Groups",
 				"url": "http://localhost:8041"
 			},
 			{
-				"route": "instances",
-				"name": "Instances",
+				"name": "instances",
+				"title": "Instances",
 				"url": "http://localhost:8042"
 			}
 		],
-		"mq": [
+		"path": "/database",
+		"name": "database",
+		"display_name": "Database"
+	},
+	{
+		"apps": [
 			{
-				"route": "brokers",
-				"name": "Brokers",
+				"name": "brokers",
+				"title": "Brokers",
 				"url": "http://localhost:8044"
 			},
 			{
-				"route": "configurations",
-				"name": "Configurations",
+				"name": "configurations",
+				"title": "Configurations",
 				"url": "http://localhost:8045"
 			}
 		],
-		"telemetry": [
+		"path": "/mq",
+		"name": "mq",
+		"display_name": "Message Queue"
+	},
+	{
+		"apps": [
 			{
-				"route": "events",
-				"name": "Events",
+				"name": "events",
+				"title": "Events",
 				"url": "http://localhost:8046"
 			},
 			{
-				"route": "notifications",
-				"name": "Notifications",
+				"name": "notifications",
+				"title": "Notifications",
 				"url": "http://localhost:8047"
-			},
-			{
-				"route": "notificationsettings",
-				"name": "Notification Settings",
-				"url": "http://localhost:8048"
 			}
-		]
+		],
+		"path": "/telemetry",
+		"name": "telemetry",
+		"display_name": "Telemetry"
 	}
-}
+]

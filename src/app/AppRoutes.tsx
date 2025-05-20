@@ -34,7 +34,11 @@ const AppRoutes = () => {
 									element={
 										<RemoteComponent
 											fallback={<Loader />}
-											remoteUrl={window.origin}
+											remoteUrl={
+												(process.env.NODE_ENV === "development" &&
+													remoteServiceInfo.url) ||
+												window.origin
+											}
 											remote={remoteServiceInfo.name}
 											service={serviceInfo.name}
 											version={remoteServiceInfo.version}

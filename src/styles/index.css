@@ -447,59 +447,6 @@ i.trash:hover {
 	padding: 1.25rem;
 }
 
-.consoles {
-	max-width: 658px;
-	width: 100%;
-}
-
-.consoles h2 {
-	margin-bottom: 1rem;
-}
-
-.consoles p {
-	line-height: 1.4285em;
-	margin: 0 0 1em;
-}
-
-.consoles h2,
-.consoles .consoles-description {
-	padding: 0 1rem;
-}
-
-.consoles .consoles-description {
-	color: var(--light-grey);
-	font-weight: 500;
-	max-width: 650px;
-}
-
-.consoles .service-block {
-	background: var(--light);
-	border-radius: 6px;
-	padding: 1rem;
-	margin-bottom: 0.75rem;
-}
-
-.consoles .service-block h6 {
-	font-weight: 600;
-	font-size: 16px;
-	margin: 0;
-}
-
-.consoles .service-block p {
-	color: var(--light-grey);
-	font-size: 13px;
-	margin-top: 0.75rem;
-}
-
-.consoles .service-block .ui.primary.button {
-	max-width: 168px;
-	width: 100%;
-}
-
-.consoles .service-block .ui.primary.button img {
-	margin-left: 0.75rem;
-}
-
 /* general networking styles to rewrite in future end*/
 
 .helpdesk-content {
@@ -560,28 +507,6 @@ i.trash:hover {
 
 .ui.dropdown .menu > .item.delete {
 	color: var(--red);
-}
-
-.contacts-page {
-	font-family: "Roboto", sans-serif;
-}
-
-.contacts-page h1 {
-	font-size: 20px;
-	margin-bottom: 24px;
-}
-
-.contacts-page .contact-item {
-	margin-bottom: 16px;
-}
-
-.contacts-page .contact-item b {
-	margin-bottom: 8px;
-	display: block;
-}
-
-.contacts-page .contact-item p:last-child {
-	margin-top: 8px;
 }
 
 .error.field .ui.basic.label {
