@@ -50,9 +50,9 @@ export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
 		}
 		if (totalInstancesCount) {
 			return {
-				...responseBody,
+				data: responseBody,
 				total: totalInstancesCount,
-			};
+			} as T;
 		}
 		return responseBody;
 	}
