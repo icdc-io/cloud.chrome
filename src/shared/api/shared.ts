@@ -311,11 +311,9 @@ export const useFetchInfiniteData = <T, U = T>({
 	}: {
 		pageParam: unknown;
 	}) => {
-		console.log(pageParam);
 		const query = new URLSearchParams(params || "");
 		query.append("page[offset]", `${pageParam || 1}`);
 		const queryString = `?${query.toString()}`;
-		console.log(queryString);
 		return fetchJsonData<T>(`${endpoint}${queryString}`, initialHeaders);
 	};
 
