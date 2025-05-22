@@ -1,7 +1,9 @@
 import {
+	type UndefinedInitialDataInfiniteOptions,
 	type UndefinedInitialDataOptions,
 	type UseMutationOptions,
 	type UseMutationResult,
+	useInfiniteQuery,
 	useMutation,
 	useQuery,
 } from "@tanstack/react-query";
@@ -277,6 +279,47 @@ export const useFetchData = <T, U = T>({
 	return {
 		queryKey,
 		...useQuery({
+			...queryOptions,
+			queryKey,
+			queryFn,
+			select,
+		}),
+	};
+};
+
+type UseFetchInfiniteData<T, U> = {
+	endpoint: string;
+	params?: Record<string, string>;
+	initialHeaders?: Record<string, string>;
+} & Omit<
+	UndefinedInitialDataInfiniteOptions<T, Error, U>,
+	"queryKey" | "queryFn"
+>;
+
+export const useFetchInfiniteData = <T, U = T>({
+	endpoint,
+	params,
+	initialHeaders,
+	select,
+	...queryOptions
+}: UseFetchInfiniteData<T, U>) => {
+	const appId = getAppId(window.location.pathname);
+	const queryKey = [appId, endpoint];
+
+	const queryFn = ({
+		pageParam,
+	}: {
+		pageParam: unknown;
+	}) => {
+		const query = new URLSearchParams(params || "");
+		query.append("page[offset]", `${pageParam || 1}`);
+		const queryString = `?${query.toString()}`;
+		return fetchJsonData<T>(`${endpoint}${queryString}`, initialHeaders);
+	};
+
+	return {
+		queryKey,
+		...useInfiniteQuery({
 			...queryOptions,
 			queryKey,
 			queryFn,

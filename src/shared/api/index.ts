@@ -41,7 +41,7 @@ export const getInfoForRequest = (): Promise<UserInfoParams> => {
 export const getFullUrl = (initialUrl: string, baseUrl: string) =>
 	initialUrl.startsWith("http") ? initialUrl : baseUrl + initialUrl;
 
-function getToken(): Promise<string> {
+export function getToken(): Promise<string> {
 	return new Promise((resolve) => {
 		if (!window.parent) {
 			console.log("No parent window available");

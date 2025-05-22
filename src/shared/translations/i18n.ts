@@ -73,6 +73,7 @@ export const resources: LanguageResources = {
 			markAsRead: "Mark as read",
 			markAsUnread: "Mark as unread",
 			delete: "Delete",
+			noNotifications: "No Notifications",
 		},
 	},
 	ru: {
@@ -133,6 +134,7 @@ export const resources: LanguageResources = {
 			markAsRead: "Отметить как прочитанное",
 			markAsUnread: "Отметить как непрочитанное",
 			delete: "Удалить",
+			noNotifications: "Нет уведомлений",
 		},
 	},
 };
