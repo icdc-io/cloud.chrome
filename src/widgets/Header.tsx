@@ -1,9 +1,10 @@
 // import { changeSidebarVisibility } from "@/redux/actions";
-import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
+// import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
 import { useAppSelector } from "@/redux/shared";
-import { withSkeleton } from "@/shared/hocs/withSkeleton";
+// import { withSkeleton } from "@/shared/hocs/withSkeleton";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { SidebarTrigger } from "@/shared/ui/sidebar";
+import { Skeleton } from "@/shared/ui/skeleton";
 import styles from "@/styles/Header.module.css";
 import HelpDropdown from "@/widgets/HelpDropdown";
 import LocationSelector from "@/widgets/LocationSelector";
@@ -17,16 +18,19 @@ const Header = () => {
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const isMobile = useIsMobile();
 
-	const infoSectionContent = () => (
-		<>
-			<NotificationBell />
-			<HelpDropdown />
-			<LocationSelector />
-			{!isMobile && <UserDropdown />}
-		</>
-	);
+	// const infoSectionContent = () => {
+	// 	console.log("vvvvvvvvvvvvvvv");
+	// 	return (
+	// 		<>
+	// 			<NotificationBell />
+	// 			<HelpDropdown />
+	// 			<LocationSelector />
+	// 			{!isMobile && <UserDropdown />}
+	// 		</>
+	// 	);
+	// };
 
-	const ExtendedInfoSection = withSkeleton(infoSectionContent);
+	// const ExtendedInfoSection = withSkeleton(infoSectionContent);
 
 	return (
 		<header className={styles["chrome-header"]}>
@@ -44,7 +48,17 @@ const Header = () => {
 			</div>
 
 			<div className={styles["info-section"]}>
-				<ExtendedInfoSection isStatusFulfilled={Boolean(userInfo)} />
+				{userInfo ? (
+					<>
+						<NotificationBell />
+						<HelpDropdown />
+						<LocationSelector />
+						{!isMobile && <UserDropdown />}
+					</>
+				) : (
+					<Skeleton className="h-8 bg-[var(--sidebar-skeleton)] w-full" />
+				)}
+				{/* <ExtendedInfoSection isStatusFulfilled={Boolean(userInfo)} /> */}
 			</div>
 		</header>
 	);

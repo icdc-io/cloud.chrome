@@ -33,17 +33,18 @@ const UserDropdown = () => {
 		(state) => state.host.user,
 	);
 
+	const locale = useAppSelector((state) => state.host.lang);
+	const invalidateQuery = useInvalidateQuery();
+
 	if (!userInfo || !account) return null;
 
 	const { accounts } = userInfo.external;
-	const locale = useAppSelector((state) => state.host.lang);
+
 	const filteredAccounts = Object.keys(accounts).filter(
 		(accountName) =>
 			accounts[accountName].locations.length &&
 			accounts[accountName].roles.length,
 	);
-
-	const invalidateQuery = useInvalidateQuery();
 
 	const logout = () => {
 		kc.logout();
