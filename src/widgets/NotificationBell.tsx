@@ -92,6 +92,7 @@ const NotificationBell = () => {
 						headers: {
 							...init.headers,
 							Authorization: `Bearer ${token}`,
+							"x-auth-group": `${user.account}.${user.role}`,
 							// "x-auth-group": `${user.account}.${user.role}`,
 							// "x-icdc-account": user.account,
 							// "x-icdc-role": user.role,
