@@ -238,6 +238,11 @@
 				"name": "notifications",
 				"title": "Notifications",
 				"url": "http://localhost:8047"
+			},
+			{
+				"name": "notificationsettings",
+				"title": "Notification Settings",
+				"url": "http://localhost:8048"
 			}
 		],
 		"path": "/telemetry",
