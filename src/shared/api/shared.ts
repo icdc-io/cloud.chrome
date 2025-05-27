@@ -132,7 +132,7 @@ export const createData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl.replace("{account}", user.account).replace("{role}", user.role),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
@@ -153,7 +153,7 @@ export const deleteData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl.replace("{account}", user.account).replace("{role}", user.role),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
