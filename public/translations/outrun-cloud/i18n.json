@@ -80,7 +80,8 @@
 			"deleteUserDescription2": "user from this namespace?",
 			"instanceCreated": "Instance Created",
 			"wasCreated": "has been created successfully. Would you like to add openshift namespaces into the instance?",
-			"email": "Email"
+			"email": "Email",
+			"selectState": "Select state"
 		}
 	},
 	"ru": {
@@ -164,7 +165,8 @@
 			"deleteUserDescription2": "из этого нэймспэйса?",
 			"instanceCreated": "Инстанс создан",
 			"wasCreated": "был успешно создан. Вы хотите добавить OpenShift нэймспэйс в этот инстанс?",
-			"email": "Почта"
+			"email": "Почта",
+			"selectState": "Выберите состояние"
 		}
 	}
 }
