@@ -56,7 +56,9 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	const currentServiceInfo =
 		currentService === ""
 			? undefined
-			: remotes?.find((service) => service.name === currentService);
+			: remotes?.find(
+					(service) => service.path.substring(1) === currentService,
+				);
 
 	const token = kc.getUserInfo();
 

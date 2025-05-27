@@ -19,7 +19,7 @@ const AppRoutes = () => {
 		return remotes
 			.filter((serviceInfo) => !!serviceInfo.name && !!serviceInfo.path)
 			.map((serviceInfo) => {
-				const route = serviceInfo.name;
+				const route = serviceInfo.path.substring(1);
 				return (
 					<Route
 						key={serviceInfo.name}
@@ -40,7 +40,7 @@ const AppRoutes = () => {
 												window.origin
 											}
 											remote={remoteServiceInfo.name}
-											service={route}
+											service={serviceInfo.name}
 											version={remoteServiceInfo.version}
 											store={store}
 										/>
