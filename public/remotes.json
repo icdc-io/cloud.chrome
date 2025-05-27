@@ -51,7 +51,7 @@
 				"url": "http://localhost:8017"
 			},
 			{
-				"name": "loadbalancer",
+				"name": "alb",
 				"title": "Load Balancer",
 				"url": "http://localhost:8018"
 			},
