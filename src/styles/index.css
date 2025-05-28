@@ -610,7 +610,7 @@ th.sorted button[type="button"]:hover {
 	background-color: rgba(0, 0, 0, 0.05);
 }
 
-th.sorted.ascending button[type="button"]::after {
+/* th.sorted.ascending button[type="button"]::after {
 	position: absolute;
 	top: 0;
 	bottom: 0;
@@ -636,7 +636,7 @@ th.sorted.descending button[type="button"]::after {
 	border-right: 5px solid transparent;
 	border-top: 6px solid;
 	border-top-color: inherit;
-}
+} */
 
 button[data-placeholder] {
 	color: hsl(var(--muted-foreground));

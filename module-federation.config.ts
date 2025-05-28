@@ -14,7 +14,6 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./NoContent": "./src/shared/ui/noContent",
 		"./CodeSnippet": "./src/shared/ui/ApiDialog/CodeSnippet",
 		"./composeValidators": "./src/shared/lib/composeValidators",
-		"./isServiceAvailable": "./src/shared/lib/availability",
 		"./Popup": "./src/shared/ui/generalTooltip",
 		"./ErrorScreen": "./src/shared/ui/ErrorScreen",
 		"./Table": "./src/shared/ui/table",
