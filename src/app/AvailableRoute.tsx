@@ -6,13 +6,13 @@ import {
 	fetchLocationData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-import { Errors } from "@/shared/constants/errors";
+// import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
 import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
-import { isServiceAvailable } from "@/shared/lib/availability";
+// import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
-import ErrorScreen from "@/widgets/Error";
+// import ErrorScreen from "@/widgets/Error";
 import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
@@ -90,8 +90,8 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 
 	if (children) return children;
 
-	if (currentService && token && !isServiceAvailable(currentService, token))
-		return <ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />;
+	// if (currentService && token && !isServiceAvailable(currentService, token))
+	// 	return <ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />;
 
 	return <Outlet />;
 };

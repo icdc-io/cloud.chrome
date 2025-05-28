@@ -1,6 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
+import { MoveDown, MoveUp } from "lucide-react";
 
 const Table = React.forwardRef<
 	HTMLTableElement,
@@ -84,14 +85,16 @@ const TableHead = React.forwardRef<
 			ref={ref}
 			className={cn(
 				"h-10 px-2 text-left align-middle font-semibold [&:has([role=checkbox])]:pr-0 [&>[role=checkbox]]:translate-y-[2px]",
-				onSort && `sorted ${sorted}`,
+				onSort && "sorted",
 				className,
 			)}
 			{...props}
 		>
 			{onSort ? (
-				<button type="button" onClick={onSort}>
+				<button type="button" onClick={onSort} className="flex items-center">
 					{children}
+					{sorted === "descending" && <MoveDown size={16} />}
+					{sorted === "ascending" && <MoveUp size={16} />}
 				</button>
 			) : (
 				children
