@@ -99,7 +99,8 @@
 			"withoutAggregation": "Without aggregation",
 			"email": "Email",
 			"webhook": "Webhook",
-			"noAggregationWarning": "No aggregation can result in a large volume of messages."
+			"noAggregationWarning": "No aggregation can result in a large volume of messages.",
+			"eventDetails": "Event Details"
 		}
 	},
 	"ru": {
@@ -186,10 +187,10 @@
 			"enterWebhookBody": "Введите webhook тело",
 			"noNotifications": "Нет уведомлений",
 			"noEventsToExport": "Нет событий для экспорта",
-			"all": "Все",
+			"all": "все",
 			"copyId": "Скопировать ID",
 			"copied": "Скопировано",
-			"severity": "Серьезность",
+			"severity": "Уровень серьезности",
 			"eventId": "ID события",
 			"resourceName": "Название ресурса",
 			"mark": "Отметить",
@@ -202,7 +203,8 @@
 			"withoutAggregation": "Без агрегации",
 			"email": "Email",
 			"webhook": "Webhook",
-			"noAggregationWarning": "Отсутствие агрегации может привести к большому объему сообщений."
+			"noAggregationWarning": "Отсутствие агрегации может привести к большому объему сообщений.",
+			"eventDetails": "Детали события"
 		}
 	}
 }
