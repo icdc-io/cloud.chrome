@@ -129,7 +129,6 @@ const parseError = (errorData: unknown): string => {
 
 export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
 	// if (!navigator.onLine) throw new RequestError("noInternet", 0);
-
 	try {
 		const response = await ky<T>(config.url, {
 			method: config.method ?? "GET",
