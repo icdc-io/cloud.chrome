@@ -48,6 +48,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./DateTimePicker": "./src/shared/ui/datetime-picker",
 		"./TitleWithCounter": "./src/shared/ui/titleWithCounter",
 		"./Progress": "./src/shared/ui/progress",
+		"./Skeleton": "./src/shared/ui/skeleton",
 	},
 	shared: {
 		react: {

@@ -136,6 +136,7 @@ export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
 			headers: config.headers,
 			json: config.body,
 			searchParams: config.options,
+			timeout: 2147483647,
 		});
 
 		return response;
