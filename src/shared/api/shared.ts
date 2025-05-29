@@ -160,7 +160,7 @@ export const createData = async <T>(
 
 export const deleteData = async <T>(
 	initialUrl: string,
-	params = {},
+	params: Record<string, string> | undefined,
 	initialHeaders = {},
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
@@ -171,6 +171,7 @@ export const deleteData = async <T>(
 			.replace("{location}", user.location),
 		baseUrl,
 	);
+
 	const headers = await getHeaders(user, initialHeaders);
 	return (await processUnknownResponse(
 		await request({

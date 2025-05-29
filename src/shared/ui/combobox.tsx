@@ -111,13 +111,10 @@ export function Combobox({
 		const newValue = formattedOptions.find(
 			(item) => item.text.trim() === newValueText.trim(),
 		)?.value;
-		console.log(newValue);
-		console.log(shouldFilter);
 
 		if (newValue === undefined) return;
 		if (shouldFilter !== false) setLocalValue(newValue);
 		const formattedValue = isOptionNumber ? +newValue : newValue;
-		console.log(formattedValue);
 
 		onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
 		setLocalOpen(false);
