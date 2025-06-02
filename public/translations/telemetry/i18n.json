@@ -100,7 +100,8 @@
 			"email": "Email",
 			"webhook": "Webhook",
 			"noAggregationWarning": "No aggregation can result in a large volume of messages.",
-			"eventDetails": "Event Details"
+			"eventDetails": "Event Details",
+			"any": "Any"
 		}
 	},
 	"ru": {
@@ -204,7 +205,8 @@
 			"email": "Email",
 			"webhook": "Webhook",
 			"noAggregationWarning": "Отсутствие агрегации может привести к большому объему сообщений.",
-			"eventDetails": "Детали события"
+			"eventDetails": "Детали события",
+			"any": "Любой"
 		}
 	}
 }
