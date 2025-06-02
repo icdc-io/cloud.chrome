@@ -40,7 +40,7 @@ const AppRoutes = () => {
 												window.origin
 											}
 											remote={remoteServiceInfo.name}
-											service={route}
+											service={serviceInfo.name}
 											version={remoteServiceInfo.version}
 											store={store}
 										/>

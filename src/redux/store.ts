@@ -189,10 +189,7 @@ declare global {
 }
 
 export default function configureStore() {
-	const composeEnhancers =
-		typeof window === "object" && window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__
-			? window.__REDUX_DEVTOOLS_EXTENSION_COMPOSE__()
-			: compose;
+	const composeEnhancers = compose;
 
 	const middlewareList = [
 		promiseMiddleware as Middleware<

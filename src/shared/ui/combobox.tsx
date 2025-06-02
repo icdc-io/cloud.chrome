@@ -78,7 +78,7 @@ export function Combobox({
 	}, [debouncedSearchQuery]);
 
 	React.useEffect(() => {
-		if (!formattedValue) return;
+		// if (!formattedValue) return;
 		setLocalValue(formattedValue);
 	}, [formattedValue]);
 
@@ -112,9 +112,10 @@ export function Combobox({
 			(item) => item.text.trim() === newValueText.trim(),
 		)?.value;
 
-		if (!newValue) return;
+		if (newValue === undefined) return;
 		if (shouldFilter !== false) setLocalValue(newValue);
 		const formattedValue = isOptionNumber ? +newValue : newValue;
+
 		onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
 		setLocalOpen(false);
 	};

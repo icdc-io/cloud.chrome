@@ -70,7 +70,10 @@ export const fetchData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl
+			.replace("{account}", user.account)
+			.replace("{role}", user.role)
+			.replace("{location}", user.location),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
@@ -90,7 +93,10 @@ export const updateData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl
+			.replace("{account}", user.account)
+			.replace("{role}", user.role)
+			.replace("{location}", user.location),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
@@ -111,7 +117,10 @@ export const patchData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl
+			.replace("{account}", user.account)
+			.replace("{role}", user.role)
+			.replace("{location}", user.location),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
@@ -132,7 +141,10 @@ export const createData = async <T>(
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl
+			.replace("{account}", user.account)
+			.replace("{role}", user.role)
+			.replace("{location}", user.location),
 		baseUrl,
 	);
 	const headers = await getHeaders(user, initialHeaders);
@@ -148,14 +160,18 @@ export const createData = async <T>(
 
 export const deleteData = async <T>(
 	initialUrl: string,
-	params = {},
+	params: Record<string, string> | undefined,
 	initialHeaders = {},
 ) => {
 	const { user, baseUrl } = await getInfoForRequest();
 	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
+		initialUrl
+			.replace("{account}", user.account)
+			.replace("{role}", user.role)
+			.replace("{location}", user.location),
 		baseUrl,
 	);
+
 	const headers = await getHeaders(user, initialHeaders);
 	return (await processUnknownResponse(
 		await request({

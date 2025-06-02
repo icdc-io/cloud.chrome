@@ -51,7 +51,7 @@
 				"url": "http://localhost:8017"
 			},
 			{
-				"name": "loadbalancer",
+				"name": "alb",
 				"title": "Load Balancer",
 				"url": "http://localhost:8018"
 			},
@@ -93,7 +93,7 @@
 				"url": "http://localhost:8002"
 			}
 		],
-		"path": "/storage2",
+		"path": "/storage",
 		"name": "storage",
 		"display_name": "Storage"
 	},
@@ -240,7 +240,7 @@
 				"url": "http://localhost:8047"
 			},
 			{
-				"name": "notificationsettings",
+				"name": "notification-settings",
 				"title": "Notification Settings",
 				"url": "http://localhost:8048"
 			}
