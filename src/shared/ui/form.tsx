@@ -190,4 +190,5 @@ export type {
 	SubmitHandler,
 	Path,
 	UseFormReturn,
+	FieldValues,
 } from "react-hook-form";

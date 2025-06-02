@@ -40,16 +40,16 @@ const processUnknownResponse = async <T>(response: KyResponse<T>) => {
 };
 
 export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
+	if (
+		response.status === 204 ||
+		response.headers.get("Content-Length") === "0"
+	) {
+		return response as T;
+	}
 	if (isJSONType(response.headers.get("Content-Type"))) {
 		const totalInstancesCount = response.headers.get("X-Total-Count");
 		const responseBody = await response.json();
 
-		if (
-			response.status === 204 ||
-			response.headers.get("Content-Length") === "0"
-		) {
-			return response as T;
-		}
 		if (totalInstancesCount) {
 			return {
 				data: responseBody,
