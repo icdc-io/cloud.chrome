@@ -334,6 +334,7 @@ type MutationVariables<U> =
 			endpoint: string;
 			params?: ObjectRecord;
 			headers?: ObjectRecord;
+			body?: unknown;
 	  }
 	| {
 			method: "POST" | "PUT" | "PATCH";
@@ -376,7 +377,7 @@ export function useMutateData<T, U = undefined>(
 	const { ...mutationOptions } = options;
 
 	const mutationFn = async (variables: MutationVariables<U>): Promise<T> => {
-		const { method, endpoint, params, headers } = variables;
+		const { method, endpoint, params, headers, body } = variables;
 
 		if (method !== "DELETE") {
 			const { body } = variables;
@@ -393,9 +394,10 @@ export function useMutateData<T, U = undefined>(
 			});
 		}
 
-		return mutateJSONData<T, undefined>({
+		return mutateJSONData<T, unknown>({
 			url: endpoint,
 			method,
+			body,
 			headers: headers,
 			options: params,
 		});
