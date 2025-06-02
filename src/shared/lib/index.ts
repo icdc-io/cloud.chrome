@@ -40,7 +40,7 @@ export const loadComponent =
 	) =>
 	async () => {
 		const remoteName = service
-			? `${service.replace("-", "")}_${moduleName}`
+			? `${service.replace("-", "")}_${moduleName?.replace("-", "")}`
 			: moduleName;
 		if (!(remoteName in window)) {
 			// Need to load the remote first
