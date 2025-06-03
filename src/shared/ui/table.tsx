@@ -1,7 +1,7 @@
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
-import { MoveDown, MoveUp } from "lucide-react";
+import { ArrowDownUp, MoveDown, MoveUp } from "lucide-react";
 
 const Table = React.forwardRef<
 	HTMLTableElement,
@@ -9,12 +9,14 @@ const Table = React.forwardRef<
 		containerClassName?: string;
 	}
 >(({ className, containerClassName, ...props }, ref) => (
-	<div className={cn("relative w-full overflow-auto", containerClassName)}>
-		<table
-			ref={ref}
-			className={cn("w-full caption-bottom text-sm", className)}
-			{...props}
-		/>
+	<div className={cn("relative w-full overflow-auto ", containerClassName)}>
+		<div className=" border border-solid border-[#E2E8F0] rounded">
+			<table
+				ref={ref}
+				className={cn("w-full caption-bottom text-sm border-none", className)}
+				{...props}
+			/>
+		</div>
 	</div>
 ));
 Table.displayName = "Table";
@@ -93,8 +95,14 @@ const TableHead = React.forwardRef<
 			{onSort ? (
 				<button type="button" onClick={onSort} className="flex items-center">
 					{children}
-					{sorted === "descending" && <MoveDown size={16} />}
-					{sorted === "ascending" && <MoveUp size={16} />}
+					{!!onSort && (
+						<>
+							&nbsp;
+							<ArrowDownUp size={16} />
+						</>
+					)}
+					{/* {sorted === "descending" && <MoveDown size={16} />}
+					{sorted === "ascending" && <MoveUp size={16} />} */}
 				</button>
 			) : (
 				children

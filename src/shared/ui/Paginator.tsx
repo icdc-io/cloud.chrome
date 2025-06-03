@@ -32,15 +32,14 @@ const Paginator: FC<PaginatorProps> = ({
 		const links = [];
 		const neighbors = 1;
 
-		if (currentPage > 1) {
-			links.push(
-				<PaginationItem key="prev">
-					<PaginationButtonPrevious
-						onClick={() => handlePageChange(currentPage - 1)}
-					/>
-				</PaginationItem>,
-			);
-		}
+		links.push(
+			<PaginationItem key="prev">
+				<PaginationButtonPrevious
+					onClick={() => handlePageChange(currentPage - 1)}
+					disabled={currentPage <= 1}
+				/>
+			</PaginationItem>,
+		);
 
 		if (currentPage >= neighbors + 2) {
 			links.push(
@@ -100,15 +99,14 @@ const Paginator: FC<PaginatorProps> = ({
 			);
 		}
 
-		if (currentPage < totalPages) {
-			links.push(
-				<PaginationItem key="next">
-					<PaginationButtonNext
-						onClick={() => handlePageChange(currentPage + 1)}
-					/>
-				</PaginationItem>,
-			);
-		}
+		links.push(
+			<PaginationItem key="next">
+				<PaginationButtonNext
+					onClick={() => handlePageChange(currentPage + 1)}
+					disabled={currentPage >= totalPages}
+				/>
+			</PaginationItem>,
+		);
 
 		return links;
 	};
