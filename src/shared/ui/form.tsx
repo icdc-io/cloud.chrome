@@ -14,6 +14,7 @@ import {
 	useFieldArray,
 	useForm,
 	useFormContext,
+	useWatch,
 } from "react-hook-form";
 
 const Form = FormProvider;
@@ -184,6 +185,7 @@ export {
 	useForm,
 	zodResolver,
 	useFieldArray,
+	useWatch,
 };
 export type {
 	DefaultValues,
