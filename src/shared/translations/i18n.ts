@@ -74,6 +74,8 @@ export const resources: LanguageResources = {
 			markAsUnread: "Mark as unread",
 			delete: "Delete",
 			noNotifications: "No Notifications",
+			info: "Info",
+			fetchFailed: "Failed to load data",
 		},
 	},
 	ru: {
@@ -135,6 +137,8 @@ export const resources: LanguageResources = {
 			markAsUnread: "Отметить как непрочитанное",
 			delete: "Удалить",
 			noNotifications: "Нет уведомлений",
+			info: "Инфо",
+			fetchFailed: "Не удалось загрузить данные",
 		},
 	},
 };

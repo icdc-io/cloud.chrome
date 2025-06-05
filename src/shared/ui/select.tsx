@@ -1,6 +1,6 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronsUpDown } from "lucide-react";
+import { Check, ChevronsUpDown, Loader } from "lucide-react";
 import * as React from "react";
 
 import { cn } from "@/shared/lib/utils";
@@ -27,8 +27,9 @@ const SelectTrigger = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Trigger>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Trigger> & {
 		onClear?: () => void;
+		isLoading?: boolean;
 	}
->(({ className, children, onClear, value, ...props }, ref) => {
+>(({ className, children, onClear, value, isLoading, ...props }, ref) => {
 	const isResetButtonVisible = value && !!onClear;
 
 	return (
@@ -42,10 +43,17 @@ const SelectTrigger = React.forwardRef<
 				{...props}
 			>
 				{children}
-				{!isResetButtonVisible && (
+
+				{isLoading ? (
 					<SelectPrimitive.Icon asChild>
-						<ChevronsUpDown className="h-4 w-4 opacity-50" />
+						<Loader className="h-4 w-4 opacity-50" />
 					</SelectPrimitive.Icon>
+				) : (
+					!isResetButtonVisible && (
+						<SelectPrimitive.Icon asChild>
+							<ChevronsUpDown className="h-4 w-4 opacity-50" />
+						</SelectPrimitive.Icon>
+					)
 				)}
 			</SelectPrimitive.Trigger>
 			{isResetButtonVisible ? (
