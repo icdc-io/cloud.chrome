@@ -4,11 +4,11 @@ import RemoteComponent from "@/shared/ui/RemoteComponent";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "@/styles/Popup.scss";
-import { HOME } from "@/shared/constants/servicesNames";
-import Loader from "@/shared/ui/loader";
-import "semantic-ui-css/semantic.min.css";
+// import "semantic-ui-css/semantic.min.css";
 import { useAppSelector } from "@/redux/shared";
 import { Errors } from "@/shared/constants/errors";
+import { HOME } from "@/shared/constants/servicesNames";
+import Loader from "@/shared/ui/loader";
 import ErrorScreen from "@/widgets/Error";
 
 const AppRoutes = () => {

@@ -5,7 +5,7 @@ import { useTranslation } from "react-i18next";
 const variants = {
 	0: {
 		icon: Frown,
-		title: "wrong",
+		title: "fetchFailed",
 		description: "",
 	},
 	403: {

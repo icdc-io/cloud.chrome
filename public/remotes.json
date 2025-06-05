@@ -83,7 +83,7 @@
 	{
 		"apps": [
 			{
-				"name": "amazon",
+				"name": "objects",
 				"title": "S3 Object Storage",
 				"url": "http://localhost:8001"
 			},

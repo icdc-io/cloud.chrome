@@ -110,25 +110,25 @@ const CONTENT_TYPE_JSON = "application/json";
 export const isJSONType = (contentType: string | null) =>
 	contentType?.includes(CONTENT_TYPE_JSON);
 
-const parseError = (errorData: unknown): string => {
-	if (!errorData) return "";
-	if (typeof errorData === "string") return errorData;
-	if (typeof errorData === "object")
-		return [
-			...(Array.isArray(errorData)
-				? errorData
-				: Object.values(errorData)
-			).reduce((acc, curr) => {
-				const msg = parseError(curr).trim();
-				if (msg) acc.add(msg);
-				return acc;
-			}, new Set()),
-		].join("\n");
-	return "";
+const parseError = (errorData: Record<string, string>): string => {
+	// if (!errorData) return "";
+	// if (typeof errorData === "string") return errorData;
+	// if (typeof errorData === "object")
+	// 	return [
+	// 		...(Array.isArray(errorData)
+	// 			? errorData
+	// 			: Object.values(errorData)
+	// 		).reduce((acc, curr) => {
+	// 			const msg = parseError(curr).trim();
+	// 			if (msg) acc.add(msg);
+	// 			return acc;
+	// 		}, new Set()),
+	// 	].join("\n");
+	return errorData?.message || "";
 };
 
 export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
-	if (!navigator.onLine) throw new RequestError("noInternet", 0);
+	// if (!navigator.onLine) throw new RequestError("noInternet", 0);
 	try {
 		const response = await ky<T>(config.url, {
 			method: config.method ?? "GET",

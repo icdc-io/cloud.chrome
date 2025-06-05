@@ -696,6 +696,10 @@ label.text-destructive ~ button[role="combobox"] {
 	color: var(--destructive);
 }
 
+.wrap-anywhere {
+	overflow-wrap: anywhere;
+}
+
 @layer base {
 	* {
 		@apply border-border;
