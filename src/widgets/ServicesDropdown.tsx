@@ -1,10 +1,7 @@
+import { useAppSelector } from "@/redux/shared";
 import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
-import styles from "@/styles/ServicesDropdown.module.css";
-import { ChevronsUpDown, Plus } from "lucide-react";
-import { useNavigate } from "react-router-dom";
-
-import { useAppSelector } from "@/redux/shared";
+import Question from "@/shared/images/question.svg";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -18,7 +15,10 @@ import {
 	SidebarMenuItem,
 	useSidebar,
 } from "@/shared/ui/sidebar";
+import styles from "@/styles/ServicesDropdown.module.css";
+import { ChevronsUpDown, Plus } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 const ServicesDropdown = () => {
 	const { t } = useTranslation();
@@ -105,11 +105,15 @@ const ServicesDropdown = () => {
 									src={currentService.image.src || ""}
 									alt="Service icon"
 									className="m-auto"
+									onError={({ currentTarget }) => {
+										currentTarget.onerror = null;
+										currentTarget.src = Question;
+									}}
 								/>
 							</div>
 							<div className="grid flex-1 text-left text-sm leading-tight ml-2">
 								<span className="truncate font-semibold text-white">
-									{currentService.text}
+									{currentService.text || t("unavailable")}
 								</span>
 								{/* <span className="truncate text-xs">{activeTeam.plan}</span> */}
 							</div>

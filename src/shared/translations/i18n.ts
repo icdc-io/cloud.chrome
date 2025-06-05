@@ -67,6 +67,7 @@ export const resources: LanguageResources = {
 			notifications: "Notifications",
 			markAllAsRead: "Mark all as read",
 			openEvents: "Open events",
+			openNotifications: "Open notifications",
 			all: "All",
 			events: "Events",
 			alerts: "Alerts",
@@ -76,6 +77,7 @@ export const resources: LanguageResources = {
 			noNotifications: "No Notifications",
 			info: "Info",
 			fetchFailed: "Failed to load data",
+			unavailable: "Unavailable",
 		},
 	},
 	ru: {
@@ -130,6 +132,7 @@ export const resources: LanguageResources = {
 			notifications: "Уведомления",
 			markAllAsRead: "Отметить все как прочитанное",
 			openEvents: "Открыть события",
+			openNotifications: "Открыть уведомления",
 			all: "Все",
 			events: "События",
 			alerts: "Оповещения",
@@ -139,6 +142,7 @@ export const resources: LanguageResources = {
 			noNotifications: "Нет уведомлений",
 			info: "Инфо",
 			fetchFailed: "Не удалось загрузить данные",
+			unavailable: "Недоступно",
 		},
 	},
 };

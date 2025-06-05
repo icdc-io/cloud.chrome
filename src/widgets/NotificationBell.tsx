@@ -5,6 +5,7 @@ import {
 	// createData,
 	// fetchData,
 	useFetchData,
+	useMutateData,
 	// useFetchInfiniteData,
 } from "@/shared/api/shared";
 import eventsIcon from "@/shared/images/telemetry_events.svg";
@@ -17,6 +18,7 @@ import { EventSource } from "eventsource";
 import { Bell, Check, Ellipsis, Trash2 } from "lucide-react";
 import { useCallback, useEffect, useMemo, useRef, useState } from "react";
 import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 
 type Notification = components["schemas"]["Notification"];
 
@@ -51,12 +53,24 @@ const NotificationDropdownMenu = ({
 
 // const ITEMS_PER_PAGE = 10;
 
+type ReadAllNotificationsBody = {
+	ids?: number[];
+};
+
+type ReadAllNotificationsResponse = {
+	message: string;
+	status: number;
+	code: string;
+	errors: string[];
+};
+
 const NotificationBell = () => {
 	const { t, i18n } = useTranslation();
 	// const observer = useRef<IntersectionObserver>();
 	const [isAllRead, setIsAllRead] = useState(false);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
+	const navigate = useNavigate();
 	// const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
 	// 	useFetchInfiniteData<Rr>({
 	// 		endpoint: "/sse/notification/v1/updates",
@@ -71,10 +85,10 @@ const NotificationBell = () => {
 	// 		initialPageParam: 0,
 	// 	});
 	const [events, setEvents] = useState<Notification[]>([]);
-	const readAllRequest = useFetchData({
-		endpoint: "/api/notification/v1/notifications/read_all",
-		enabled: false,
-	});
+	const { mutateAsync } = useMutateData<
+		ReadAllNotificationsResponse,
+		ReadAllNotificationsBody
+	>({});
 
 	const currentLocationUrl = baseUrls?.[user.location];
 
@@ -214,10 +228,21 @@ const NotificationBell = () => {
 		events.filter((event) => !event.read_at).length !== 0;
 
 	const onReadAll = () => {
-		readAllRequest.refetch().then(() => {
-			setIsAllRead(true);
-		});
+		mutateAsync({
+			endpoint: "/api/notification/v1/notifications",
+			method: "PATCH",
+			body: {},
+		})
+			// .refetch()
+			.then(() => {
+				setIsAllRead(true);
+			});
 	};
+
+	const goToEvents = () =>
+		navigate("/telemetry/notifications", {
+			relative: "path",
+		});
 
 	return (
 		<Popover>
@@ -256,8 +281,8 @@ const NotificationBell = () => {
 								icon: (
 									<img src={eventsIcon} alt="Events" width={16} height={16} />
 								),
-								label: t("openEvents"),
-								onSelect: () => null,
+								label: t("openNotifications"),
+								onSelect: goToEvents,
 							},
 						]}
 					/>

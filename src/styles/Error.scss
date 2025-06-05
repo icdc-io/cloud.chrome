@@ -11,6 +11,7 @@ div.errorScreen {
   align-items: center;
   padding: 100px 40px 40px;
   min-height: calc(100vh - 160px);
+	overflow: hidden;
 
   img {
     max-inline-size: unset;
