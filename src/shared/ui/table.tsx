@@ -95,14 +95,14 @@ const TableHead = React.forwardRef<
 			{onSort ? (
 				<button type="button" onClick={onSort} className="flex items-center">
 					{children}
-					{!!onSort && (
+					{!!onSort && !sorted && (
 						<>
 							&nbsp;
 							<ArrowDownUp size={16} />
 						</>
 					)}
-					{/* {sorted === "descending" && <MoveDown size={16} />}
-					{sorted === "ascending" && <MoveUp size={16} />} */}
+					{sorted === "descending" && <MoveDown size={16} />}
+					{sorted === "ascending" && <MoveUp size={16} />}
 				</button>
 			) : (
 				children
