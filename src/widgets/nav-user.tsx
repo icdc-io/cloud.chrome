@@ -1,14 +1,11 @@
 import { SidebarMenu, SidebarMenuItem } from "@/shared/ui/sidebar";
 import UserDropdown from "./UserDropdown";
 
-type UserDropdownType = {
-	isFullInfoAvailable: boolean;
-};
-export function NavUser({ isFullInfoAvailable }: UserDropdownType) {
+export function NavUser() {
 	return (
 		<SidebarMenu>
 			<SidebarMenuItem>
-				<UserDropdown isFullInfoAvailable={isFullInfoAvailable} />
+				<UserDropdown />
 			</SidebarMenuItem>
 		</SidebarMenu>
 	);

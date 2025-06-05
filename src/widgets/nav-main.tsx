@@ -1,3 +1,4 @@
+import Question from "@/shared/images/question.svg";
 // import { builtInServices } from "@/shared/constants/builtInServices";
 import { Collapsible, CollapsibleTrigger } from "@/shared/ui/collapsible";
 import {
@@ -42,6 +43,10 @@ export function NavMain({
 												className="m-auto"
 												src={`/icons/${currentService}_${item.url}.svg`}
 												alt={currentService}
+												onError={({ currentTarget }) => {
+													currentTarget.onerror = null;
+													currentTarget.src = Question;
+												}}
 											/>
 										</div>
 
