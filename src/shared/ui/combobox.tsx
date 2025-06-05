@@ -38,143 +38,148 @@ type Combobox = {
 	className?: string;
 };
 
-export function Combobox({
-	options,
-	placeholder,
-	onOpenChange,
-	onValueChange,
-	open,
-	value,
-	shouldFilter = true,
-	searchQueryFn,
-	formatOption,
-	emptyMessage,
-	onQueryChange,
-	minValueLength,
-	isLoading,
-	disabled,
-	unClearable = false,
-	className = "",
-}: Combobox) {
-	const { t } = useTranslation();
-	const [localOpen, setLocalOpen] = React.useState(false);
-	const [localValue, setLocalValue] = React.useState("");
-	const [searchQuery, setSearchQuery] = React.useState("");
-	const debouncedSearchQuery = useDebounce(searchQuery, 0);
-	const isOptionNumber = typeof options[0]?.value === "number";
-	const formattedOptions = options.map((item) => ({
-		...item,
-		value: item.value ? item.value + "" : item.value,
-		text: item.text + "",
-	}));
-	const formattedValue = value ? value + "" : value;
+export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
+	(
+		{
+			options,
+			placeholder,
+			onOpenChange,
+			onValueChange,
+			open,
+			value,
+			shouldFilter = true,
+			searchQueryFn,
+			formatOption,
+			emptyMessage,
+			onQueryChange,
+			minValueLength,
+			isLoading,
+			disabled,
+			unClearable = false,
+			className = "",
+		},
+		ref,
+	) => {
+		const { t } = useTranslation();
+		const [localOpen, setLocalOpen] = React.useState(false);
+		const [localValue, setLocalValue] = React.useState("");
+		const [searchQuery, setSearchQuery] = React.useState("");
+		const debouncedSearchQuery = useDebounce(searchQuery, 0);
+		const isOptionNumber = typeof options[0]?.value === "number";
+		const formattedOptions = options.map((item) => ({
+			...item,
+			value: item.value ? item.value + "" : item.value,
+			text: item.text + "",
+		}));
+		const formattedValue = value ? value + "" : value;
 
-	React.useEffect(() => {
-		if (!searchQueryFn) return;
-		if (!minValueLength) return searchQueryFn(debouncedSearchQuery);
-		if (debouncedSearchQuery.length >= minValueLength)
-			searchQueryFn(debouncedSearchQuery);
-		return;
-	}, [debouncedSearchQuery]);
+		React.useEffect(() => {
+			if (!searchQueryFn) return;
+			if (!minValueLength) return searchQueryFn(debouncedSearchQuery);
+			if (debouncedSearchQuery.length >= minValueLength)
+				searchQueryFn(debouncedSearchQuery);
+			return;
+		}, [debouncedSearchQuery]);
 
-	React.useEffect(() => {
-		// if (!formattedValue) return;
-		setLocalValue(formattedValue);
-	}, [formattedValue]);
+		React.useEffect(() => {
+			// if (!formattedValue) return;
+			setLocalValue(formattedValue);
+		}, [formattedValue]);
 
-	React.useEffect(() => {
-		onOpenChange?.(localOpen);
-	}, [localOpen]);
+		React.useEffect(() => {
+			onOpenChange?.(localOpen);
+		}, [localOpen]);
 
-	React.useEffect(() => {
-		onQueryChange?.(searchQuery);
-	}, [searchQuery]);
+		React.useEffect(() => {
+			onQueryChange?.(searchQuery);
+		}, [searchQuery]);
 
-	React.useEffect(() => {
-		if (open === undefined) return;
-		setLocalOpen(open);
-	}, [open]);
+		React.useEffect(() => {
+			if (open === undefined) return;
+			setLocalOpen(open);
+		}, [open]);
 
-	const placeholderAttribute = localValue
-		? {}
-		: {
-				"data-placeholder": true,
-			};
+		const placeholderAttribute = localValue
+			? {}
+			: {
+					"data-placeholder": true,
+				};
 
-	const currentOption = localValue
-		? formattedOptions.find((option) => option.value === localValue)?.text
-		: "";
+		const currentOption = localValue
+			? formattedOptions.find((option) => option.value === localValue)?.text
+			: "";
 
-	const onSelect = (currentValue: string) => {
-		const newValueText =
-			currentValue === localValue && !unClearable ? "" : currentValue;
-		const newValue = formattedOptions.find(
-			(item) => item.text.trim() === newValueText.trim(),
-		)?.value;
+		const onSelect = (currentValue: string) => {
+			const newValueText =
+				currentValue === localValue && !unClearable ? "" : currentValue;
+			const newValue = formattedOptions.find(
+				(item) => item.text.trim() === newValueText.trim(),
+			)?.value;
 
-		if (newValue === undefined) return;
-		if (shouldFilter !== false) setLocalValue(newValue);
-		const formattedValue = isOptionNumber ? +newValue : newValue;
+			if (newValue === undefined) return;
+			if (shouldFilter !== false) setLocalValue(newValue);
+			const formattedValue = isOptionNumber ? +newValue : newValue;
 
-		onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
-		setLocalOpen(false);
-	};
+			onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
+			setLocalOpen(false);
+		};
 
-	return (
-		<Popover open={localOpen} onOpenChange={setLocalOpen}>
-			<PopoverTrigger asChild>
-				<Button
-					variant="outline"
-					// biome-ignore lint/a11y/useSemanticElements: <explanation>
-					role="combobox"
-					aria-expanded={localOpen}
-					className={cn(
-						"w-full justify-between font-medium border border-input",
-						className,
-					)}
-					{...placeholderAttribute}
-					disabled={disabled}
-				>
-					{currentOption || t(placeholder)}
-					<ChevronsUpDown className="h-4 w-4 opacity-50" size={16} />
-				</Button>
-			</PopoverTrigger>
-			<PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
-				<Command shouldFilter={shouldFilter}>
-					<CommandInput
-						isLoading={isLoading}
-						placeholder={t(placeholder)}
-						value={searchQuery}
-						onValueChange={setSearchQuery}
-						className="h-9 !outline-0 !outline-none border-none"
-					/>
-					<CommandList>
-						{(minValueLength && minValueLength > searchQuery.length) ||
-						isLoading ? null : (
-							<CommandEmpty>{emptyMessage || t("noOptions")}</CommandEmpty>
+		return (
+			<Popover open={localOpen} onOpenChange={setLocalOpen}>
+				<PopoverTrigger asChild>
+					<Button
+						variant="outline"
+						// biome-ignore lint/a11y/useSemanticElements: <explanation>
+						role="combobox"
+						aria-expanded={localOpen}
+						className={cn(
+							"w-full justify-between font-medium border border-input",
+							className,
 						)}
-						<CommandGroup>
-							{formattedOptions.map((option) => (
-								<CommandItem
-									key={option.value}
-									value={option.text}
-									onSelect={onSelect}
-								>
-									{formatOption?.(option) || option.text}
-									<Check
-										className={cn(
-											"ml-auto",
-											formattedValue === option.value
-												? "opacity-100"
-												: "opacity-0",
-										)}
-									/>
-								</CommandItem>
-							))}
-						</CommandGroup>
-					</CommandList>
-				</Command>
-			</PopoverContent>
-		</Popover>
-	);
-}
+						{...placeholderAttribute}
+						disabled={disabled}
+					>
+						{currentOption || t(placeholder)}
+						<ChevronsUpDown className="h-4 w-4 opacity-50" size={16} />
+					</Button>
+				</PopoverTrigger>
+				<PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
+					<Command shouldFilter={shouldFilter}>
+						<CommandInput
+							isLoading={isLoading}
+							placeholder={t(placeholder)}
+							value={searchQuery}
+							onValueChange={setSearchQuery}
+							className="h-9 !outline-0 !outline-none border-none"
+						/>
+						<CommandList>
+							{(minValueLength && minValueLength > searchQuery.length) ||
+							isLoading ? null : (
+								<CommandEmpty>{emptyMessage || t("noOptions")}</CommandEmpty>
+							)}
+							<CommandGroup>
+								{formattedOptions.map((option) => (
+									<CommandItem
+										key={option.value}
+										value={option.text}
+										onSelect={onSelect}
+									>
+										{formatOption?.(option) || option.text}
+										<Check
+											className={cn(
+												"ml-auto",
+												formattedValue === option.value
+													? "opacity-100"
+													: "opacity-0",
+											)}
+										/>
+									</CommandItem>
+								))}
+							</CommandGroup>
+						</CommandList>
+					</Command>
+				</PopoverContent>
+			</Popover>
+		);
+	},
+);
