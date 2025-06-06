@@ -160,6 +160,7 @@ export enum ActionTypes {
 	TOKEN = "TOKEN",
 	GET = "GET",
 	CREATE = "CREATE",
+	UPDATE = "UPDATE",
 	DELETE = "DELETE",
 	LIST = "LIST",
 }
@@ -186,6 +187,14 @@ const postRequest = ({
 }: GeneralAction) =>
 	`curl -X POST -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d \n'${body || ""}' \n%BASE_URL${url} \n${comment}`;
 
+const updateRequest = ({
+	headers,
+	url = "",
+	body = "",
+	comment = "",
+}: GeneralAction) =>
+	`curl -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d \n'${body || ""}' \n%BASE_URL${url} \n${comment}`;
+
 const deleteRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
 	`curl -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" \n%BASE_URL${url || ""}`;
 
@@ -196,6 +205,7 @@ const ApiActions = {
 	TOKEN: tokenRequest,
 	GET: getRequest,
 	CREATE: postRequest,
+	UPDATE: updateRequest,
 	DELETE: deleteRequest,
 	LIST: listRequest,
 } as const;

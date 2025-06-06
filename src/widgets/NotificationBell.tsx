@@ -253,7 +253,7 @@ const NotificationBell = () => {
 					aria-label="Notification Bell"
 				>
 					<Bell size={20} />
-					{isNotificationsAvailable && (
+					{!isAllRead && isNotificationsAvailable && (
 						<span className="absolute h-2 w-2 rounded-full bg-[#EF4444] top-0 right-0" />
 					)}
 				</button>
