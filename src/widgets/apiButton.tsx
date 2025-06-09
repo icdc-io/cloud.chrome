@@ -177,7 +177,7 @@ type GeneralAction = {
 const tokenRequest = () => `export TOKEN="%TOKEN"`;
 
 const getRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} \n%BASE_URL${url}`;
+	`curl '%BASE_URL${url}' -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)}`;
 
 const postRequest = ({
 	headers,
@@ -185,7 +185,7 @@ const postRequest = ({
 	body = "",
 	comment = "",
 }: GeneralAction) =>
-	`curl -X POST -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d \n'${body || ""}' \n%BASE_URL${url} \n${comment}`;
+	`curl '%BASE_URL${url}' -X POST -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' ${comment}`;
 
 const updateRequest = ({
 	headers,
@@ -193,13 +193,13 @@ const updateRequest = ({
 	body = "",
 	comment = "",
 }: GeneralAction) =>
-	`curl -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d \n'${body || ""}' \n%BASE_URL${url} \n${comment}`;
+	`curl '%BASE_URL${url}' -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' ${comment}`;
 
 const deleteRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" \n%BASE_URL${url || ""}`;
+	`curl '%BASE_URL${url || ""}' -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json"`;
 
 const listRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} \n%BASE_URL${url}`;
+	`curl '%BASE_URL${url}' -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)}`;
 
 const ApiActions = {
 	TOKEN: tokenRequest,
