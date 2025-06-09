@@ -153,7 +153,7 @@ const formatHeaders = (headers?: Headers): string => {
 			acc.push(`-H "${headerName}: ${headerValue}"`);
 			return acc;
 		}, [])
-		.join("");
+		.join(" ");
 };
 
 export enum ActionTypes {
@@ -177,7 +177,7 @@ type GeneralAction = {
 const tokenRequest = () => `export TOKEN="%TOKEN"`;
 
 const getRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl '%BASE_URL${url}' -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)}`;
+	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} %BASE_URL${url}`;
 
 const postRequest = ({
 	headers,
@@ -185,7 +185,7 @@ const postRequest = ({
 	body = "",
 	comment = "",
 }: GeneralAction) =>
-	`curl '%BASE_URL${url}' -X POST -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' ${comment}`;
+	`curl -X POST -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' %BASE_URL${url} ${comment}`;
 
 const updateRequest = ({
 	headers,
@@ -193,13 +193,13 @@ const updateRequest = ({
 	body = "",
 	comment = "",
 }: GeneralAction) =>
-	`curl '%BASE_URL${url}' -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' ${comment}`;
+	`curl -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' %BASE_URL${url} ${comment}`;
 
 const deleteRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl '%BASE_URL${url || ""}' -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json"`;
+	`curl -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" %BASE_URL${url || ""}`;
 
 const listRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
-	`curl '%BASE_URL${url}' -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)}`;
+	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} %BASE_URL${url}`;
 
 const ApiActions = {
 	TOKEN: tokenRequest,
