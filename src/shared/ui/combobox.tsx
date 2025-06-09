@@ -121,6 +121,7 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 			const formattedValue = isOptionNumber ? +newValue : newValue;
 
 			onValueChange(Number.isNaN(formattedValue) ? undefined : formattedValue);
+			setSearchQuery("");
 			setLocalOpen(false);
 		};
 
@@ -129,8 +130,7 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						// biome-ignore lint/a11y/useSemanticElements: <explanation>
-						role="combobox"
+						// role="combobox"
 						aria-expanded={localOpen}
 						className={cn(
 							"w-full justify-between font-medium border border-input",
