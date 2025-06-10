@@ -79,7 +79,8 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 	for (const headerInfo in initialHeaders) {
 		headers[headerInfo] = initialHeaders[headerInfo]
 			?.replace("%ACCOUNT", user.account)
-			.replace("%ROLE", user.role);
+			.replace("%ROLE", user.role)
+			.replace("%LOCATION", user.location);
 	}
 
 	return {
