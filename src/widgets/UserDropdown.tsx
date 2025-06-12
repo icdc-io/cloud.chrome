@@ -87,7 +87,7 @@ const UserDropdown = () => {
 		<DropdownMenuSub>
 			<DropdownMenuSubTrigger className={styles["select-item"]}>
 				<div className={styles.RightSlot}>
-					<span>{t("accounts")}</span>
+					<span>{t("account")}</span>
 					<span className={styles["selected-value"]}>{account}</span>
 				</div>
 			</DropdownMenuSubTrigger>

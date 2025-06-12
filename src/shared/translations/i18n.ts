@@ -47,6 +47,7 @@ export const resources: LanguageResources = {
 			location: "Location",
 			role: "Role",
 			accounts: "Accounts",
+			account: "Account",
 			language: "Language",
 			unavailableDescription: "Please choose another location.",
 			loading: "Loading...",
@@ -78,6 +79,8 @@ export const resources: LanguageResources = {
 			info: "Info",
 			fetchFailed: "Failed to load data",
 			unavailable: "Unavailable",
+			tryAgainAndRefresh: "Please refresh the page and try again",
+			openNotificationSettings: "Open notification settings",
 		},
 	},
 	ru: {
@@ -112,6 +115,7 @@ export const resources: LanguageResources = {
 			location: "Локация",
 			role: "Роль",
 			accounts: "Аккаунты",
+			account: "Аккаунт",
 			language: "Язык",
 			unavailableDescription: "Пожалуйста, выберите другую локацию.",
 			loading: "Загрузка...",
@@ -143,6 +147,8 @@ export const resources: LanguageResources = {
 			info: "Инфо",
 			fetchFailed: "Не удалось загрузить данные",
 			unavailable: "Недоступно",
+			tryAgainAndRefresh: "Пожалуйста, обновите страницу и попробуйте снова",
+			openNotificationSettings: "Открыть настройки уведомлений",
 		},
 	},
 };
