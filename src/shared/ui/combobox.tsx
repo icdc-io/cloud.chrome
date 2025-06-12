@@ -130,7 +130,8 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						// role="combobox"
+						// biome-ignore lint/a11y/useSemanticElements:
+						role="combobox"
 						aria-expanded={localOpen}
 						className={cn(
 							"w-full justify-between font-medium border border-input",

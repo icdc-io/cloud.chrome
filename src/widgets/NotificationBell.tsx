@@ -8,6 +8,7 @@ import {
 	useMutateData,
 	// useFetchInfiniteData,
 } from "@/shared/api/shared";
+import BellSettings from "@/shared/images/bell-settings.svg";
 import eventsIcon from "@/shared/images/telemetry_events.svg";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 // import { Skeleton } from "@/shared/ui/skeleton";
@@ -15,8 +16,8 @@ import styles from "@/styles/NotificationBell.module.css";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { EventSource } from "eventsource";
 // import * as Tabs from "@radix-ui/react-tabs";
-import { Bell, Check, Ellipsis, Trash2 } from "lucide-react";
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { Bell, Check, Ellipsis } from "lucide-react";
+import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
 
@@ -68,6 +69,7 @@ const NotificationBell = () => {
 	const { t, i18n } = useTranslation();
 	// const observer = useRef<IntersectionObserver>();
 	const [isAllRead, setIsAllRead] = useState(false);
+	const [isError, setIsError] = useState(false);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
 	const navigate = useNavigate();
@@ -119,16 +121,17 @@ const NotificationBell = () => {
 			},
 		);
 		es.addEventListener("notifications", (event) => {
-			setEvents(JSON.parse(event.data));
+			setEvents(JSON.parse(event.data).slice(0, 50));
 		});
 
 		es.addEventListener("notification_update", (event) => {
 			const newData = JSON.parse(event.data) as Notification[];
-			setEvents((prevState) => [...newData, ...prevState]);
+			setEvents((prevState) => [...newData, ...prevState].slice(0, 50));
 		});
 
 		es.onerror = (error) => {
 			console.log("error ", error);
+			setIsError(true);
 			es?.close();
 		};
 
@@ -163,12 +166,43 @@ const NotificationBell = () => {
 	// 	}, []);
 	// }, [data]);
 
+	const onReadNotifications = (id?: number) => {
+		mutateAsync({
+			endpoint: "/api/notification/v1/notifications",
+			method: "PATCH",
+			body: id ? { ids: [id] } : {},
+		})
+			// .refetch()
+			.then(() => {
+				if (id) {
+					setEvents((prevState) =>
+						prevState.map((notification) =>
+							notification.id === id
+								? {
+										...notification,
+										read_at: new Date().toISOString(),
+									}
+								: notification,
+						),
+					);
+				} else {
+					setIsAllRead(true);
+				}
+			});
+	};
+
+	const onReadNotificationById = (id?: number) => () => onReadNotifications(id);
+
+	const onReadAllNotifications = () => onReadNotifications();
+
 	const notificationItems = events.map((notification) => (
-		<div
+		<button
+			type="button"
 			key={notification.id}
 			// ref={lastElementRef}
 			// ref={observer}
-			className="flex items-center gap-2 mb-4 mt-4 group"
+			className="flex items-center gap-2 mb-4 mt-4 group w-full"
+			onClick={onReadNotificationById(notification.id)}
 		>
 			<div className="flex items-start gap-2 w-full pr-2">
 				{/* <div>
@@ -221,26 +255,19 @@ const NotificationBell = () => {
 					/> */}
 				{/* </div> */}
 			</div>
-		</div>
+		</button>
 	));
 
 	const isNotificationsAvailable =
 		events.filter((event) => !event.read_at).length !== 0;
 
-	const onReadAll = () => {
-		mutateAsync({
-			endpoint: "/api/notification/v1/notifications",
-			method: "PATCH",
-			body: {},
-		})
-			// .refetch()
-			.then(() => {
-				setIsAllRead(true);
-			});
-	};
-
 	const goToEvents = () =>
 		navigate("/telemetry/notifications", {
+			relative: "path",
+		});
+
+	const goToNotificationSettings = () =>
+		navigate("/telemetry/notification-settings", {
 			relative: "path",
 		});
 
@@ -261,6 +288,7 @@ const NotificationBell = () => {
 			<PopoverContent className="max-w-[420px] w-[90vw]">
 				<div className="flex justify-between items-center mb-4">
 					<h3>{t("notifications")}</h3>
+
 					<NotificationDropdownMenu
 						trigger={
 							<button
@@ -271,20 +299,42 @@ const NotificationBell = () => {
 								<Ellipsis />
 							</button>
 						}
-						items={[
-							{
-								icon: <Check size={16} />,
-								label: t("markAllAsRead"),
-								onSelect: onReadAll,
-							},
-							{
-								icon: (
-									<img src={eventsIcon} alt="Events" width={16} height={16} />
-								),
-								label: t("openNotifications"),
-								onSelect: goToEvents,
-							},
-						]}
+						items={
+							events.length > 0
+								? [
+										{
+											icon: <Check size={16} />,
+											label: t("markAllAsRead"),
+											onSelect: onReadAllNotifications,
+										},
+										{
+											icon: (
+												<img
+													src={eventsIcon}
+													alt="Events"
+													width={16}
+													height={16}
+												/>
+											),
+											label: t("openNotifications"),
+											onSelect: goToEvents,
+										},
+									]
+								: [
+										{
+											icon: (
+												<img
+													src={BellSettings}
+													alt="Notification settings"
+													width={16}
+													height={16}
+												/>
+											),
+											label: t("openNotificationSettings"),
+											onSelect: goToNotificationSettings,
+										},
+									]
+						}
 					/>
 				</div>
 				<div className="overflow-auto	max-h-[424px]">
@@ -319,7 +369,12 @@ const NotificationBell = () => {
 							{notificationItems}
 						</Tabs.Content>
 					</Tabs.Root> */}
-					{events.length !== 0 ? (
+					{isError ? (
+						<div className="flex justify-center items-center h-screen	max-h-80 text-[#E60000] flex-col gap-2">
+							<h3>{t("error")}</h3>
+							<p className="text-lg">{t("tryAgainAndRefresh")}</p>
+						</div>
+					) : events.length !== 0 ? (
 						<>
 							{notificationItems}
 							{/* <div className="pl-10 flex flex-col gap-2 pr-4">
