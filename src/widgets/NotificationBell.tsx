@@ -215,7 +215,7 @@ const NotificationBell = () => {
 						<span className="h-2.5 w-2.5 bg-[#2185D0] rounded-full" />
 					)}
 				</div>
-				<div className="flex flex-col grow">
+				<div className="flex flex-col basis-[400px]">
 					<p className="text-sm font-bold mb-1">{notification.body}</p>
 					<p className="text-sm text-gray-600">{notification.summary}</p>
 					<p className="text-sm text-gray-400 pt-2 font-size-12">
