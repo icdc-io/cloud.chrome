@@ -360,10 +360,9 @@ type MutationVariables<U> =
 			body: U;
 	  };
 
-type UseMutateDataOptions<T, U> = Omit<
-	UseMutationOptions<T, Error, MutationVariables<U>>,
-	"mutationFn"
->;
+type UseMutateDataOptions<T, U> = {
+	notificationDisabled?: boolean;
+} & Omit<UseMutationOptions<T, Error, MutationVariables<U>>, "mutationFn">;
 
 type MutateJSONData<U> = Omit<RequestParamsType<U>, "method"> & {
 	method: MutableHTTPMethod;
@@ -390,7 +389,7 @@ export const mutateJSONData = async <T, U = unknown>(
 export function useMutateData<T, U = undefined>(
 	options: UseMutateDataOptions<T, U>,
 ): UseMutationResult<T, Error, MutationVariables<U>> {
-	const { ...mutationOptions } = options;
+	const { notificationDisabled, ...mutationOptions } = options;
 
 	const mutationFn = async (variables: MutationVariables<U>): Promise<T> => {
 		const { method, endpoint, params, headers, body } = variables;
@@ -423,11 +422,11 @@ export function useMutateData<T, U = undefined>(
 		...mutationOptions,
 		mutationFn,
 		onError: (error, vars, ctx) => {
-			showErrorNotification(error);
+			!notificationDisabled && showErrorNotification(error);
 			return mutationOptions.onError?.(error, vars, ctx);
 		},
 		onSuccess: (data, vars, ctx) => {
-			showSuccessNotification();
+			!notificationDisabled && showSuccessNotification();
 			return mutationOptions.onSuccess?.(data, vars, ctx);
 		},
 	});
