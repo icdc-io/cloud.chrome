@@ -147,7 +147,7 @@ const NotificationBell = () => {
 				);
 				return [...filteredArray, ...prevState].slice(0, ITEMS_PER_PAGE);
 			});
-			if (newData.length) {
+			if (newData.length && !open) {
 				setIsAllView(false);
 			}
 		});
