@@ -11,6 +11,7 @@ import {
 import BellSettings from "@/shared/images/bell-settings.svg";
 import eventsIcon from "@/shared/images/telemetry_events.svg";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { Skeleton } from "@/shared/ui/skeleton";
 // import { Skeleton } from "@/shared/ui/skeleton";
 import styles from "@/styles/NotificationBell.module.css";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
@@ -52,7 +53,7 @@ const NotificationDropdownMenu = ({
 	</DropdownMenu.Root>
 );
 
-// const ITEMS_PER_PAGE = 10;
+const ITEMS_PER_PAGE = 50;
 
 type ReadAllNotificationsBody = {
 	ids?: number[];
@@ -65,27 +66,40 @@ type ReadAllNotificationsResponse = {
 	errors: string[];
 };
 
+type NotificationsResponse = {
+	data: Notification[];
+	total: number;
+};
+
 const NotificationBell = () => {
 	const { t, i18n } = useTranslation();
 	// const observer = useRef<IntersectionObserver>();
-	const [isAllRead, setIsAllRead] = useState(false);
+	const [isAllView, setIsAllView] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
+	const [open, setOpen] = useState(false);
 	const navigate = useNavigate();
-	// const { data, error, fetchNextPage, hasNextPage, isFetching, isLoading } =
-	// 	useFetchInfiniteData<Rr>({
-	// 		endpoint: "/sse/notification/v1/updates",
-	// 		params: {
-	// 			"page[limit]": `${ITEMS_PER_PAGE}`,
-	// 		},
-	// 		getNextPageParam: (lastPage, allPages) => {
-	// 			return lastPage.data.length === ITEMS_PER_PAGE
-	// 				? allPages.length + 1
-	// 				: undefined;
-	// 		},
-	// 		initialPageParam: 0,
-	// 	});
+	const {
+		// data,
+		// error,
+		/*fetchNextPage, hasNextPage, */
+		isFetching,
+		// isLoading,
+		refetch,
+	} = useFetchData<NotificationsResponse>({
+		endpoint: "/api/notification/v1/notifications",
+		params: {
+			"page[limit]": `${ITEMS_PER_PAGE}`,
+		},
+		// getNextPageParam: (lastPage, allPages) => {
+		// 	return lastPage.data.length === ITEMS_PER_PAGE
+		// 		? allPages.length + 1
+		// 		: undefined;
+		// },
+		// initialPageParam: 0,
+		enabled: false,
+	});
 	const [events, setEvents] = useState<Notification[]>([]);
 	const { mutateAsync } = useMutateData<
 		ReadAllNotificationsResponse,
@@ -121,12 +135,21 @@ const NotificationBell = () => {
 			},
 		);
 		es.addEventListener("notifications", (event) => {
-			setEvents(JSON.parse(event.data).slice(0, 50));
+			setEvents(JSON.parse(event.data).slice(0, ITEMS_PER_PAGE));
 		});
 
 		es.addEventListener("notification_update", (event) => {
 			const newData = JSON.parse(event.data) as Notification[];
-			setEvents((prevState) => [...newData, ...prevState].slice(0, 50));
+
+			setEvents((prevState) => {
+				const filteredArray = newData.filter(
+					(item) => !prevState.find((event) => event.id === item.id),
+				);
+				return [...filteredArray, ...prevState].slice(0, ITEMS_PER_PAGE);
+			});
+			if (newData.length) {
+				setIsAllView(false);
+			}
 		});
 
 		es.onerror = (error) => {
@@ -166,6 +189,12 @@ const NotificationBell = () => {
 	// 	}, []);
 	// }, [data]);
 
+	const refetchNotifications = () =>
+		refetch().then((response) => {
+			if (!response.data) return;
+			setEvents(response.data.data);
+		});
+
 	const onReadNotifications = (id?: number) => {
 		mutateAsync({
 			endpoint: "/api/notification/v1/notifications",
@@ -186,12 +215,15 @@ const NotificationBell = () => {
 						),
 					);
 				} else {
-					setIsAllRead(true);
+					refetchNotifications();
 				}
 			});
 	};
 
-	const onReadNotificationById = (id?: number) => () => onReadNotifications(id);
+	const onReadNotificationById = (notification?: Notification) => () =>
+		notification?.id && !notification.read_at
+			? onReadNotifications(notification.id)
+			: undefined;
 
 	const onReadAllNotifications = () => onReadNotifications();
 
@@ -202,7 +234,7 @@ const NotificationBell = () => {
 			// ref={lastElementRef}
 			// ref={observer}
 			className="flex items-center gap-2 mb-4 mt-4 group w-full"
-			onClick={onReadNotificationById(notification.id)}
+			onClick={onReadNotificationById(notification)}
 		>
 			<div className="flex items-start gap-2 w-full pr-2">
 				{/* <div>
@@ -211,11 +243,11 @@ const NotificationBell = () => {
 					</div>
 				</div> */}
 				<div className="flex basis-10 justify-center h-5 items-center">
-					{!isAllRead && !notification.read_at && (
+					{!notification.read_at && (
 						<span className="h-2.5 w-2.5 bg-[#2185D0] rounded-full" />
 					)}
 				</div>
-				<div className="flex flex-col basis-[400px]">
+				<div className="flex flex-col basis-[400px] break-all	">
 					<p className="text-sm font-bold mb-1">{notification.body}</p>
 					<p className="text-sm text-gray-600">{notification.summary}</p>
 					<p className="text-sm text-gray-400 pt-2 font-size-12">
@@ -258,9 +290,6 @@ const NotificationBell = () => {
 		</button>
 	));
 
-	const isNotificationsAvailable =
-		events.filter((event) => !event.read_at).length !== 0;
-
 	const goToEvents = () =>
 		navigate("/telemetry/notifications", {
 			relative: "path",
@@ -271,8 +300,14 @@ const NotificationBell = () => {
 			relative: "path",
 		});
 
+	const onOpenChange = (isOpen: boolean) => {
+		setOpen(isOpen);
+		if (!isOpen) return;
+		refetchNotifications().then(() => setIsAllView(true));
+	};
+
 	return (
-		<Popover>
+		<Popover open={open} onOpenChange={onOpenChange}>
 			<PopoverTrigger>
 				<button
 					className="text-white flex items-center justify-center relative"
@@ -280,7 +315,7 @@ const NotificationBell = () => {
 					aria-label="Notification Bell"
 				>
 					<Bell size={20} />
-					{!isAllRead && isNotificationsAvailable && (
+					{!isAllView && (
 						<span className="absolute h-2 w-2 rounded-full bg-[#EF4444] top-0 right-0" />
 					)}
 				</button>
@@ -374,19 +409,23 @@ const NotificationBell = () => {
 							<h3>{t("error")}</h3>
 							<p className="text-lg">{t("tryAgainAndRefresh")}</p>
 						</div>
+					) : isFetching ? (
+						new Array(3).fill("").map((_, key) => (
+							// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
+							<div
+								className="flex items-center gap-2 mb-4 mt-4 group w-full"
+								key={key}
+							>
+								<div className="flex basis-10 justify-center h-5 items-center" />
+								<div className="flex flex-col basis-[400px] break-all	gap-2">
+									<Skeleton className="w-9/12 h-4 rounded-full" />
+									<Skeleton className="w-full h-4 rounded-full" />
+									<Skeleton className="w-3/12 h-4 rounded-full" />
+								</div>
+							</div>
+						))
 					) : events.length !== 0 ? (
-						<>
-							{notificationItems}
-							{/* <div className="pl-10 flex flex-col gap-2 pr-4">
-								{isFetching && (
-									<>
-										<Skeleton className="w-9/12 h-4 rounded-full" />
-										<Skeleton className="w-full h-4 rounded-full" />
-										<Skeleton className="w-3/12 h-4 rounded-full" />
-									</>
-								)}
-							</div> */}
-						</>
+						<>{notificationItems}</>
 					) : (
 						<div className="flex justify-center items-center h-screen	max-h-80 text-[var(--placeholder)] flex-col gap-2">
 							<Bell size={63} />
