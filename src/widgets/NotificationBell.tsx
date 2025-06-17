@@ -79,6 +79,8 @@ const NotificationBell = () => {
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
 	const [open, setOpen] = useState(false);
+	const [isDisabledNotifications, setIsDisabledNotifications] = useState(true);
+
 	const navigate = useNavigate();
 	const {
 		// data,
@@ -104,7 +106,9 @@ const NotificationBell = () => {
 	const { mutateAsync } = useMutateData<
 		ReadAllNotificationsResponse,
 		ReadAllNotificationsBody
-	>({});
+	>({
+		notificationDisabled: isDisabledNotifications,
+	});
 
 	const currentLocationUrl = baseUrls?.[user.location];
 
@@ -214,7 +218,9 @@ const NotificationBell = () => {
 								: notification,
 						),
 					);
+					setIsDisabledNotifications(true);
 				} else {
+					setIsDisabledNotifications(false);
 					refetchNotifications();
 				}
 			});
