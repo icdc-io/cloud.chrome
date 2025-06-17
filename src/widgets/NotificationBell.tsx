@@ -74,12 +74,26 @@ type NotificationsResponse = {
 const NotificationBell = () => {
 	const { t, i18n } = useTranslation();
 	// const observer = useRef<IntersectionObserver>();
-	const [isAllView, setIsAllView] = useState(false);
 	const [isError, setIsError] = useState(false);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
-	const [open, setOpen] = useState(false);
+	const [widgetState, setWidgetState] = useState({
+		open: false,
+		isAllView: true,
+	});
 	const [isDisabledNotifications, setIsDisabledNotifications] = useState(true);
+
+	const setIsAllView = (value: boolean) =>
+		setWidgetState((prevState) => ({
+			...prevState,
+			isAllView: value,
+		}));
+
+	const setOpen = (value: boolean) =>
+		setWidgetState((prevState) => ({
+			...prevState,
+			open: value,
+		}));
 
 	const navigate = useNavigate();
 	const {
@@ -127,19 +141,18 @@ const NotificationBell = () => {
 							...init.headers,
 							Authorization: `Bearer ${token}`,
 							"x-auth-group": `${user.account}.${user.role}`,
-							// "x-auth-group": `${user.account}.${user.role}`,
-							// "x-icdc-account": user.account,
-							// "x-icdc-role": user.role,
-							// "x-auth-account": user.account,
-							// "x-auth-role": user.role,
-							// ...(await getHeaders(user, init.headers)),
 						},
 					});
 				},
 			},
 		);
 		es.addEventListener("notifications", (event) => {
-			setEvents(JSON.parse(event.data).slice(0, ITEMS_PER_PAGE));
+			const notifications = JSON.parse(event.data).slice(0, ITEMS_PER_PAGE);
+			setEvents(notifications);
+			const isAllRead = !notifications.some(
+				(item: Notification) => !item.read_at,
+			);
+			setIsAllView(isAllRead);
 		});
 
 		es.addEventListener("notification_update", (event) => {
@@ -151,8 +164,13 @@ const NotificationBell = () => {
 				);
 				return [...filteredArray, ...prevState].slice(0, ITEMS_PER_PAGE);
 			});
-			if (newData.length && !open) {
-				setIsAllView(false);
+			if (newData.length) {
+				setWidgetState((prevState) => {
+					return {
+						...prevState,
+						isAllView: prevState.open,
+					};
+				});
 			}
 		});
 
@@ -200,6 +218,7 @@ const NotificationBell = () => {
 		});
 
 	const onReadNotifications = (id?: number) => {
+		setIsDisabledNotifications(!!id);
 		mutateAsync({
 			endpoint: "/api/notification/v1/notifications",
 			method: "PATCH",
@@ -218,9 +237,7 @@ const NotificationBell = () => {
 								: notification,
 						),
 					);
-					setIsDisabledNotifications(true);
 				} else {
-					setIsDisabledNotifications(false);
 					refetchNotifications();
 				}
 			});
@@ -313,7 +330,7 @@ const NotificationBell = () => {
 	};
 
 	return (
-		<Popover open={open} onOpenChange={onOpenChange}>
+		<Popover open={widgetState.open} onOpenChange={onOpenChange}>
 			<PopoverTrigger>
 				<button
 					className="text-white flex items-center justify-center relative"
@@ -321,7 +338,7 @@ const NotificationBell = () => {
 					aria-label="Notification Bell"
 				>
 					<Bell size={20} />
-					{!isAllView && (
+					{!widgetState.isAllView && (
 						<span className="absolute h-2 w-2 rounded-full bg-[#EF4444] top-0 right-0" />
 					)}
 				</button>
