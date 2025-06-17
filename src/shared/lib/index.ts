@@ -3,7 +3,7 @@ export const fetchRemote = (url, remoteName) =>
 	new Promise((resolve, reject) => {
 		// We define a script tag to use the browser for fetching the remoteEntry.js file
 		const script = document.createElement("script");
-		script.src = url;
+		script.src = `${url}?${new Date().getMilliseconds()}`;
 		script.onerror = (err) => {
 			console.error(err);
 			reject(new Error(`Failed to fetch remote: ${remoteName}`));
