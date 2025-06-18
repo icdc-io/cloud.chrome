@@ -121,7 +121,8 @@
 			"noChannelMessage": "You’ll see notifications right in the",
 			"appLink": "app",
 			"link": "link",
-			"save": "Save"
+			"save": "Save",
+			"editNotificationConfiguration": "Edit Notification Configuration"
 		}
 	},
 	"ru": {
@@ -246,7 +247,8 @@
 			"noChannelMessage": "Уведомления будут появлятся прямо в",
 			"appLink": "приложении",
 			"link": "Ссылка",
-			"save": "Сохранить"
+			"save": "Сохранить",
+			"editNotificationConfiguration": "Изменить конфигурацию уведомлений"
 		}
 	}
 }
