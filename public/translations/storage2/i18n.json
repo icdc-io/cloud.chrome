@@ -161,7 +161,9 @@
 			"latin": "Latin letters only",
 			"bucketName": "Can be between 3 and 63 characters long, and can contain only lower-case characters, numbers, periods, and dashes",
 			"s3userName": "Only numbers, latin letters, hyphens, periods, @ signs and underscores are allowed",
-			"confirm": "Confirm"
+			"confirm": "Confirm",
+			"lockedUserPopup": "S3 user is locked, blocking modifications to it and blocking access to buckets with S3 user credentials. Unlock via the action menu or S3 user details.",
+			"deletedUserPopup": "S3 User data was deleted. Retry removing the S3 user to fully clear metadata."
 		}
 	},
 	"ru": {
@@ -327,7 +329,9 @@
 			"latin": "Только латинские символы",
 			"bucketName": "Может иметь длину от 3 до 63 символов и содержать только строчные буквы, цифры, точки и тире",
 			"s3userName": "Допускаются только цифры, латинские буквы, дефисы, точки, знаки @ и знаки подчеркивания",
-			"confirm": "Подтвердить"
+			"confirm": "Подтвердить",
+			"lockedUserPopup": "Пользователь S3 заблокирован, что блокирует его изменение и доступ к бакетам с его учетными данными. Разблокируйте через меню действий или в деталях пользователя S3.",
+			"deletedUserPopup": "Данные пользователя S3 удалены. Повторите попытку удаления пользователя S3, чтобы полностью очистить метаданные."
 		}
 	}
 }

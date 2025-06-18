@@ -69,6 +69,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [location.pathname]);
 
 	useEffect(() => {
+		console.log(currentServiceName);
 		loadServiceTranslationsByServiceName(currentServiceName || HOME);
 		changeMetaData(currentServiceInfo);
 	}, []);
