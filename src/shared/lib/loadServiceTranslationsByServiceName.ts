@@ -4,7 +4,9 @@ import i18next from "i18next";
 const { locales } = require("@/shared/translations/i18n");
 
 export const loadServiceTranslationsByServiceName = (serviceName: string) => {
-	return fetch(`/translations/${serviceName}/i18n.json`)
+	return fetch(
+		`/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
+	)
 		.then((module) => module.json())
 		.then((module) => {
 			locales.forEach((lang: Langs) => {
