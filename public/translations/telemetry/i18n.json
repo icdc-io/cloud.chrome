@@ -24,7 +24,7 @@
 			"rowsSelected": "row(s) selected.",
 			"lessThan1MinuteAgo": "Less than 1 minute ago",
 			"notifications": "Notifications",
-			"notificationsDescription": "This page allows you to view notifications across services for the currently selected account and location, stored only for the last week (7 days).",
+			"notificationsDescription": "This page allows you to view notifications across services for the currently selected account and location, stored only for the last week (30 days).",
 			"title": "Title",
 			"message": "Message",
 			"type": "Type",
@@ -118,7 +118,8 @@
 			"deleteMarkedConfigurationsTitle": "Are you sure you want to delete selected configurations?",
 			"cancel": "Cancel",
 			"presetEnabled": "Preset enabled",
-			"noChannelMessage": "You’ll see notifications right in the app.",
+			"noChannelMessage": "You’ll see notifications right in the",
+			"appLink": "app",
 			"link": "link",
 			"save": "Save"
 		}
@@ -148,7 +149,7 @@
 			"rowsSelected": "строк выбрано.",
 			"lessThan1MinuteAgo": "Менее 1 минуты назад",
 			"notifications": "Уведомления",
-			"notificationsDescription": "Эта страница позволяет просматривать уведомления по всем сервисам для выбранного аккаунта и местоположения, сохраняемые только за последнюю неделю (7 дней).",
+			"notificationsDescription": "Эта страница позволяет просматривать уведомления по всем сервисам для выбранного аккаунта и местоположения, сохраняемые только за последнюю неделю (30 дней).",
 			"title": "Название",
 			"message": "Сообщение",
 			"type": "Тип",
@@ -242,7 +243,8 @@
 			"deleteMarkedConfigurationsTitle": "Вы уверены, что хотите удалить выбранные конфигурации?",
 			"cancel": "Отмена",
 			"presetEnabled": "Предустановки включены",
-			"noChannelMessage": "Уведомления будут появлятся прямо в приложении.",
+			"noChannelMessage": "Уведомления будут появлятся прямо в",
+			"appLink": "приложении",
 			"link": "Ссылка",
 			"save": "Сохранить"
 		}
