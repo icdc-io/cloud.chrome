@@ -12,7 +12,7 @@ const Table = React.forwardRef<
 	<div className={cn("relative w-full ", containerClassName)}>
 		<div
 			className={cn(
-				"overflow-auto border border-solid border-[#E2E8F0] rounded",
+				"overflow-auto border border-solid border-[#E2E8F0] rounded !min-h-0	",
 				containerClassName,
 			)}
 		>

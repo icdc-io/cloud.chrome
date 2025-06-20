@@ -1,7 +1,5 @@
 @import "./reset.css";
-/* @import "./globals.css"; */
-@import url("https://fonts.googleapis.com/css2?family=Lato:wght@400;700&display=swap");
-
+@import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
@@ -12,7 +10,7 @@
 		--foreground: 222.2 47.4% 11.2%;
 
 		--muted: 210 40% 96.1%;
-		--muted-foreground: 215.4 16.3% 46.9%;
+		--muted-foreground: oklch(0.556 0 0);
 
 		--popover: 0 0% 100%;
 		--popover-foreground: 222.2 47.4% 11.2%;
@@ -104,7 +102,7 @@
 		--foreground: 213 31% 91%;
 
 		--muted: 223 47% 11%;
-		--muted-foreground: 215.4 16.3% 56.9%;
+		--muted-foreground: oklch(0.708 0 0);
 
 		--accent: 216 34% 17%;
 		--accent-foreground: 210 40% 98%;
@@ -148,7 +146,9 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-		font-feature-settings: "rlig" 1, "calt" 1;
+		font-feature-settings:
+			"rlig" 1,
+			"calt" 1;
 	}
 }
 
@@ -160,7 +160,7 @@ body {
 	position: relative;
 	background-color: var(--bg-color);
 	position: relative;
-	font-family: Lato, sans-serif;
+	font-family: "Geist", "Geist Fallback";
 	pointer-events: auto !important;
 }
 
@@ -182,7 +182,7 @@ textarea::placeholder {
 button {
 	all: unset;
 	cursor: pointer;
-	font-family: Lato, sans-serif;
+	/* font-family: Lato, sans-serif; */
 	box-sizing: border-box;
 }
 
@@ -191,7 +191,7 @@ button:focus-visible {
 }
 
 #root {
-	font-family: Lato, sans-serif;
+	/* font-family: Lato, sans-serif; */
 	position: relative;
 	min-height: 100vh;
 	display: flex;
@@ -357,7 +357,7 @@ i.trash:hover {
 	border: none;
 	background-color: transparent;
 }
-/* 
+/*
 .network-delete {
 	border-top: 3px solid var(--light-border);
 	margin: 0 1rem;
@@ -450,7 +450,7 @@ i.trash:hover {
 /* general networking styles to rewrite in future end*/
 
 .helpdesk-content {
-	font-family: "Poppins", sans-serif;
+	/* font-family: "Poppins", sans-serif; */
 	background: var(--white);
 	min-height: calc(100vh - 140px);
 	padding: 20px 34px;
@@ -639,7 +639,7 @@ th.sorted.descending button[type="button"]::after {
 } */
 
 button[data-placeholder] {
-	color: hsl(var(--muted-foreground));
+	color: var(--muted-foreground);
 }
 
 input[aria-invalid="true"],
@@ -698,6 +698,15 @@ label.text-destructive ~ button[role="combobox"] {
 
 .wrap-anywhere {
 	overflow-wrap: anywhere;
+}
+
+label b {
+	font-weight: 600;
+}
+
+.page-title {
+	font-size: 1.5rem;
+	font-weight: 600;
 }
 
 @layer base {

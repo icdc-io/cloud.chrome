@@ -43,7 +43,7 @@
 	height: calc(100vh - 76px);
 	overflow: hidden;
 	background-color: var(--sidebar-bg);
-	font-family: Lato, sans-serif;
+	/* font-family: Lato, sans-serif; */
 	transform: translateZ(0);
 	transition: transform 0.5s ease;
 }
