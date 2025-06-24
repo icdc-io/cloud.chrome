@@ -111,7 +111,15 @@ const CONTENT_TYPE_JSON = "application/json";
 export const isJSONType = (contentType: string | null) =>
 	contentType?.includes(CONTENT_TYPE_JSON);
 
-const parseError = (errorData: Record<string, string>): string => {
+type ErrorResponse = {
+	code: string;
+	data: Record<string, string>;
+	errors: string[];
+	message: string;
+	status: number;
+};
+
+const parseError = (errorData: ErrorResponse): string => {
 	// if (!errorData) return "";
 	// if (typeof errorData === "string") return errorData;
 	// if (typeof errorData === "object")
@@ -125,7 +133,15 @@ const parseError = (errorData: Record<string, string>): string => {
 	// 			return acc;
 	// 		}, new Set()),
 	// 	].join("\n");
-	return errorData?.message || "";
+	if (!errorData) return "";
+	const message = errorData.message;
+	const errorsInfo = errorData.errors;
+	const description = errorsInfo
+		? (Array.isArray(errorsInfo) ? errorsInfo : Object.values(errorsInfo)).join(
+				"\n",
+			)
+		: "";
+	return [message, description].filter(Boolean).join("\n");
 };
 
 export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
