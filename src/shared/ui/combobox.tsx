@@ -36,6 +36,8 @@ type Combobox = {
 	disabled?: boolean;
 	unClearable?: boolean;
 	className?: string;
+	debouncedTime?: number;
+	searchQueryParam?: string;
 };
 
 export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
@@ -57,6 +59,8 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 			disabled,
 			unClearable = false,
 			className = "",
+			debouncedTime = 0,
+			searchQueryParam,
 		},
 		ref,
 	) => {
@@ -64,7 +68,7 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 		const [localOpen, setLocalOpen] = React.useState(false);
 		const [localValue, setLocalValue] = React.useState("");
 		const [searchQuery, setSearchQuery] = React.useState("");
-		const debouncedSearchQuery = useDebounce(searchQuery, 0);
+		const debouncedSearchQuery = useDebounce(searchQuery, debouncedTime);
 		const isOptionNumber = typeof options[0]?.value === "number";
 		const formattedOptions = options.map((item) => ({
 			...item,
@@ -91,13 +95,17 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 		}, [localOpen]);
 
 		React.useEffect(() => {
-			onQueryChange?.(searchQuery);
-		}, [searchQuery]);
+			onQueryChange?.(debouncedSearchQuery);
+		}, [debouncedSearchQuery]);
 
 		React.useEffect(() => {
 			if (open === undefined) return;
 			setLocalOpen(open);
 		}, [open]);
+
+		React.useEffect(() => {
+			if (searchQueryParam === "") setSearchQuery("");
+		}, [searchQueryParam]);
 
 		const placeholderAttribute = localValue
 			? {}
@@ -125,6 +133,11 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 			setLocalOpen(false);
 		};
 
+		const isLoadingState =
+			isLoading !== undefined
+				? isLoading || debouncedSearchQuery !== searchQuery
+				: isLoading;
+
 		return (
 			<Popover open={localOpen} onOpenChange={setLocalOpen}>
 				<PopoverTrigger asChild>
@@ -147,15 +160,16 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 				<PopoverContent className="w-[var(--radix-popover-trigger-width)] p-0">
 					<Command shouldFilter={shouldFilter}>
 						<CommandInput
-							isLoading={isLoading}
+							isLoading={isLoadingState}
 							placeholder={t(placeholder)}
 							value={searchQuery}
 							onValueChange={setSearchQuery}
 							className="h-9 !outline-0 !outline-none border-none"
 						/>
 						<CommandList>
-							{(minValueLength && minValueLength > searchQuery.length) ||
-							isLoading ? null : (
+							{(minValueLength &&
+								minValueLength > debouncedSearchQuery.length) ||
+							isLoadingState ? null : (
 								<CommandEmpty>{emptyMessage || t("noOptions")}</CommandEmpty>
 							)}
 							<CommandGroup>

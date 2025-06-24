@@ -135,7 +135,12 @@ const parseError = (errorData: ErrorResponse): string => {
 	// 	].join("\n");
 	if (!errorData) return "";
 	const message = errorData.message;
-	const description = errorData.errors?.join("\n");
+	const errorsInfo = errorData.errors;
+	const description = errorsInfo
+		? (Array.isArray(errorsInfo) ? errorsInfo : Object.values(errorsInfo)).join(
+				"\n",
+			)
+		: "";
 	return [message, description].filter(Boolean).join("\n");
 };
 
