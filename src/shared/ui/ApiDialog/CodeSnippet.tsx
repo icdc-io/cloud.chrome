@@ -7,12 +7,14 @@ type CodeSnippetType = {
 	activeItem?: string;
 	title?: string;
 	language?: string;
+	noFormatting?: boolean;
 };
 const CodeSnippet = ({
 	content,
 	activeItem,
 	title = "Terminal",
 	language = "bash",
+	noFormatting,
 }: CodeSnippetType) => {
 	const copy = (value: string) => value.replaceAll("\n", "");
 
@@ -20,7 +22,11 @@ const CodeSnippet = ({
 		<>
 			<div className="header-container">
 				<h5 style={{ margin: 0, color: "grey" }}>{title}</h5>
-				<CopyButton size={16} content={content} formatText={copy} />
+				<CopyButton
+					size={16}
+					content={content}
+					formatText={noFormatting ? undefined : copy}
+				/>
 			</div>
 			<div className="code-snippet-wrapper">
 				<SyntaxHighlighter
