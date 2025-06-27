@@ -76,7 +76,6 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 			text: item.text + "",
 		}));
 		const formattedValue = value ? value + "" : value;
-		console.log("ku");
 
 		React.useEffect(() => {
 			if (!searchQueryFn) return;
