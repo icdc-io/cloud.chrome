@@ -730,7 +730,7 @@ const SidebarMenuSubButton = React.forwardRef<
 			data-size={size}
 			data-active={isActive}
 			className={cn(
-				"flex min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-4 text-white outline-none ring-sidebar-ring hover:bg[var(--header-bg-hv)] hover:text-white focus-visible:ring-2 active:bg-[var(--active-item)] active:text-white disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-white hover:bg-[var(--header-bg-hv)]",
+				"flex min-w-0 -translate-x-px items-center gap-2 overflow-hidden rounded-md px-4 text-white outline-none ring-sidebar-ring hover:text-white focus-visible:ring-2 active:bg-[var(--active-item)] active:text-white disabled:pointer-events-none disabled:opacity-50 aria-disabled:pointer-events-none aria-disabled:opacity-50 [&>span:last-child]:truncate [&>svg]:shrink-0 [&>svg]:text-white hover:bg-[var(--header-bg-hv)]",
 				'data-[active=true]:bg-[var(--active-item)] data-[active=true]:text-white data-[active=true]:after:content-[""] data-[active=true]:after:bg-[var(--primary-blue)] data-[active=true]:after:block data-[active=true]:after:h-0.5 data-[active=true]:after:left-0 data-[active=true]:after:ml-4 data-[active=true]:after:absolute data-[active=true]:after:w-1/5 data-[active=true]:after:bottom-0',
 				size === "sm" && "text-xs",
 				size === "md" && "text-sm",
