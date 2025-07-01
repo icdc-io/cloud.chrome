@@ -26,7 +26,6 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import type { UserType } from "@/types/entities";
 import { ChevronDownIcon } from "lucide-react";
-import { useEffect } from "react";
 
 const UserDropdown = () => {
 	const dispatch = useAppDispatch();
@@ -35,16 +34,9 @@ const UserDropdown = () => {
 	const { account, role, location } = useAppSelector(
 		(state) => state.host.user,
 	);
-	const isMobile = useIsMobile();
 
 	const locale = useAppSelector((state) => state.host.lang);
 	const invalidateQuery = useInvalidateQuery();
-
-	useEffect(() => {
-		const rootContainer = document.getElementById("cloud-container");
-		rootContainer?.setAttribute("data-role", role);
-		console.log(rootContainer);
-	}, [role]);
 
 	if (!userInfo || !account) return null;
 
@@ -171,10 +163,7 @@ const UserDropdown = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className={cn(
-						styles["user-select__trigger"],
-						isMobile && "px-4 py-3 hover:bg-[var(--header-bg-hv)] rounded-md",
-					)}
+					className={cn(styles["user-select__trigger"], useIsMobile())}
 					aria-label="User options"
 					type="button"
 				>
