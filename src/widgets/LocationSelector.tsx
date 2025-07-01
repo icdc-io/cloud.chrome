@@ -64,7 +64,9 @@ const LocationSelector = () => {
 
 	return (
 		<div className={"relative flex items-center gap-2"}>
-			<span style={{ color: "white" }}>{t("location")}:</span>
+			<span className="text-[var(--white)] hidden sm:block">
+				{t("location")}:
+			</span>
 			<div>
 				<Select defaultValue={location} onValueChange={changeLocation}>
 					<SelectTrigger
