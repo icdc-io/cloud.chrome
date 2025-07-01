@@ -15,6 +15,7 @@ import { Skeleton } from "@/shared/ui/skeleton";
 import { NavMain } from "@/widgets/nav-main";
 import { NavUser } from "@/widgets/nav-user";
 import ServicesDropdown from "./ServicesDropdown";
+import UserDropdown from "./UserDropdown";
 
 type AppSidebarType = {
 	status: STATUSES_TYPES[number];
@@ -59,8 +60,8 @@ export function AppSidebar({ status, ...props }: AppSidebarType) {
 						/>
 					</SidebarContent>
 					{isMobile && (
-						<SidebarFooter className="pl-4 pb-4">
-							<NavUser />
+						<SidebarFooter className="p-2">
+							<UserDropdown />
 						</SidebarFooter>
 					)}
 					<SidebarRail />

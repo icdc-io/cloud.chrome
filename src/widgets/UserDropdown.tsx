@@ -7,7 +7,9 @@ import styles from "@/styles/UserDropdown.module.css";
 import { useTranslation } from "react-i18next";
 
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
+import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { useInvalidateQuery } from "@/shared/hooks/useInvalidateQuery";
+import { cn } from "@/shared/lib/utils";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -24,6 +26,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import type { UserType } from "@/types/entities";
 import { ChevronDownIcon } from "lucide-react";
+import { useEffect } from "react";
 
 const UserDropdown = () => {
 	const dispatch = useAppDispatch();
@@ -32,7 +35,7 @@ const UserDropdown = () => {
 	const { account, role, location } = useAppSelector(
 		(state) => state.host.user,
 	);
-
+	const isMobile = useIsMobile();
 	const locale = useAppSelector((state) => state.host.lang);
 	const invalidateQuery = useInvalidateQuery();
 
@@ -161,7 +164,10 @@ const UserDropdown = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className={styles["user-select__trigger"]}
+					className={cn(
+						styles["user-select__trigger"],
+						isMobile && "px-4 py-3 hover:bg-[var(--header-bg-hv)] rounded-md",
+					)}
 					aria-label="User options"
 					type="button"
 				>
