@@ -26,6 +26,7 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import type { UserType } from "@/types/entities";
 import { ChevronDownIcon } from "lucide-react";
+import { useEffect } from "react";
 
 const UserDropdown = () => {
 	const dispatch = useAppDispatch();
@@ -34,7 +35,7 @@ const UserDropdown = () => {
 	const { account, role, location } = useAppSelector(
 		(state) => state.host.user,
 	);
-
+	const isMobile = useIsMobile();
 	const locale = useAppSelector((state) => state.host.lang);
 	const invalidateQuery = useInvalidateQuery();
 
@@ -163,7 +164,10 @@ const UserDropdown = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className={cn(styles["user-select__trigger"], useIsMobile())}
+					className={cn(
+						styles["user-select__trigger"],
+						isMobile && "px-4 py-3 hover:bg-[var(--header-bg-hv)] rounded-md",
+					)}
 					aria-label="User options"
 					type="button"
 				>
