@@ -88,7 +88,7 @@
 			"diskSpace": "Space (GiB)",
 			"clientName": "Client IQN is limited to 64 chars long. It should start with \"iqn\" and match the following template iqn.<year, four digits>-<month, two digits>.<reverse domain name>[optional string starting with ':']\n• reverse domain name should contain characters in [0-9a-zA-Z] and '.' '-' \n• optional string should start with ':' and contain characters in [0-9a-zA-Z] and '.' '-' '_' \n\nExamples:\niqn.1992-01.com.example\niqn.2020-07.com.example:disk-128.01",
 			"chapUsername": "Chap user name is 8-64 chars long containing any alphanumeric in [0-9a-zA-Z] and '.' ':' '@' '_' '-'",
-			"chapPassword": "Password string is 12-16 chars long containing any alphanumeric in [0-9a-zA-Z] and '@' '-' '_' '/'",
+			"chapPassword": "Password string is 12-16 chars long containing any alphanumeric in [0-9a-zA-Z] and '.' ':' '@' '-' '_' '/'",
 			"add": "Add",
 			"diskLoad": "Load",
 			"readIOPS": "Read IOPS",
