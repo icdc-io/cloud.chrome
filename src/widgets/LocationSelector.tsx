@@ -68,7 +68,7 @@ const LocationSelector = () => {
 				{t("location")}:
 			</span>
 			<div>
-				<Select defaultValue={location} onValueChange={changeLocation}>
+				<Select value={location} onValueChange={changeLocation}>
 					<SelectTrigger
 						className={"py-1 bg-white w-28"}
 						aria-label={t("location")}
