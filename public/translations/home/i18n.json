@@ -1,7 +1,7 @@
 {
 	"en": {
 		"translation": {
-			"title": "Discover our cloud services",
+			"home_title": "Discover our cloud services",
 			"goTo": "Go to",
 			"open": "Open",
 			"noServices": "There are no available services in this location",
@@ -18,7 +18,7 @@
 	},
 	"ru": {
 		"translation": {
-			"title": "Наши облачные сервисы",
+			"home_title": "Наши облачные сервисы",
 			"goTo": "Перейти к",
 			"open": "Открыть",
 			"noServices": "В этой локации нет доступных сервисов",

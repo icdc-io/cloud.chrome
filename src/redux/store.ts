@@ -38,6 +38,7 @@ import {
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
 	defaultLocationData,
+	emptyLocationData,
 } from "../redux/constants";
 import type { CustomStore, HostReducerType } from "../redux/types";
 import { servicesWithCompletedStatus } from "../shared/constants/servicesWithCompletedStatus";
@@ -61,7 +62,7 @@ const initialState: HostReducerType = Immutable({
 	// serviceVersion: "",
 	// serviceVersionFetchStatus: PENDING,
 	currentService: window.location.pathname.split("/")[1],
-	locationData: defaultLocationData,
+	locationData: emptyLocationData,
 	userInfo: null,
 	contacts: null,
 	contactsFetchStatus: PENDING,
@@ -116,11 +117,10 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 		// 		serviceVersionFetchStatus: FULFILLED,
 		// 		serviceVersion: action.payload,
 		// 	});
-
+		case `${FETCH_LOCATION_DATA}_FULFILLED`:
+			return state.set("locationData", action.payload);
 		case `${FETCH_LOCATION_DATA}_REJECTED`:
 			return state.set("locationData", defaultLocationData);
-		case `${FETCH_LOCATION_DATA}`:
-			return state.set("locationData", action.payload);
 
 		case UPDATE_TOKEN_INFO: {
 			return state.merge({

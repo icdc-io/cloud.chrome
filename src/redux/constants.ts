@@ -31,7 +31,16 @@ export const defaultLocationData = {
 	back_to_url: "https://ibacloud.by",
 } as const;
 
+export const emptyLocationData = {
+	footer_message: "",
+	privacy_policy_url: "",
+	cookies_policy_url: "",
+	status_page_url: "",
+	back_to_url: "",
+};
+
 const STATUSES = [PENDING, REJECTED, FULFILLED, ""] as const;
 
 export type STATUSES_TYPES = typeof STATUSES;
-export type DEFAULT_LOCATION_DATA = typeof defaultLocationData;
+
+export type DEFAULT_LOCATION_DATA = typeof emptyLocationData;
