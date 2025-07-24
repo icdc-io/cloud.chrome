@@ -165,7 +165,8 @@
 			"s3userName": "Only numbers, latin letters, hyphens, periods, @ signs and underscores are allowed",
 			"confirm": "Confirm",
 			"lockedUserPopup": "S3 user is locked, blocking modifications to it and blocking access to buckets with S3 user credentials. Unlock via the action menu or S3 user details.",
-			"deletedUserPopup": "S3 User data was deleted. Retry removing the S3 user to fully clear metadata."
+			"deletedUserPopup": "S3 User data was deleted. Retry removing the S3 user to fully clear metadata.",
+			"copyUrl": "Copy URL"
 		}
 	},
 	"ru": {
@@ -335,7 +336,8 @@
 			"s3userName": "Допускаются только цифры, латинские буквы, дефисы, точки, знаки @ и знаки подчеркивания",
 			"confirm": "Подтвердить",
 			"lockedUserPopup": "Пользователь S3 заблокирован, что блокирует его изменение и доступ к бакетам с его учетными данными. Разблокируйте через меню действий или в деталях пользователя S3.",
-			"deletedUserPopup": "Данные пользователя S3 удалены. Повторите попытку удаления пользователя S3, чтобы полностью очистить метаданные."
+			"deletedUserPopup": "Данные пользователя S3 удалены. Повторите попытку удаления пользователя S3, чтобы полностью очистить метаданные.",
+			"copyUrl": "Скопировать URL"
 		}
 	}
 }
