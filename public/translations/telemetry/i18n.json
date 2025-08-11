@@ -189,7 +189,7 @@
 			"configurationUrlValidationLengthText": "URL не может превышать 1024 символа.",
 			"configurationUrlValidationText": "Неверный формат URL.",
 			"configurationBodyRequiredText": "Тело не может быть пустым.",
-			"configurationBodyValidationLengthText": "Тело не может превышать 4096 символа.",
+			"configurationBodyValidationLengthText": "Тело не может превышать 4096 символов.",
 			"configurationBodyValidationText": "Тело должно содержать только допустимые символы.",
 			"configurationMethodRequiredText": "Метод не может быть пустым.",
 			"configurationUserEmailRequiredText": "Выберите хотя бы 1 электронную почту.",
