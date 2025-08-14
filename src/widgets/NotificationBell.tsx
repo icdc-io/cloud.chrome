@@ -256,7 +256,7 @@ const NotificationBell = () => {
 			key={notification.id}
 			// ref={lastElementRef}
 			// ref={observer}
-			className="flex items-center gap-2 mb-3 mt-3 group w-full hover:bg-[#F1F5F9] p-2"
+			className="flex items-center gap-2 mb-[10px] mt-[10px] group w-full hover:bg-[#F1F5F9] p-2"
 			onClick={onReadNotificationById(notification)}
 		>
 			<div className="flex items-start gap-2 w-full pr-2">
