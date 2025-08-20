@@ -166,7 +166,14 @@
 			"confirm": "Confirm",
 			"lockedUserPopup": "S3 user is locked, blocking modifications to it and blocking access to buckets with S3 user credentials. Unlock via the action menu or S3 user details.",
 			"deletedUserPopup": "S3 User data was deleted. Retry removing the S3 user to fully clear metadata.",
-			"copyUrl": "Copy URL"
+			"copyUrl": "Copy URL",
+			"totalObjects": "Total objects",
+			"storedObjects": "Stored objects",
+			"multipartObjects": "Multipart objects",
+			"quotaCalculationTitle": "Quota Calculation for Total Objects",
+			"quotaCalculationDesc": "The quota is based on the total number of objects. This includes both stored objects (full objects and multipart chunks) and multipart upload session objects.",
+			"formulaTitle": "Formula",
+			"formulaDesc": "Total objects (full objects+multipart chunks) / Quota"
 		}
 	},
 	"ru": {
@@ -337,7 +344,14 @@
 			"confirm": "Подтвердить",
 			"lockedUserPopup": "Пользователь S3 заблокирован, что блокирует его изменение и доступ к бакетам с его учетными данными. Разблокируйте через меню действий или в деталях пользователя S3.",
 			"deletedUserPopup": "Данные пользователя S3 удалены. Повторите попытку удаления пользователя S3, чтобы полностью очистить метаданные.",
-			"copyUrl": "Скопировать URL"
+			"copyUrl": "Скопировать URL",
+			"totalObjects": "Всего объектов",
+			"storedObjects": "Сохранённые объекты",
+			"multipartObjects": "Объекты multipart",
+			"quotaCalculationTitle": "Расчёт квоты по общему количеству объектов",
+			"quotaCalculationDesc": "Квота основана на общем количестве объектов. Это включает как сохранённые объекты (полные объекты и части multipart), так и объекты сессий multipart-загрузки.",
+			"formulaTitle": "Формула",
+			"formulaDesc": "Всего объектов (полные объекты + части multipart) / Квота"
 		}
 	}
 }
