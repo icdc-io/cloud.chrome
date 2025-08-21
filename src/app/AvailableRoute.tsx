@@ -8,7 +8,7 @@ import {
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 // import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
-import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
+// import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
 // import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
@@ -41,7 +41,7 @@ type AvailableRoute = {
 };
 
 const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
-	useSpecificTranslations();
+	// useSpecificTranslations();
 	const currentServiceName = useAppSelector(
 		(state) => state.host.currentService,
 	);
