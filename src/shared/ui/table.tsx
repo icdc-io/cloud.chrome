@@ -86,7 +86,7 @@ const TableHead = React.forwardRef<
 		sorted?: "ascending" | "descending" | undefined;
 		onSort?: () => void;
 	}
->(({ className, sorted, onSort, children, ...props }, ref) => {
+>(({ className, sorted, onSort, children, align, ...props }, ref) => {
 	return (
 		<th
 			ref={ref}
@@ -95,10 +95,15 @@ const TableHead = React.forwardRef<
 				onSort && "sorted",
 				className,
 			)}
+			align={align}
 			{...props}
 		>
 			{onSort ? (
-				<button type="button" onClick={onSort} className="flex items-center">
+				<button
+					type="button"
+					onClick={onSort}
+					className={`flex items-center justify-${align}`}
+				>
 					{children}
 					{!!onSort && !sorted && (
 						<>
