@@ -170,10 +170,10 @@
 			"totalObjects": "Total objects",
 			"storedObjects": "Stored objects",
 			"multipartObjects": "Multipart objects",
-			"quotaCalculationTitle": "Quota Calculation for Total Objects",
-			"quotaCalculationDesc": "The quota is based on the total number of objects. This includes both stored objects (full objects and multipart chunks) and multipart upload session objects.",
-			"formulaTitle": "Formula",
-			"formulaDesc": "Total objects (full objects+multipart chunks) / Quota"
+			"quotaCalculationTitle": "Used object count",
+			"quotaCalculationDesc": "The used total object count includes both stored objects (complete objects and parts of multi-component data) and session objects from multi-part uploads.",
+			"formulaTitle": "Object quota",
+			"formulaDesc": "The quota limits the total number of objects."
 		}
 	},
 	"ru": {
@@ -348,10 +348,10 @@
 			"totalObjects": "Всего объектов",
 			"storedObjects": "Сохранённые объекты",
 			"multipartObjects": "Объекты multipart",
-			"quotaCalculationTitle": "Расчёт квоты по общему количеству объектов",
-			"quotaCalculationDesc": "Квота основана на общем количестве объектов. Это включает как сохранённые объекты (полные объекты и части multipart), так и объекты сессий multipart-загрузки.",
-			"formulaTitle": "Формула",
-			"formulaDesc": "Всего объектов (полные объекты + части multipart) / Квота"
+			"quotaCalculationTitle": "Используемое количество объектов",
+			"quotaCalculationDesc": "Используемое общее количество объектов включает как сохранённые объекты (полные объекты и части многокомпонентных данных), так и объекты сессии многокомпонентной загрузки.",
+			"formulaTitle": "Квота на объекты",
+			"formulaDesc": "Квота ограничивает общее количество объектов."
 		}
 	}
 }
