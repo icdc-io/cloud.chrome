@@ -155,7 +155,7 @@
 			"month": "Month",
 			"currentPricePlan": "Current Price Plan",
 			"schedulePricePlan": "Schedule a price plan",
-			"selectPricePlan": "Select a price plan",
+			"selectPricePlan": "Select Price plan",
 			"schedule": "Schedule",
 			"services": "Services",
 			"microservice": "Microservice",
@@ -423,7 +423,11 @@
 			"sucReleaseNotif": "Release completed.",
 			"startReleaseNotif": "Release  started.",
 			"errReleaseNotif": "Release failed",
-			"errorFetch": "Error while fetching data"
+			"errorFetch": "Error while fetching data",
+			"nameWithSpace": "Must be latin letters, cyrillic, digits",
+			"idValidation": "Only lower case, latin letters, digits. Must be 5 characters or less",
+			"minLength": "Must be {{value}} characters or more",
+			"phoneNumberValidation": "Enter a valid phone number, starting with a \"+\""
 		}
 	},
 	"ru": {
@@ -834,7 +838,11 @@
 			"sucReleaseNotif": "Обновление завершено.",
 			"startReleaseNotif": "Обновление начато.",
 			"errReleaseNotif": "Обновление не удалось.",
-			"errorFetch": "Ошибка получения данных"
+			"errorFetch": "Ошибка получения данных",
+			"nameWithSpace": "Должны быть только латинские буквы, кириллица, цифры",
+			"idValidation": "Только строчные буквы, цифры, не более 5 символов",
+			"minLength": "Должно быть {{value}} символов или больше",
+			"phoneNumberValidation": "Введите корректный номер телефона, начинающийся на \"+\""
 		}
 	}
 }
