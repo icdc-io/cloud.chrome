@@ -427,7 +427,8 @@
 			"nameWithSpace": "Must be latin letters, cyrillic, digits",
 			"idValidation": "Only lower case, latin letters, digits. Must be 5 characters or less",
 			"minLength": "Must be {{value}} characters or more",
-			"phoneNumberValidation": "Enter a valid phone number, starting with a \"+\""
+			"phoneNumberValidation": "Enter a valid phone number, starting with a \"+\"",
+			"pricePlansFetchingError": "Couldn’t fetch price plans"
 		}
 	},
 	"ru": {
@@ -842,7 +843,8 @@
 			"nameWithSpace": "Должны быть только латинские буквы, кириллица, цифры",
 			"idValidation": "Только строчные буквы, цифры, не более 5 символов",
 			"minLength": "Должно быть {{value}} символов или больше",
-			"phoneNumberValidation": "Введите корректный номер телефона, начинающийся на \"+\""
+			"phoneNumberValidation": "Введите корректный номер телефона, начинающийся на \"+\"",
+			"pricePlansFetchingError": "Не удалось получить данные о тарифных планах"
 		}
 	}
 }
