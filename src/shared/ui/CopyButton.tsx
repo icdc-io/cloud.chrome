@@ -7,9 +7,15 @@ type CopyButton = {
 	content: string;
 	formatText?: (content: string) => string;
 	size?: number;
+	buttonText?: string;
 };
 
-const CopyButton = ({ content, formatText, size = 16 }: CopyButton) => {
+const CopyButton = ({
+	content,
+	formatText,
+	size = 16,
+	buttonText,
+}: CopyButton) => {
 	const { t } = useTranslation();
 	const [isOpen, setIsOpen] = useState(false);
 
@@ -35,8 +41,12 @@ const CopyButton = ({ content, formatText, size = 16 }: CopyButton) => {
 	};
 
 	const copyButton = (
-		<button onClick={() => copy(content)} type="button">
-			<Copy size={size} />
+		<button
+			onClick={() => copy(content)}
+			type="button"
+			className="bg-gray-100 rounded-md p-1"
+		>
+			{buttonText ? buttonText : <Copy size={size} />}
 		</button>
 	);
 

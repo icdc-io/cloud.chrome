@@ -16,10 +16,7 @@
 		"dev": " REACT_APP_LOCAL_DATA_USAGE=full rsbuild dev --open",
 		"stage": " REACT_APP_LOCAL_DATA_USAGE=partial rsbuild dev --open",
 		"format": "biome format --write",
-		"preview": "rsbuild preview",
-		"create-account-api-schema": "npx openapi-typescript https://code.icz.icdc.io/api/v4/projects/2155/repository/files/doc%2Fopenapi.yml/raw?ref=dev -o src/schemas/account-api.ts",
-		"create-delivery-api-schema": "npx openapi-typescript https://code.icz.icdc.io/api/v4/projects/2239/repository/files/doc%2Fopenapi.yaml/raw?ref=dev -o src/schemas/delivery-api.ts",
-		"create-helpdesk-api-schema": "npx openapi-typescript https://code.icz.icdc.io/api/v4/projects/2304/repository/files/doc%2Fopenapi.yml/raw?ref=dev -o src/schemas/helpdesk-api.ts"
+		"preview": "rsbuild preview"
 	},
 	"keywords": [],
 	"license": "ISC",

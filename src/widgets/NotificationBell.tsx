@@ -256,7 +256,7 @@ const NotificationBell = () => {
 			key={notification.id}
 			// ref={lastElementRef}
 			// ref={observer}
-			className="flex items-center gap-2 mb-4 mt-4 group w-full"
+			className="flex items-center gap-2 mb-[10px] mt-[10px] group w-full hover:bg-[#F1F5F9] p-2"
 			onClick={onReadNotificationById(notification)}
 		>
 			<div className="flex items-start gap-2 w-full pr-2">
@@ -265,13 +265,13 @@ const NotificationBell = () => {
 						<Bell size={10} className="text-gray-500" />
 					</div>
 				</div> */}
-				<div className="flex basis-10 justify-center h-5 items-center">
+				<div className="flex basis-10 justify-center h-5 items-center pl-4">
 					{!notification.read_at && (
 						<span className="h-2.5 w-2.5 bg-[#2185D0] rounded-full" />
 					)}
 				</div>
 				<div className="flex flex-col basis-[400px] break-all	">
-					<p className="text-sm font-bold mb-1">{notification.body}</p>
+					<p className="text-sm font-medium mb-1">{notification.body}</p>
 					<p className="text-sm text-gray-600">{notification.summary}</p>
 					<p className="text-sm text-gray-400 pt-2 font-size-12">
 						{notification.created_at &&
@@ -343,9 +343,9 @@ const NotificationBell = () => {
 					)}
 				</button>
 			</PopoverTrigger>
-			<PopoverContent className="max-w-[420px] w-[90vw]">
-				<div className="flex justify-between items-center mb-4">
-					<h3>{t("notifications")}</h3>
+			<PopoverContent className="max-w-[420px] w-[90vw] pl-0 pr-0">
+				<div className="flex justify-between items-center mb-4 pl-4 pr-4">
+					<h3 className="font-medium">{t("notifications")}</h3>
 
 					<NotificationDropdownMenu
 						trigger={
