@@ -1,24 +1,24 @@
+import { i18nInstance } from "@/shared/translations/i18n";
 import type { Langs } from "@/shared/translations/langs";
-import i18next from "i18next";
 
 const { locales } = require("@/shared/translations/i18n");
 
-export const loadServiceTranslationsByServiceName = (serviceName: string) => {
-	return fetch(
-		`/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
-	)
-		.then((module) => module.json())
-		.then((module) => {
-			locales.forEach((lang: Langs) => {
-				i18next.addResourceBundle(
-					lang,
-					"translation",
-					module[lang].translation,
-				);
-			});
-		});
-};
+export const loadServiceTranslationsByServiceName = async (
+	origin: string,
+	serviceName?: string,
+) => {
+	const url = `${origin}/translations/i18n.json?t=${Date.now()}`;
+	// temporary while migration is in progress, we need to load translations from the old url
+	const oldUrl = `/translations/${serviceName}/i18n.json?t=${Date.now()}`;
 
-// loadServiceTranslationsByServiceName("storage2").then(() => {
-//   setState(prev => prev + 1);
-// });
+	const res = await fetch(origin === "local" ? oldUrl : url);
+	const translations = await res.json();
+
+	locales.forEach((lang: Langs) => {
+		i18nInstance.addResourceBundle(
+			lang,
+			"translation",
+			translations[lang].translation,
+		);
+	});
+};

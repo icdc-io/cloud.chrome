@@ -1,22 +1,14 @@
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 
-export const useSpecificTranslations = () => {
+export const useSpecificTranslations = (url: string) => {
+	const [isReady, setIsReady] = useState(false);
+
 	useEffect(() => {
-		const changeServiceListener = (e: CustomEvent) => {
-			loadServiceTranslationsByServiceName(e.detail);
-		};
-		window.addEventListener(
-			"switchTranslations",
-			changeServiceListener as EventListener,
-		);
-
-		return () =>
-			window.removeEventListener(
-				"switchTranslations",
-				changeServiceListener as EventListener,
-			);
+		loadServiceTranslationsByServiceName(url).finally(() => {
+			setIsReady(true);
+		});
 	}, []);
 
-	return;
+	return { isReady };
 };
