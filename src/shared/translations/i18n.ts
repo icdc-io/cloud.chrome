@@ -87,6 +87,7 @@ export const resources: LanguageResources = {
 			to: "To",
 			date: "Date",
 			service: "Service",
+			services: "Services",
 			resource: "Resource",
 			description: "Description",
 			next: "Next",
@@ -108,6 +109,7 @@ export const resources: LanguageResources = {
 			no: "No",
 			none: "None",
 			id: "ID",
+			add: "Add",
 		},
 	},
 	ru: {
@@ -182,6 +184,7 @@ export const resources: LanguageResources = {
 			to: "До",
 			date: "Дата",
 			service: "Сервис",
+			services: "Сервисы",
 			resource: "Ресурс",
 			description: "Описание",
 			next: "Далее",
@@ -202,6 +205,7 @@ export const resources: LanguageResources = {
 			yes: "Да",
 			no: "Нет",
 			id: "ID",
+			add: "Добавить",
 		},
 	},
 };
