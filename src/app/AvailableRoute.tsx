@@ -51,6 +51,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentRoute = location.pathname.split("/")[1];
+	const currentApp = location.pathname.split("/")[2];
 
 	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo =
@@ -69,16 +70,19 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [location.pathname]);
 
 	useEffect(() => {
-		loadServiceTranslationsByServiceName(currentServiceName || HOME);
 		changeMetaData(currentServiceInfo);
 	}, []);
 
 	useEffect(() => {
 		if (currentRoute !== currentServiceName) {
 			dispatch(changeCurrentService(currentRoute));
-			loadServiceTranslationsByServiceName(currentRoute || HOME);
 		}
 	}, [currentRoute]);
+
+	// temporary while migration is in progress, we need to load translations from the old url
+	useEffect(() => {
+		loadServiceTranslationsByServiceName("local", currentRoute || HOME);
+	}, [currentApp, currentRoute]);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
