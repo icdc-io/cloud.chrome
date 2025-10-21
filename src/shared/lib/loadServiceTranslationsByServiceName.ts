@@ -7,7 +7,7 @@ export const loadServiceTranslationsByServiceName = async (
 	origin: string,
 	serviceName?: string,
 ) => {
-	const url = `${origin}/translations/i18n.json?t=${Date.now()}`;
+	const url = `${origin}/i18n.json?time=${Date.now()}`;
 	// temporary while migration is in progress, we need to load translations from the old url
 	const oldUrl = `/translations/${serviceName}/i18n.json?t=${Date.now()}`;
 
