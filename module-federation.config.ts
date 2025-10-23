@@ -8,7 +8,6 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Api": "./src/shared/api/shared",
 		"./Loader": "./src/shared/ui/loader",
 		"./getCurrentAppropriateLang": "./src/shared/lib/getCurrentAppropriateLang",
-		"./useSpecificTranslations": "./src/shared/hooks/useSpecificTranslations",
 		"./ReturnBaseUrl": "./src/shared/lib/returnBaseUrl",
 		"./ApiButton": "./src/widgets/apiButton",
 		"./GeneralInput": "./src/shared/ui/generalInput",
@@ -67,11 +66,6 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 			singleton: true,
 			strictVersion: true,
 			requiredVersion: dependencies["react-i18next"],
-		},
-		i18next: {
-			singleton: true,
-			strictVersion: true,
-			requiredVersion: dependencies.i18next,
 		},
 		"@tanstack/react-query": {
 			singleton: true,

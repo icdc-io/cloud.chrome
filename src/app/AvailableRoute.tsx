@@ -12,6 +12,7 @@ import { HOME } from "@/shared/constants/servicesNames";
 // import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
+
 // import ErrorScreen from "@/widgets/Error";
 import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -41,17 +42,13 @@ type AvailableRoute = {
 };
 
 const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
-	// useSpecificTranslations();
-	const currentServiceName = useAppSelector(
-		(state) => state.host.currentService,
-	);
 	const location = useLocation();
 	const dispatch = useAppDispatch();
 	const user = useAppSelector((state) => state.host.user);
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentRoute = location.pathname.split("/")[1];
-	const currentApp = location.pathname.split("/")[2];
+	const currentServiceApp = location.pathname.split("/")[2];
 
 	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo =
@@ -60,6 +57,10 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 			: remotes?.find(
 					(service) => service.path.substring(1) === currentService,
 				);
+
+	const currentServiceAppInfo = currentServiceInfo?.apps?.find(
+		(service) => service.name === currentServiceApp,
+	);
 
 	const token = kc.getUserInfo();
 
@@ -74,15 +75,17 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, []);
 
 	useEffect(() => {
-		if (currentRoute !== currentServiceName) {
+		if (currentRoute !== currentService) {
 			dispatch(changeCurrentService(currentRoute));
 		}
 	}, [currentRoute]);
 
-	// temporary while migration is in progress, we need to load translations from the old url
 	useEffect(() => {
-		loadServiceTranslationsByServiceName("local", currentRoute || HOME);
-	}, [currentApp, currentRoute]);
+		loadServiceTranslationsByServiceName(
+			currentServiceInfo || HOME,
+			currentServiceApp,
+		);
+	}, [location.pathname]);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
