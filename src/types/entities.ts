@@ -106,5 +106,5 @@ export type Remote = {
 	roles?: string;
 	title: string;
 	url: string;
-	version: string;
+	version?: string;
 };

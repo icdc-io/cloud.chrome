@@ -26,22 +26,18 @@ const AppRoutes = () => {
 						path={`${route}/*`}
 						Component={AvailableRoute}
 					>
-						{serviceInfo.apps.map((remoteServiceInfo) => {
+						{serviceInfo.apps.map((remoteAppInfo) => {
 							return (
 								<Route
-									key={remoteServiceInfo.name}
-									path={`${remoteServiceInfo.name}/*`}
+									key={remoteAppInfo.name}
+									path={`${remoteAppInfo.name}/*`}
 									element={
 										<RemoteComponent
 											fallback={<Loader />}
-											remoteUrl={
-												(process.env.NODE_ENV === "development" &&
-													remoteServiceInfo.url) ||
-												window.origin
-											}
-											remote={remoteServiceInfo.name}
+											remoteUrl={remoteAppInfo.url || window.origin}
+											remote={remoteAppInfo.name}
 											service={serviceInfo.name}
-											version={remoteServiceInfo.version}
+											version={remoteAppInfo.version}
 											store={store}
 										/>
 									}
@@ -66,12 +62,8 @@ const AppRoutes = () => {
 						element={
 							<RemoteComponent
 								fallback={<Loader />}
-								remoteUrl={
-									process.env.NODE_ENV === "production"
-										? window.location.origin
-										: "http://localhost:8080"
-								}
-								remote={HOME}
+								remoteUrl={HOME.url}
+								remote={HOME.name}
 								store={store}
 							/>
 						}

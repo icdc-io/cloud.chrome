@@ -1,36 +1,31 @@
-import type { Langs } from "@/shared/translations/langs";
-import type { Remote, Service } from "@/types/entities";
+import { locales } from "@/shared/translations/i18n";
+import type { App, Remote } from "@/types/entities";
 import i18next from "i18next";
-import { HOME } from "../constants/servicesNames";
-
-const { locales } = require("@/shared/translations/i18n");
 
 export const loadServiceTranslationsByServiceName = (
-	serviceInfo: Remote | string,
-	appName: string | undefined,
+	serviceInfo: Remote,
+	appInfo: App | undefined,
 ) => {
-	const isHome = serviceInfo === HOME;
-	const origin = window.location.origin;
+	const isProd = process.env.NODE_ENV === "production";
+	const origin = isProd
+		? window.location.origin
+		: appInfo
+			? appInfo.url
+			: serviceInfo.url; // 1 case for env = prod, 2 - for remote apps, 3 - for home service
 
-	const getBaseUrl = (): string => {
-		if (process.env.NODE_ENV === "development") {
-			if (isHome) return "http://localhost:8080";
+	const url = [
+		origin,
+		isProd && serviceInfo.name,
+		isProd && appInfo?.name,
+		`i18n.json?${new Date().getMilliseconds()}`,
+	]
+		.filter(Boolean)
+		.join("/");
 
-			const remote = serviceInfo as Remote;
-			const appUrl = remote?.apps?.find((app) => app.name === appName)?.url;
-			if (appUrl) return appUrl;
-		}
-
-		if (isHome) return `${origin}/${serviceInfo}`;
-		return `${origin}/${(serviceInfo as Remote).name}/${appName}`;
-	};
-
-	const url = getBaseUrl();
-
-	return fetch(`${url}/i18n.json?${new Date().getMilliseconds()}`)
+	return fetch(url)
 		.then((module) => module.json())
 		.then((module) => {
-			locales.forEach((lang: Langs) => {
+			locales.forEach((lang) => {
 				i18next.addResourceBundle(
 					lang,
 					"translation",
