@@ -9,20 +9,23 @@ export const loadServiceTranslationsByServiceName = (
 	serviceInfo: Remote | string,
 	appName: string,
 ) => {
-	let url = `${window.location.origin}/${(serviceInfo as Remote).name}/${appName}`;
-	if ((serviceInfo as string) === HOME) {
-		url = window.location.origin;
-	}
-	if (process.env.NODE_ENV === "development") {
-		if ((serviceInfo as string) === HOME) {
-			url = "http://localhost:8080";
-		} else {
-			const appUrl = (serviceInfo as Remote)?.apps?.find(
-				(app) => app.name === appName,
-			)?.url;
-			url = appUrl || url;
+	const isHome = serviceInfo === HOME;
+	const origin = window.location.origin;
+
+	const getBaseUrl = (): string => {
+		if (process.env.NODE_ENV === "development") {
+			if (isHome) return "http://localhost:8080";
+
+			const remote = serviceInfo as Remote;
+			const appUrl = remote?.apps?.find((app) => app.name === appName)?.url;
+			if (appUrl) return appUrl;
 		}
-	}
+
+		if (isHome) return `${origin}/${serviceInfo}`;
+		return `${origin}/${(serviceInfo as Remote).name}/${appName}`;
+	};
+
+	const url = getBaseUrl();
 
 	return fetch(`${url}/i18n.json?${new Date().getMilliseconds()}`)
 		.then((module) => module.json())
