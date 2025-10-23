@@ -9,7 +9,10 @@ export const loadServiceTranslationsByServiceName = (
 	serviceInfo: Remote | string,
 	appName: string,
 ) => {
-	let url = window.location.origin;
+	let url = `${window.location.origin}/${(serviceInfo as Remote).name}/${appName}`;
+	if ((serviceInfo as string) === HOME) {
+		url = window.location.origin;
+	}
 	if (process.env.NODE_ENV === "development") {
 		if ((serviceInfo as string) === HOME) {
 			url = "http://localhost:8080";
@@ -20,7 +23,7 @@ export const loadServiceTranslationsByServiceName = (
 			url = appUrl || url;
 		}
 	}
-	console.log("origin url: ", url);
+
 	return (
 		fetch(`${url}/i18n.json?${new Date().getMilliseconds()}`)
 			.then((module) => module.json())
