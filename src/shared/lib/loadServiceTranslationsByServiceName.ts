@@ -7,7 +7,7 @@ const { locales } = require("@/shared/translations/i18n");
 
 export const loadServiceTranslationsByServiceName = (
 	serviceInfo: Remote | string,
-	appName: string,
+	appName: string | undefined,
 ) => {
 	const isHome = serviceInfo === HOME;
 	const origin = window.location.origin;

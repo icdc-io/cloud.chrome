@@ -57,6 +57,10 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 					(service) => service.path.substring(1) === currentService,
 				);
 
+	const currentServiceAppName = currentServiceInfo?.apps?.find(
+		(app) => app.name === currentServiceApp,
+	)?.name;
+
 	const token = kc.getUserInfo();
 
 	useEffect(() => {
@@ -76,11 +80,16 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [currentRoute]);
 
 	useEffect(() => {
-		loadServiceTranslationsByServiceName(
-			currentServiceInfo || HOME,
-			currentServiceApp,
-		);
-	}, [location.pathname]);
+		if (
+			(currentServiceAppName && currentServiceInfo) ||
+			(!currentServiceAppName && !currentServiceInfo)
+		) {
+			loadServiceTranslationsByServiceName(
+				currentServiceInfo || HOME,
+				currentServiceAppName,
+			);
+		}
+	}, [currentRoute, currentServiceInfo, currentServiceAppName]);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
