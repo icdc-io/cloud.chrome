@@ -24,35 +24,15 @@ export const loadServiceTranslationsByServiceName = (
 		}
 	}
 
-	return (
-		fetch(`${url}/i18n.json?${new Date().getMilliseconds()}`)
-			.then((module) => module.json())
-			.then((module) => {
-				console.log("fetch new translations");
-				locales.forEach((lang: Langs) => {
-					i18next.addResourceBundle(
-						lang,
-						"translation",
-						module[lang].translation,
-					);
-				});
-			})
-			// for old translations approach
-			.catch(() => {
-				fetch(
-					`/translations/${(serviceInfo as Service).name}/i18n.json?${new Date().getMilliseconds()}`,
-				)
-					.then((module) => module.json())
-					.then((module) => {
-						console.log("fetch old translations");
-						locales.forEach((lang: Langs) => {
-							i18next.addResourceBundle(
-								lang,
-								"translation",
-								module[lang].translation,
-							);
-						});
-					});
-			})
-	);
+	return fetch(`${url}/i18n.json?${new Date().getMilliseconds()}`)
+		.then((module) => module.json())
+		.then((module) => {
+			locales.forEach((lang: Langs) => {
+				i18next.addResourceBundle(
+					lang,
+					"translation",
+					module[lang].translation,
+				);
+			});
+		});
 };
