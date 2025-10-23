@@ -12,7 +12,6 @@ import { HOME } from "@/shared/constants/servicesNames";
 // import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
-
 // import ErrorScreen from "@/widgets/Error";
 import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
@@ -57,10 +56,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 			: remotes?.find(
 					(service) => service.path.substring(1) === currentService,
 				);
-
-	const currentServiceAppInfo = currentServiceInfo?.apps?.find(
-		(service) => service.name === currentServiceApp,
-	);
 
 	const token = kc.getUserInfo();
 
