@@ -1,4 +1,3 @@
-import { kc } from "@/entities/keycloak";
 import {
 	changeBurgerVisibility,
 	changeCurrentService,
@@ -51,17 +50,8 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 
 	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo =
-		currentService === ""
-			? undefined
-			: remotes?.find(
-					(service) => service.path.substring(1) === currentService,
-				);
-
-	const currentServiceAppName = currentServiceInfo?.apps?.find(
-		(app) => app.name === currentServiceApp,
-	)?.name;
-
-	const token = kc.getUserInfo();
+		remotes?.find((service) => service.path.substring(1) === currentService) ||
+		HOME;
 
 	useEffect(() => {
 		const newService = location.pathname.split("/")[1];
@@ -80,16 +70,17 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [currentRoute]);
 
 	useEffect(() => {
-		if (
-			(currentServiceAppName && currentServiceInfo) ||
-			(!currentServiceAppName && !currentServiceInfo)
-		) {
+		const currentServiceAppInfo = currentServiceInfo.apps?.find(
+			(app) => app.name === currentServiceApp,
+		);
+
+		if (currentServiceAppInfo || currentServiceInfo.name === HOME.name) {
 			loadServiceTranslationsByServiceName(
-				currentServiceInfo || HOME,
-				currentServiceAppName,
+				currentServiceInfo,
+				currentServiceAppInfo,
 			);
 		}
-	}, [currentRoute, currentServiceInfo, currentServiceAppName]);
+	}, [currentServiceInfo, currentServiceApp]);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
