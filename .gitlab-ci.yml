@@ -1,6 +1,6 @@
 stages:
-  - lint
   - audit
+  - lint
 
 variables:
   GITLEAKS_IMAGE: "ghcr.io/gitleaks/gitleaks:latest"
