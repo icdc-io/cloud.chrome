@@ -434,7 +434,6 @@ const NotificationBell = () => {
 						</div>
 					) : isFetching ? (
 						new Array(3).fill("").map((_, key) => (
-							// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
 							<div
 								className="flex items-center gap-2 mb-4 mt-4 group w-full"
 								key={key}

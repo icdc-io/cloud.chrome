@@ -146,9 +146,9 @@
 	}
 	body {
 		@apply bg-background text-foreground;
-		font-feature-settings:
+		/*font-feature-settings:
 			"rlig" 1,
-			"calt" 1;
+			"calt" 1;*/
 	}
 }
 
@@ -160,7 +160,7 @@ body {
 	position: relative;
 	background-color: var(--bg-color);
 	position: relative;
-	font-family: "Geist", "Geist Fallback";
+	font-family: "Geist", sans-serif;
 	pointer-events: auto !important;
 }
 
