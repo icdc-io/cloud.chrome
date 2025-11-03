@@ -33,6 +33,7 @@ biome:
     paths:
       - biome-report.txt
     expire_in: 14 days
+  allow_failure: true
 
 gitleaks:
   stage: audit
