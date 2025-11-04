@@ -65,7 +65,8 @@
 } */
 
 .select-item[data-highlighted] {
-	background-color: #262626;
+	/* biome-ignore lint/complexity/noImportantStyles: allow important */
+	background-color: #262626 !important;
 }
 
 .services-skeleton {
@@ -98,5 +99,6 @@
 }
 
 .select-item[data-state="unchecked"]:hover {
-	background-color: #262626;
+	/* biome-ignore lint/complexity/noImportantStyles: allow imortant */
+	background-color: #262626 !important;
 }

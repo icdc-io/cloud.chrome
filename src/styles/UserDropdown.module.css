@@ -30,7 +30,8 @@
 }
 
 .user-dropdown .menu.transition.second-level {
-	top: 0px;
+	/* biome-ignore lint/complexity/noImportantStyles: allow important */
+	top: 0px !important;
 }
 
 .user-dropdown .header {
