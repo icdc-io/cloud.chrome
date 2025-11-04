@@ -9,13 +9,16 @@ It serves as the **core container** for remote applications, handling authentica
 
 The **Host App** is responsible for:
 
-- 🔐 **User authentication** and session management
-- 🧩 Providing **shared UI components** (built with [shadcn/ui](https://ui.shadcn.com/))
+- 🔐 **User authentication** and session management  
+- 🧩 Providing **shared UI components** built with [shadcn/ui](https://ui.shadcn.com/)  
 - ⚙️ Exporting **common hooks** for:
-  - Form handling — powered by [react-hook-form](https://react-hook-form.com/)
-  - Data fetching and mutations — via [TanStack Query](https://tanstack.com/query/latest)
-  - Schema validation — using [Zod](https://zod.dev/)
-- 🌐 Exposing modules for remote apps using **Module Federation**
+  - Form handling — [react-hook-form](https://react-hook-form.com/)
+  - Data fetching and mutations — [TanStack Query](https://tanstack.com/query/latest)
+  - Schema validation — [Zod](https://zod.dev/)
+- 🗺️ **Top-level routing** — controls navigation and route-based loading of remote apps  
+- 🧭 Rendering **global layout** elements: `Header`, `Sidebar`, and `Navbar`  
+- 🧠 Providing a **shared Redux store** accessible across all microfrontends  
+- 🌐 Exposing common modules for remote applications through **Module Federation**
 - 🛠️ Built and bundled with [Rsbuild](https://modernjs.dev/rsbuild)
 
 ---
