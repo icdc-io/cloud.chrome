@@ -30,7 +30,7 @@
 }
 
 .user-dropdown .menu.transition.second-level {
-	top: 0px !important;
+	top: 0px;
 }
 
 .user-dropdown .header {

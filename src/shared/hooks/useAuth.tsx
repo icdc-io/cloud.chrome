@@ -1,12 +1,12 @@
+import { useEffect } from "react";
 import { initOptions, kc } from "@/entities/keycloak";
 import {
 	fetchAccountsData,
-	fetchAppsData,
-	fetchRemotes,
+	// fetchAppsData,
+	// fetchRemotes,
 	// fetchServiceVersion,
 } from "@/redux/actions";
 import { useAppDispatch } from "@/redux/shared";
-import { useEffect } from "react";
 
 const keycloakRequest = kc.init(initOptions);
 

@@ -1,15 +1,10 @@
 import {
-	type TypedUseSelectorHook,
-	useDispatch,
-	useSelector,
-} from "react-redux";
-import {
-	type Dispatch,
-	type Middleware,
 	applyMiddleware,
 	combineReducers,
 	compose,
 	legacy_createStore as createStore,
+	type Dispatch,
+	type Middleware,
 } from "redux";
 import { logger } from "redux-logger";
 import promiseMiddleware, {
@@ -17,19 +12,21 @@ import promiseMiddleware, {
 	// type AsyncAction,
 	type FluxStandardAction,
 } from "redux-promise-middleware";
-import { type ThunkDispatch, thunk } from "redux-thunk";
+import { thunk } from "redux-thunk";
 import Immutable from "seamless-immutable";
 import {
-	CHANGE_BURGER_VISIBILITY,
+	// CHANGE_BURGER_VISIBILITY,
 	CHANGE_CURRENT_SERVICE,
 	CHANGE_LANG,
-	CHANGE_SIDEBAR_VISIBILITY,
+	// CHANGE_SIDEBAR_VISIBILITY,
 	CHANGE_USER_INFO,
 	CONTACTS_FETCH,
+	defaultLocationData,
+	emptyLocationData,
 	FETCH_ACCOUNTS_DATA,
 	FETCH_LOCATION_DATA,
-	FETCH_SERVICES_STATUSES,
-	FETCH_SERVICE_VERSION_DATA,
+	// FETCH_SERVICES_STATUSES,
+	// FETCH_SERVICE_VERSION_DATA,
 	FULFILLED,
 	PENDING,
 	REJECTED,
@@ -37,8 +34,6 @@ import {
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
-	defaultLocationData,
-	emptyLocationData,
 } from "../redux/constants";
 import type { CustomStore, HostReducerType } from "../redux/types";
 import { servicesWithCompletedStatus } from "../shared/constants/servicesWithCompletedStatus";

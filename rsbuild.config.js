@@ -7,11 +7,23 @@ import Dotenv from "dotenv-webpack";
 import { mfConfig } from "./module-federation.config";
 
 const { publicVars } = loadEnv({ prefixes: ["REACT_APP_"] });
+const PORT = 8000;
 
 export default ({ envMode }) => {
 	return defineConfig({
 		server: {
-			port: 8000,
+			port: PORT,
+			host: "0.0.0.0",
+		},
+		dev: {
+			assetPrefix: true,
+			client: {
+				host: "localhost",
+				port: PORT,
+				protocol: "ws",
+			},
+			hmr: true,
+			lazyCompilation: false,
 		},
 		source: {
 			define: publicVars,

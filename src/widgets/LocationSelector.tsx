@@ -1,3 +1,4 @@
+import { useTranslation } from "react-i18next";
 import { changeUserInfo } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import {
@@ -9,7 +10,6 @@ import {
 	SelectTrigger,
 	SelectValue,
 } from "@/shared/ui/select";
-import { useTranslation } from "react-i18next";
 
 // const toDropdownOptions = (options: string[]) =>
 // 	options.map((option) => ({

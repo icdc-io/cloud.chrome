@@ -1,6 +1,6 @@
+import i18next from "i18next";
 import { locales } from "@/shared/translations/i18n";
 import type { App, Remote } from "@/types/entities";
-import i18next from "i18next";
 
 export const loadServiceTranslationsByServiceName = (
 	serviceInfo: Remote,

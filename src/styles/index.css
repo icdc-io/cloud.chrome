@@ -1,7 +1,11 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: allow important */
 @import "./reset.css";
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind base;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind components;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind utilities;
 
 @layer base {
@@ -159,8 +163,7 @@ html {
 body {
 	position: relative;
 	background-color: var(--bg-color);
-	position: relative;
-	font-family: "Geist", "Geist Fallback";
+	font-family: "Geist", sans-serif;
 	pointer-events: auto !important;
 }
 

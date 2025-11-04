@@ -67,6 +67,12 @@ textarea::placeholder {
 	overflow: auto;
 }
 
+.accordion-table-container td,
+th {
+	padding-left: 10px;
+	padding-right: 10px;
+}
+
 .accordion-table-container .expand-button {
 	width: 40px;
 	height: 40px;
@@ -96,7 +102,9 @@ textarea::placeholder {
 
 .accordion-table-container .visible .cell-content {
 	height: 70px;
-	transition: height 0.6s, padding 0.6s;
+	transition:
+		height 0.6s,
+		padding 0.6s;
 }
 
 .accordion-table-container .visible td {
@@ -140,19 +148,15 @@ textarea::placeholder {
 
 .accordion-table-container .hidden .cell-content {
 	height: 0;
-	transition: height 0.3s, padding 0.3s;
+	transition:
+		height 0.3s,
+		padding 0.3s;
 }
 
 .accordion-table-container td .flex {
 	display: flex;
 	gap: 2px;
 	align-items: center;
-}
-
-.accordion-table-container td,
-th {
-	padding-left: 10px;
-	padding-right: 10px;
 }
 
 .accordion-table-container th {
@@ -183,7 +187,6 @@ th {
 
 .accordion-table-container .right {
 	text-align: right;
-	text-align: -webkit-right;
 }
 
 .accordion-table-container .right div {

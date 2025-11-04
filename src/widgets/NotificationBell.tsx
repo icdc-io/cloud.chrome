@@ -1,3 +1,10 @@
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { EventSource } from "eventsource";
+// import * as Tabs from "@radix-ui/react-tabs";
+import { Bell, Check, Ellipsis } from "lucide-react";
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/redux/shared";
 import type { components } from "@/schemas/notifications-api";
 import { getToken } from "@/shared/api";
@@ -14,13 +21,6 @@ import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
 import { Skeleton } from "@/shared/ui/skeleton";
 // import { Skeleton } from "@/shared/ui/skeleton";
 import styles from "@/styles/NotificationBell.module.css";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
-import { EventSource } from "eventsource";
-// import * as Tabs from "@radix-ui/react-tabs";
-import { Bell, Check, Ellipsis } from "lucide-react";
-import { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 type Notification = components["schemas"]["Notification"];
 
@@ -434,7 +434,6 @@ const NotificationBell = () => {
 						</div>
 					) : isFetching ? (
 						new Array(3).fill("").map((_, key) => (
-							// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
 							<div
 								className="flex items-center gap-2 mb-4 mt-4 group w-full"
 								key={key}
@@ -448,7 +447,7 @@ const NotificationBell = () => {
 							</div>
 						))
 					) : events.length !== 0 ? (
-						<>{notificationItems}</>
+						notificationItems
 					) : (
 						<div className="flex justify-center items-center h-screen	max-h-80 text-[var(--placeholder)] flex-col gap-2">
 							<Bell size={63} />

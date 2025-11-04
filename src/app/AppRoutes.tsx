@@ -1,15 +1,14 @@
-import AvailableRoute from "@/app/AvailableRoute";
-import { store } from "@/redux/store";
-import RemoteComponent from "@/shared/ui/RemoteComponent";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
-import "@/styles/Popup.scss";
-// import "semantic-ui-css/semantic.min.css";
+import AvailableRoute from "@/app/AvailableRoute";
 import { useAppSelector } from "@/redux/shared";
+import { store } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
+import RemoteComponent from "@/shared/ui/RemoteComponent";
 import ErrorScreen from "@/widgets/Error";
+import "@/styles/Popup.scss";
 
 const AppRoutes = () => {
 	const remotes = useAppSelector((state) => state.host.remotes);

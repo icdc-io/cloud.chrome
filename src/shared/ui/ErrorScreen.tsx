@@ -1,6 +1,6 @@
-import styles from "@/styles/ErrorScreen.module.css";
 import { Frown, TriangleAlert } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import styles from "@/styles/ErrorScreen.module.css";
 
 const variants = {
 	0: {

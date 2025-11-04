@@ -4,14 +4,14 @@ import { Errors } from "@/shared/constants/errors";
 import Loader from "@/shared/ui/loader";
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar";
 import styles from "@/styles/Layout.module.css";
+import { AppSidebar } from "@/widgets/app-sidebar";
 import ErrorScreen from "@/widgets/Error";
 import Header from "@/widgets/Header";
 import ToastNotifications from "@/widgets/ToastNotifications";
-import { AppSidebar } from "@/widgets/app-sidebar";
 import "@/styles/index.css";
+import { useEffect } from "react";
 import { fetchAppsData, fetchRemotes } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-import { useEffect } from "react";
 
 const Layout = () => {
 	const dispatch = useAppDispatch();

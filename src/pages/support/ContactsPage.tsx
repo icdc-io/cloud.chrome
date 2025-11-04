@@ -1,9 +1,9 @@
+import { useEffect } from "react";
+import { useTranslation } from "react-i18next";
 import { fetchContacts } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import type { Langs } from "@/shared/translations/langs";
 import Loader from "@/shared/ui/loader";
-import { useEffect } from "react";
-import { useTranslation } from "react-i18next";
 
 const ContactsPage = () => {
 	const { t, i18n } = useTranslation();

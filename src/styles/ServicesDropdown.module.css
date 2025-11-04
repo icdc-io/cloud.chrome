@@ -32,10 +32,8 @@
 	align-items: center;
 	position: relative;
 	user-select: none;
-	align-items: center;
 	font-size: 15px;
 	padding: 12px 17px;
-	position: relative;
 	font-weight: 400;
 	border: none;
 	outline: none;
@@ -67,7 +65,7 @@
 } */
 
 .select-item[data-highlighted] {
-	background-color: #262626 !important;
+	background-color: #262626;
 }
 
 .services-skeleton {
@@ -100,5 +98,5 @@
 }
 
 .select-item[data-state="unchecked"]:hover {
-	background-color: #262626 !important;
+	background-color: #262626;
 }

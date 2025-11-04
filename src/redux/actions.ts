@@ -7,23 +7,21 @@ import {
 	CHANGE_LANG,
 	CHANGE_SIDEBAR_VISIBILITY,
 	CHANGE_USER_INFO,
+	CONTACTS_FETCH,
+	CONTACTS_FETCH_URL,
 	// CONTACTS_FETCH,
 	// CONTACTS_FETCH_URL,
 	FETCH_ACCOUNTS_DATA,
-	FETCH_APPS_DATA,
+	// FETCH_APPS_DATA,
 	FETCH_LOCATION_DATA,
 	FETCH_SERVICE_VERSION_DATA,
+	// DEFAULT_LOCATION_DATA,
+	FETCH_SERVICES_STATUSES,
+	SERVICES_STATUSES_URL,
 	// SET_AVAILABLE_SERVICES,
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
-} from "../redux/constants";
-import {
-	CONTACTS_FETCH,
-	CONTACTS_FETCH_URL,
-	DEFAULT_LOCATION_DATA,
-	FETCH_SERVICES_STATUSES,
-	SERVICES_STATUSES_URL,
 } from "../redux/constants";
 import { fetchData, fetchJsonData } from "../shared/api/shared";
 import { parseLocalStorage } from "../shared/lib/parseLocalStorage";
@@ -32,11 +30,11 @@ import type { components } from "../shared/schemas/account-api";
 import type { Langs } from "../shared/translations/langs";
 import type {
 	External,
-	FullAccountsInfo,
+	// FullAccountsInfo,
 	Remote,
-	ServiceInLocation,
-	ServicesInLocations,
-	UniqueInternalServices,
+	// ServiceInLocation,
+	// ServicesInLocations,
+	// UniqueInternalServices,
 	User,
 	UserInfo,
 } from "../types/entities";
