@@ -10,7 +10,6 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./getCurrentAppropriateLang": "./src/shared/lib/getCurrentAppropriateLang",
 		"./ReturnBaseUrl": "./src/shared/lib/returnBaseUrl",
 		"./ApiButton": "./src/widgets/apiButton",
-		"./GeneralInput": "./src/shared/ui/generalInput",
 		"./NoContent": "./src/shared/ui/noContent",
 		"./CodeSnippet": "./src/shared/ui/ApiDialog/CodeSnippet",
 		"./composeValidators": "./src/shared/lib/composeValidators",

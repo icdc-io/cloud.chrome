@@ -1,3 +1,4 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: allow important */
 @import "./reset.css";
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
 /* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
@@ -163,7 +164,7 @@ body {
 	position: relative;
 	background-color: var(--bg-color);
 	font-family: "Geist", sans-serif;
-	pointer-events: auto;
+	pointer-events: auto !important;
 }
 
 input,
@@ -333,8 +334,8 @@ i.trash:hover {
 }
 
 .api-dialog-snippet-wrapper .code-snippet-wrapper .language-bash {
-	word-break: break-all;
-	white-space: pre-wrap;
+	word-break: break-all !important;
+	white-space: pre-wrap !important;
 }
 
 .api-dialog-snippet-wrapper .header-container {
@@ -492,9 +493,9 @@ i.trash:hover {
 }
 
 .modal-dimmer {
-	z-index: 9999;
-	opacity: 0.5;
-	position: fixed;
+	z-index: 9999 !important;
+	opacity: 0.5 !important;
+	position: fixed !important;
 }
 
 .dimmed.dimmable > .ui.animating.dimmer,
@@ -504,7 +505,7 @@ i.trash:hover {
 }
 
 .ui.dropdown .menu {
-	z-index: 7;
+	z-index: 7 !important;
 }
 
 .ui.dropdown .menu > .item.delete {
@@ -647,9 +648,9 @@ button[data-placeholder] {
 input[aria-invalid="true"],
 button[aria-invalid="true"],
 textarea[aria-invalid="true"] {
-	border-color: var(--error-input-border);
-	background-color: var(--error-input-bg);
-	color: var(--destructive);
+	border-color: var(--error-input-border) !important;
+	background-color: var(--error-input-bg) !important;
+	color: var(--destructive) !important;
 }
 td[width="9"],
 th[width="9"] {
