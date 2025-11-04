@@ -40,8 +40,25 @@ The **Host App** is responsible for:
 
 ## ⚙️ Installation & Local Development
 
+### 1. Clone the repository
+
+### 2. Install dependencies
 ```bash
 npm install
+```
+
+### 3. Configure environment variables
+
+Before starting the app, you need to create a local environment file.
+Copy the example file:
+
+```bash
+cp .env.example .env.local
+```
+Open .env.local and provide valid values for all keys (API endpoints, authentication URLs, etc.).
+
+### 4. Start the development server
+```bash
 npm run dev
 ```
 
