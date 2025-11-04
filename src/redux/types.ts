@@ -1,6 +1,6 @@
 import type { Store } from "redux";
-import type { ImmutableObject } from "seamless-immutable";
 import type Immutable from "seamless-immutable";
+import type { ImmutableObject } from "seamless-immutable";
 import type { DEFAULT_LOCATION_DATA, STATUSES_TYPES } from "../redux/constants";
 import type { components as helpdeskComponents } from "../shared/schemas/helpdesk-api";
 import type { Langs } from "../shared/translations/langs";

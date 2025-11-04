@@ -1,8 +1,8 @@
+import { ChevronDown } from "lucide-react";
+import { useEffect, useRef, useState } from "react";
 import CodeSnippet from "@/shared/ui/ApiDialog/CodeSnippet";
 import CodeSnippetOptions from "@/shared/ui/ApiDialog/CodeSnippetOptions";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-import { ChevronDown } from "lucide-react";
-import { useEffect, useRef, useState } from "react";
 import "@/styles/apiButton.scss";
 import { useAppSelector } from "@/redux/shared";
 
@@ -52,7 +52,7 @@ const ApiButtonView = ({ actionsData }: ApiButtonView) => {
 	const [token, setToken] = useState("");
 	const user = useAppSelector((state) => state.host.user);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
-	const [position, setPosition] = useState<PositionType>("center");
+	const [_position, setPosition] = useState<PositionType>("center");
 	const apiButtonRef = useRef<HTMLButtonElement>(null);
 
 	useEffect(() => {
@@ -176,7 +176,7 @@ type GeneralAction = {
 
 const tokenRequest = () => `export TOKEN="%TOKEN"`;
 
-const getRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
+const getRequest = ({ headers, url = "" }: GeneralAction) =>
 	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} %BASE_URL${url}`;
 
 const postRequest = ({
@@ -195,10 +195,10 @@ const updateRequest = ({
 }: GeneralAction) =>
 	`curl -X PUT -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" -d '${body || ""}' %BASE_URL${url} ${comment}`;
 
-const deleteRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
+const deleteRequest = ({ headers, url = "" }: GeneralAction) =>
 	`curl -X DELETE -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} -H "Content-Type: application/json" %BASE_URL${url || ""}`;
 
-const listRequest = ({ headers, url = "", body, comment }: GeneralAction) =>
+const listRequest = ({ headers, url = "" }: GeneralAction) =>
 	`curl -H "Authorization: Bearer $TOKEN" ${formatHeaders(headers)} %BASE_URL${url}`;
 
 const ApiActions = {

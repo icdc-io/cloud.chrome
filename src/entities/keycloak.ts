@@ -1,10 +1,10 @@
-import { updateTokenInfo } from "@/redux/actions";
-import { store } from "@/redux/store";
-import type { UserInfo } from "@/types/entities";
 import Keycloak, {
 	type KeycloakConfig,
 	type KeycloakInitOptions,
 } from "keycloak-js";
+import { updateTokenInfo } from "@/redux/actions";
+import { store } from "@/redux/store";
+import type { UserInfo } from "@/types/entities";
 export const onLoad = "check-sso";
 
 const keycloakOptions = {

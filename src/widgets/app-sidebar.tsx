@@ -13,7 +13,6 @@ import {
 } from "@/shared/ui/sidebar";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { NavMain } from "@/widgets/nav-main";
-import { NavUser } from "@/widgets/nav-user";
 import ServicesDropdown from "./ServicesDropdown";
 import UserDropdown from "./UserDropdown";
 

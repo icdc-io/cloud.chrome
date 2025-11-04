@@ -34,7 +34,7 @@ type SelectProps = React.FC<
 const Select = React.forwardRef<
 	React.ElementRef<SelectProps>,
 	React.ComponentPropsWithoutRef<SelectProps>
->(({ children, ...props }, ref) => {
+>(({ children, ...props }, _ref) => {
 	return (
 		<SelectPrimitive.Root {...props} data-fill="open">
 			{children}

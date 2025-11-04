@@ -25,7 +25,13 @@
 		"rules": {
 			"recommended": true,
 			"suspicious": {
-				"noArrayIndexKey": "off"
+				"noArrayIndexKey": "off",
+				"noUnknownAtRules": {
+					"level": "warn",
+					"options": {
+						"ignore": ["@apply", "@plugin"]
+					}
+				}
 			},
 			"a11y": {
 				"useKeyWithClickEvents": "off",
@@ -41,6 +47,11 @@
 			"complexity": {
 				"noForEach": "off"
 			}
+		}
+	},
+	"css": {
+		"parser": {
+			"tailwindDirectives": true
 		}
 	}
 }

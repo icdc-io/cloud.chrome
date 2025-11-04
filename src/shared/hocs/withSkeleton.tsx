@@ -1,5 +1,5 @@
-import { Skeleton } from "@/shared/ui/skeleton";
 import type React from "react";
+import { Skeleton } from "@/shared/ui/skeleton";
 
 type HocType = {
 	isStatusFulfilled: boolean;

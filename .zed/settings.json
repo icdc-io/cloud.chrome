@@ -8,5 +8,9 @@
 	},
 	"tab_size": 2,
 	"format_on_save": "on",
-	"hard_tabs": true
+	"hard_tabs": true,
+	"code_actions_on_format": {
+		"source.organizeImports.biome": true,
+		"source.fixAll.biome": true
+	}
 }

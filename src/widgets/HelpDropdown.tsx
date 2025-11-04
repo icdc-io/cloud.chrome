@@ -1,7 +1,7 @@
+import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { useAppSelector } from "@/redux/shared";
 import QuestionLogo from "@/shared/images/question.svg";
 import styles from "@/styles/HelpDropdown.module.css";
-import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 
 const HelpDropdown = () => {
 	const vendorDomain = window.location.origin.split(".").slice(-2).join(".");

@@ -1,4 +1,3 @@
-import { SidebarMenu, SidebarMenuItem } from "@/shared/ui/sidebar";
 import UserDropdown from "./UserDropdown";
 
 export function NavUser() {
