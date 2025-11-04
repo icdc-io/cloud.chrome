@@ -1,6 +1,6 @@
-# 🏗️ Host Application — React + TypeScript + Module Federation + Rsbuild
+# 🏗️ Chrome (Host Application) — React + TypeScript + Module Federation + Rsbuild
 
-This repository contains the **Host Application** in a **microfrontend architecture** built with [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Module Federation](https://module-federation.io/).
+This repository contains the **Chrome Host Application** in a **microfrontend architecture** built with [React](https://react.dev/), [TypeScript](https://www.typescriptlang.org/), and [Module Federation](https://module-federation.io/).
 It serves as the **core container** for remote applications, handling authentication, shared UI components, and global logic.
 
 ---
