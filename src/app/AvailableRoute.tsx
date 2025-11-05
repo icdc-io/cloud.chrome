@@ -80,7 +80,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 				currentServiceAppInfo,
 			);
 		}
-	}, [currentServiceInfo, currentServiceApp]);
+	}, [currentRoute, currentServiceApp]);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
