@@ -74,13 +74,19 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 			(app) => app.name === currentServiceApp,
 		);
 
-		if (currentServiceAppInfo || currentServiceInfo.name === HOME.name) {
+		if (currentServiceAppInfo) {
 			loadServiceTranslationsByServiceName(
 				currentServiceInfo,
 				currentServiceAppInfo,
 			);
 		}
-	}, [currentRoute, currentServiceApp]);
+	}, [currentServiceApp, currentServiceInfo]);
+
+	useEffect(() => {
+		if (currentServiceInfo.name === HOME.name) {
+			loadServiceTranslationsByServiceName(currentServiceInfo, undefined);
+		}
+	}, []);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
