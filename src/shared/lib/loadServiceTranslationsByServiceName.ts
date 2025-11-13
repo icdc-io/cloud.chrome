@@ -22,6 +22,8 @@ export const loadServiceTranslationsByServiceName = (
 		.filter(Boolean)
 		.join("/");
 
+	console.log("url", url);
+
 	return fetch(url)
 		.then((module) => module.json())
 		.then((module) => {

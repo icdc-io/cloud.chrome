@@ -73,6 +73,8 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 		const currentServiceAppInfo = currentServiceInfo.apps?.find(
 			(app) => app.name === currentServiceApp,
 		);
+		console.log("uc1: currentServiceInfo", currentServiceInfo);
+		console.log("uc1: currentServiceAppInfo", currentServiceAppInfo);
 
 		if (currentServiceAppInfo) {
 			loadServiceTranslationsByServiceName(
@@ -83,7 +85,9 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [currentServiceApp, currentServiceInfo]);
 
 	useEffect(() => {
+		console.log("uc2: currentServiceInfo", currentServiceInfo);
 		if (currentServiceInfo.name === HOME.name) {
+			console.log("callback home");
 			loadServiceTranslationsByServiceName(currentServiceInfo, undefined);
 		}
 	}, []);
