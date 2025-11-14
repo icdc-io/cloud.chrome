@@ -110,6 +110,7 @@ export const resources: LanguageResources = {
 			none: "None",
 			id: "ID",
 			add: "Add",
+			docs: "Docs",
 		},
 	},
 	ru: {
@@ -206,6 +207,7 @@ export const resources: LanguageResources = {
 			no: "Нет",
 			id: "ID",
 			add: "Добавить",
+			docs: "Документация",
 		},
 	},
 };
