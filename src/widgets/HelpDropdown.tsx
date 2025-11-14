@@ -1,9 +1,12 @@
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
+import { useTranslation } from "react-i18next";
 import { useAppSelector } from "@/redux/shared";
 import QuestionLogo from "@/shared/images/question.svg";
 import styles from "@/styles/HelpDropdown.module.css";
 
 const HelpDropdown = () => {
+	const { t } = useTranslation();
+
 	const vendorDomain = window.location.origin.split(".").slice(-2).join(".");
 	const helpBaseUrl = `https://docs.${vendorDomain}`;
 	const lang = useAppSelector((state) => state.host.lang);
@@ -31,7 +34,7 @@ const HelpDropdown = () => {
 						className={styles["help-item"]}
 						onSelect={goToHelp}
 					>
-						Help & Asistance
+						{t("docs")}
 					</DropdownMenu.Item>
 				</DropdownMenu.Content>
 			</DropdownMenu.Portal>
