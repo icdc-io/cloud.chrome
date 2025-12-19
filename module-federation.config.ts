@@ -49,6 +49,10 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Progress": "./src/shared/ui/progress",
 		"./Collapsible": "./src/shared/ui/collapsible",
 		"./Skeleton": "./src/shared/ui/skeleton",
+		"./useLocalStorage": "./src/shared/hooks/useLocalStorage",
+		"./fieldGetter": "./src/shared/lib/fieldGetter",
+		"./fieldSetter": "./src/shared/lib/fieldSetter",
+		"./sortByParams": "./src/shared/lib/sortByParams",
 	},
 	shared: {
 		react: {
