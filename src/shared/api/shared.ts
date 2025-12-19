@@ -285,7 +285,7 @@ export const useFetchData = <T, U = T>({
 	...queryOptions
 }: UseFetchData<T, U>) => {
 	const appId = getAppId(window.location.pathname);
-	const queryKey = [appId, endpoint, params];
+	const queryKey = [appId, endpoint, params].filter(Boolean);
 
 	const queryFn = () => {
 		const query = params ? `?${new URLSearchParams(params)}` : "";
