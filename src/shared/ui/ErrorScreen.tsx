@@ -17,10 +17,12 @@ const variants = {
 
 type ErrorScreenProps = {
 	status?: keyof typeof variants;
+	message: string | undefined;
 };
 
 const ErrorScreen = ({
 	status = 0,
+	message,
 	...props
 }: ErrorScreenProps & JSX.IntrinsicElements["div"]) => {
 	const { t } = useTranslation();
@@ -33,6 +35,7 @@ const ErrorScreen = ({
 					<div className={styles["error-icon"]}>
 						<errorContent.icon size={54} />
 						<h3>{t(errorContent.title)}</h3>
+						{message && <p>{message}</p>}
 					</div>
 					<p>{t(errorContent.description)}</p>
 				</div>
