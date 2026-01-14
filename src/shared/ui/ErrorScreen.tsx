@@ -17,7 +17,7 @@ const variants = {
 
 type ErrorScreenProps = {
 	status?: keyof typeof variants;
-	message: string | undefined;
+	message?: string;
 };
 
 const ErrorScreen = ({
