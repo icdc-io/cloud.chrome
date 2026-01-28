@@ -92,7 +92,6 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 		"x-icdc-role": user.role,
 		"x-auth-account": user.account,
 		"x-auth-role": user.role,
-		// "x-icdc-location": user.location,
 	};
 };
 
@@ -120,19 +119,6 @@ type ErrorResponse = {
 };
 
 const parseError = (errorData: ErrorResponse): string => {
-	// if (!errorData) return "";
-	// if (typeof errorData === "string") return errorData;
-	// if (typeof errorData === "object")
-	// 	return [
-	// 		...(Array.isArray(errorData)
-	// 			? errorData
-	// 			: Object.values(errorData)
-	// 		).reduce((acc, curr) => {
-	// 			const msg = parseError(curr).trim();
-	// 			if (msg) acc.add(msg);
-	// 			return acc;
-	// 		}, new Set()),
-	// 	].join("\n");
 	if (!errorData) return "";
 	const message = errorData.message;
 	const errorsInfo = errorData.errors;

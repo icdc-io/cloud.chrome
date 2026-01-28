@@ -1,5 +1,3 @@
-// import { useTranslation } from "react-i18next";
-
 import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
@@ -18,7 +16,6 @@ const loaderVariants = cva("", {
 const Loader = ({
 	variant = "default",
 }: VariantProps<typeof loaderVariants>) => {
-	// const { t } = useTranslation();
 	return (
 		<div className="flex h-full w-full items-center justify-center">
 			<div

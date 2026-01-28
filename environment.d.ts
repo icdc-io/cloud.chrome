@@ -8,7 +8,6 @@ declare global {
 			REACT_APP_CP_VENDOR: string;
 			REACT_APP_LOGOUT_URL: string;
 			REACT_APP_KEYCLOAK_URL: string;
-			REACT_APP_CENTRAL_LOCATION_URL: string;
 		}
 	}
 }

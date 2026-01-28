@@ -22,8 +22,6 @@ export type StoreType = {
 	accountsDataFetchStatus: STATUSES_TYPES[number];
 	username: string;
 	email: string;
-	// serviceVersion: string;
-	// serviceVersionFetchStatus: STATUSES_TYPES[number];
 	currentService: string | undefined;
 	locationData: DEFAULT_LOCATION_DATA;
 	userInfo: UserInfo;
@@ -40,8 +38,6 @@ interface Action<T, P> {
 	readonly type: T;
 	readonly payload?: P;
 }
-
-// type AsyncReducerState<P extends Immutable.ImmutableObject<P>> = ReducerType<P> | undefined;
 
 export type CustomStore = Store<
 	{ host: HostReducerType },

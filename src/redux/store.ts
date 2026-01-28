@@ -9,28 +9,22 @@ import {
 import { logger } from "redux-logger";
 import promiseMiddleware, {
 	type AsyncAction,
-	// type AsyncAction,
 	type FluxStandardAction,
 } from "redux-promise-middleware";
 import { thunk } from "redux-thunk";
 import Immutable from "seamless-immutable";
 import {
-	// CHANGE_BURGER_VISIBILITY,
 	CHANGE_CURRENT_SERVICE,
 	CHANGE_LANG,
-	// CHANGE_SIDEBAR_VISIBILITY,
 	CHANGE_USER_INFO,
 	CONTACTS_FETCH,
 	defaultLocationData,
 	emptyLocationData,
 	FETCH_ACCOUNTS_DATA,
 	FETCH_LOCATION_DATA,
-	// FETCH_SERVICES_STATUSES,
-	// FETCH_SERVICE_VERSION_DATA,
 	FULFILLED,
 	PENDING,
 	REJECTED,
-	// SET_AVAILABLE_SERVICES,
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
@@ -46,7 +40,6 @@ const initialState: HostReducerType = Immutable({
 		location: "",
 	},
 	lang: currentLang(),
-	// servicesAvailability: null,
 	remotes: null,
 	remotesFetchStatus: PENDING,
 	fullAccountsInfo: null,
@@ -54,8 +47,6 @@ const initialState: HostReducerType = Immutable({
 	accountsDataFetchStatus: PENDING,
 	username: "",
 	email: "",
-	// serviceVersion: "",
-	// serviceVersionFetchStatus: PENDING,
 	currentService: window.location.pathname.split("/")[1],
 	locationData: emptyLocationData,
 	userInfo: null,
@@ -103,15 +94,6 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 				...action.payload,
 			});
 
-		// case `${FETCH_SERVICE_VERSION_DATA}_PENDING`:
-		// 	return state.set("serviceVersionFetchStatus", PENDING);
-		// case `${FETCH_SERVICE_VERSION_DATA}_REJECTED`:
-		// 	return state.set("serviceVersionFetchStatus", REJECTED);
-		// case `${FETCH_SERVICE_VERSION_DATA}_FULFILLED`:
-		// 	return state.merge({
-		// 		serviceVersionFetchStatus: FULFILLED,
-		// 		serviceVersion: action.payload,
-		// 	});
 		case `${FETCH_LOCATION_DATA}_FULFILLED`:
 			return state.set("locationData", action.payload);
 		case `${FETCH_LOCATION_DATA}_REJECTED`:
@@ -122,28 +104,6 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 				userInfo: action.payload,
 			});
 		}
-
-		// case `${FETCH_SERVICES_STATUSES}_PENDING`:
-		// 	return state.set("servicesWithCompletedStatusFetchStatus", PENDING);
-		// case `${FETCH_SERVICES_STATUSES}_REJECTED`:
-		// 	return state.set("servicesWithCompletedStatusFetchStatus", REJECTED);
-		// case `${FETCH_SERVICES_STATUSES}_FULFILLED`: {
-		// 	const servicesWithCompletedStatus = action.payload.data.reduce(
-		// 		(acc: Array<string>, curr: any) => {
-		// 			if (curr.common_service_status === "Complete")
-		// 				acc.push(curr.common_name);
-		// 			return acc;
-		// 		},
-		// 		[],
-		// 	);
-		// 	return state.merge({
-		// 		servicesWithCompletedStatusFetchStatus: FULFILLED,
-		// 		servicesWithCompletedStatus: new Set([
-		// 			state.servicesWithCompletedStatus,
-		// 			...servicesWithCompletedStatus,
-		// 		]),
-		// 	});
-		// }
 
 		case `${CONTACTS_FETCH}_PENDING`:
 			return state.set("contactsFetchStatus", "pending");
@@ -168,7 +128,6 @@ function createReducer(asyncReducers: unknown) {
 	if (asyncReducers instanceof Object) {
 		return combineReducers({
 			...staticReducers,
-			// form: reduxFormReducer,
 			...asyncReducers,
 		});
 	}
