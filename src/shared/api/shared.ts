@@ -60,7 +60,6 @@ export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
 	}
 
 	return response as T;
-	// throw new RequestError("Invalid response type", 0);
 };
 
 export const fetchData = async <T>(

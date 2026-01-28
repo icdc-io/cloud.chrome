@@ -9,16 +9,11 @@ import {
 	CHANGE_USER_INFO,
 	CONTACTS_FETCH,
 	CONTACTS_FETCH_URL,
-	// CONTACTS_FETCH,
-	// CONTACTS_FETCH_URL,
 	FETCH_ACCOUNTS_DATA,
-	// FETCH_APPS_DATA,
 	FETCH_LOCATION_DATA,
 	FETCH_SERVICE_VERSION_DATA,
-	// DEFAULT_LOCATION_DATA,
 	FETCH_SERVICES_STATUSES,
 	SERVICES_STATUSES_URL,
-	// SET_AVAILABLE_SERVICES,
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
@@ -28,16 +23,7 @@ import { parseLocalStorage } from "../shared/lib/parseLocalStorage";
 import { availableRoles } from "../shared/lib/roleUtils";
 import type { components } from "../shared/schemas/account-api";
 import type { Langs } from "../shared/translations/langs";
-import type {
-	External,
-	// FullAccountsInfo,
-	Remote,
-	// ServiceInLocation,
-	// ServicesInLocations,
-	// UniqueInternalServices,
-	User,
-	UserInfo,
-} from "../types/entities";
+import type { External, Remote, User, UserInfo } from "../types/entities";
 import type { HostReducerType } from "./types";
 
 function infernalLiteral<U, T extends U>(arg: T): T {
@@ -49,9 +35,6 @@ function inferStringLiteral<T extends string>(arg: T): T {
 }
 
 const parseAccountsData = async () => {
-	// const accountsData = await accountsDataPromise;
-	// if (!accountsData) return {};
-
 	const parsedToken = kc.getUserInfo();
 
 	if (!parsedToken) return {};
@@ -106,44 +89,7 @@ const parseAccountsData = async () => {
 	localStorage.setItem("user", JSON.stringify(user));
 	localStorage.setItem("baseUrls", JSON.stringify(locations));
 
-	// const uniqueInternalServices: UniqueInternalServices = {};
-
-	// const fullAccountsInfo = filteredAccounts.reduce(
-	// 	(allAccountsData: FullAccountsInfo, currentAccountData) => {
-	// 		allAccountsData[currentAccountData.name] = {
-	// 			...accounts[currentAccountData.name],
-	// 			display_name: currentAccountData.display_name,
-	// 			name: currentAccountData.name,
-	// 			servicesInLocations: currentAccountData.locations?.reduce(
-	// 				(allLocationsData: ServicesInLocations, currentLocationData) => {
-	// 					allLocationsData[currentLocationData.name || ""] =
-	// 						currentLocationData.services?.reduce(
-	// 							(allServicesData: ServiceInLocation, currentServiceData) => {
-	// 								if (currentServiceData.path) {
-	// 									allServicesData[currentServiceData.path.split("/")[1]] =
-	// 										currentServiceData;
-	// 									// uniqueInternalServices[currentServiceData.path] =
-	// 									// 	currentServiceData.name;
-	// 								} else {
-	// 									allServicesData[currentServiceData.name || ""] =
-	// 										currentServiceData;
-	// 								}
-	// 								return allServicesData;
-	// 							},
-	// 							{},
-	// 						);
-	// 					return allLocationsData;
-	// 				},
-	// 				{},
-	// 			),
-	// 		};
-	// 		return allAccountsData;
-	// 	},
-	// 	{},
-	// );
-
 	return {
-		// fullAccountsInfo,
 		user,
 		baseUrls: locations,
 		username: `${parsedToken.given_name} ${parsedToken.family_name}`,
@@ -213,13 +159,6 @@ export const changeBurgerVisibility = (isOpen: boolean) =>
 		type: inferStringLiteral(CHANGE_BURGER_VISIBILITY),
 		payload: isOpen,
 	}) as const;
-export const fetchServiceVersion = () =>
-	({
-		type: inferStringLiteral(FETCH_SERVICE_VERSION_DATA),
-		payload: fetchData(
-			`${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/install`,
-		).then(() => "3.0.2") as Promise<string>,
-	}) as const;
 export const changeCurrentService = (service: string) =>
 	({
 		type: inferStringLiteral(CHANGE_CURRENT_SERVICE),
@@ -230,13 +169,6 @@ export const changeUserInfo = (newInfo: User) =>
 		type: inferStringLiteral(CHANGE_USER_INFO),
 		payload: newInfo,
 	}) as const;
-// export const fetchRemotesApps = () =>
-// 	({
-// 		type: inferStringLiteral(SET_REMOTES),
-// 		payload: fetchData(
-// 			`${process.env.REACT_APP_CENTRAL_LOCATION_URL}/api/delivery/v1/service/networking/version`,
-// 		),
-// 	}) as const;
 export const fetchLocationData = (currentLocation: string) =>
 	({
 		type: inferStringLiteral(FETCH_LOCATION_DATA),

@@ -1,4 +1,3 @@
-// import ErrorScreen from "@/widgets/Error";
 import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 import {
@@ -8,10 +7,7 @@ import {
 	fetchLocationData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-// import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
-// import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
-// import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
 
@@ -48,7 +44,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	const currentRoute = location.pathname.split("/")[1];
 	const currentServiceApp = location.pathname.split("/")[2];
 
-	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo = currentRoute
 		? remotes?.find(
 				(service) => service.path.substring(1) === currentService,
@@ -99,9 +94,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [user.location]);
 
 	if (children) return children;
-
-	// if (currentService && token && !isServiceAvailable(currentService, token))
-	// 	return <ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />;
 
 	return <Outlet />;
 };

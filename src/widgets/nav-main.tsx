@@ -1,7 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
 import Question from "@/shared/images/question.svg";
-// import { builtInServices } from "@/shared/constants/builtInServices";
 import { Collapsible, CollapsibleTrigger } from "@/shared/ui/collapsible";
 import {
 	SidebarGroup,
