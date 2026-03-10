@@ -688,6 +688,10 @@ td[width="1"],
 th[width="1"] {
 	width: 6.25%;
 }
+td[width="0.5"],
+th[width="0.5"] {
+	width: 3.125%;
+}
 
 .gap-4 {
 	gap: 1rem;

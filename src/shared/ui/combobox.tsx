@@ -152,7 +152,9 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 						{...placeholderAttribute}
 						disabled={disabled}
 					>
-						{currentOption || t(placeholder)}
+						<span className="w-full overflow-hidden whitespace-nowrap text-ellipsis">
+							{currentOption || t(placeholder)}
+						</span>
 						<ChevronsUpDown className="h-4 w-4 opacity-50" size={16} />
 					</Button>
 				</PopoverTrigger>
