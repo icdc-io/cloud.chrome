@@ -1,27 +1,22 @@
 import { SquareTerminal } from "lucide-react";
 import type * as React from "react";
-
 import { FULFILLED, type STATUSES_TYPES } from "@/redux/constants";
 import { useAppSelector } from "@/redux/shared";
-import { useIsMobile } from "@/shared/hooks/use-mobile";
 import {
 	Sidebar,
 	SidebarContent,
-	SidebarFooter,
 	SidebarHeader,
 	SidebarRail,
 } from "@/shared/ui/sidebar";
 import { Skeleton } from "@/shared/ui/skeleton";
 import { NavMain } from "@/widgets/nav-main";
 import ServicesDropdown from "./ServicesDropdown";
-import UserDropdown from "./UserDropdown";
 
 type AppSidebarType = {
 	status: STATUSES_TYPES[number];
 } & React.ComponentProps<typeof Sidebar>;
 
 export function AppSidebar({ status, ...props }: AppSidebarType) {
-	const isMobile = useIsMobile();
 	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const isFulfilled = status === FULFILLED;
@@ -58,11 +53,6 @@ export function AppSidebar({ status, ...props }: AppSidebarType) {
 							items={[...currentRemotesList]}
 						/>
 					</SidebarContent>
-					{isMobile && (
-						<SidebarFooter className="p-2">
-							<UserDropdown />
-						</SidebarFooter>
-					)}
 					<SidebarRail />
 				</>
 			)}
