@@ -168,13 +168,13 @@ PaginationEllipsis.displayName = "PaginationEllipsis";
 
 export {
 	Pagination,
-	PaginationContent,
-	PaginationLink,
 	PaginationButton,
-	PaginationItem,
-	PaginationPrevious,
-	PaginationButtonPrevious,
-	PaginationNext,
 	PaginationButtonNext,
+	PaginationButtonPrevious,
+	PaginationContent,
 	PaginationEllipsis,
+	PaginationItem,
+	PaginationLink,
+	PaginationNext,
+	PaginationPrevious,
 };

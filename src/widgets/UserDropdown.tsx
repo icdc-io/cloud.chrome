@@ -6,7 +6,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { useInvalidateQuery } from "@/shared/hooks/useInvalidateQuery";
 import { filterAndSort } from "@/shared/lib/roleUtils";
-import { cn } from "@/shared/lib/utils";
 import { langs } from "@/shared/translations/i18n";
 import type { Langs } from "@/shared/translations/langs";
 import {
@@ -45,6 +44,13 @@ const UserDropdown = () => {
 		(accountName) =>
 			accounts[accountName].locations.length &&
 			accounts[accountName].roles.length,
+	);
+
+	const availableLocations = (accounts[account]?.locations || []).map(
+		(locationName) => ({
+			value: locationName,
+			text: locationName,
+		}),
 	);
 
 	const logout = () => {
@@ -126,6 +132,37 @@ const UserDropdown = () => {
 		</DropdownMenuSub>
 	) : null;
 
+	const locationSection = userInfo ? (
+		<DropdownMenuSub>
+			<DropdownMenuSubTrigger className={styles["select-item"]}>
+				<div className={styles.RightSlot}>
+					<span>{t("location")}</span>
+					<span className={styles["selected-value"]}>{location}</span>
+				</div>
+			</DropdownMenuSubTrigger>
+			<DropdownMenuPortal>
+				<DropdownMenuSubContent className={styles["user-select"]}>
+					<DropdownMenuRadioGroup
+						value={location}
+						onValueChange={(newLocation) =>
+							changeCurrentInfo("location", newLocation)
+						}
+					>
+						{availableLocations.map((location) => (
+							<DropdownMenuRadioItem
+								key={location.value}
+								className={styles["select-item"]}
+								value={location.value}
+							>
+								{location.text}
+							</DropdownMenuRadioItem>
+						))}
+					</DropdownMenuRadioGroup>
+				</DropdownMenuSubContent>
+			</DropdownMenuPortal>
+		</DropdownMenuSub>
+	) : null;
+
 	const rolesSection = userInfo ? (
 		<>
 			<DropdownMenuSub>
@@ -162,15 +199,23 @@ const UserDropdown = () => {
 		<DropdownMenu>
 			<DropdownMenuTrigger asChild>
 				<button
-					className={cn(
-						styles["user-select__trigger"],
-						isMobile && "px-4 py-3 hover:bg-[var(--header-bg-hv)] rounded-md",
-					)}
+					// className={cn(
+					// 	isMobile && "px-4 py-3 hover:bg-[var(--header-bg-hv)] rounded-md",
+					// )}
 					aria-label="User options"
 					type="button"
 				>
-					{userInfo?.given_name} {userInfo?.family_name}
-					<ChevronDownIcon color="white" size={15} />
+					{isMobile ? (
+						<div className={styles["user-avatar"]}>
+							{userInfo?.given_name[0]?.toUpperCase()}
+							{userInfo?.family_name[0]?.toUpperCase()}
+						</div>
+					) : (
+						<div className={styles["user-select__trigger"]}>
+							{userInfo?.given_name} {userInfo?.family_name}
+							<ChevronDownIcon color="white" size={15} />
+						</div>
+					)}
 				</button>
 			</DropdownMenuTrigger>
 
@@ -183,6 +228,7 @@ const UserDropdown = () => {
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator className={styles.DropdownMenuSeparator} />
 					{accountsSection}
+					{isMobile && locationSection}
 					{rolesSection}
 					<DropdownMenuSub>
 						<DropdownMenuSubTrigger className={styles["select-item"]}>
