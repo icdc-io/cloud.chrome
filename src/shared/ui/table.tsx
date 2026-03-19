@@ -1,13 +1,27 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowDownUp, MoveDown, MoveUp } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/shared/lib/utils";
 
+const tableVariants = cva("", {
+	variants: {
+		variant: {
+			responsive: "responsive table-fixed",
+			default: "",
+		},
+	},
+	defaultVariants: {
+		variant: "default",
+	},
+});
+
 const Table = React.forwardRef<
 	HTMLTableElement,
-	React.HTMLAttributes<HTMLTableElement> & {
-		containerClassName?: string;
-	}
->(({ className, containerClassName, ...props }, ref) => (
+	React.HTMLAttributes<HTMLTableElement> &
+		VariantProps<typeof tableVariants> & {
+			containerClassName?: string;
+		}
+>(({ className, containerClassName, variant, ...props }, ref) => (
 	<div className={cn("relative w-full ", containerClassName)}>
 		<div
 			className={cn(
@@ -17,7 +31,11 @@ const Table = React.forwardRef<
 		>
 			<table
 				ref={ref}
-				className={cn("w-full caption-bottom text-sm border-none", className)}
+				className={cn(
+					tableVariants({ variant }),
+					"w-full caption-bottom text-sm border-none",
+					className,
+				)}
 				{...props}
 			/>
 		</div>
