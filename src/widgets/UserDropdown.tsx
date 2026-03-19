@@ -227,8 +227,8 @@ const UserDropdown = () => {
 						{userInfo?.email}
 					</DropdownMenuLabel>
 					<DropdownMenuSeparator className={styles.DropdownMenuSeparator} />
-					{isMobile && locationSection}
 					{accountsSection}
+					{isMobile && locationSection}
 					{rolesSection}
 					<DropdownMenuSub>
 						<DropdownMenuSubTrigger className={styles["select-item"]}>
