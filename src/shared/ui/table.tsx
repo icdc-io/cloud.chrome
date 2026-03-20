@@ -2,11 +2,12 @@ import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowDownUp, MoveDown, MoveUp } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/shared/lib/utils";
+import { useContainerBreakpoint } from "../hooks/useContainerBreakpoint";
 
 const tableVariants = cva("", {
 	variants: {
 		variant: {
-			responsive: "responsive table-fixed",
+			responsive: "responsive",
 			default: "",
 		},
 	},
@@ -20,11 +21,18 @@ const Table = React.forwardRef<
 	React.HTMLAttributes<HTMLTableElement> &
 		VariantProps<typeof tableVariants> & {
 			containerClassName?: string;
+			breakpoint?: number;
 		}
->(({ className, containerClassName, variant, ...props }, ref) => (
-	<div className={cn("relative w-full ", containerClassName)}>
+>(({ className, containerClassName, breakpoint, variant, ...props }, ref) => {
+	const wrapperRef = React.useRef(null);
+	const isCards = useContainerBreakpoint(wrapperRef, breakpoint);
+	const isTableResponsive = variant === "responsive";
+
+	const tableComponent = (
 		<div
+			ref={wrapperRef}
 			className={cn(
+				isCards && isTableResponsive ? "table-cards-mode" : "table-default",
 				"overflow-auto border border-solid border-[#E2E8F0] rounded !min-h-0	",
 				containerClassName,
 			)}
@@ -39,8 +47,16 @@ const Table = React.forwardRef<
 				{...props}
 			/>
 		</div>
-	</div>
-));
+	);
+
+	if (isTableResponsive) return tableComponent;
+
+	return (
+		<div className={cn("relative w-full ", containerClassName)}>
+			{tableComponent}
+		</div>
+	);
+});
 Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<
@@ -59,11 +75,7 @@ const TableBody = React.forwardRef<
 	HTMLTableSectionElement,
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-	<tbody
-		ref={ref}
-		className={cn("[&_tr:last-child]:border-0", className)}
-		{...props}
-	/>
+	<tbody ref={ref} className={cn("", className)} {...props} />
 ));
 TableBody.displayName = "TableBody";
 

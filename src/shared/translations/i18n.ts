@@ -113,6 +113,7 @@ export const resources: LanguageResources = {
 			id: "ID",
 			add: "Add",
 			docs: "Docs",
+			options: "Options",
 		},
 	},
 	ru: {
@@ -211,6 +212,7 @@ export const resources: LanguageResources = {
 			id: "ID",
 			add: "Добавить",
 			docs: "Документация",
+			options: "Опции",
 		},
 	},
 };

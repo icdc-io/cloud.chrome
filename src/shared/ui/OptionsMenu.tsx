@@ -32,8 +32,22 @@ const OptionsMenu = <T,>({ options, instance }: OptionsMenu<T>) => {
 	return (
 		<DropdownMenu onOpenChange={setOpen} open={open}>
 			<DropdownMenuTrigger asChild>
-				<Button variant="ghost" onClick={onOpenChange}>
+				<Button
+					className="options-trigger-dots"
+					variant="ghost"
+					onClick={onOpenChange}
+				>
 					<EllipsisVertical />
+				</Button>
+			</DropdownMenuTrigger>
+
+			<DropdownMenuTrigger asChild>
+				<Button
+					className="options-grigger-mobile"
+					variant="outline"
+					onClick={onOpenChange}
+				>
+					{t("options")}
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">
