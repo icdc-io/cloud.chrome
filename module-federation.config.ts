@@ -53,6 +53,8 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./fieldGetter": "./src/shared/lib/fieldGetter",
 		"./fieldSetter": "./src/shared/lib/fieldSetter",
 		"./sortByParams": "./src/shared/lib/sortByParams",
+		"./withSkeleton": "./src/shared/hocs/withSkeleton",
+		"./WithCopyButton": "./src/shared/ui/WithCopyButton",
 	},
 	shared: {
 		react: {

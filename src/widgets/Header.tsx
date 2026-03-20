@@ -26,7 +26,9 @@ const Header = () => {
 					<img
 						src={require(`@/shared/images/${dynamicfilename}.svg`)}
 						alt="Cloud logo"
-						className="max-w-fit"
+						className={styles["cloud-logo"]}
+						width={100}
+						height={31}
 					/>
 				</Link>
 			</div>

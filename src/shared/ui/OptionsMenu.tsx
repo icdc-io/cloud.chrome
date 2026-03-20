@@ -33,21 +33,12 @@ const OptionsMenu = <T,>({ options, instance }: OptionsMenu<T>) => {
 		<DropdownMenu onOpenChange={setOpen} open={open}>
 			<DropdownMenuTrigger asChild>
 				<Button
-					className="options-trigger-dots"
+					className="options-trigger-button"
 					variant="ghost"
 					onClick={onOpenChange}
 				>
 					<EllipsisVertical />
-				</Button>
-			</DropdownMenuTrigger>
-
-			<DropdownMenuTrigger asChild>
-				<Button
-					className="options-grigger-mobile"
-					variant="outline"
-					onClick={onOpenChange}
-				>
-					{t("options")}
+					<span>{t("options")}</span>
 				</Button>
 			</DropdownMenuTrigger>
 			<DropdownMenuContent align="end">

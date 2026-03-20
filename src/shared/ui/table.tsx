@@ -153,8 +153,10 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<
 	HTMLTableCellElement,
-	React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+	React.TdHTMLAttributes<HTMLTableCellElement> & {
+		direction?: "col" | "row";
+	}
+>(({ className, children, align, direction = "col", ...props }, ref) => (
 	<td
 		ref={ref}
 		className={cn(
@@ -162,7 +164,18 @@ const TableCell = React.forwardRef<
 			className,
 		)}
 		{...props}
-	/>
+		align={align}
+	>
+		<div
+			className={cn(
+				"responsive-cell flex",
+				direction === "row" && "flex-row",
+				direction === "col" && "flex-col",
+			)}
+		>
+			{children}
+		</div>
+	</td>
 ));
 TableCell.displayName = "TableCell";
 

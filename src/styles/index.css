@@ -758,6 +758,53 @@ table.responsive td * {
 	border: none;
 }
 
+.table-default tbody tr:last-child {
+	border-width: 0;
+}
+
+.options-grigger-mobile {
+	display: none;
+}
+
+td .responsive-cell {
+	align-items: flex-start;
+	justify-content: center;
+	min-height: 40px;
+	gap: 0.5rem;
+
+	&.flex-row {
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+
+		img {
+			flex: 0 0 40px;
+		}
+
+		img > div {
+			flex: 1, 1, auto;
+		}
+	}
+}
+
+td[align="center"] .responsive-cell {
+	align-items: center;
+}
+
+td[align="right"] .responsive-cell {
+	align-items: flex-end;
+}
+
+.options-trigger-button {
+	span {
+		display: none;
+	}
+
+	svg {
+		display: block;
+	}
+}
+
 .table-cards-mode .responsive {
 	table,
 	thead,
@@ -786,15 +833,11 @@ table.responsive td * {
 		padding: 6px 0;
 		border: none;
 		border-bottom: 1px solid #f0f0f0;
-		overflow: unset;
+		max-width: calc(100vw - 96px);
 		text-align: right;
-		max-width: unset;
 	}
 
 	td * {
-		white-space: unset;
-		overflow: unset;
-		text-overflow: unset;
 		text-align: right;
 	}
 
@@ -813,26 +856,38 @@ table.responsive td * {
 		display: none;
 	}
 
-	td > div {
+	td .responsive-cell {
 		width: 100%;
 		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+
+		.with-copy {
+			flex-direction: row-reverse;
+			justify-content: flex-start;
+		}
+	}
+
+	td .responsive-cell.flex-row {
 		justify-content: flex-end;
+		align-items: center;
+
+		img[width="40"] {
+			display: none;
+		}
 	}
 
-	.options-grigger-mobile {
+	.options-trigger-button {
 		display: flex;
 		width: 100%;
+		border: 1px solid var(--black);
+
+		span {
+			display: block;
+		}
+
+		svg {
+			display: none;
+		}
 	}
-
-	.options-trigger-dots {
-		display: none;
-	}
-}
-
-.table-default tbody tr:last-child {
-	border-width: 0;
-}
-
-.options-grigger-mobile {
-	display: none;
 }

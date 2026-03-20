@@ -3,7 +3,7 @@
 	position: fixed;
 	width: 100vw;
 	height: 76px;
-	padding: 0 40px 0 24px;
+	padding: 0 min(24px, 5%);
 	display: flex;
 	align-items: center;
 	left: 0;
@@ -51,4 +51,9 @@
 
 .info-section .available {
 	font-weight: 700;
+}
+
+.cloud-logo {
+	max-width: 100px;
+	width: 25vw;
 }
