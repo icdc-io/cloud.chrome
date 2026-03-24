@@ -189,21 +189,6 @@
 				"name": "snapshots",
 				"title": "Snapshots",
 				"url": "http://localhost:8039"
-			},
-			{
-				"name": "catalog",
-				"title": "Catalog",
-				"url": "http://localhost:8040"
-			},
-			{
-				"name": "instancegroups",
-				"title": "Instance Groups",
-				"url": "http://localhost:8041"
-			},
-			{
-				"name": "instances",
-				"title": "Instances",
-				"url": "http://localhost:8042"
 			}
 		],
 		"path": "/database",
@@ -248,5 +233,32 @@
 		"path": "/telemetry",
 		"name": "telemetry",
 		"display_name": "Telemetry"
+	},
+	{
+		"title": "Compute",
+		"name": "compute",
+		"label": "",
+		"apps": [
+			{
+				"name": "catalog",
+				"title": "Catalog",
+				"url": "http://localhost:8040"
+			},
+			{
+				"name": "instances",
+				"title": "Instances",
+				"url": "http://localhost:8042"
+			},
+			{
+				"name": "instance-groups",
+				"title": "Instance groups",
+				"url": "http://localhost:8041"
+			}
+		],
+		"description": "Order cloud services directly from the catalog: virtual machines, application images, and network access.",
+		"position": 3,
+		"display_name": "Compute",
+		"path": "/compute",
+		"url": ""
 	}
 ]
