@@ -26,7 +26,7 @@ const Loader = ({
 			>
 				<div
 					className={cn(
-						"animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 w-full h-full max-h-12 max-w-12 icdc-loader",
+						"loader-animate-spin animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 w-full h-full max-h-12 max-w-12 icdc-loader",
 						loaderVariants({ variant }),
 					)}
 				/>

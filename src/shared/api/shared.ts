@@ -272,7 +272,7 @@ export const getAppId = (pathname: string) => {
 
 type UseFetchData<T, U> = {
 	endpoint: string;
-	params?: Record<string, string>;
+	params?: Record<string, string> | string;
 	initialHeaders?: Record<string, string>;
 } & Omit<UndefinedInitialDataOptions<T, Error, U>, "queryKey" | "queryFn">;
 
@@ -284,11 +284,16 @@ export const useFetchData = <T, U = T>({
 	...queryOptions
 }: UseFetchData<T, U>) => {
 	const appId = getAppId(window.location.pathname);
-	const queryKey = [appId, endpoint, params].filter(Boolean);
+	const queryKey = [appId, endpoint].filter(Boolean);
 
 	const queryFn = () => {
-		const query = params ? `?${new URLSearchParams(params)}` : "";
-		return fetchJsonData<T>(`${endpoint}${query}`, initialHeaders);
+		const [url, initialSearchParams] = endpoint.split("?");
+		const query = [initialSearchParams, new URLSearchParams(params)]
+			.filter(Boolean)
+			.join("&");
+		const fullUrl = [url, query].filter(Boolean).join("?");
+
+		return fetchJsonData<T>(fullUrl, initialHeaders);
 	};
 
 	return {
