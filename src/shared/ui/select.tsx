@@ -66,7 +66,7 @@ const SelectTrigger = React.forwardRef<
 
 				{isLoading ? (
 					<SelectPrimitive.Icon asChild>
-						<Loader className="h-4 w-4 opacity-50" />
+						<Loader className="h-4 w-4 opacity-50 animate-spin" />
 					</SelectPrimitive.Icon>
 				) : (
 					!isResetButtonVisible && (

@@ -36,8 +36,8 @@ const Header = () => {
 					<>
 						<NotificationBell />
 						<HelpDropdown />
-						<LocationSelector />
-						{!isMobile && <UserDropdown />}
+						{!isMobile && <LocationSelector />}
+						<UserDropdown />
 					</>
 				) : (
 					<Skeleton className="h-8 bg-[var(--sidebar-skeleton)] w-full" />
