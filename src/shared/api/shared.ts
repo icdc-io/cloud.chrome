@@ -9,9 +9,6 @@ import {
 } from "@tanstack/react-query";
 import type { KyResponse } from "ky";
 import {
-	getFullUrl,
-	getHeaders,
-	getInfoForRequest,
 	isJSONType,
 	type MutableHTTPMethod,
 	type ObjectRecord,
@@ -63,19 +60,10 @@ export const processJSONnResponse = async <T>(response: KyResponse<T>) => {
 };
 
 export const fetchData = async <T>(
-	initialUrl: string,
-	initialHeaders?: ObjectRecord,
+	url: string,
+	headers?: ObjectRecord,
 	options?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl
-			.replace("{account}", user.account)
-			.replace("{role}", user.role)
-			.replace("{location}", user.location),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -86,19 +74,10 @@ export const fetchData = async <T>(
 };
 
 export const updateData = async <T>(
-	initialUrl: string,
+	url: string,
 	data: unknown,
-	initialHeaders = {},
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl
-			.replace("{account}", user.account)
-			.replace("{role}", user.role)
-			.replace("{location}", user.location),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -110,19 +89,10 @@ export const updateData = async <T>(
 };
 
 export const patchData = async <T>(
-	initialUrl: string,
+	url: string,
 	data: unknown,
-	initialHeaders = {},
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl
-			.replace("{account}", user.account)
-			.replace("{role}", user.role)
-			.replace("{location}", user.location),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -134,19 +104,10 @@ export const patchData = async <T>(
 };
 
 export const createData = async <T>(
-	initialUrl: string,
+	url: string,
 	data: Omit<T, "id">,
-	initialHeaders = {},
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl
-			.replace("{account}", user.account)
-			.replace("{role}", user.role)
-			.replace("{location}", user.location),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processUnknownResponse(
 		await request<T>({
 			url,
@@ -158,61 +119,29 @@ export const createData = async <T>(
 };
 
 export const deleteData = async <T>(
-	initialUrl: string,
-	params: Record<string, string> | undefined,
-	initialHeaders = {},
+	url: string,
+	options?: Record<string, string> | undefined,
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl
-			.replace("{account}", user.account)
-			.replace("{role}", user.role)
-			.replace("{location}", user.location),
-		baseUrl,
-	);
-
-	const headers = await getHeaders(user, initialHeaders);
 	return (await processUnknownResponse(
 		await request({
 			url,
 			headers,
 			method: "DELETE",
-			options: params,
+			options,
 		}),
 	)) as T;
 };
 
-export const fetchJsonData = async <T>(
-	initialUrl: string,
-	initialHeaders?: ObjectRecord,
-	options?: ObjectRecord,
-) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
-	return await processJSONnResponse<T>(
-		await request<T>({
-			url,
-			headers,
-			options,
-		}),
-	);
+export const fetchJsonData = async <T>(config: RequestParamsType<T>) => {
+	return await processJSONnResponse<T>(await request<T>(config));
 };
 
 export const fetchNonJSONData = async <T>(
-	initialUrl: string,
-	initialHeaders?: ObjectRecord,
+	url: string,
+	headers?: ObjectRecord,
 	options?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await request<T>({
 		url,
 		headers,
@@ -224,16 +153,10 @@ export const createJsonData = async <
 	TResponse,
 	PRequest = Omit<TResponse, "id">,
 >(
-	initialUrl: string,
+	url: string,
 	data: PRequest,
-	initialHeaders = {},
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processJSONnResponse(
 		await request<TResponse>({
 			url,
@@ -245,16 +168,10 @@ export const createJsonData = async <
 };
 
 export const updateJSONData = async <T, U>(
-	initialUrl: string,
+	url: string,
 	data: U,
-	initialHeaders = {},
+	headers?: ObjectRecord,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		initialUrl.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, initialHeaders);
 	return await processJSONnResponse(
 		await request<T, U>({
 			url,
@@ -286,14 +203,13 @@ export const useFetchData = <T, U = T>({
 	const appId = getAppId(window.location.pathname);
 	const queryKey = [appId, endpoint].filter(Boolean);
 
-	const queryFn = () => {
-		const [url, initialSearchParams] = endpoint.split("?");
-		const query = [initialSearchParams, new URLSearchParams(params)]
-			.filter(Boolean)
-			.join("&");
-		const fullUrl = [url, query].filter(Boolean).join("?");
-
-		return fetchJsonData<T>(fullUrl, initialHeaders);
+	const queryFn = ({ signal }: { signal: AbortSignal }) => {
+		return fetchJsonData<T>({
+			url: endpoint,
+			headers: initialHeaders,
+			options: params,
+			signal,
+		});
 	};
 
 	return {
@@ -326,11 +242,21 @@ export const useFetchInfiniteData = <T, U = T>({
 	const appId = getAppId(window.location.pathname);
 	const queryKey = [appId, endpoint];
 
-	const queryFn = ({ pageParam }: { pageParam: unknown }) => {
+	const queryFn = ({
+		pageParam,
+		signal,
+	}: {
+		pageParam: unknown;
+		signal: AbortSignal;
+	}) => {
 		const query = new URLSearchParams(params || "");
 		query.append("page[offset]", `${pageParam || 1}`);
 		const queryString = `?${query.toString()}`;
-		return fetchJsonData<T>(`${endpoint}${queryString}`, initialHeaders);
+		return fetchJsonData<T>({
+			url: `${endpoint}${queryString}`,
+			headers: initialHeaders,
+			signal,
+		});
 	};
 
 	return {
@@ -371,19 +297,7 @@ type MutateJSONData<U> = Omit<RequestParamsType<U>, "method"> & {
 export const mutateJSONData = async <T, U = unknown>(
 	config: MutateJSONData<U>,
 ) => {
-	const { user, baseUrl } = await getInfoForRequest();
-	const url = getFullUrl(
-		config.url.replace("{account}", user.account),
-		baseUrl,
-	);
-	const headers = await getHeaders(user, config.headers);
-	return await processJSONnResponse(
-		await request<T, U>({
-			...config,
-			url,
-			headers,
-		}),
-	);
+	return await processJSONnResponse(await request<T, U>(config));
 };
 
 export function useMutateData<T, U = undefined>(
