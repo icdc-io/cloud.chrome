@@ -5,9 +5,15 @@ import { cn } from "@/shared/lib/utils";
 
 type Progress = {
 	total?: number;
+	disabled?: boolean;
 };
 
-const getProgressColor = (value: number, total: number | undefined) => {
+const getProgressColor = (
+	value: number,
+	total: number | undefined,
+	disabled?: boolean,
+) => {
+	if (disabled) return "bg-[var(--red)]";
 	if (!total || !value) return "";
 	return value > 0.9
 		? "bg-[var(--red)]"
@@ -19,10 +25,15 @@ const getProgressColor = (value: number, total: number | undefined) => {
 const Progress = React.forwardRef<
 	React.ElementRef<typeof ProgressPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof ProgressPrimitive.Root> & Progress
->(({ className, value, total = 0, ...props }, ref) => {
+>(({ className, value, total = 0, disabled, ...props }, ref) => {
 	const protectedValue = value ? +value : 0;
 	const progressValue = total ? protectedValue / total : protectedValue;
-	const bgColor = getProgressColor(progressValue, total);
+	const bgColor = getProgressColor(progressValue, total, disabled);
+	const translateX = disabled
+		? 0
+		: progressValue
+			? 100 - progressValue * 100
+			: 0;
 
 	return (
 		<div>
@@ -42,7 +53,7 @@ const Progress = React.forwardRef<
 				<ProgressPrimitive.Indicator
 					className={cn("h-full w-full flex-1 transition-all", bgColor)}
 					style={{
-						transform: `translateX(-${progressValue ? 100 - progressValue * 100 : 0}%)`,
+						transform: `translateX(-${translateX}%)`,
 					}}
 				/>
 			</ProgressPrimitive.Root>
