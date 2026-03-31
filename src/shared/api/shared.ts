@@ -187,11 +187,16 @@ export const getAppId = (pathname: string) => {
 	return pathnameParts.slice(0, 3).join("/");
 };
 
+export type AddUseQueryOptions<T, U = T> = Omit<
+	UndefinedInitialDataOptions<T, Error, U>,
+	"queryKey" | "queryFn"
+>;
+
 type UseFetchData<T, U> = {
 	endpoint: string;
 	params?: Record<string, string> | string;
 	initialHeaders?: Record<string, string>;
-} & Omit<UndefinedInitialDataOptions<T, Error, U>, "queryKey" | "queryFn">;
+} & AddUseQueryOptions<T, U>;
 
 export const useFetchData = <T, U = T>({
 	endpoint,
