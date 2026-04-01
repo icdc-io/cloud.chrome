@@ -837,7 +837,7 @@ td[align="right"] .responsive-cell {
 		padding: 6px 0;
 		border: none;
 		border-bottom: 1px solid #f0f0f0;
-		max-width: calc(100vw - 96px);
+		max-width: calc(100vw - 120px);
 		text-align: right;
 	}
 
@@ -870,6 +870,15 @@ td[align="right"] .responsive-cell {
 			flex-direction: row-reverse;
 			justify-content: flex-start;
 		}
+	}
+
+	td .responsive-cell > :first-child {
+		width: auto;
+	}
+
+	td .responsive-cell .animate-pulse:first-child,
+	td .responsive-cell .options-trigger-button {
+		width: 100%;
 	}
 
 	td .responsive-cell.flex-row {
