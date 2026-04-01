@@ -168,7 +168,8 @@ const TableCell = React.forwardRef<
 	>
 		<div
 			className={cn(
-				"responsive-cell flex",
+				"contents",
+				"[table.responsive_&]:flex responsive-cell",
 				direction === "row" && "flex-row",
 				direction === "col" && "flex-col",
 			)}
