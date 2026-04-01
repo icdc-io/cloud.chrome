@@ -13,8 +13,8 @@
 	"scripts": {
 		"build": "cross-env REACT_APP_LOCAL_DATA_USAGE=none rsbuild build",
 		"check": "biome check --write",
-		"dev": "cross-env REACT_APP_LOCAL_DATA_USAGE=full rsbuild dev --open",
-		"stage": "cross-env REACT_APP_LOCAL_DATA_USAGE=partial rsbuild dev --open",
+		"dev": "cross-env REACT_APP_LOCAL_DATA_USAGE=full rsbuild dev",
+		"stage": "cross-env REACT_APP_LOCAL_DATA_USAGE=partial rsbuild dev",
 		"format": "biome format --write",
 		"preview": "rsbuild preview"
 	},

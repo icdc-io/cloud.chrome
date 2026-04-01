@@ -55,6 +55,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./sortByParams": "./src/shared/lib/sortByParams",
 		"./withSkeleton": "./src/shared/hocs/withSkeleton",
 		"./WithCopyButton": "./src/shared/ui/WithCopyButton",
+		"./useDebounce": "./src/shared/hooks/useDebounce",
 	},
 	shared: {
 		react: {

@@ -119,7 +119,9 @@ const formatRemotes = (remotesPromise: Promise<Remote[]>) => {
 export const fetchAppsData = () =>
 	({
 		type: inferStringLiteral(SET_REMOTES),
-		payload: formatRemotes(fetchJsonData("/api/delivery/v1/services/apps")),
+		payload: formatRemotes(
+			fetchJsonData({ url: "/api/delivery/v1/services/apps" }),
+		),
 	}) as const;
 
 export const fetchServicesStatuses = () =>
