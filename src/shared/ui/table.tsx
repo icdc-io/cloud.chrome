@@ -1,28 +1,62 @@
+import { cva, type VariantProps } from "class-variance-authority";
 import { ArrowDownUp, MoveDown, MoveUp } from "lucide-react";
 import * as React from "react";
 import { cn } from "@/shared/lib/utils";
+import { useContainerBreakpoint } from "../hooks/useContainerBreakpoint";
+
+const tableVariants = cva("", {
+	variants: {
+		variant: {
+			responsive: "responsive",
+			default: "",
+		},
+	},
+	defaultVariants: {
+		variant: "default",
+	},
+});
 
 const Table = React.forwardRef<
 	HTMLTableElement,
-	React.HTMLAttributes<HTMLTableElement> & {
-		containerClassName?: string;
-	}
->(({ className, containerClassName, ...props }, ref) => (
-	<div className={cn("relative w-full ", containerClassName)}>
+	React.HTMLAttributes<HTMLTableElement> &
+		VariantProps<typeof tableVariants> & {
+			containerClassName?: string;
+			breakpoint?: number;
+		}
+>(({ className, containerClassName, breakpoint, variant, ...props }, ref) => {
+	const wrapperRef = React.useRef(null);
+	const isCards = useContainerBreakpoint(wrapperRef, breakpoint);
+	const isTableResponsive = variant === "responsive";
+
+	const tableComponent = (
 		<div
+			ref={wrapperRef}
 			className={cn(
+				isCards && isTableResponsive ? "table-cards-mode" : "table-default",
 				"overflow-auto border border-solid border-[#E2E8F0] rounded !min-h-0	",
 				containerClassName,
 			)}
 		>
 			<table
 				ref={ref}
-				className={cn("w-full caption-bottom text-sm border-none", className)}
+				className={cn(
+					tableVariants({ variant }),
+					"w-full caption-bottom text-sm border-none",
+					className,
+				)}
 				{...props}
 			/>
 		</div>
-	</div>
-));
+	);
+
+	if (isTableResponsive) return tableComponent;
+
+	return (
+		<div className={cn("relative w-full ", containerClassName)}>
+			{tableComponent}
+		</div>
+	);
+});
 Table.displayName = "Table";
 
 const TableHeader = React.forwardRef<
@@ -41,11 +75,7 @@ const TableBody = React.forwardRef<
 	HTMLTableSectionElement,
 	React.HTMLAttributes<HTMLTableSectionElement>
 >(({ className, ...props }, ref) => (
-	<tbody
-		ref={ref}
-		className={cn("[&_tr:last-child]:border-0", className)}
-		{...props}
-	/>
+	<tbody ref={ref} className={cn("", className)} {...props} />
 ));
 TableBody.displayName = "TableBody";
 
@@ -123,8 +153,10 @@ TableHead.displayName = "TableHead";
 
 const TableCell = React.forwardRef<
 	HTMLTableCellElement,
-	React.TdHTMLAttributes<HTMLTableCellElement>
->(({ className, ...props }, ref) => (
+	React.TdHTMLAttributes<HTMLTableCellElement> & {
+		direction?: "col" | "row";
+	}
+>(({ className, children, align, direction = "col", ...props }, ref) => (
 	<td
 		ref={ref}
 		className={cn(
@@ -132,7 +164,18 @@ const TableCell = React.forwardRef<
 			className,
 		)}
 		{...props}
-	/>
+		align={align}
+	>
+		<div
+			className={cn(
+				"responsive-cell flex",
+				direction === "row" && "flex-row",
+				direction === "col" && "flex-col",
+			)}
+		>
+			{children}
+		</div>
+	</td>
 ));
 TableCell.displayName = "TableCell";
 
