@@ -1,4 +1,5 @@
 import {
+	type QueryKey,
 	type UndefinedInitialDataInfiniteOptions,
 	type UndefinedInitialDataOptions,
 	type UseMutationOptions,
@@ -10,6 +11,7 @@ import {
 import type { KyResponse } from "ky";
 import { useRef } from "react";
 import {
+	type HTTPMethod,
 	isJSONType,
 	type MutableHTTPMethod,
 	type ObjectRecord,
@@ -197,6 +199,9 @@ type UseFetchData<T, U> = {
 	endpoint: string;
 	params?: Record<string, string> | string;
 	initialHeaders?: Record<string, string>;
+	method?: HTTPMethod;
+	body?: T;
+	queryKey?: QueryKey;
 } & AddUseQueryOptions<T, U>;
 
 export const useFetchData = <T, U = T>({
@@ -204,10 +209,13 @@ export const useFetchData = <T, U = T>({
 	params,
 	initialHeaders,
 	select,
+	method = "GET",
+	body,
+	queryKey,
 	...queryOptions
 }: UseFetchData<T, U>) => {
 	const appId = getAppId(window.location.pathname);
-	const queryKey = [appId, endpoint].filter(Boolean);
+	const customQueryKey = [appId, endpoint, queryKey].filter(Boolean);
 
 	const queryFn = ({ signal }: { signal: AbortSignal }) => {
 		return fetchJsonData<T>({
@@ -215,14 +223,16 @@ export const useFetchData = <T, U = T>({
 			headers: initialHeaders,
 			options: params,
 			signal,
+			method,
+			body,
 		});
 	};
 
 	return {
-		queryKey,
+		queryKey: customQueryKey,
 		...useQuery({
 			...queryOptions,
-			queryKey,
+			queryKey: customQueryKey,
 			queryFn,
 			select,
 		}),
