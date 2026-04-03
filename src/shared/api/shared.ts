@@ -8,6 +8,7 @@ import {
 	useQuery,
 } from "@tanstack/react-query";
 import type { KyResponse } from "ky";
+import { useRef } from "react";
 import {
 	isJSONType,
 	type MutableHTTPMethod,
@@ -309,8 +310,12 @@ export function useMutateData<T, U = undefined>(
 	options: UseMutateDataOptions<T, U>,
 ): UseMutationResult<T, Error, MutationVariables<U>> {
 	const { notificationDisabled, ...mutationOptions } = options;
+	const abortControllerRef = useRef<AbortController | null>(null);
 
 	const mutationFn = async (variables: MutationVariables<U>): Promise<T> => {
+		abortControllerRef.current?.abort();
+		abortControllerRef.current = new AbortController();
+
 		const { method, endpoint, params, headers, body } = variables;
 
 		if (method !== "DELETE") {
@@ -325,6 +330,7 @@ export function useMutateData<T, U = undefined>(
 				headers,
 				body,
 				options: params,
+				signal: abortControllerRef.current.signal,
 			});
 		}
 
@@ -332,8 +338,9 @@ export function useMutateData<T, U = undefined>(
 			url: endpoint,
 			method,
 			body,
-			headers: headers,
+			headers,
 			options: params,
+			signal: abortControllerRef.current.signal,
 		});
 	};
 
