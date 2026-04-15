@@ -1,4 +1,4 @@
-import ky, { HTTPError, type KyResponse } from "ky";
+import ky, { HTTPError } from "ky";
 import type { List, User } from "../../types/entities";
 
 export type ObjectRecord =
@@ -20,10 +20,11 @@ export type HTTPMethod = MutableHTTPMethod | ImmutableHTTPMethod;
 
 export type RequestParamsType<U> = {
 	url: string;
-	headers: ObjectRecord;
+	headers?: ObjectRecord;
 	method?: HTTPMethod;
 	body?: U;
-	options?: ObjectRecord;
+	options?: ObjectRecord | string;
+	signal?: AbortSignal;
 };
 
 export const getInfoForRequest = (): Promise<UserInfoParams> => {
@@ -92,7 +93,6 @@ export const getHeaders = async (user: User, initialHeaders: List = {}) => {
 		"x-icdc-role": user.role,
 		"x-auth-account": user.account,
 		"x-auth-role": user.role,
-		// "x-icdc-location": user.location,
 	};
 };
 
@@ -120,19 +120,6 @@ type ErrorResponse = {
 };
 
 const parseError = (errorData: ErrorResponse): string => {
-	// if (!errorData) return "";
-	// if (typeof errorData === "string") return errorData;
-	// if (typeof errorData === "object")
-	// 	return [
-	// 		...(Array.isArray(errorData)
-	// 			? errorData
-	// 			: Object.values(errorData)
-	// 		).reduce((acc, curr) => {
-	// 			const msg = parseError(curr).trim();
-	// 			if (msg) acc.add(msg);
-	// 			return acc;
-	// 		}, new Set()),
-	// 	].join("\n");
 	if (!errorData) return "";
 	const message = errorData.message;
 	const errorsInfo = errorData.errors;
@@ -147,12 +134,25 @@ const parseError = (errorData: ErrorResponse): string => {
 export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
 	// if (!navigator.onLine) throw new RequestError("noInternet", 0);
 	try {
-		const response = await ky<T>(config.url, {
+		const { user, baseUrl } = await getInfoForRequest();
+		const [url, params] = getFullUrl(
+			config.url
+				.replace("{account}", user.account)
+				.replace("{role}", user.role)
+				.replace("{location}", user.location),
+			baseUrl,
+		).split("?");
+		const searchParams = [params, new URLSearchParams(config.options)]
+			.filter(Boolean)
+			.join("&");
+		const headers = await getHeaders(user, config.headers);
+		const response = await ky<T>(url, {
 			method: config.method ?? "GET",
-			headers: config.headers,
+			headers: headers,
 			json: config.body,
-			searchParams: config.options,
+			searchParams,
 			timeout: 2147483647,
+			signal: config.signal,
 		});
 
 		return response;
@@ -161,7 +161,10 @@ export const request = async <T, U = unknown>(config: RequestParamsType<U>) => {
 			const { response } = error;
 			if (isJSONType(response.headers.get("Content-Type"))) {
 				const errorData = await response.json();
-				throw new RequestError(parseError(errorData), response.status);
+				throw new RequestError(
+					parseError(errorData?.error || errorData),
+					response.status,
+				);
 			}
 			const errorMessage = response.statusText || "unknown_error";
 

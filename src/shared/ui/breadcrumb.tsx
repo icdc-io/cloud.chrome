@@ -61,6 +61,7 @@ const BreadcrumbPage = React.forwardRef<
 	HTMLSpanElement,
 	React.ComponentPropsWithoutRef<"span">
 >(({ className, ...props }, ref) => (
+	// biome-ignore lint/a11y/useSemanticElements: shadcn code
 	<span
 		ref={ref}
 		role="link"
@@ -107,10 +108,10 @@ BreadcrumbEllipsis.displayName = "BreadcrumbElipssis";
 
 export {
 	Breadcrumb,
-	BreadcrumbList,
+	BreadcrumbEllipsis,
 	BreadcrumbItem,
 	BreadcrumbLink,
+	BreadcrumbList,
 	BreadcrumbPage,
 	BreadcrumbSeparator,
-	BreadcrumbEllipsis,
 };

@@ -1,3 +1,6 @@
+import { ChevronsUpDown } from "lucide-react";
+import { useTranslation } from "react-i18next";
+import { useNavigate } from "react-router-dom";
 import { useAppSelector } from "@/redux/shared";
 import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
@@ -16,9 +19,6 @@ import {
 	useSidebar,
 } from "@/shared/ui/sidebar";
 import styles from "@/styles/ServicesDropdown.module.css";
-import { ChevronsUpDown, Plus } from "lucide-react";
-import { useTranslation } from "react-i18next";
-import { useNavigate } from "react-router-dom";
 
 const ServicesDropdown = () => {
 	const { t } = useTranslation();
@@ -142,7 +142,7 @@ const ServicesDropdown = () => {
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							className={`${styles["select-item"]}`}
-							onClick={() => onServiceChange(homepage.value)}
+							onClick={() => onServiceChange(homepage.value.name)}
 						>
 							<img src={homepage.image.src || ""} alt="Service icon" />
 							<span className="hover:text-white text-white text-base">

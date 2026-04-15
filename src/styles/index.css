@@ -1,7 +1,11 @@
+/** biome-ignore-all lint/complexity/noImportantStyles: allow important */
 @import "./reset.css";
 @import url("https://fonts.googleapis.com/css2?family=Geist:wght@100..900&display=swap");
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind base;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind components;
+/* biome-ignore lint/suspicious/noUnknownAtRules: tailwind */
 @tailwind utilities;
 
 @layer base {
@@ -159,8 +163,7 @@ html {
 body {
 	position: relative;
 	background-color: var(--bg-color);
-	position: relative;
-	font-family: "Geist", "Geist Fallback";
+	font-family: "Geist", sans-serif;
 	pointer-events: auto !important;
 }
 
@@ -375,6 +378,8 @@ i.trash:hover {
 	border-top: 1px solid var(--light-border);
 	margin-top: 2rem;
 	padding-top: 1rem;
+	gap: 1rem;
+	flex-wrap: wrap;
 }
 
 .network-delete_desc {
@@ -685,6 +690,10 @@ td[width="1"],
 th[width="1"] {
 	width: 6.25%;
 }
+td[width="0.5"],
+th[width="0.5"] {
+	width: 3.125%;
+}
 
 .gap-4 {
 	gap: 1rem;
@@ -715,5 +724,183 @@ label b {
 	}
 	body {
 		@apply bg-background text-foreground;
+	}
+}
+
+table.responsive td {
+	max-width: 0;
+	overflow: hidden;
+}
+
+table.responsive td,
+table.responsive td * {
+	white-space: nowrap;
+	overflow: hidden;
+	text-overflow: ellipsis;
+}
+
+/* .table-cards-mode .responsive thead {
+	display: none;
+}
+
+.table-cards-mode .responsive th {
+	width: unset;
+	min-width: unset;
+}
+
+.table-cards-mode .responsive tr {
+	display: block;
+	margin-bottom: 0.75rem;
+}
+
+.table-cards-mode .responsive td::before {
+	content: attr(data-label);
+	font-weight: 600;
+} */
+
+.table-cards-mode {
+	border: none;
+}
+
+.table-default tbody tr:last-child {
+	border-width: 0;
+}
+
+.options-grigger-mobile {
+	display: none;
+}
+
+td .responsive-cell {
+	align-items: flex-start;
+	justify-content: center;
+	min-height: 40px;
+	gap: 0.5rem;
+
+	&.flex-row {
+		flex-direction: row;
+		justify-content: flex-start;
+		align-items: center;
+
+		img {
+			flex: 0 0 40px;
+		}
+
+		img > div {
+			flex: 1, 1, auto;
+		}
+	}
+}
+
+td[align="center"] .responsive-cell {
+	align-items: center;
+}
+
+td[align="right"] .responsive-cell {
+	align-items: flex-end;
+}
+
+.options-trigger-button {
+	span {
+		display: none;
+	}
+
+	svg {
+		display: block;
+	}
+}
+
+.table-cards-mode .responsive {
+	table,
+	thead,
+	tbody,
+	tr,
+	th,
+	td {
+		display: block;
+	}
+
+	thead {
+		display: none;
+	}
+
+	tr {
+		margin-bottom: 12px;
+		border: 1px solid #e0e0e0;
+		border-radius: 8px;
+		padding: 12px;
+	}
+
+	td {
+		display: flex;
+		justify-content: space-between;
+		align-items: center;
+		padding: 6px 0;
+		border: none;
+		border-bottom: 1px solid #f0f0f0;
+		max-width: calc(100vw - 120px);
+		text-align: right;
+	}
+
+	td * {
+		text-align: right;
+	}
+
+	td:last-child {
+		border-bottom: none;
+	}
+
+	td::before {
+		content: attr(data-label);
+		font-weight: 600;
+		flex-shrink: 0;
+		margin-right: 12px;
+	}
+
+	td:not([data-label])::before {
+		display: none;
+	}
+
+	td .responsive-cell {
+		width: 100%;
+		display: flex;
+		justify-content: center;
+		align-items: flex-end;
+
+		.with-copy {
+			flex-direction: row-reverse;
+			justify-content: flex-start;
+		}
+	}
+
+	td .responsive-cell > :first-child {
+		width: auto;
+	}
+
+	td .responsive-cell .animate-pulse:first-child,
+	td .responsive-cell .options-trigger-button {
+		width: 100%;
+	}
+
+	td .responsive-cell.flex-row {
+		justify-content: flex-end;
+		align-items: center;
+
+		img[width="40"] {
+			display: none;
+		}
+	}
+
+	.options-trigger-button {
+		display: flex;
+		width: 100%;
+		border: 1px solid var(--black);
+
+		span {
+			display: block;
+		}
+
+		svg {
+			display: none;
+		}
 	}
 }

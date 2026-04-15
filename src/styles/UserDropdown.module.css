@@ -30,6 +30,7 @@
 }
 
 .user-dropdown .menu.transition.second-level {
+	/* biome-ignore lint/complexity/noImportantStyles: allow important */
 	top: 0px !important;
 }
 
@@ -116,4 +117,14 @@
 	text-transform: uppercase;
 	color: gray;
 	margin-left: auto;
+}
+
+.user-avatar {
+	width: 48px;
+	height: 48px;
+	border-radius: 24px;
+	background-color: #ebebeb;
+	display: flex;
+	align-items: center;
+	justify-content: center;
 }

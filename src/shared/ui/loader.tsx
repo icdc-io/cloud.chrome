@@ -1,6 +1,4 @@
-// import { useTranslation } from "react-i18next";
-
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 const loaderVariants = cva("", {
@@ -18,7 +16,6 @@ const loaderVariants = cva("", {
 const Loader = ({
 	variant = "default",
 }: VariantProps<typeof loaderVariants>) => {
-	// const { t } = useTranslation();
 	return (
 		<div className="flex h-full w-full items-center justify-center">
 			<div
@@ -29,7 +26,7 @@ const Loader = ({
 			>
 				<div
 					className={cn(
-						"animate-spin rounded-full border-4 border-gray-300 border-t-gray-900 w-full h-full max-h-12 max-w-12 icdc-loader",
+						"loader-animate-spin animate-spin rounded-full border-[0.2em] border-gray-300 border-t-gray-900 w-full h-full max-h-12 max-w-12 icdc-loader",
 						loaderVariants({ variant }),
 					)}
 				/>

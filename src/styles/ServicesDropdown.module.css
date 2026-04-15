@@ -32,10 +32,8 @@
 	align-items: center;
 	position: relative;
 	user-select: none;
-	align-items: center;
 	font-size: 15px;
 	padding: 12px 17px;
-	position: relative;
 	font-weight: 400;
 	border: none;
 	outline: none;
@@ -67,6 +65,7 @@
 } */
 
 .select-item[data-highlighted] {
+	/* biome-ignore lint/complexity/noImportantStyles: allow important */
 	background-color: #262626 !important;
 }
 
@@ -100,5 +99,6 @@
 }
 
 .select-item[data-state="unchecked"]:hover {
+	/* biome-ignore lint/complexity/noImportantStyles: allow imortant */
 	background-color: #262626 !important;
 }

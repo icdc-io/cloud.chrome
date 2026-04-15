@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { Menu } from "lucide-react";
 import * as React from "react";
 
@@ -17,8 +17,6 @@ import {
 	TooltipTrigger,
 } from "@/shared/ui/tooltip";
 
-const SIDEBAR_COOKIE_NAME = "sidebar:state";
-const SIDEBAR_COOKIE_MAX_AGE = 60 * 60 * 24 * 7;
 const SIDEBAR_WIDTH = "16rem";
 const SIDEBAR_WIDTH_MOBILE = "18rem";
 const SIDEBAR_WIDTH_ICON = "3rem";
@@ -83,7 +81,7 @@ const SidebarProvider = React.forwardRef<
 				_setOpen(value);
 
 				// This sets the cookie to keep the sidebar state.
-				document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
+				// document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
 			},
 			[setOpenProp, open],
 		);

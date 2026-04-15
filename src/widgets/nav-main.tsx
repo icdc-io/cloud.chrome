@@ -1,14 +1,14 @@
+import type { LucideIcon } from "lucide-react";
+import { Link, useLocation } from "react-router-dom";
 import Question from "@/shared/images/question.svg";
-// import { builtInServices } from "@/shared/constants/builtInServices";
 import { Collapsible, CollapsibleTrigger } from "@/shared/ui/collapsible";
 import {
 	SidebarGroup,
 	SidebarMenu,
 	SidebarMenuButton,
 	SidebarMenuItem,
+	useSidebar,
 } from "@/shared/ui/sidebar";
-import type { LucideIcon } from "lucide-react";
-import { Link, useLocation } from "react-router-dom";
 
 export function NavMain({
 	items,
@@ -19,6 +19,9 @@ export function NavMain({
 }) {
 	const location = useLocation();
 	const currentRemote = location.pathname.split("/")[2];
+	const { toggleSidebar } = useSidebar();
+	const { isMobile } = useSidebar();
+	const onAppChange = isMobile ? toggleSidebar : undefined;
 
 	return (
 		<SidebarGroup>
@@ -32,7 +35,11 @@ export function NavMain({
 					>
 						<SidebarMenuItem>
 							<CollapsibleTrigger asChild>
-								<Link className="w-full" to={`/${currentService}/${item.url}`}>
+								<Link
+									className="w-full"
+									to={`/${currentService}/${item.url}`}
+									onClick={onAppChange}
+								>
 									<SidebarMenuButton
 										tooltip={item.title}
 										className="py-3 text-base font-bold text-white"

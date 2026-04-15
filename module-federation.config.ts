@@ -10,7 +10,6 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./getCurrentAppropriateLang": "./src/shared/lib/getCurrentAppropriateLang",
 		"./ReturnBaseUrl": "./src/shared/lib/returnBaseUrl",
 		"./ApiButton": "./src/widgets/apiButton",
-		"./GeneralInput": "./src/shared/ui/generalInput",
 		"./NoContent": "./src/shared/ui/noContent",
 		"./CodeSnippet": "./src/shared/ui/ApiDialog/CodeSnippet",
 		"./composeValidators": "./src/shared/lib/composeValidators",
@@ -50,6 +49,15 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 		"./Progress": "./src/shared/ui/progress",
 		"./Collapsible": "./src/shared/ui/collapsible",
 		"./Skeleton": "./src/shared/ui/skeleton",
+		"./useLocalStorage": "./src/shared/hooks/useLocalStorage",
+		"./fieldGetter": "./src/shared/lib/fieldGetter",
+		"./fieldSetter": "./src/shared/lib/fieldSetter",
+		"./sortByParams": "./src/shared/lib/sortByParams",
+		"./withSkeleton": "./src/shared/hocs/withSkeleton",
+		"./WithCopyButton": "./src/shared/ui/WithCopyButton",
+		"./useDebounce": "./src/shared/hooks/useDebounce",
+		"./Accordion": "./src/shared/ui/accordion",
+		"./useDebouncedCallback": "./src/shared/hooks/useDebouncedCallback",
 	},
 	shared: {
 		react: {

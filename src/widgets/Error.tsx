@@ -1,9 +1,8 @@
+import { useTranslation } from "react-i18next";
 import { kc } from "@/entities/keycloak";
 import { Errors } from "@/shared/constants/errors";
 import UnauthorizeImg from "@/shared/images/401.svg";
 import NoAccessImg from "@/shared/images/403.svg";
-import React from "react";
-import { useTranslation } from "react-i18next";
 import "@/styles/Error.scss";
 import type { ErrorStatusType } from "@/shared/constants/errorTypes";
 

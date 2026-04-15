@@ -1,26 +1,18 @@
-import { useAppSelector } from "@/redux/shared";
-import type { components } from "@/schemas/notifications-api";
-import { getToken } from "@/shared/api";
-import {
-	// createData,
-	// fetchData,
-	useFetchData,
-	useMutateData,
-	// useFetchInfiniteData,
-} from "@/shared/api/shared";
-import BellSettings from "@/shared/images/bell-settings.svg";
-import eventsIcon from "@/shared/images/telemetry_events.svg";
-import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-import { Skeleton } from "@/shared/ui/skeleton";
-// import { Skeleton } from "@/shared/ui/skeleton";
-import styles from "@/styles/NotificationBell.module.css";
 import * as DropdownMenu from "@radix-ui/react-dropdown-menu";
 import { EventSource } from "eventsource";
-// import * as Tabs from "@radix-ui/react-tabs";
 import { Bell, Check, Ellipsis } from "lucide-react";
 import { useEffect, useState } from "react";
 import { useTranslation } from "react-i18next";
 import { useNavigate } from "react-router-dom";
+import { useAppSelector } from "@/redux/shared";
+import type { components } from "@/schemas/notifications-api";
+import { getToken } from "@/shared/api";
+import { useFetchData, useMutateData } from "@/shared/api/shared";
+import BellSettings from "@/shared/images/bell-settings.svg";
+import eventsIcon from "@/shared/images/telemetry_events.svg";
+import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
+import { Skeleton } from "@/shared/ui/skeleton";
+import styles from "@/styles/NotificationBell.module.css";
 
 type Notification = components["schemas"]["Notification"];
 
@@ -73,7 +65,6 @@ type NotificationsResponse = {
 
 const NotificationBell = () => {
 	const { t, i18n } = useTranslation();
-	// const observer = useRef<IntersectionObserver>();
 	const [isError, setIsError] = useState(false);
 	const baseUrls = useAppSelector((state) => state.host.baseUrls);
 	const user = useAppSelector((state) => state.host.user);
@@ -96,24 +87,11 @@ const NotificationBell = () => {
 		}));
 
 	const navigate = useNavigate();
-	const {
-		// data,
-		// error,
-		/*fetchNextPage, hasNextPage, */
-		isFetching,
-		// isLoading,
-		refetch,
-	} = useFetchData<NotificationsResponse>({
+	const { isFetching, refetch } = useFetchData<NotificationsResponse>({
 		endpoint: "/api/notification/v1/notifications",
 		params: {
 			"page[limit]": `${ITEMS_PER_PAGE}`,
 		},
-		// getNextPageParam: (lastPage, allPages) => {
-		// 	return lastPage.data.length === ITEMS_PER_PAGE
-		// 		? allPages.length + 1
-		// 		: undefined;
-		// },
-		// initialPageParam: 0,
 		enabled: false,
 	});
 	const [events, setEvents] = useState<Notification[]>([]);
@@ -127,7 +105,6 @@ const NotificationBell = () => {
 	const currentLocationUrl = baseUrls?.[user.location];
 
 	useEffect(() => {
-		// fetchData("/sse/notification/v1/updates");
 		if (!currentLocationUrl) return;
 		const es = new EventSource(
 			currentLocationUrl + "/sse/notification/v1/updates",
@@ -183,34 +160,6 @@ const NotificationBell = () => {
 		return () => es.close();
 	}, [currentLocationUrl, user]);
 
-	// const tabsOptions = ["all", "events", "alerts"];
-	// const [selectedTab, setSelectedTab] = useState<string>(tabsOptions[0]);
-
-	// const lastElementRef = useCallback(
-	// 	(node: HTMLDivElement) => {
-	// 		if (isLoading) return;
-
-	// 		if (observer.current) observer.current.disconnect();
-
-	// 		observer.current = new IntersectionObserver((entries) => {
-	// 			if (entries[0].isIntersecting && hasNextPage && !isFetching) {
-	// 				fetchNextPage();
-	// 			}
-	// 		});
-
-	// 		if (node) observer.current.observe(node);
-	// 	},
-	// 	[fetchNextPage, hasNextPage, isFetching, isLoading],
-	// );
-
-	// const data = [];
-
-	// const notifications = useMemo(() => {
-	// 	return (data?.pages || []).reduce((acc, page) => {
-	// 		return [...acc, ...page.data];
-	// 	}, []);
-	// }, [data]);
-
 	const refetchNotifications = () =>
 		refetch().then((response) => {
 			if (!response.data) return;
@@ -223,24 +172,22 @@ const NotificationBell = () => {
 			endpoint: "/api/notification/v1/notifications",
 			method: "PATCH",
 			body: id ? { ids: [id] } : {},
-		})
-			// .refetch()
-			.then(() => {
-				if (id) {
-					setEvents((prevState) =>
-						prevState.map((notification) =>
-							notification.id === id
-								? {
-										...notification,
-										read_at: new Date().toISOString(),
-									}
-								: notification,
-						),
-					);
-				} else {
-					refetchNotifications();
-				}
-			});
+		}).then(() => {
+			if (id) {
+				setEvents((prevState) =>
+					prevState.map((notification) =>
+						notification.id === id
+							? {
+									...notification,
+									read_at: new Date().toISOString(),
+								}
+							: notification,
+					),
+				);
+			} else {
+				refetchNotifications();
+			}
+		});
 	};
 
 	const onReadNotificationById = (notification?: Notification) => () =>
@@ -254,17 +201,10 @@ const NotificationBell = () => {
 		<button
 			type="button"
 			key={notification.id}
-			// ref={lastElementRef}
-			// ref={observer}
 			className="flex items-center gap-2 mb-[10px] mt-[10px] group w-full hover:bg-[#F1F5F9] p-2"
 			onClick={onReadNotificationById(notification)}
 		>
 			<div className="flex items-start gap-2 w-full pr-2">
-				{/* <div>
-					<div className="w-8 h-8 bg-gray-100 rounded-full mt-1 flex items-center justify-center">
-						<Bell size={10} className="text-gray-500" />
-					</div>
-				</div> */}
 				<div className="flex basis-10 justify-center h-5 items-center pl-4">
 					{!notification.read_at && (
 						<span className="h-2.5 w-2.5 bg-[#2185D0] rounded-full" />
@@ -281,34 +221,6 @@ const NotificationBell = () => {
 							})}
 					</p>
 				</div>
-				{/* <div className="flex flex-col items-center gap-2">
-					<div
-						className={`w-2 h-2 rounded-full mt-1 ${notification.status ? "" : "bg-blue-500"}`}
-					/> */}
-				{/* <NotificationDropdownMenu
-						trigger={
-							<button
-								type="button"
-								aria-label="Notification options"
-								className="w-6 h-6 bg-gray-100 rounded-full flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity cursor-pointer"
-							>
-								<Ellipsis size={12} />
-							</button>
-						}
-						items={[
-							{
-								icon: <Check size={16} />,
-								label: t(notification.read ? "markAsUnread" : "markAsRead"),
-								onSelect: () => {},
-							},
-							{
-								icon: <Trash2 size={16} />,
-								label: t("delete"),
-								onSelect: () => {},
-							},
-						]}
-					/> */}
-				{/* </div> */}
 			</div>
 		</button>
 	));
@@ -396,37 +308,6 @@ const NotificationBell = () => {
 					/>
 				</div>
 				<div className="overflow-auto	max-h-[424px]">
-					{/* <Tabs.Root value={selectedTab} onValueChange={setSelectedTab}>
-						<Tabs.List className="flex items-center gap-4 bg-gray-100 rounded-lg p-1 w-max">
-							{tabsOptions.map((tab) => (
-								<Tabs.Trigger
-									key={tab}
-									value={tab}
-									className={`${selectedTab === tab ? "bg-white text-black" : "text-gray-500"} px-4 py-2 rounded-lg`}
-								>
-									{t(tab)}
-								</Tabs.Trigger>
-							))}
-						</Tabs.List>
-						<Tabs.Content
-							value={tabsOptions[0]}
-							className="max-h-[470px] overflow-y-auto"
-						>
-							{notificationItems}
-						</Tabs.Content>
-						<Tabs.Content
-							value={tabsOptions[1]}
-							className="max-h-[470px] overflow-y-auto"
-						>
-							{notificationItems}
-						</Tabs.Content>
-						<Tabs.Content
-							value={tabsOptions[2]}
-							className="max-h-[470px] overflow-y-auto"
-						>
-							{notificationItems}
-						</Tabs.Content>
-					</Tabs.Root> */}
 					{isError ? (
 						<div className="flex justify-center items-center h-screen	max-h-80 text-[#E60000] flex-col gap-2">
 							<h3>{t("error")}</h3>
@@ -434,7 +315,6 @@ const NotificationBell = () => {
 						</div>
 					) : isFetching ? (
 						new Array(3).fill("").map((_, key) => (
-							// biome-ignore lint/correctness/useJsxKeyInIterable: <explanation>
 							<div
 								className="flex items-center gap-2 mb-4 mt-4 group w-full"
 								key={key}
@@ -448,7 +328,7 @@ const NotificationBell = () => {
 							</div>
 						))
 					) : events.length !== 0 ? (
-						<>{notificationItems}</>
+						notificationItems
 					) : (
 						<div className="flex justify-center items-center h-screen	max-h-80 text-[var(--placeholder)] flex-col gap-2">
 							<Bell size={63} />

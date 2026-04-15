@@ -11,17 +11,17 @@
 		"url": "https://code.icz.icdc.io/icdc/cloud/chrome-icdc"
 	},
 	"scripts": {
-		"build": "REACT_APP_LOCAL_DATA_USAGE=none rsbuild build",
+		"build": "cross-env REACT_APP_LOCAL_DATA_USAGE=none rsbuild build",
 		"check": "biome check --write",
-		"dev": " REACT_APP_LOCAL_DATA_USAGE=full rsbuild dev --open",
-		"stage": " REACT_APP_LOCAL_DATA_USAGE=partial rsbuild dev --open",
+		"dev": "cross-env REACT_APP_LOCAL_DATA_USAGE=full rsbuild dev",
+		"stage": "cross-env REACT_APP_LOCAL_DATA_USAGE=partial rsbuild dev",
 		"format": "biome format --write",
 		"preview": "rsbuild preview"
 	},
 	"keywords": [],
 	"license": "ISC",
 	"devDependencies": {
-		"@biomejs/biome": "^1.8.3",
+		"@biomejs/biome": "^2.4.8",
 		"@module-federation/enhanced": "^0.6.4",
 		"@rsbuild/core": "^1.0.4",
 		"@rsbuild/plugin-basic-ssl": "^1.1.1",
@@ -36,6 +36,7 @@
 		"@types/redux-logger": "^3.0.13",
 		"@types/seamless-immutable": "^7.1.19",
 		"autoprefixer": "^10.4.20",
+		"cross-env": "^10.1.0",
 		"dotenv-webpack": "^8.1.0",
 		"globals": "^15.9.0",
 		"html-webpack-plugin": "^5.6.0",

@@ -44,7 +44,7 @@ const CopyButton = ({
 		<button
 			onClick={() => copy(content)}
 			type="button"
-			className="bg-gray-100 rounded-md p-1"
+			className="copy-button bg-gray-100 rounded-md p-1"
 		>
 			{buttonText ? buttonText : <Copy size={size} />}
 		</button>

@@ -1,3 +1,6 @@
+import { Check, ChevronsUpDown } from "lucide-react";
+import * as React from "react";
+import { useTranslation } from "react-i18next";
 import { cn } from "@/shared/lib/utils";
 import { Button } from "@/shared/ui/button";
 import {
@@ -9,9 +12,6 @@ import {
 	CommandList,
 } from "@/shared/ui/command";
 import { Popover, PopoverContent, PopoverTrigger } from "@/shared/ui/popover";
-import { Check, ChevronsUpDown } from "lucide-react";
-import * as React from "react";
-import { useTranslation } from "react-i18next";
 import { useDebounce } from "../hooks/useDebounce";
 
 type Option = {
@@ -62,7 +62,7 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 			debouncedTime = 0,
 			searchQueryParam,
 		},
-		ref,
+		_ref,
 	) => {
 		const { t } = useTranslation();
 		const [localOpen, setLocalOpen] = React.useState(false);
@@ -143,7 +143,6 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						// biome-ignore lint/a11y/useSemanticElements:
 						role="combobox"
 						aria-expanded={localOpen}
 						className={cn(
@@ -153,7 +152,9 @@ export const Combobox = React.forwardRef<HTMLButtonElement, Combobox>(
 						{...placeholderAttribute}
 						disabled={disabled}
 					>
-						{currentOption || t(placeholder)}
+						<span className="w-full overflow-hidden whitespace-nowrap text-ellipsis">
+							{currentOption || t(placeholder)}
+						</span>
 						<ChevronsUpDown className="h-4 w-4 opacity-50" size={16} />
 					</Button>
 				</PopoverTrigger>

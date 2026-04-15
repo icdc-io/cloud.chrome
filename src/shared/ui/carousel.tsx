@@ -136,7 +136,7 @@ const Carousel = React.forwardRef<
 					onKeyDownCapture={handleKeyDown}
 					className={cn("relative", className)}
 					// role="region"
-					aria-roledescription="carousel"
+					// aria-roledescription="carousel"
 					{...props}
 				>
 					{children}
@@ -176,6 +176,7 @@ const CarouselItem = React.forwardRef<
 	const { orientation } = useCarousel();
 
 	return (
+		// biome-ignore lint/a11y/useSemanticElements: shadcn code
 		<div
 			ref={ref}
 			role="group"
@@ -250,10 +251,10 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = "CarouselNext";
 
 export {
-	type CarouselApi,
 	Carousel,
+	type CarouselApi,
 	CarouselContent,
 	CarouselItem,
-	CarouselPrevious,
 	CarouselNext,
+	CarouselPrevious,
 };
