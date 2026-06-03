@@ -1,4 +1,3 @@
-import { kc } from "@/entities/keycloak";
 import {
 	changeBurgerVisibility,
 	changeCurrentService,
@@ -6,13 +5,9 @@ import {
 	fetchLocationData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-// import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
-// import { useSpecificTranslations } from "@/shared/hooks/useSpecificTranslations";
-// import { isServiceAvailable } from "@/shared/lib/availability";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
-// import ErrorScreen from "@/widgets/Error";
 import { type FC, type ReactNode, useEffect } from "react";
 import { Outlet, useLocation } from "react-router-dom";
 
@@ -41,7 +36,6 @@ type AvailableRoute = {
 };
 
 const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
-	// useSpecificTranslations();
 	const currentServiceName = useAppSelector(
 		(state) => state.host.currentService,
 	);
@@ -52,7 +46,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	const remotes = useAppSelector((state) => state.host.remotes);
 	const currentRoute = location.pathname.split("/")[1];
 
-	// if (!fullAccountsInfo || !currentService) return;
 	const currentServiceInfo =
 		currentService === ""
 			? undefined
@@ -88,9 +81,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [user.location]);
 
 	if (children) return children;
-
-	// if (currentService && token && !isServiceAvailable(currentService, token))
-	// 	return <ErrorScreen errorStatus={Errors.NO_ACCESS_ERROR} />;
 
 	return <Outlet />;
 };
