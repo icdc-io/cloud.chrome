@@ -1,7 +1,5 @@
-import type { Langs } from "@/shared/translations/langs";
+import { locales } from "@/shared/translations/i18n";
 import i18next from "i18next";
-
-const { locales } = require("@/shared/translations/i18n");
 
 export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 	return fetch(
@@ -9,7 +7,7 @@ export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 	)
 		.then((module) => module.json())
 		.then((module) => {
-			locales.forEach((lang: Langs) => {
+			locales.forEach((lang) => {
 				i18next.addResourceBundle(
 					lang,
 					"translation",

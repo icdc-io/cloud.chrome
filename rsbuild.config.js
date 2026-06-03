@@ -16,20 +16,23 @@ export default ({ envMode }) => {
 		source: {
 			define: publicVars,
 		},
-		html: {
-			template: path.resolve(__dirname, "./public/index.html"),
-			favicon: path.resolve(__dirname, "./public/favicon.ico"),
-		},
+		// html: {
+		// 	template: path.resolve(__dirname, "./public/index.html"),
+		// 	favicon: path.resolve(__dirname, "./public/favicon.ico"),
+		// },
 		tools: {
-			rspack: {
-				plugins: [
+			rspack: (config, { appendPlugins }) => {
+				config.output.publicPath = "auto";
+				if (config.output) config.output.publicPath = "auto";
+				const plugins = [
 					new ModuleFederationPlugin(mfConfig),
 					envMode === "development" &&
 						new Dotenv({
 							path: "./.env.local", // Path to .env file (this is the default)
 							safe: true, // load .env.example (defaults to "false" which does not use dotenv-safe)
 						}),
-				].filter(Boolean),
+				].filter(Boolean);
+				appendPlugins(plugins);
 			},
 		},
 		plugins: [

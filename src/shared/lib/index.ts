@@ -49,8 +49,8 @@ export const loadComponent =
 			await __webpack_init_sharing__(scope); // TODO when would you use a different scope?
 			const containerPath = [
 				remoteUrl.replace(/\/$/, ""),
-				process.env.NODE_ENV === "production" && service,
-				process.env.NODE_ENV === "production" && moduleName,
+				process.env.PROD && service,
+				process.env.PROD && moduleName,
 				!!version && version,
 				`${remoteFilename}.js`,
 			]

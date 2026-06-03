@@ -14,5 +14,5 @@
 			"@/*": ["./src/*"]
 		}
 	},
-	"include": ["src", "environment.d.ts"]
+	"include": ["src", "environment.d.ts", "declaration.d.ts"]
 }

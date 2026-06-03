@@ -1,19 +1,16 @@
 import AvailableRoute from "@/app/AvailableRoute";
 import { store } from "@/redux/store";
+import { Errors } from "@/shared/constants/errors";
+import { HOME } from "@/shared/constants/servicesNames";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
+import Loader from "@/shared/ui/loader";
+import type { Remote } from "@/types/entities";
+import ErrorScreen from "@/widgets/Error";
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import "@/styles/Popup.scss";
-// import "semantic-ui-css/semantic.min.css";
-import { useAppSelector } from "@/redux/shared";
-import { Errors } from "@/shared/constants/errors";
-import { HOME } from "@/shared/constants/servicesNames";
-import Loader from "@/shared/ui/loader";
-import ErrorScreen from "@/widgets/Error";
 
-const AppRoutes = () => {
-	const remotes = useAppSelector((state) => state.host.remotes);
-
+const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 	const routes = () => {
 		if (!remotes) return null;
 		return remotes
@@ -35,8 +32,7 @@ const AppRoutes = () => {
 										<RemoteComponent
 											fallback={<Loader />}
 											remoteUrl={
-												(process.env.NODE_ENV === "development" &&
-													remoteServiceInfo.url) ||
+												(import.meta.env.DEV && remoteServiceInfo.url) ||
 												window.origin
 											}
 											remote={remoteServiceInfo.name}
@@ -67,7 +63,7 @@ const AppRoutes = () => {
 							<RemoteComponent
 								fallback={<Loader />}
 								remoteUrl={
-									process.env.NODE_ENV === "production"
+									import.meta.env.PROD
 										? window.location.origin
 										: "http://localhost:8080"
 								}

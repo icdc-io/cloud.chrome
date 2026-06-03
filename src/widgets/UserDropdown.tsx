@@ -1,4 +1,3 @@
-import { kc } from "@/entities/keycloak";
 import { changeLang, changeUserInfo } from "@/redux/actions";
 import { filterAndSort } from "@/shared/lib/roleUtils";
 import { langs } from "@/shared/translations/i18n";
@@ -26,9 +25,12 @@ import {
 } from "@/shared/ui/dropdown-menu";
 import type { UserType } from "@/types/entities";
 import { ChevronDownIcon } from "lucide-react";
-import { useEffect } from "react";
 
-const UserDropdown = () => {
+const UserDropdown = ({
+	logout,
+}: {
+	logout: () => Promise<void>;
+}) => {
 	const dispatch = useAppDispatch();
 	const { t, i18n } = useTranslation();
 	const userInfo = useAppSelector((state) => state.host.userInfo);
@@ -48,10 +50,6 @@ const UserDropdown = () => {
 			accounts[accountName].locations.length &&
 			accounts[accountName].roles.length,
 	);
-
-	const logout = () => {
-		kc.logout();
-	};
 
 	const changeLocale = (newLang: string) => {
 		dispatch(changeLang(newLang as Langs));

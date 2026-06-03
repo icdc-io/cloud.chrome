@@ -60,8 +60,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 					(service) => service.path.substring(1) === currentService,
 				);
 
-	const token = kc.getUserInfo();
-
 	useEffect(() => {
 		const newService = location.pathname.split("/")[1];
 		dispatch(changeSidebarVisibility(Boolean(newService)));
@@ -85,6 +83,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [currentService]);
 
 	useEffect(() => {
+		if (!user.location) return;
 		dispatch(fetchLocationData(user.location));
 	}, [user.location]);
 

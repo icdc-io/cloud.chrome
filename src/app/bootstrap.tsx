@@ -1,4 +1,4 @@
-import App from "@/app/App";
+// import App from "@/app/App";
 import { store } from "@/redux/store";
 import { i18nInstance } from "@/shared/translations/i18n";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
@@ -25,9 +25,7 @@ if (container) {
 		<QueryClientProvider client={queryClient}>
 			<Provider store={store}>
 				<Router>
-					<I18nextProvider i18n={i18nInstance}>
-						<App />
-					</I18nextProvider>
+					<I18nextProvider i18n={i18nInstance}>{/* <App /> */}</I18nextProvider>
 				</Router>
 			</Provider>
 			<ReactQueryDevtools initialIsOpen={false} />
