@@ -11,7 +11,7 @@ const { publicVars } = loadEnv({ prefixes: ["REACT_APP_"] });
 export default ({ envMode }) => {
 	return defineConfig({
 		server: {
-			port: 7999,
+			port: 8000,
 		},
 		source: {
 			define: publicVars,
