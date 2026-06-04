@@ -5,6 +5,7 @@ export const mfConfig: Rspack.ModuleFederationPluginOptions = {
 	name: "host",
 	filename: "general.js",
 	exposes: {
+		"./mount": "./src/app/App",
 		"./Api": "./src/shared/api/shared",
 		"./Loader": "./src/shared/ui/loader",
 		"./getCurrentAppropriateLang": "./src/shared/lib/getCurrentAppropriateLang",

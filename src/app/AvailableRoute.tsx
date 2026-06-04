@@ -90,6 +90,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [currentService]);
 
 	useEffect(() => {
+		if (!user.location) return;
 		dispatch(fetchLocationData(user.location));
 	}, [user.location]);
 

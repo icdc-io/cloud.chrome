@@ -1,5 +1,6 @@
 import type { LucideIcon } from "lucide-react";
 import { Link, useLocation } from "react-router-dom";
+import { ASSET_BASE } from "@/shared/constants";
 import Question from "@/shared/images/question.svg";
 import { Collapsible, CollapsibleTrigger } from "@/shared/ui/collapsible";
 import {
@@ -48,7 +49,7 @@ export function NavMain({
 										<div className="min-w-8 flex">
 											<img
 												className="m-auto"
-												src={`/icons/${currentService}_${item.url}.svg`}
+												src={`${ASSET_BASE}/icons/${currentService}_${item.url}.svg`}
 												alt={currentService}
 												onError={({ currentTarget }) => {
 													currentTarget.onerror = null;

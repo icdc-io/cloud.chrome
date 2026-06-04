@@ -1,66 +1,74 @@
+import { useEffect, useRef } from "react";
 import AppRoutes from "@/app/AppRoutes";
-import { FULFILLED, PENDING, REJECTED } from "@/redux/constants";
-import { Errors } from "@/shared/constants/errors";
-import Loader from "@/shared/ui/loader";
+import {
+	setRemoteAppInfo,
+	setUserInfo,
+	updateTokenInfo,
+} from "@/redux/actions";
+import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar";
 import styles from "@/styles/Layout.module.css";
+import type { BaseUrls, Remote, User, UserInfo } from "@/types/entities";
 import { AppSidebar } from "@/widgets/app-sidebar";
-import ErrorScreen from "@/widgets/Error";
 import Header from "@/widgets/Header";
 import ToastNotifications from "@/widgets/ToastNotifications";
 import "@/styles/index.css";
-import { useQueryClient } from "@tanstack/react-query";
-import { useEffect } from "react";
-import { fetchAppsData, fetchRemotes } from "@/redux/actions";
-import { useAppDispatch, useAppSelector } from "@/redux/shared";
 
-const Layout = () => {
+const generateKey = (...parts: (string | undefined)[]) =>
+	parts.filter(Boolean).join("|");
+
+export type LayoutProps = {
+	auth: {
+		logout: () => Promise<void>;
+		getUserInfo: () => UserInfo;
+	};
+	remotes: Remote[];
+	userInfo: {
+		user: User;
+		baseUrls: BaseUrls;
+		username: string;
+		email: string;
+	};
+	onContextChange: (user: User) => Promise<Remote[]>;
+};
+
+const Layout = ({ auth, remotes, userInfo, onContextChange }: LayoutProps) => {
 	const dispatch = useAppDispatch();
-	const queryClient = useQueryClient();
-	const accountsDataFetchStatus = useAppSelector(
-		(state) => state.host.accountsDataFetchStatus,
-	);
-	const remotesFetchStatus = useAppSelector(
-		(state) => state.host.remotesFetchStatus,
-	);
-	const { account, role, location } = useAppSelector(
-		(state) => state.host.user,
+	const { account, role, location } = useAppSelector((s) => s.host.user);
+	const syncedKey = useRef(
+		generateKey(
+			userInfo?.user?.account,
+			userInfo?.user?.role,
+			userInfo?.user?.location,
+		),
 	);
 
 	useEffect(() => {
-		if (accountsDataFetchStatus !== "fulfilled") return;
-		queryClient.clear();
-		dispatch(
-			import.meta.env.REACT_APP_LOCAL_DATA_USAGE === "full"
-				? fetchRemotes()
-				: fetchAppsData(),
-		);
-	}, [account, role, location, accountsDataFetchStatus]);
+		dispatch(setUserInfo(userInfo));
+		dispatch(updateTokenInfo(auth.getUserInfo()));
+		dispatch(setRemoteAppInfo(remotes));
+	}, []);
 
-	const fetchStatuses = [accountsDataFetchStatus, remotesFetchStatus];
+	useEffect(() => {
+		if (!account) return;
+		const key = generateKey(account, role, location);
+		if (key === syncedKey.current) return;
 
-	const finalFetchStatus = fetchStatuses.includes(REJECTED)
-		? REJECTED
-		: fetchStatuses.includes(PENDING)
-			? PENDING
-			: FULFILLED;
-
-	const mainContent =
-		finalFetchStatus === REJECTED ? (
-			<ErrorScreen errorStatus={Errors.CRITICAL_DATA_FETCH_ERROR} />
-		) : finalFetchStatus === PENDING ? (
-			<Loader />
-		) : (
-			<AppRoutes />
-		);
+		syncedKey.current = key;
+		onContextChange({ account, role, location }).then((freshRemotes) => {
+			dispatch(setRemoteAppInfo(freshRemotes));
+		});
+	}, [account, role, location]);
 
 	return (
 		<SidebarProvider>
-			<Header />
+			<Header logout={auth.logout} />
 			<div className="flex min-h-svh">
-				<AppSidebar status={finalFetchStatus} />
+				<AppSidebar />
 				<SidebarInset>
-					<div className={styles["main-content"]}>{mainContent}</div>
+					<div className={styles["main-content"]}>
+						<AppRoutes remotes={remotes} />
+					</div>
 				</SidebarInset>
 			</div>
 			<ToastNotifications />

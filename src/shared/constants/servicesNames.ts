@@ -10,10 +10,7 @@ export const HOME: Remote = {
 	path: "/",
 	position: 1,
 	title: "Home",
-	url:
-		process.env.NODE_ENV === "production"
-			? window.location.origin
-			: "http://localhost:8080",
+	url: import.meta.env.PROD ? window.location.origin : "http://localhost:8080",
 } as const;
 
 export const homepage = {
