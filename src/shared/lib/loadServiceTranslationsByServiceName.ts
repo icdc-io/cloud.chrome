@@ -1,9 +1,10 @@
 import { locales } from "@/shared/translations/i18n";
 import i18next from "i18next";
+import { ASSET_BASE } from "../constants";
 
 export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 	return fetch(
-		`/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
+		`${ASSET_BASE}/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
 	)
 		.then((module) => module.json())
 		.then((module) => {
@@ -16,7 +17,3 @@ export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 			});
 		});
 };
-
-// loadServiceTranslationsByServiceName("storage2").then(() => {
-//   setState(prev => prev + 1);
-// });

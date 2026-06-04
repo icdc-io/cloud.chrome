@@ -11,15 +11,11 @@ const { publicVars } = loadEnv({ prefixes: ["REACT_APP_"] });
 export default ({ envMode }) => {
 	return defineConfig({
 		server: {
-			port: 8000,
+			port: 7999,
 		},
 		source: {
 			define: publicVars,
 		},
-		// html: {
-		// 	template: path.resolve(__dirname, "./public/index.html"),
-		// 	favicon: path.resolve(__dirname, "./public/favicon.ico"),
-		// },
 		tools: {
 			rspack: (config, { appendPlugins }) => {
 				config.output.publicPath = "auto";
