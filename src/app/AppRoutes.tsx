@@ -8,6 +8,7 @@ import RemoteComponent from "@/shared/ui/RemoteComponent";
 import type { Remote } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
 import "@/styles/Popup.scss";
+import { homepage } from "@/shared/constants/servicesNames";
 import {
 	CORE_NAMESPACE,
 	filterNonCoreRemotes,
@@ -63,7 +64,7 @@ const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 
 	const homeRemote = remotes
 		.find((r) => r.name === CORE_NAMESPACE)
-		?.apps.find((app) => app.name === "home");
+		?.apps.find((app) => app.name === homepage.value);
 
 	return (
 		<React.Suspense fallback={<Loader />}>
@@ -79,7 +80,7 @@ const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 										(import.meta.env.DEV && homeRemote.url) || window.origin
 									}
 									remote={homeRemote.name}
-									service={"core"}
+									service={CORE_NAMESPACE}
 									version={homeRemote.version}
 									store={store}
 								/>

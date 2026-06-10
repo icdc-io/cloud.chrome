@@ -1,21 +1,22 @@
 import Homepage from "@/shared/images/homepage.svg";
 import type { Remote } from "@/types/entities";
+import { CORE_NAMESPACE } from "../lib/filterNonCoreRemotes";
 
-export const HOME: Remote = {
+export const CORE: Remote = {
 	apps: [],
 	description: "",
-	display_name: "Home",
+	display_name: "",
 	label: "",
-	name: "home",
+	name: CORE_NAMESPACE,
 	path: "/",
 	position: 1,
-	title: "Home",
+	title: "",
 	url: import.meta.env.PROD ? window.location.origin : "http://localhost:8080",
 } as const;
 
 export const homepage = {
 	text: "toHome",
-	value: HOME,
+	value: "home",
 	image: {
 		src: Homepage,
 	},

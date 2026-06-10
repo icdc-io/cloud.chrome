@@ -144,7 +144,7 @@ const ServicesDropdown = () => {
 						<DropdownMenuSeparator />
 						<DropdownMenuItem
 							className={`${styles["select-item"]}`}
-							onClick={() => onServiceChange(homepage.value.name)}
+							onClick={() => onServiceChange(homepage.value)}
 						>
 							<img src={homepage.image.src || ""} alt="Service icon" />
 							<span className="hover:text-white text-white text-base">

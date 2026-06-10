@@ -7,26 +7,27 @@ import {
 	fetchLocationData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-import { HOME } from "@/shared/constants/servicesNames";
+import { CORE } from "@/shared/constants/servicesNames";
+import { CORE_NAMESPACE } from "@/shared/lib/filterNonCoreRemotes";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
 
 const changeMetaData = (serviceInfo: Service | undefined) => {
-	if (!serviceInfo) {
+	if (serviceInfo?.name === CORE_NAMESPACE) {
 		document.title = "Home";
 	} else {
-		document.title = serviceInfo.display_name || "";
+		document.title = serviceInfo?.display_name || "";
 		const description = [
 			...(document.getElementsByTagName(
 				"META",
 			) as HTMLCollectionOf<HTMLMetaElement>),
 		].find((tag) => tag.name === "description");
 		if (description) {
-			description.setAttribute("content", serviceInfo.description || "");
+			description.setAttribute("content", serviceInfo?.description || "");
 		} else {
 			const metaDescription = document.createElement("meta");
 			metaDescription.setAttribute("name", "description");
-			metaDescription.setAttribute("content", serviceInfo.description || "");
+			metaDescription.setAttribute("content", serviceInfo?.description || "");
 		}
 	}
 };
@@ -44,11 +45,12 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	const currentRoute = location.pathname.split("/")[1];
 	const currentServiceApp = location.pathname.split("/")[2];
 
-	const currentServiceInfo = currentRoute
-		? remotes?.find(
-				(service) => service.path.substring(1) === currentService,
-			) || HOME
-		: HOME;
+	const currentServiceInfo =
+		remotes?.find((service) =>
+			currentRoute
+				? service.path.substring(1) === currentService
+				: service.name === CORE_NAMESPACE,
+		) || CORE;
 
 	useEffect(() => {
 		const newService = location.pathname.split("/")[1];
@@ -68,7 +70,7 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 
 	useEffect(() => {
 		const currentServiceAppInfo = currentServiceInfo.apps?.find(
-			(app) => app.name === currentServiceApp,
+			(app) => app.name === (currentRoute ? currentServiceApp : "home"),
 		);
 
 		if (currentServiceAppInfo) {
@@ -78,12 +80,6 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 			);
 		}
 	}, [currentServiceApp, currentServiceInfo]);
-
-	useEffect(() => {
-		if (currentServiceInfo.name === HOME.name) {
-			loadServiceTranslationsByServiceName(currentServiceInfo, undefined);
-		}
-	}, []);
 
 	useEffect(() => {
 		changeMetaData(currentServiceInfo);
