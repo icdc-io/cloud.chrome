@@ -1,5 +1,5 @@
 import { Slot } from "@radix-ui/react-slot";
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { Menu } from "lucide-react";
 import * as React from "react";
 
@@ -83,6 +83,7 @@ const SidebarProvider = React.forwardRef<
 				_setOpen(value);
 
 				// This sets the cookie to keep the sidebar state.
+				// biome-ignore lint/suspicious/noDocumentCookie: shadcn code
 				document.cookie = `${SIDEBAR_COOKIE_NAME}=${open}; path=/; max-age=${SIDEBAR_COOKIE_MAX_AGE}`;
 			},
 			[setOpenProp, open],

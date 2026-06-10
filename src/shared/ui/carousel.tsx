@@ -131,6 +131,7 @@ const Carousel = React.forwardRef<
 					canScrollNext,
 				}}
 			>
+				{/** biome-ignore lint/a11y/useAriaPropsSupportedByRole: allow role */}
 				<section
 					ref={ref}
 					onKeyDownCapture={handleKeyDown}
@@ -176,6 +177,7 @@ const CarouselItem = React.forwardRef<
 	const { orientation } = useCarousel();
 
 	return (
+		// biome-ignore lint/a11y/useSemanticElements: allow role
 		<div
 			ref={ref}
 			role="group"
@@ -250,10 +252,10 @@ const CarouselNext = React.forwardRef<
 CarouselNext.displayName = "CarouselNext";
 
 export {
-	type CarouselApi,
 	Carousel,
+	type CarouselApi,
 	CarouselContent,
 	CarouselItem,
-	CarouselPrevious,
 	CarouselNext,
+	CarouselPrevious,
 };

@@ -40,7 +40,7 @@ export const MultiSelect = React.forwardRef<
 			emptyMessage = "noOptions",
 			className,
 		},
-		ref,
+		_ref,
 	) => {
 		const [open, setOpen] = React.useState(false);
 		const { t } = useTranslation();
@@ -78,7 +78,6 @@ export const MultiSelect = React.forwardRef<
 				<PopoverTrigger asChild>
 					<Button
 						variant="outline"
-						// biome-ignore lint/a11y/useSemanticElements: <explanation>
 						role="combobox"
 						aria-expanded={open}
 						className={cn(

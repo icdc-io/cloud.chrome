@@ -1,8 +1,8 @@
-import type { ErrorStatusType } from "@/shared/constants/errorTypes";
+import { useTranslation } from "react-i18next";
 import { Errors } from "@/shared/constants/errors";
+import type { ErrorStatusType } from "@/shared/constants/errorTypes";
 import UnauthorizeImg from "@/shared/images/401.svg";
 import NoAccessImg from "@/shared/images/403.svg";
-import { useTranslation } from "react-i18next";
 import "@/styles/Error.scss";
 
 const NoAccessError = () => {

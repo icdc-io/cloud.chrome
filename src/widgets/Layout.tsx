@@ -1,3 +1,4 @@
+import { useEffect, useRef } from "react";
 import AppRoutes from "@/app/AppRoutes";
 import {
 	setRemoteAppInfo,
@@ -8,10 +9,9 @@ import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { SidebarInset, SidebarProvider } from "@/shared/ui/sidebar";
 import styles from "@/styles/Layout.module.css";
 import type { BaseUrls, Remote, User, UserInfo } from "@/types/entities";
+import { AppSidebar } from "@/widgets/app-sidebar";
 import Header from "@/widgets/Header";
 import ToastNotifications from "@/widgets/ToastNotifications";
-import { AppSidebar } from "@/widgets/app-sidebar";
-import { useEffect, useRef } from "react";
 import "@/styles/index.css";
 
 const generateKey = (...parts: (string | undefined)[]) =>

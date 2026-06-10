@@ -1,10 +1,8 @@
 import { ChevronDownIcon, ChevronUpIcon } from "@radix-ui/react-icons";
 import * as SelectPrimitive from "@radix-ui/react-select";
-import { Check, ChevronsUpDown, Loader } from "lucide-react";
+import { Check, ChevronsUpDown, Loader, X } from "lucide-react";
 import * as React from "react";
-
 import { cn } from "@/shared/lib/utils";
-import { X } from "lucide-react";
 import { Button } from "./button";
 
 const SelectGroup = SelectPrimitive.Group;
@@ -14,7 +12,7 @@ const SelectValue = SelectPrimitive.Value;
 const Select = React.forwardRef<
 	React.ElementRef<typeof SelectPrimitive.Root>,
 	React.ComponentPropsWithoutRef<typeof SelectPrimitive.Root>
->(({ children, ...props }, ref) => {
+>(({ children, ...props }, _ref) => {
 	return (
 		<SelectPrimitive.Root {...props} data-fill="open">
 			{children}
@@ -187,13 +185,13 @@ SelectSeparator.displayName = SelectPrimitive.Separator.displayName;
 
 export {
 	Select,
-	SelectGroup,
-	SelectValue,
-	SelectTrigger,
 	SelectContent,
-	SelectLabel,
+	SelectGroup,
 	SelectItem,
-	SelectSeparator,
-	SelectScrollUpButton,
+	SelectLabel,
 	SelectScrollDownButton,
+	SelectScrollUpButton,
+	SelectSeparator,
+	SelectTrigger,
+	SelectValue,
 };

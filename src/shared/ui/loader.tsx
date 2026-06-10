@@ -1,6 +1,6 @@
 // import { useTranslation } from "react-i18next";
 
-import { type VariantProps, cva } from "class-variance-authority";
+import { cva, type VariantProps } from "class-variance-authority";
 import { cn } from "../lib/utils";
 
 const loaderVariants = cva("", {

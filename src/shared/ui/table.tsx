@@ -1,7 +1,6 @@
-import * as React from "react";
-
-import { cn } from "@/shared/lib/utils";
 import { ArrowDownUp, MoveDown, MoveUp } from "lucide-react";
+import * as React from "react";
+import { cn } from "@/shared/lib/utils";
 
 const Table = React.forwardRef<
 	HTMLTableElement,
@@ -147,11 +146,11 @@ TableCaption.displayName = "TableCaption";
 
 export {
 	Table,
-	TableHeader,
 	TableBody,
+	TableCaption,
+	TableCell,
 	TableFooter,
 	TableHead,
+	TableHeader,
 	TableRow,
-	TableCell,
-	TableCaption,
 };

@@ -3,11 +3,9 @@
 	background-color: var(--header-bg);
 	position: fixed;
 	width: 100vw;
-	height: 76px;
 	padding: 0 40px 0 24px;
 	display: flex;
 	align-items: center;
-	z-index: 2;
 	left: 0;
 	top: 0;
 	z-index: 20;

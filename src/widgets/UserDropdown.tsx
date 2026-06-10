@@ -1,14 +1,13 @@
-import { changeLang, changeUserInfo } from "@/redux/actions";
-import { filterAndSort } from "@/shared/lib/roleUtils";
-import { langs } from "@/shared/translations/i18n";
-import type { Langs } from "@/shared/translations/langs";
-import styles from "@/styles/UserDropdown.module.css";
+import { ChevronDownIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-
+import { changeLang, changeUserInfo } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
 import { useInvalidateQuery } from "@/shared/hooks/useInvalidateQuery";
+import { filterAndSort } from "@/shared/lib/roleUtils";
 import { cn } from "@/shared/lib/utils";
+import { langs } from "@/shared/translations/i18n";
+import type { Langs } from "@/shared/translations/langs";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -23,14 +22,10 @@ import {
 	DropdownMenuSubTrigger,
 	DropdownMenuTrigger,
 } from "@/shared/ui/dropdown-menu";
+import styles from "@/styles/UserDropdown.module.css";
 import type { UserType } from "@/types/entities";
-import { ChevronDownIcon } from "lucide-react";
 
-const UserDropdown = ({
-	logout,
-}: {
-	logout: () => Promise<void>;
-}) => {
+const UserDropdown = ({ logout }: { logout: () => Promise<void> }) => {
 	const dispatch = useAppDispatch();
 	const { t, i18n } = useTranslation();
 	const userInfo = useAppSelector((state) => state.host.userInfo);

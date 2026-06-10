@@ -4,18 +4,16 @@ import {
 	CHANGE_LANG,
 	CHANGE_SIDEBAR_VISIBILITY,
 	CHANGE_USER_INFO,
+	CONTACTS_FETCH,
+	CONTACTS_FETCH_URL,
 	FETCH_ACCOUNTS_DATA,
 	FETCH_LOCATION_DATA,
 	FETCH_SERVICE_VERSION_DATA,
+	FETCH_SERVICES_STATUSES,
+	SERVICES_STATUSES_URL,
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
-} from "../redux/constants";
-import {
-	CONTACTS_FETCH,
-	CONTACTS_FETCH_URL,
-	FETCH_SERVICES_STATUSES,
-	SERVICES_STATUSES_URL,
 } from "../redux/constants";
 import { fetchData } from "../shared/api/shared";
 import type { components } from "../shared/schemas/account-api";

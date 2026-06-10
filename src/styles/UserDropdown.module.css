@@ -30,6 +30,7 @@
 }
 
 .user-dropdown .menu.transition.second-level {
+	/* biome-ignore lint/complexity/noImportantStyles: allow important */
 	top: 0px !important;
 }
 

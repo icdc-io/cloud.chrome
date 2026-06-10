@@ -1,5 +1,5 @@
-import { locales } from "@/shared/translations/i18n";
 import i18next from "i18next";
+import { locales } from "@/shared/translations/i18n";
 import { ASSET_BASE } from "../constants";
 
 export const loadServiceTranslationsByServiceName = (serviceName: string) => {

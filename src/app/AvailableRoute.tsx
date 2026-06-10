@@ -1,3 +1,5 @@
+import { type FC, type ReactNode, useEffect } from "react";
+import { Outlet, useLocation } from "react-router-dom";
 import {
 	changeBurgerVisibility,
 	changeCurrentService,
@@ -8,8 +10,6 @@ import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { HOME } from "@/shared/constants/servicesNames";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
 import type { Service } from "@/types/entities";
-import { type FC, type ReactNode, useEffect } from "react";
-import { Outlet, useLocation } from "react-router-dom";
 
 const changeMetaData = (serviceInfo: Service | undefined) => {
 	if (!serviceInfo) {

@@ -1,10 +1,10 @@
 import {
-	type Dispatch,
-	type Middleware,
 	applyMiddleware,
 	combineReducers,
 	compose,
 	legacy_createStore as createStore,
+	type Dispatch,
+	type Middleware,
 } from "redux";
 import { logger } from "redux-logger";
 import promiseMiddleware, {
@@ -18,6 +18,8 @@ import {
 	CHANGE_LANG,
 	CHANGE_USER_INFO,
 	CONTACTS_FETCH,
+	defaultLocationData,
+	emptyLocationData,
 	FETCH_ACCOUNTS_DATA,
 	FETCH_LOCATION_DATA,
 	FULFILLED,
@@ -25,8 +27,6 @@ import {
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
-	defaultLocationData,
-	emptyLocationData,
 } from "../redux/constants";
 import type { CustomStore, HostReducerType } from "../redux/types";
 import { servicesWithCompletedStatus } from "../shared/constants/servicesWithCompletedStatus";

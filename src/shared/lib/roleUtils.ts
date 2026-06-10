@@ -9,7 +9,7 @@ export const rolesWithAdminRights = [OPERATOR, OWNER, ADMIN];
 export const availableRoles = [...rolesWithAdminRights, MEMBER];
 
 const filterAndSort = (list: ImmutableArray<string> | undefined) => {
-	if (!list || !list.length) {
+	if (!list?.length) {
 		return [];
 	}
 

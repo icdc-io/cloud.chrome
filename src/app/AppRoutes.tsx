@@ -1,13 +1,13 @@
+import React from "react";
+import { Navigate, Route, Routes } from "react-router-dom";
 import AvailableRoute from "@/app/AvailableRoute";
 import { store } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
-import RemoteComponent from "@/shared/ui/RemoteComponent";
 import Loader from "@/shared/ui/loader";
+import RemoteComponent from "@/shared/ui/RemoteComponent";
 import type { Remote } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
-import React from "react";
-import { Navigate, Route, Routes } from "react-router-dom";
 import "@/styles/Popup.scss";
 
 const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {

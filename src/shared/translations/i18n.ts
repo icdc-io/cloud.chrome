@@ -1,7 +1,7 @@
-import ErrorEn from "@/shared/images/error_en.svg";
-import ErrorRu from "@/shared/images/error_ru.svg";
 import i18n from "i18next";
 import { initReactI18next } from "react-i18next";
+import ErrorEn from "@/shared/images/error_en.svg";
+import ErrorRu from "@/shared/images/error_ru.svg";
 import type { Langs } from "./langs";
 
 type Translation = {
