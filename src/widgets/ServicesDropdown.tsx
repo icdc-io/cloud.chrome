@@ -5,6 +5,7 @@ import { useAppSelector } from "@/redux/shared";
 import { homepage } from "@/shared/constants/servicesNames";
 import { servicesImages } from "@/shared/constants/viewConstants";
 import Question from "@/shared/images/question.svg";
+import { filterNonCoreRemotes } from "@/shared/lib/filterNonCoreRemotes";
 import {
 	DropdownMenu,
 	DropdownMenuContent,
@@ -37,6 +38,7 @@ const ServicesDropdown = () => {
 		if (!remotes) return [];
 
 		return [...remotes]
+			.filter(filterNonCoreRemotes)
 			.filter((service) => service?.name && service.display_name)
 			.sort((a, b) => numberOrLast(a.position) - numberOrLast(b.position))
 			.map((service, key) => {

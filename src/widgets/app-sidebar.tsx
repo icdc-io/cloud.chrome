@@ -1,6 +1,7 @@
 import { SquareTerminal } from "lucide-react";
 import type * as React from "react";
 import { useAppSelector } from "@/redux/shared";
+import { filterNonCoreRemotes } from "@/shared/lib/filterNonCoreRemotes";
 import {
 	Sidebar,
 	SidebarContent,
@@ -18,9 +19,9 @@ export function AppSidebar({ ...props }: AppSidebarType) {
 
 	if (!remotes || !currentService) return;
 
-	const currentRemoteService = remotes.find(
-		(serviceInfo) => serviceInfo.path.substring(1) === currentService,
-	);
+	const currentRemoteService = remotes
+		.filter(filterNonCoreRemotes)
+		.find((serviceInfo) => serviceInfo.path.substring(1) === currentService);
 	const currentRemotesList =
 		currentRemoteService?.apps?.map((remote) => ({
 			title: remote.title,
