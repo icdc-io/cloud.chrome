@@ -1,18 +1,16 @@
 import React from "react";
 import { Navigate, Route, Routes } from "react-router-dom";
 import AvailableRoute from "@/app/AvailableRoute";
-import { useAppSelector } from "@/redux/shared";
 import { store } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import { HOME } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
+import type { Remote } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
 import "@/styles/Popup.scss";
 
-const AppRoutes = () => {
-	const remotes = useAppSelector((state) => state.host.remotes);
-
+const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 	const routes = () => {
 		if (!remotes) return null;
 		return remotes
@@ -25,18 +23,21 @@ const AppRoutes = () => {
 						path={`${route}/*`}
 						Component={AvailableRoute}
 					>
-						{serviceInfo.apps.map((remoteAppInfo) => {
+						{serviceInfo.apps.map((remoteServiceInfo) => {
 							return (
 								<Route
-									key={remoteAppInfo.name}
-									path={`${remoteAppInfo.name}/*`}
+									key={remoteServiceInfo.name}
+									path={`${remoteServiceInfo.name}/*`}
 									element={
 										<RemoteComponent
 											fallback={<Loader />}
-											remoteUrl={remoteAppInfo.url || window.origin}
-											remote={remoteAppInfo.name}
+											remoteUrl={
+												(import.meta.env.DEV && remoteServiceInfo.url) ||
+												window.origin
+											}
+											remote={remoteServiceInfo.name}
 											service={serviceInfo.name}
-											version={remoteAppInfo.version}
+											version={remoteServiceInfo.version}
 											store={store}
 										/>
 									}
@@ -61,7 +62,11 @@ const AppRoutes = () => {
 						element={
 							<RemoteComponent
 								fallback={<Loader />}
-								remoteUrl={HOME.url}
+								remoteUrl={
+									import.meta.env.PROD
+										? window.location.origin
+										: "http://localhost:8080"
+								}
 								remote={HOME.name}
 								store={store}
 							/>

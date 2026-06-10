@@ -1,6 +1,3 @@
-import type { AsyncAction } from "redux-promise-middleware";
-import type { ThunkAction } from "redux-thunk";
-import { kc } from "../entities/keycloak";
 import {
 	CHANGE_BURGER_VISIBILITY,
 	CHANGE_CURRENT_SERVICE,
@@ -18,12 +15,9 @@ import {
 	UPDATE_USER,
 } from "../redux/constants";
 import { fetchData, fetchJsonData } from "../shared/api/shared";
-import { parseLocalStorage } from "../shared/lib/parseLocalStorage";
-import { availableRoles } from "../shared/lib/roleUtils";
 import type { components } from "../shared/schemas/account-api";
 import type { Langs } from "../shared/translations/langs";
-import type { External, Remote, User, UserInfo } from "../types/entities";
-import type { HostReducerType } from "./types";
+import type { BaseUrls, Remote, User, UserInfo } from "../types/entities";
 
 function infernalLiteral<U, T extends U>(arg: T): T {
 	return arg;
@@ -32,69 +26,6 @@ function infernalLiteral<U, T extends U>(arg: T): T {
 function inferStringLiteral<T extends string>(arg: T): T {
 	return infernalLiteral<string, T>(arg);
 }
-
-const parseAccountsData = async () => {
-	const parsedToken = kc.getUserInfo();
-
-	if (!parsedToken) return {};
-
-	const { accounts, locations } = parsedToken.external as External;
-	const accountsNames = Object.keys(accounts);
-
-	const filteredAccounts = accountsNames
-		.map((accountName) => ({
-			...accounts[accountName],
-			name: accountName || "",
-		}))
-		.filter(
-			//filter accounts that contain at least 1 role and 1 location
-			(account) =>
-				accounts[account.name] &&
-				accounts[account.name].roles.length &&
-				accounts[account.name].locations.length,
-		);
-
-	if (!filteredAccounts.length) return {};
-
-	const userInfo = parseLocalStorage("user");
-
-	const isUserInfoInvalid = !userInfo;
-
-	const user: User = {
-		//initial object user that will contain data about current account, role, location
-		account:
-			isUserInfoInvalid || !accounts[userInfo.account]
-				? filteredAccounts[0]?.name
-				: userInfo.account,
-		role: "",
-		location: "",
-	};
-
-	const currentAccountInfo = accounts[user.account];
-	const currentAccountRoles = accounts[user.account].roles.filter((role) =>
-		availableRoles.includes(role),
-	);
-
-	user.location =
-		isUserInfoInvalid ||
-		!currentAccountInfo.locations.includes(userInfo.location)
-			? currentAccountInfo.locations[0]
-			: userInfo.location; //check if location from localStorage is valid, otherwise set first available location
-	user.role =
-		isUserInfoInvalid || !currentAccountRoles.includes(userInfo.role)
-			? currentAccountRoles[0]
-			: userInfo.role; //check if role from localStorage is valid, otherwise set first available role
-
-	localStorage.setItem("user", JSON.stringify(user));
-	localStorage.setItem("baseUrls", JSON.stringify(locations));
-
-	return {
-		user,
-		baseUrls: locations,
-		username: `${parsedToken.given_name} ${parsedToken.family_name}`,
-		email: parsedToken.email,
-	};
-};
 
 export const updateUser = (newUser: User) =>
 	({
@@ -105,11 +36,6 @@ export const changeLang = (newLang: Langs) =>
 	({
 		type: inferStringLiteral(CHANGE_LANG),
 		payload: newLang,
-	}) as const;
-export const fetchAccountsData = () =>
-	({
-		type: inferStringLiteral(FETCH_ACCOUNTS_DATA),
-		payload: parseAccountsData(),
 	}) as const;
 
 const formatRemotes = (remotesPromise: Promise<Remote[]>) => {
@@ -130,21 +56,6 @@ export const fetchServicesStatuses = () =>
 		payload: fetchData(SERVICES_STATUSES_URL),
 	}) as const;
 
-export const fetchAccountsAndFetchServicesStatus = (): ThunkAction<
-	void,
-	HostReducerType,
-	unknown,
-	AsyncAction
-> => {
-	return async (dispatch) => {
-		try {
-			await dispatch(fetchAccountsData());
-			dispatch(fetchServicesStatuses());
-		} catch (error) {
-			console.error(error);
-		}
-	};
-};
 export const fetchRemotes = () =>
 	({
 		type: inferStringLiteral(SET_REMOTES),
@@ -174,7 +85,7 @@ export const fetchLocationData = (currentLocation: string) =>
 	({
 		type: inferStringLiteral(FETCH_LOCATION_DATA),
 		payload: fetchData(
-			`${process.env.REACT_APP_API_GATEWAY}/api/accounts/v1/locations/${currentLocation}`,
+			`${import.meta.env.REACT_APP_API_GATEWAY}/api/accounts/v1/locations/${currentLocation}`,
 		) as Promise<components["schemas"]["Location"]>,
 	}) as const;
 
@@ -188,3 +99,20 @@ export const fetchContacts = (lang: Langs) => ({
 	type: inferStringLiteral(CONTACTS_FETCH),
 	payload: fetchData(CONTACTS_FETCH_URL(lang)),
 });
+
+export const setRemoteAppInfo = (payload: Remote[]) =>
+	({
+		type: inferStringLiteral(SET_REMOTES),
+		payload: payload,
+	}) as const;
+
+export const setUserInfo = (payload: {
+	user: User;
+	baseUrls: BaseUrls;
+	username: string;
+	email: string;
+}) =>
+	({
+		type: inferStringLiteral(FETCH_ACCOUNTS_DATA),
+		payload,
+	}) as const;

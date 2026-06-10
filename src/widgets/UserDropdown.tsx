@@ -1,6 +1,5 @@
 import { ChevronDownIcon } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { kc } from "@/entities/keycloak";
 import { changeLang, changeUserInfo } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
@@ -25,7 +24,7 @@ import {
 import styles from "@/styles/UserDropdown.module.css";
 import type { UserType } from "@/types/entities";
 
-const UserDropdown = () => {
+const UserDropdown = ({ logout }: { logout: () => Promise<void> }) => {
 	const dispatch = useAppDispatch();
 	const { t, i18n } = useTranslation();
 	const userInfo = useAppSelector((state) => state.host.userInfo);
@@ -52,10 +51,6 @@ const UserDropdown = () => {
 			text: locationName,
 		}),
 	);
-
-	const logout = () => {
-		kc.logout();
-	};
 
 	const changeLocale = (newLang: string) => {
 		dispatch(changeLang(newLang as Langs));

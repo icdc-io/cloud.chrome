@@ -6,7 +6,7 @@ export const loadServiceTranslationsByServiceName = (
 	serviceInfo: Remote,
 	appInfo: App | undefined,
 ) => {
-	const isProd = process.env.NODE_ENV === "production";
+	const isProd = import.meta.env.PROD;
 	const origin = isProd
 		? window.location.origin
 		: appInfo

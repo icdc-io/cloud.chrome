@@ -1,4 +1,3 @@
-import type { KeycloakTokenParsed } from "keycloak-js";
 import type { components } from "../shared/schemas/account-api";
 
 export type User = {
@@ -12,6 +11,27 @@ export type List = {
 };
 
 export type UserType = User;
+
+type KeycloakTokenParsed = {
+	iss?: string;
+	sub?: string;
+	aud?: string;
+	exp?: number;
+	iat?: number;
+	auth_time?: number;
+	nonce?: string;
+	acr?: string;
+	amr?: string;
+	azp?: string;
+	session_state?: string;
+	realm_access?: {
+		roles: string[];
+	};
+	resource_access?: {
+		[key: string]: { roles: string[] };
+	};
+	[key: string]: unknown;
+};
 
 export type UserInfo =
 	| ({
