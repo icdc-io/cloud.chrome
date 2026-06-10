@@ -5,7 +5,6 @@ export const REJECTED = "rejected";
 export const FULFILLED = "fulfilled";
 export const UPDATE_USER = "UPDATE_USER";
 export const CHANGE_LANG = "CHANGE_LANG";
-// export const SET_AVAILABLE_SERVICES = "SET_AVAILABLE_SERVICES";
 export const SET_REMOTES = "SET_REMOTES";
 export const FETCH_SERVICES_STATUSES = "FETCH_SERVICES_STATUSES";
 export const FETCH_REMOTES_APPS = "FETCH_REMOTES_APPS";

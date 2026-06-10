@@ -1,15 +1,14 @@
-import type { Langs } from "@/shared/translations/langs";
 import i18next from "i18next";
-
-const { locales } = require("@/shared/translations/i18n");
+import { locales } from "@/shared/translations/i18n";
+import { ASSET_BASE } from "../constants";
 
 export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 	return fetch(
-		`/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
+		`${ASSET_BASE}/translations/${serviceName}/i18n.json?${new Date().getMilliseconds()}`,
 	)
 		.then((module) => module.json())
 		.then((module) => {
-			locales.forEach((lang: Langs) => {
+			locales.forEach((lang) => {
 				i18next.addResourceBundle(
 					lang,
 					"translation",
@@ -18,7 +17,3 @@ export const loadServiceTranslationsByServiceName = (serviceName: string) => {
 			});
 		});
 };
-
-// loadServiceTranslationsByServiceName("storage2").then(() => {
-//   setState(prev => prev + 1);
-// });

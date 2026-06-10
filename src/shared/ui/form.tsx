@@ -1,5 +1,3 @@
-import { cn } from "@/shared/lib/utils";
-import { Label } from "@/shared/ui/label";
 import { zodResolver } from "@hookform/resolvers/zod";
 import type * as LabelPrimitive from "@radix-ui/react-label";
 import { Slot } from "@radix-ui/react-slot";
@@ -10,12 +8,13 @@ import {
 	type FieldPath,
 	type FieldValues,
 	FormProvider,
-	type UseFormReturn,
 	useFieldArray,
 	useForm,
 	useFormContext,
 	useWatch,
 } from "react-hook-form";
+import { cn } from "@/shared/lib/utils";
+import { Label } from "@/shared/ui/label";
 
 const Form = FormProvider;
 
@@ -173,24 +172,24 @@ const FormMessage = React.forwardRef<
 });
 FormMessage.displayName = "FormMessage";
 
-export {
-	useFormField,
-	Form,
-	FormItem,
-	FormLabel,
-	FormControl,
-	FormDescription,
-	FormMessage,
-	FormField,
-	useForm,
-	zodResolver,
-	useFieldArray,
-	useWatch,
-};
 export type {
 	DefaultValues,
-	SubmitHandler,
-	Path,
-	UseFormReturn,
 	FieldValues,
+	Path,
+	SubmitHandler,
+	UseFormReturn,
 } from "react-hook-form";
+export {
+	Form,
+	FormControl,
+	FormDescription,
+	FormField,
+	FormItem,
+	FormLabel,
+	FormMessage,
+	useFieldArray,
+	useForm,
+	useFormField,
+	useWatch,
+	zodResolver,
+};

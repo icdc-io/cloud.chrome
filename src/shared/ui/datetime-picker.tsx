@@ -1,15 +1,15 @@
-import { cn } from "@/shared/lib/utils";
 import { add, format } from "date-fns";
-import { type Locale, enUS } from "date-fns/locale";
+import { enUS, type Locale } from "date-fns/locale";
 import {
 	Calendar as CalendarIcon,
 	ChevronLeft,
 	ChevronRight,
+	Clock,
 } from "lucide-react";
-import { Clock } from "lucide-react";
 import * as React from "react";
 import { useImperativeHandle, useRef } from "react";
 import { DayPicker } from "react-day-picker";
+import { cn } from "@/shared/lib/utils";
 import { Button, buttonVariants } from "./button";
 import type { CalendarProps } from "./calendar";
 import { Input } from "./input";
@@ -295,7 +295,6 @@ function Calendar({
 				months:
 					"flex flex-col sm:flex-row space-y-4  sm:space-y-0 justify-center",
 				month: "flex flex-col items-center space-y-4",
-				//@ts-ignore
 				month_caption: "flex justify-center pt-1 relative items-center",
 				caption_label: "text-sm font-medium",
 				nav: "space-x-1 flex items-center ",
@@ -340,7 +339,9 @@ function Calendar({
 					),
 				MonthCaption: ({
 					calendarMonth,
-				}: { calendarMonth: { date: Date } }) => {
+				}: {
+					calendarMonth: { date: Date };
+				}) => {
 					return (
 						<div className="inline-flex gap-2">
 							<Select
@@ -902,5 +903,5 @@ const DateTimePicker = React.forwardRef<
 
 DateTimePicker.displayName = "DateTimePicker";
 
-export { DateTimePicker, TimePickerInput, TimePicker };
-export type { TimePickerType, DateTimePickerProps, DateTimePickerRef };
+export type { DateTimePickerProps, DateTimePickerRef, TimePickerType };
+export { DateTimePicker, TimePicker, TimePickerInput };

@@ -1,5 +1,5 @@
-import { loadComponent } from "@/shared/lib/index";
 import React, { Component, type ReactNode } from "react";
+import { loadComponent } from "@/shared/lib/index";
 
 interface IExampleComponentProps {
 	children: ReactNode;

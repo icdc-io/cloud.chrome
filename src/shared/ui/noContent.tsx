@@ -1,6 +1,6 @@
-import styles from "@/styles/ErrorScreen.module.css";
 import { Meh } from "lucide-react";
 import { useTranslation } from "react-i18next";
+import styles from "@/styles/ErrorScreen.module.css";
 
 type NoContent = {
 	textMessage: string;

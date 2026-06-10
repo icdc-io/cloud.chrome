@@ -13,4 +13,13 @@ declare global {
 	}
 }
 
-export {};
+declare const require: {
+	context(
+		directory: string,
+		useSubdirectories: boolean,
+		regExp: RegExp,
+	): {
+		(id: string): string;
+		keys(): string[];
+	};
+};

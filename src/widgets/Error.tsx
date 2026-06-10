@@ -1,15 +1,13 @@
-import { kc } from "@/entities/keycloak";
+import { useTranslation } from "react-i18next";
 import { Errors } from "@/shared/constants/errors";
+import type { ErrorStatusType } from "@/shared/constants/errorTypes";
 import UnauthorizeImg from "@/shared/images/401.svg";
 import NoAccessImg from "@/shared/images/403.svg";
-import React from "react";
-import { useTranslation } from "react-i18next";
 import "@/styles/Error.scss";
-import type { ErrorStatusType } from "@/shared/constants/errorTypes";
 
 const NoAccessError = () => {
 	const { t } = useTranslation();
-	const supportLink = `https://${process.env.REACT_APP_CP_VENDOR}.io/#contact`;
+	const supportLink = `https://${import.meta.env.REACT_APP_CP_VENDOR}.io/#contact`;
 	return (
 		<div className="content_wrapper noAccess">
 			<div className="textBlock">
@@ -25,9 +23,6 @@ const NoAccessError = () => {
 					<button type="button" onClick={() => window.open(supportLink)}>
 						{t("supportBtn")}
 					</button>
-					<button type="button" color="black" onClick={() => kc.logout()}>
-						{t("exitBtn")}
-					</button>
 				</div>
 			</div>
 			<img src={NoAccessImg} alt={t("error")} className="imgBlock" />
@@ -42,9 +37,6 @@ const UnauthorizeError = () => {
 			<div className={`textBlock ${i18n.language}`}>
 				<h2>{t("unauthTitle")}</h2>
 				<p>{t("unAuthDescription")}</p>
-				<button onClick={() => kc.logout()} type="button">
-					{t("logout")}
-				</button>
 			</div>
 			<img src={UnauthorizeImg} className="imgBlock" alt="Unauthorized" />
 		</div>
@@ -69,7 +61,7 @@ const UnavailableInLocationError = () => {
 const GeneralError = () => {
 	const { t } = useTranslation();
 
-	const statusPage = `https://status.${process.env.REACT_APP_CP_VENDOR}.io`;
+	const statusPage = `https://status.${import.meta.env.REACT_APP_CP_VENDOR}.io`;
 
 	const onReload = () => window.location.reload();
 

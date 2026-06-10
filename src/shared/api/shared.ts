@@ -9,13 +9,13 @@ import {
 } from "@tanstack/react-query";
 import type { KyResponse } from "ky";
 import {
-	type MutableHTTPMethod,
-	type ObjectRecord,
-	type RequestParamsType,
 	getFullUrl,
 	getHeaders,
 	getInfoForRequest,
 	isJSONType,
+	type MutableHTTPMethod,
+	type ObjectRecord,
+	type RequestParamsType,
 	request,
 } from "../../shared/api";
 
@@ -322,11 +322,7 @@ export const useFetchInfiniteData = <T, U = T>({
 	const appId = getAppId(window.location.pathname);
 	const queryKey = [appId, endpoint];
 
-	const queryFn = ({
-		pageParam,
-	}: {
-		pageParam: unknown;
-	}) => {
+	const queryFn = ({ pageParam }: { pageParam: unknown }) => {
 		const query = new URLSearchParams(params || "");
 		query.append("page[offset]", `${pageParam || 1}`);
 		const queryString = `?${query.toString()}`;

@@ -1,4 +1,4 @@
-import ky, { HTTPError, type KyResponse } from "ky";
+import ky, { HTTPError } from "ky";
 import type { List, User } from "../../types/entities";
 
 export type ObjectRecord =

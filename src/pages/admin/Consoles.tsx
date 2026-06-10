@@ -1,9 +1,9 @@
+import { useEffect, useState } from "react";
+import { useTranslation } from "react-i18next";
 import { useAppSelector } from "@/redux/shared";
 import External from "@/shared/images/ext.svg";
 import { Button } from "@/shared/ui/button";
 import Loader from "@/shared/ui/loader";
-import React, { useEffect, useState } from "react";
-import { useTranslation } from "react-i18next";
 
 const Consoles = () => {
 	const { t } = useTranslation();
