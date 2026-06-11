@@ -4,10 +4,11 @@ import UnauthorizeImg from "@/shared/images/401.svg";
 import NoAccessImg from "@/shared/images/403.svg";
 import "@/styles/Error.scss";
 import type { ErrorStatusType } from "@/shared/constants/errorTypes";
+import { getVendor } from "@/shared/lib/getVendor";
 
 const NoAccessError = () => {
 	const { t } = useTranslation();
-	const supportLink = `https://${import.meta.env.REACT_APP_CP_VENDOR}.io/#contact`;
+	const supportLink = `https://${getVendor()}.io/#contact`;
 	return (
 		<div className="content_wrapper noAccess">
 			<div className="textBlock">
@@ -61,7 +62,7 @@ const UnavailableInLocationError = () => {
 const GeneralError = () => {
 	const { t } = useTranslation();
 
-	const statusPage = `https://status.${import.meta.env.REACT_APP_CP_VENDOR}.io`;
+	const statusPage = `https://status.${getVendor()}.io`;
 
 	const onReload = () => window.location.reload();
 
