@@ -5,18 +5,21 @@ import { store } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
 import Loader from "@/shared/ui/loader";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
-import type { Remote } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
 import "@/styles/Popup.scss";
+import { useAppSelector } from "@/redux/shared";
 import { homepage } from "@/shared/constants/servicesNames";
 import {
 	CORE_NAMESPACE,
 	filterNonCoreRemotes,
 } from "@/shared/lib/filterNonCoreRemotes";
 
-const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
+const AppRoutes = () => {
+	const remotes = useAppSelector((s) => s.host.remotes);
+
+	if (!remotes) return null;
+
 	const routes = () => {
-		if (!remotes) return null;
 		return remotes
 			.filter(
 				(serviceInfo) =>

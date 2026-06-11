@@ -67,7 +67,7 @@ const Layout = ({ auth, remotes, userInfo, onContextChange }: LayoutProps) => {
 				<AppSidebar />
 				<SidebarInset>
 					<div className={styles["main-content"]}>
-						<AppRoutes remotes={remotes} />
+						<AppRoutes />
 					</div>
 				</SidebarInset>
 			</div>
