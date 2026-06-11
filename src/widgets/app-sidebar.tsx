@@ -3,6 +3,7 @@ import type * as React from "react";
 
 import { useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
+import { filterNonCoreRemotes } from "@/shared/lib/src/shared/lib/filterNonCoreRemotes";
 import {
 	Sidebar,
 	SidebarContent,
@@ -25,9 +26,10 @@ export function AppSidebar({ logout, ...props }: AppSidebarType) {
 
 	if (!remotes || !currentService) return;
 
-	const currentRemoteService = remotes.find(
-		(serviceInfo) => serviceInfo.path.substring(1) === currentService,
-	);
+	const currentRemoteService = remotes
+		.filter(filterNonCoreRemotes)
+		.find((serviceInfo) => serviceInfo.path.substring(1) === currentService);
+
 	const currentRemotesList =
 		currentRemoteService?.apps?.map((remote) => ({
 			title: remote.title,

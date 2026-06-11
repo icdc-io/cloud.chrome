@@ -7,12 +7,13 @@ import {
 	fetchLocationData,
 } from "@/redux/actions";
 import { useAppDispatch, useAppSelector } from "@/redux/shared";
-import { HOME } from "@/shared/constants/servicesNames";
+import { homepage } from "@/shared/constants/servicesNames";
 import { loadServiceTranslationsByServiceName } from "@/shared/lib/loadServiceTranslationsByServiceName";
+import { CORE_NAMESPACE } from "@/shared/lib/src/shared/lib/filterNonCoreRemotes";
 import type { Service } from "@/types/entities";
 
 const changeMetaData = (serviceInfo: Service | undefined) => {
-	if (!serviceInfo) {
+	if (serviceInfo?.name === CORE_NAMESPACE || !serviceInfo) {
 		document.title = "Home";
 	} else {
 		document.title = serviceInfo.display_name || "";
@@ -60,14 +61,14 @@ const AvailableRoute: FC<AvailableRoute> = ({ children }) => {
 	}, [location.pathname]);
 
 	useEffect(() => {
-		loadServiceTranslationsByServiceName(currentServiceName || HOME);
+		loadServiceTranslationsByServiceName(currentServiceName || homepage.value);
 		changeMetaData(currentServiceInfo);
 	}, []);
 
 	useEffect(() => {
 		if (currentRoute !== currentServiceName) {
 			dispatch(changeCurrentService(currentRoute));
-			loadServiceTranslationsByServiceName(currentRoute || HOME);
+			loadServiceTranslationsByServiceName(currentRoute || homepage.value);
 		}
 	}, [currentRoute]);
 

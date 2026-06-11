@@ -3,18 +3,28 @@ import { Navigate, Route, Routes } from "react-router-dom";
 import AvailableRoute from "@/app/AvailableRoute";
 import { store } from "@/redux/store";
 import { Errors } from "@/shared/constants/errors";
-import { HOME } from "@/shared/constants/servicesNames";
+import { homepage } from "@/shared/constants/servicesNames";
 import Loader from "@/shared/ui/loader";
 import RemoteComponent from "@/shared/ui/RemoteComponent";
 import type { Remote } from "@/types/entities";
 import ErrorScreen from "@/widgets/Error";
 import "@/styles/Popup.scss";
+import {
+	CORE_NAMESPACE,
+	filterNonCoreRemotes,
+} from "@/shared/lib/src/shared/lib/filterNonCoreRemotes";
 
 const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 	const routes = () => {
 		if (!remotes) return null;
 		return remotes
-			.filter((serviceInfo) => !!serviceInfo.name && !!serviceInfo.path)
+			.filter(
+				(serviceInfo) =>
+					!!serviceInfo.name &&
+					!!serviceInfo.path &&
+					filterNonCoreRemotes(serviceInfo),
+			)
+
 			.map((serviceInfo) => {
 				const route = serviceInfo.path.substring(1);
 				return (
@@ -53,26 +63,32 @@ const AppRoutes = ({ remotes }: { remotes: Remote[] }) => {
 			});
 	};
 
+	const homeRemote = remotes
+		.find((r) => r.name === CORE_NAMESPACE)
+		?.apps.find((app) => app.name === homepage.value);
+
 	return (
 		<React.Suspense fallback={<Loader />}>
 			<Routes>
-				<Route path="/" Component={AvailableRoute}>
-					<Route
-						index
-						element={
-							<RemoteComponent
-								fallback={<Loader />}
-								remoteUrl={
-									import.meta.env.PROD
-										? window.location.origin
-										: "http://localhost:8080"
-								}
-								remote={HOME}
-								store={store}
-							/>
-						}
-					/>
-				</Route>
+				{homeRemote && (
+					<Route path="/" Component={AvailableRoute}>
+						<Route
+							index
+							element={
+								<RemoteComponent
+									fallback={<Loader />}
+									remoteUrl={
+										(import.meta.env.DEV && homeRemote.url) || window.origin
+									}
+									remote={homeRemote.name}
+									service={CORE_NAMESPACE}
+									version={homeRemote.version}
+									store={store}
+								/>
+							}
+						/>
+					</Route>
+				)}
 				{routes()}
 				<Route
 					path="*"

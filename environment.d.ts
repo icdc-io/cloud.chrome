@@ -5,11 +5,16 @@ declare global {
 			REACT_APP_KEYCLOAK_CLIENTID: string;
 			REACT_APP_DEFAULT_COOKIE_NAME: string;
 			REACT_APP_API_GATEWAY: string;
-			REACT_APP_CP_VENDOR: string;
 			REACT_APP_LOGOUT_URL: string;
 			REACT_APP_KEYCLOAK_URL: string;
 			REACT_APP_CENTRAL_LOCATION_URL: string;
 		}
+	}
+
+	interface Window {
+		__CP_SHELL__?: {
+			vendor?: string;
+		};
 	}
 }
 
