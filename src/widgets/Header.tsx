@@ -23,7 +23,7 @@ const Header = ({ logout }: { logout: () => Promise<void> }) => {
 
 				<Link to="/" className={styles["header-logo"]}>
 					<img
-						src={require(`@/shared/images/${dynamicfilename}.svg`)}
+						src={`/${dynamicfilename}.svg`}
 						alt="Cloud logo"
 						className={styles["cloud-logo"]}
 						width={100}
