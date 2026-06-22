@@ -20,7 +20,7 @@
   }
 }
 
-.gap-4 .api-button {
+.gap-4 > .api-button, .gap-2 > .api-button {
   margin-right: 0 !important;
 }
 

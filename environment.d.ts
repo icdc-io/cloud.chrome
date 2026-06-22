@@ -10,6 +10,12 @@ declare global {
 			REACT_APP_KEYCLOAK_URL: string;
 		}
 	}
+
+	interface Window {
+		__CP_SHELL__?: {
+			vendor?: string;
+		};
+	}
 }
 
 export {};

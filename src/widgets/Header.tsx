@@ -1,17 +1,16 @@
 import { Link } from "react-router-dom";
 import { useAppSelector } from "@/redux/shared";
 import { useIsMobile } from "@/shared/hooks/use-mobile";
+import { getVendor } from "@/shared/lib/getVendor";
 import { SidebarTrigger } from "@/shared/ui/sidebar";
-import { Skeleton } from "@/shared/ui/skeleton";
 import styles from "@/styles/Header.module.css";
 import HelpDropdown from "@/widgets/HelpDropdown";
 import LocationSelector from "@/widgets/LocationSelector";
 import UserDropdown from "@/widgets/UserDropdown";
 import NotificationBell from "./NotificationBell";
 
-const Header = () => {
-	const dynamicfilename = process.env.REACT_APP_CP_VENDOR || "icdc";
-	const userInfo = useAppSelector((state) => state.host.userInfo);
+const Header = ({ logout }: { logout: () => Promise<void> }) => {
+	const dynamicfilename = getVendor();
 	const currentService = useAppSelector((state) => state.host.currentService);
 	const isMobile = useIsMobile();
 
@@ -24,7 +23,7 @@ const Header = () => {
 
 				<Link to="/" className={styles["header-logo"]}>
 					<img
-						src={require(`@/shared/images/${dynamicfilename}.svg`)}
+						src={`/${dynamicfilename}.svg`}
 						alt="Cloud logo"
 						className={styles["cloud-logo"]}
 						width={100}
@@ -34,16 +33,10 @@ const Header = () => {
 			</div>
 
 			<div className={styles["info-section"]}>
-				{userInfo ? (
-					<>
-						<NotificationBell />
-						<HelpDropdown />
-						{!isMobile && <LocationSelector />}
-						<UserDropdown />
-					</>
-				) : (
-					<Skeleton className="h-8 bg-[var(--sidebar-skeleton)] w-full" />
-				)}
+				<NotificationBell />
+				<HelpDropdown />
+				{!isMobile && <LocationSelector />}
+				<UserDropdown logout={logout} />
 			</div>
 		</header>
 	);

@@ -24,7 +24,6 @@ import {
 	FETCH_LOCATION_DATA,
 	FULFILLED,
 	PENDING,
-	REJECTED,
 	SET_REMOTES,
 	UPDATE_TOKEN_INFO,
 	UPDATE_USER,
@@ -70,25 +69,14 @@ const hostReducer = (state = initialState, action: FluxStandardAction) => {
 		case CHANGE_USER_INFO:
 			return state.set("user", action.payload);
 
-		case `${SET_REMOTES}_PENDING`:
-			return state.set("remotesFetchStatus", PENDING);
-		case `${SET_REMOTES}_REJECTED`:
-			return state.set("remotesFetchStatus", REJECTED);
-		case `${SET_REMOTES}_FULFILLED`: {
+		case SET_REMOTES: {
 			return state.merge({
 				remotesFetchStatus: FULFILLED,
 				remotes: action.payload,
 			});
 		}
 
-		case `${FETCH_ACCOUNTS_DATA}_PENDING`:
-			return state.set("accountsDataFetchStatus", PENDING);
-		case `${FETCH_ACCOUNTS_DATA}_REJECTED`: {
-			return state.merge({
-				accountsDataFetchStatus: REJECTED,
-			});
-		}
-		case `${FETCH_ACCOUNTS_DATA}_FULFILLED`:
+		case FETCH_ACCOUNTS_DATA:
 			return state.merge({
 				accountsDataFetchStatus: FULFILLED,
 				...action.payload,
@@ -154,7 +142,7 @@ export default function configureStore() {
 		thunk,
 	];
 
-	if (process.env.NODE_ENV === "development") {
+	if (import.meta.env.DEV) {
 		middlewareList.push(logger);
 	}
 
